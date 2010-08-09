@@ -14,6 +14,11 @@ import matplotlib.image as mpimg
 import mlpy
 import pylab
 import matplotlib.numerix as nx
+from numpy import array
+from scipy.cluster.vq import vq, kmeans, kmeans2, whiten
+from mvpa.clfs.knn import kNN
+from mvpa.datasets import Dataset
+
 
 def hsvToRGB(h, s, v):
     """Convert HSV color space to RGB color space
@@ -123,7 +128,7 @@ options, args = parser.parse_args()
 #print 'ARGS::', args
 
 if len(sys.argv) == 1:
-		path='/home/lforet/python/images'
+		path='images'
 
 if len(sys.argv) == 2:
 		path= sys.argv[1]
@@ -145,8 +150,8 @@ if count > 0:
 	#del classid and classdata files
 	f_handle = open("classidfile.txt", 'w')
 	f_handle.close()
-	#f_handle = open("classdatafile.txt", 'w')
-	#f_handle.close()
+	f_handle = open("classdatafile.txt", 'w')
+	f_handle.close()
 	print "Files to Process: ", count
 	for subdir, dirs, files in os.walk(path):
 		for file in files:
@@ -164,10 +169,12 @@ if count > 0:
 				print Green_Band
 				#print "Saving color bands...."
 				#filename = filename1.rsplit('.')[0] + "_RedBand.bmp"
+				#print filename1.rsplit('.')[0][-1]
+				#break
 				imageclassid = filename1.rsplit('.')[0][-1]
 				classid = array(int(imageclassid[0]))
 				if imageclassid.isdigit():
-					print "hey this is a class 1 image"
+					print "Image class: ", imageclassid
 					#if os.stat("classidfile.txt")[6] == 0:
 					#	f_handle = open("classidfile.txt", 'a')
 					#	classid.append(int(imageclassid[0]))
@@ -194,12 +201,50 @@ if count > 0:
 						f_handle.write(" ")
 					f_handle.write('\n')
 					f_handle.close()
-					#break
-					
-					#f_handle = open("classdatafile.txt", 'r')
-					#jjj = genfromtxt(f_handle, dtype = int)
-					#print np.shape(jjj), jjj.ndim
-					#break
+	#pymvpa stuff				
+	f_handle = open("classdatafile.txt", 'r')
+	f_handle2 = open("classidfile.txt", 'r')
+	f_handle3 = open("predictdata.txt", 'r')
+	features = genfromtxt(f_handle, dtype = float)
+	classes = genfromtxt(f_handle2, dtype = int)
+	predictdata = genfromtxt(f_handle3, dtype = float)
+	predictdata = np.expand_dims(predictdata, axis=0)
+	print np.shape(features), features.ndim
+	print np.shape(classes), classes.ndim
+	print np.shape(predictdata), predictdata.ndim, predictdata.dtype
+	f_handle.close()
+	f_handle2.close()
+	f_handle3.close()
+
+ 	training = Dataset(samples=features,labels=classes)
+	clf = kNN(k=2)
+	print clf
+	clf.train(training)
+	#print np.mean(clf.predict(training.samples) == training.labels)
+	print clf.predict(predictdata)
+	print clf.trained_labels
+
+
+	#whitened = whiten(features)
+	#book = array((whitened[0],whitened[2]))
+	#features = features.swapaxes(0, 1)
+	#print np.shape(features), features.ndim
+	#clusters, labels = kmeans2(features, 3, iter = 10, minit = 'points', missing = 'warn')
+	#print clusters
+	#print np.shape(clusters), clusters.ndim
+	#print labels
+	#KNN
+	#features = features.swapaxes(0, 1)
+	#print "mlpy.data_normalize(features) = ", mlpy.data_normalize(features)
+	#myknn = mlpy.Knn(k = 3)                # initialize knn class
+	#print myknn.compute(features, classes)      # compute knn
+	#print myknn.predict(features)      # predict knn model on training data
+	#print myknn.predict(predict)      # predict knn model on test point
+	#print myknn.realpred      # real-valued prediction
+
+
+
+	#break
 				#fff[-1].isdigit()
 				#print "Saving.....", filename 
 				#Red_Band.save(filename, "BMP")
@@ -212,9 +257,9 @@ if count > 0:
 				#ary = array([[47, 51, 65],[62, 70, 71], [80, 83, 78], [65, 34, 89]])
 				
 
-				print np.ndim(hist1)
-				print np.size(hist1)
-				print np.shape(hist1)
+				#print np.ndim(hist1)
+				#print np.size(hist1)
+				#print np.shape(hist1)
 				#y = np.shape(ary)[0]
 				#x = np.shape(ary)[1]
 				#print ary[0].tolist()
@@ -226,12 +271,12 @@ if count > 0:
 				#print type(hist1)
 				#print list(np.ravel(hist1)).count(0)
 
-				print np.size(H)
-				print np.shape(H)
+				#print np.size(H)
+				#print np.shape(H)
 
-				ary = Green_Band.histogram()
-				print np.size(ary)
-				print np.shape(ary)
+				#ary = Green_Band.histogram()
+				#print np.size(ary)
+				#print np.shape(ary)
 				#hist2d = np.array([hist], dtype=int)
 				#print np.shape(hist2d)
 				#print np.ndim(hist2d)
@@ -284,46 +329,46 @@ if count > 0:
 				#plt.show()
 
 			   #print hist[0]
-				xmax = im.size[0]
-				ymax = im.size[1]
+				#xmax = im.size[0]
+				#ymax = im.size[1]
 				#elementcount =  np.size(ary2)
 				#print elementcount
 				#meanvalue = np.mean(ary)
 				#print "meanvalue = ", int(meanvalue)
 
 				# Angle step.
-				PI = 3.14159265
-				neighbors = 8
-				a = 2*PI/neighbors;
-				radius = 2
-				Increment = 1/neighbors 
+				#PI = 3.14159265
+				#neighbors = 8
+				#a = 2*PI/neighbors;
+				#radius = 2
+				#Increment = 1/neighbors 
 
-				im2 = im.copy()
-				im3 = im.copy()
+				#im2 = im.copy()
+				#im3 = im.copy()
 	
-				for y in range(0, ymax, 1):					
-					for x in range(0, xmax, 1):
-						rgb = im.getpixel((x, y))
-						i3 = rgbToI3(rgb[0],rgb[1],rgb[2])
-						im3.putpixel((x,y), (0,i3,0))
-				im.show()
-				im3.show()
+				#for y in range(0, ymax, 1):					
+				#	for x in range(0, xmax, 1):
+				#		rgb = im.getpixel((x, y))
+				#		i3 = rgbToI3(rgb[0],rgb[1],rgb[2])
+				#		im3.putpixel((x,y), (0,i3,0))
+				#im.show()
+				#im3.show()
 										
-				for y in range(0, ymax, 5):					
-					for x in range(0, xmax, 5):
-						rgb = im.getpixel((x, y))
-						im2.putpixel((x,y), (255,0,0))
-						for i in range(neighbors):
-							XPixel = around(-radius*sin((i-1)*a) )
-							YPixel = around(radius*cos((i-1)*a) )
+				#for y in range(0, ymax, 5):					
+				#	for x in range(0, xmax, 5):
+				#		rgb = im.getpixel((x, y))
+				#		im2.putpixel((x,y), (255,0,0))
+				#		for i in range(neighbors):
+				#			XPixel = around(-radius*sin((i-1)*a) )
+				#			YPixel = around(radius*cos((i-1)*a) )
 						
 							#print  XPixel, YPixel,x+XPixel,y+YPixel
-							if x+XPixel > -1 and y+YPixel > -1:
-								im2.putpixel((x+XPixel,y+YPixel), (0,255,0))
+				#			if x+XPixel > -1 and y+YPixel > -1:
+				#				im2.putpixel((x+XPixel,y+YPixel), (0,255,0))
 						#    
 						#    #if sum(XPixel)+x > 0:
 						#    print ary[x+XPixel][y+YPixel]
-				im2.show()
+				#im2.show()
 			
 
 
