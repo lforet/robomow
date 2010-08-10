@@ -2,6 +2,7 @@
 
 import os
 from PIL import Image
+from PIL import ImageOps
 import sys
 from optparse import OptionParser
 import numpy as np
@@ -16,13 +17,11 @@ import pylab
 import matplotlib.numerix as nx
 from numpy import array
 from scipy.cluster.vq import vq, kmeans, kmeans2, whiten
-from mvpa.clfs.knn import kNN
-from mvpa.datasets import Dataset
+
 
 
 def hsvToRGB(h, s, v):
     """Convert HSV color space to RGB color space
-    
     @param h: Hue
     @param s: Saturation
     @param v: Value
@@ -45,7 +44,6 @@ def hsvToRGB(h, s, v):
 
 def rgbToHSV(r, g, b):
     """Convert RGB color space to HSV color space
-    
     @param r: Red
     @param g: Green
     @param b: Blue
@@ -75,7 +73,6 @@ def rgbToHSV(r, g, b):
 
 def rgbToI3(r, g, b):
 	"""Convert RGB color space to I3 color space
-
 	@param r: Red
 	@param g: Green
 	@param b: Blue
@@ -104,12 +101,19 @@ def array2image(a):
         raise ValueError, "unsupported image mode"
     return Image.fromstring(mode, (a.shape[1], a.shape[0]), a.tostring())
 
+def CalcHistogram(img):
+	#calc histogram of green band
+	bins = nx.arange(0,256)
+	hist1 = image2array(img)
+	H, xedges = np.histogram(np.ravel(hist1), bins=bins, normed=False)
+	return H				
+
 usage = "usage: %prog [options]"
 
 parser = OptionParser(prog=sys.argv[0], usage=usage)
 
 parser.add_option("-d", "--dir", dest="directory",
-                  help="directory of images to process. example: /home/user/python/images", metavar="DIRECTORY")
+                  help="directory of images to process. example: /home/user/python/images...default = images", metavar="DIRECTORY")
 
 #parser.add_option('-d', '--dir', dest='directory of images to process', action='store',
 #    help='directory of images to process. example: /home/user/python/images')
@@ -127,17 +131,15 @@ options, args = parser.parse_args()
 #print 'OPTIONS::', options
 #print 'ARGS::', args
 
-if len(sys.argv) == 1:
-		path='images'
 
+if len(sys.argv) == 1:
+		path='testimage'
+		
 if len(sys.argv) == 2:
 		path= sys.argv[1]
 print 
-print "Attempting to process files in directory: ", path
+print "Attempting to process files in directory: ", os.getcwd()+"/"+ path
 print 
-
-
-
 
 count = 0
 for subdir, dirs, files in os.walk(path):
@@ -147,10 +149,10 @@ if count == 0:
 	print "No files in directory to process..."
 
 if count > 0:
-	#del classid and classdata files
-	f_handle = open("classidfile.txt", 'w')
+	#delete classid and classdata files to completely rebuild them 
+	f_handle = open("greenbandclassid.txt", 'w')
 	f_handle.close()
-	f_handle = open("classdatafile.txt", 'w')
+	f_handle = open("greenbanddata.txt", 'w')
 	f_handle.close()
 	print "Files to Process: ", count
 	for subdir, dirs, files in os.walk(path):
@@ -163,6 +165,7 @@ if count > 0:
 			if im.size[0] <> 320 or im.size[1] <> 240:
 				print "Image is not right size. Resizing image...."
 				im = im.resize((320, 240))
+				print "Resized to 320, 340"
 			if im.mode == "RGB":
 				print "Image has multiple color bands...Splitting Bands...."
 				Red_Band, Green_Band,Blue_Band = im.split()
@@ -170,206 +173,108 @@ if count > 0:
 				#print "Saving color bands...."
 				#filename = filename1.rsplit('.')[0] + "_RedBand.bmp"
 				#print filename1.rsplit('.')[0][-1]
-				#break
 				imageclassid = filename1.rsplit('.')[0][-1]
 				classid = array(int(imageclassid[0]))
 				if imageclassid.isdigit():
 					print "Image class: ", imageclassid
-					#if os.stat("classidfile.txt")[6] == 0:
-					#	f_handle = open("classidfile.txt", 'a')
-					#	classid.append(int(imageclassid[0]))
-					#	savetxt("classidfile.txt", classid)
-					#	f_handle.close()
-					f_handle = open("classidfile.txt", 'a')
+					f_handle = open("greenbandclassid.txt", 'a')
 					f_handle.write(str(classid))
 					f_handle.write(' ')
 					f_handle.close()
-					#testarray.fromfile(f_handle, 100)
-					#classid.append(int(imageclassid[0]))
-					#array.tofile(f)
-					print imageclassid
 					
-					#calc histogram of green band
-					bins = nx.arange(0,256)
-					hist1 = image2array(Green_Band)
-					H, xedges = np.histogram(np.ravel(hist1), bins=bins, normed=False)
-
-					f_handle = open("classdatafile.txt", 'a')
-					#savetxt(f_handle, H, fmt='%.f')
-					for i in range(len(H)):
-						f_handle.write(str(H[i]))
+					#calculate histogram
+					print "Calculating Histogram for the green pixels of image..."
+					Histogram = CalcHistogram(Green_Band)
+					#save Green Histogram to file in certain format
+					print "saving histogram to dictionary..."
+					f_handle = open("greenbanddata.txt", 'a')
+					for i in range(len(Histogram)):
+						f_handle.write(str(Histogram[i]))
 						f_handle.write(" ")
 					f_handle.write('\n')
 					f_handle.close()
-	#pymvpa stuff				
-	f_handle = open("classdatafile.txt", 'r')
-	f_handle2 = open("classidfile.txt", 'r')
-	f_handle3 = open("predictdata.txt", 'r')
-	features = genfromtxt(f_handle, dtype = float)
-	classes = genfromtxt(f_handle2, dtype = int)
-	predictdata = genfromtxt(f_handle3, dtype = float)
-	predictdata = np.expand_dims(predictdata, axis=0)
-	print np.shape(features), features.ndim
-	print np.shape(classes), classes.ndim
-	print np.shape(predictdata), predictdata.ndim, predictdata.dtype
-	f_handle.close()
-	f_handle2.close()
-	f_handle3.close()
-
- 	training = Dataset(samples=features,labels=classes)
-	clf = kNN(k=2)
-	print clf
-	clf.train(training)
-	#print np.mean(clf.predict(training.samples) == training.labels)
-	print clf.predict(predictdata)
-	print clf.trained_labels
-
-
-	#whitened = whiten(features)
-	#book = array((whitened[0],whitened[2]))
-	#features = features.swapaxes(0, 1)
-	#print np.shape(features), features.ndim
-	#clusters, labels = kmeans2(features, 3, iter = 10, minit = 'points', missing = 'warn')
-	#print clusters
-	#print np.shape(clusters), clusters.ndim
-	#print labels
-	#KNN
-	#features = features.swapaxes(0, 1)
-	#print "mlpy.data_normalize(features) = ", mlpy.data_normalize(features)
-	#myknn = mlpy.Knn(k = 3)                # initialize knn class
-	#print myknn.compute(features, classes)      # compute knn
-	#print myknn.predict(features)      # predict knn model on training data
-	#print myknn.predict(predict)      # predict knn model on test point
-	#print myknn.realpred      # real-valued prediction
-
-
-
-	#break
-				#fff[-1].isdigit()
 				#print "Saving.....", filename 
 				#Red_Band.save(filename, "BMP")
 				#filename = filename1.rsplit('.')[0] + "_GreenBand.bmp"
-				#print "Saving.....", filename 
-				#Green_Band.save(filename, "BMP")
-				#filename = filename1.rsplit('.')[0] + "_BlueBand.bmp"
-				#print "Saving.....", filename 
-				#Blue_Band.save(filename, "BMP")
-				#ary = array([[47, 51, 65],[62, 70, 71], [80, 83, 78], [65, 34, 89]])
+
+					# Angle step.
+					PI = 3.14159265
+					neighbors = 8
+					a = 2*PI/neighbors;
+					radius = 1
+					#Increment = 1/neighbors
+					xmax = im.size[0]
+					ymax = im.size[1] 
+
+					#convert image RGB to I3 colorspace
+					im3 = im.copy()
+					for y in range(0, ymax, 1):					
+						for x in range(0, xmax, 1):
+							rgb = im.getpixel((x, y))
+							i3 = rgbToI3(rgb[0],rgb[1],rgb[2])
+							im3.putpixel((x,y), (0,i3,0))
+
+					#calculate histogram
+					print "Calculating Histogram for I3 pixels of image..."
+					Red_Band, Green_Band, Blue_Band = im3.split()
+					Histogram = CalcHistogram(Green_Band)
+					#save I3 Histogram to file in certain format
+					f_handle = open("I3bandclassid.txt", 'a')
+					f_handle.write(str(classid))
+					f_handle.write(' ')
+					f_handle.close()
+					print "saving I3 histogram to dictionary..."
+					f_handle = open("I3banddata.txt", 'a')
+					for i in range(len(Histogram)):
+						f_handle.write(str(Histogram[i]))
+						f_handle.write(" ")
+					f_handle.write('\n')
+					f_handle.close()
+
+					#im.show()
+					#im3.show()
 				
-
-				#print np.ndim(hist1)
-				#print np.size(hist1)
-				#print np.shape(hist1)
-				#y = np.shape(ary)[0]
-				#x = np.shape(ary)[1]
-				#print ary[0].tolist()
-
-				#hist1 = np.array([Green_Band.histogram()], dtype=int)
-				#hist1 = np.array(ary, dtype=int)
-				#hist1 = list(ary)
-				#print hist1[0]
-				#print type(hist1)
-				#print list(np.ravel(hist1)).count(0)
-
-				#print np.size(H)
-				#print np.shape(H)
-
-				#ary = Green_Band.histogram()
-				#print np.size(ary)
-				#print np.shape(ary)
-				#hist2d = np.array([hist], dtype=int)
-				#print np.shape(hist2d)
-				#print np.ndim(hist2d)
-				#savetxt("test.txt", hist)
-				#f_handle = open("test.txt", 'a')
-				#savetxt(f_handle, hist2d)
-				#f_handle.close()
-				#f_handle = open("test.txt", 'a')
-				#hist2 = genfromtxt("test.txt")
-				#print hist2
-				#print np.shape(hist2)
-				#print np.ndim(hist2)
-				#print hist2[0], hist2[1]
-				#xtr = np.array([hist])
-				#ytr = np.array([1])
-				#print np.shape(xtr)
-				#print np.shape(ytr)
-
-
-				#Save and read data from disk
-				#print mlpy.data_tofile('data_example.dat', xtr, ytr, sep='	')
-				#x, y = mlpy.data_fromfile('data_example.dat')
-				#print x
-				#print y
-
-				#plot the thing
-				# the histogram of the data
-				#pylab.hist(H, bins=32, facecolor='b', edgecolor='b' )
-				#pylab.plot(ary)
-				#pylab.plot(H)
-				#pylab.show()
-
-#				im = Image.open(filename1)
-#				imbuf = im.tostring('raw','RGB',0,-1)
-#				imnx = nx.fromstring(imbuf,nx.UInt8)
-#				imnx.shape = im.size[1], im.size[0], 3
-
-#				bins = nx.arange(0,256)
-#				pylab.hist( nx.ravel(imnx[:,:,0]), bins=bins, facecolor='r', edgecolor='r' )
-#				pylab.hist( nx.ravel(imnx[:,:,1]), bins=bins, facecolor='g', edgecolor='g' )
-#				pylab.hist( nx.ravel(imnx[:,:,2]), bins=bins, facecolor='b', edgecolor='b' )
-#				pylab.show()
-
-
-
-				#n, bins, patches = plt.hist(hist1, 32, normed=0, facecolor='green', alpha=0.95)
-				#plt.axis([0, 255, 0, 255])
-				#print bins
-				#plt.grid(True)
-				#plt.show()
-
-			   #print hist[0]
-				#xmax = im.size[0]
-				#ymax = im.size[1]
-				#elementcount =  np.size(ary2)
-				#print elementcount
-				#meanvalue = np.mean(ary)
-				#print "meanvalue = ", int(meanvalue)
-
-				# Angle step.
-				#PI = 3.14159265
-				#neighbors = 8
-				#a = 2*PI/neighbors;
-				#radius = 2
-				#Increment = 1/neighbors 
-
 				#im2 = im.copy()
-				#im3 = im.copy()
+				im2= ImageOps.grayscale(im)
+				im3 = im2.copy()
+				#stop
+				#print im2.getpixel((5, 5)
 	
-				#for y in range(0, ymax, 1):					
-				#	for x in range(0, xmax, 1):
-				#		rgb = im.getpixel((x, y))
-				#		i3 = rgbToI3(rgb[0],rgb[1],rgb[2])
-				#		im3.putpixel((x,y), (0,i3,0))
-				#im.show()
-				#im3.show()
-										
-				#for y in range(0, ymax, 5):					
-				#	for x in range(0, xmax, 5):
-				#		rgb = im.getpixel((x, y))
-				#		im2.putpixel((x,y), (255,0,0))
-				#		for i in range(neighbors):
-				#			XPixel = around(-radius*sin((i-1)*a) )
-				#			YPixel = around(radius*cos((i-1)*a) )
-						
+				neighborRGB = np.empty([8], dtype=int)
+
+				for y in range(1, ymax-1, 1):	
+					print y				
+					for x in range(1, xmax-1, 1):
+						meanRGB = 0
+						neighborRGB[0] = 0
+						centerRGB = im2.getpixel((x, y))
+						#im2.putpixel((x,y), (255,0,0))
+						meanRGB = centerRGB
+						for i in range(neighbors):
+							XPixel = around(-radius*sin((i-1)*a) )
+							YPixel = around(radius*cos((i-1)*a) )
 							#print  XPixel, YPixel,x+XPixel,y+YPixel
-				#			if x+XPixel > -1 and y+YPixel > -1:
-				#				im2.putpixel((x+XPixel,y+YPixel), (0,255,0))
+							if x+XPixel > -1 and y+YPixel > -1:
+								neighborRGB[i] = im2.getpixel((x+XPixel,y+YPixel))
+								meanRGB = meanRGB + neighborRGB[i]
+								#im3.putpixel((x+XPixel,y+YPixel), 0)
+								#print neighborRGB, meanRGB
+						meanRGB = meanRGB / (neighbors+1)
+						#print neighborRGB, meanRGB
+						#im3.putpixel((x,y), meanRGB)
+						
+				im2.show()
+				im3.show()
+				stop
+				"""
+							#print  XPixel, YPixel,x+XPixel,y+YPixel
+							if x+XPixel > -1 and y+YPixel > -1:
+								im2.putpixel((x+XPixel,y+YPixel), (0,255,0))
 						#    
-						#    #if sum(XPixel)+x > 0:
-						#    print ary[x+XPixel][y+YPixel]
-				#im2.show()
-			
+						    #if sum(XPixel)+x > 0:
+						    print ary[x+XPixel][y+YPixel]
+				"""
+
 
 
 
