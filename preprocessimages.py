@@ -3,7 +3,7 @@
 import os
 from PIL import Image
 from PIL import ImageOps
-import sys
+import sys, time
 from optparse import OptionParser
 import numpy as np
 from numpy import *
@@ -232,24 +232,31 @@ if count > 0:
 					f_handle.close()
 
 					#im.show()
-					#im3.show()
+					im3.show()
 				
-				#im2 = im.copy()
+				Green_Band.show()
 				im2= ImageOps.grayscale(im)
-				im3 = im2.copy()
+				#print im2.getcolors(), im2.mode
+				
+				im3 = Image.new("L", (320,240))
+				im4 = Image.new("L", (320,240))
 				#stop
 				#print im2.getpixel((5, 5)
-	
-				neighborRGB = np.empty([8], dtype=int)
+				
 
-				for y in range(1, ymax-1, 1):	
-					print y				
-					for x in range(1, xmax-1, 1):
+				#Local Binary Patterns
+				print "Computing Local Binary Patterns....", time.time()
+				neighborRGB = np.empty([8], dtype=int)
+				
+				for y in range(10, ymax-1, 1):	
+					#print y				
+					for x in range(10, xmax-1, 1):
 						meanRGB = 0
 						neighborRGB[0] = 0
 						centerRGB = im2.getpixel((x, y))
 						#im2.putpixel((x,y), (255,0,0))
 						meanRGB = centerRGB
+						#lbp = 0
 						for i in range(neighbors):
 							XPixel = around(-radius*sin((i-1)*a) )
 							YPixel = around(radius*cos((i-1)*a) )
@@ -257,23 +264,41 @@ if count > 0:
 							if x+XPixel > -1 and y+YPixel > -1:
 								neighborRGB[i] = im2.getpixel((x+XPixel,y+YPixel))
 								meanRGB = meanRGB + neighborRGB[i]
-								#im3.putpixel((x+XPixel,y+YPixel), 0)
+								#if neighborRGB[i] >= centerRGB:
+								#	lbp = lbp + (2**i)
 								#print neighborRGB, meanRGB
 						meanRGB = meanRGB / (neighbors+1)
+
 						#print neighborRGB, meanRGB
-						#im3.putpixel((x,y), meanRGB)
+						#im3.putpixel((x,y), lbp)
 						
-				im2.show()
+						
+						#compute Improved local binary pattern (center pixel vs the mean of neighbors)
+						lbp = 0						
+						for i in range(neighbors):
+							print i, neighborRGB[i], meanRGB, (neighborRGB[i] >= meanRGB)
+							if neighborRGB[i] >= meanRGB:
+								lbp = lbp + (2**i)
+						im3.putpixel((x,y), lbp)
+						print lbp
+						stop
+						#Compute Uniform local binary pattern (center pixel vs the mean of neighbors)
+						im4.putpixel((x,y), 0)
+						if lbp == 1 or lbp == 3 or lbp == 7 or lbp == 15 or lbp == 31 or lbp == 127 or lbp == 255:
+							im4.putpixel((x,y), lbp)
+
+ 				print "Completed Computing Local Binary Patterns....", time.time()
+				im.show()
+				print im3.getcolors()
+				print im3.histogram()				
 				im3.show()
 				stop
-				"""
-							#print  XPixel, YPixel,x+XPixel,y+YPixel
-							if x+XPixel > -1 and y+YPixel > -1:
-								im2.putpixel((x+XPixel,y+YPixel), (0,255,0))
-						#    
-						    #if sum(XPixel)+x > 0:
-						    print ary[x+XPixel][y+YPixel]
-				"""
+				im4.show()
+				hist1 = CalcHistogram(im3)
+				print hist1
+				#plt.plot(hist1)
+				#plt.show()
+				stop
 
 
 
