@@ -108,8 +108,81 @@ def CalcHistogram(img):
 	H, xedges = np.histogram(np.ravel(hist1), bins=bins, normed=False)
 	return H				
 
-usage = "usage: %prog [options]"
 
+def CalcLBP(img):
+	#Function to calculate local binary pattern of an image 
+	#pass in a img
+	#returns an array???
+	# Angle step.
+	#PI = 3.14159265
+	neighbors = 8
+	#a = 2*PI/neighbors;
+	#radius = 1
+	#Increment = 1/neighbors
+	xmax = img.size[0]
+	ymax = img.size[1] 
+	#convert image to grayscale
+	grayimage = ImageOps.grayscale(img)
+	#make a copy to return
+	returnimage = Image.new("L", (xmax,ymax))
+
+	neighborRGB = np.empty([8], dtype=int)
+	meanRGB = 0
+	imagearray = grayimage.load()
+	for y in range(1, ymax-1, 1):				
+		for x in range(1, xmax-1, 1):
+			centerRGB = imagearray[x, y]
+			meanRGB = centerRGB
+			neighborRGB[0] = imagearray[x+1,y+1]
+			neighborRGB[1] = imagearray[x,y+1]
+			neighborRGB[2] = imagearray[x-1,y+1]
+			neighborRGB[3] = imagearray[x-1,y]
+			neighborRGB[4] = imagearray[x-1,y-1]
+			neighborRGB[5] = imagearray[x,y-1]
+			neighborRGB[6] = imagearray[x+1,y-1]
+			neighborRGB[7] = imagearray[x+1,y]
+			#comparing against mean adds a sec vs comparing against center pixel
+			#maybe use a sum function here
+			for i in range(neighbors):		
+				meanRGB = meanRGB + neighborRGB[i]
+			print meanRGB
+			print neighborRGB.sum()
+			stop
+			meanRGB = meanRGB / (neighbors+1)
+			#compute Improved local binary pattern (center pixel vs the mean of neighbors)
+			lbp = 0						
+			for i in range(neighbors):
+			#comparing against mean adds a sec vs comparing against center pixel
+				#print i, neighborRGB[i], meanRGB, (neighborRGB[i] >= meanRGB)
+				if neighborRGB[i] >= meanRGB:
+				#if neighborRGB[i] >= centerRGB:
+					lbp = lbp + (2**i)
+			#putpixel adds 1 second vs storing to array
+			returnimage.putpixel((x,y), lbp)
+	return returnimage
+
+
+def rgb2I3 (img):
+	"""Convert RGB color space to I3 color space
+	@param r: Red
+	@param g: Green
+	@param b: Blue
+	return (I3) integer 
+	"""
+	xmax = img.size[0]
+	ymax = img.size[1]
+	#make a copy to return
+	returnimage = Image.new("RGB", (xmax,ymax))
+	imagearray = img.load()
+	for y in range(0, ymax, 1):					
+		for x in range(0, xmax, 1):
+			rgb = imagearray[x, y]
+			i3 = ((2*rgb[1])-rgb[0]-rgb[2]) / 2
+			#print rgb, i3
+			returnimage.putpixel((x,y), (0,i3,0))
+	return returnimage
+
+usage = "usage: %prog [options]"
 parser = OptionParser(prog=sys.argv[0], usage=usage)
 
 parser.add_option("-d", "--dir", dest="directory",
@@ -169,7 +242,10 @@ if count > 0:
 			if im.mode == "RGB":
 				print "Image has multiple color bands...Splitting Bands...."
 				Red_Band, Green_Band,Blue_Band = im.split()
+				
+				im.show()
 				print Green_Band
+				Green_Band.show()
 				#print "Saving color bands...."
 				#filename = filename1.rsplit('.')[0] + "_RedBand.bmp"
 				#print filename1.rsplit('.')[0][-1]
@@ -196,27 +272,11 @@ if count > 0:
 				#print "Saving.....", filename 
 				#Red_Band.save(filename, "BMP")
 				#filename = filename1.rsplit('.')[0] + "_GreenBand.bmp"
-
-					# Angle step.
-					PI = 3.14159265
-					neighbors = 8
-					a = 2*PI/neighbors;
-					radius = 1
-					#Increment = 1/neighbors
-					xmax = im.size[0]
-					ymax = im.size[1] 
-
-					#convert image RGB to I3 colorspace
-					im3 = im.copy()
-					for y in range(0, ymax, 1):					
-						for x in range(0, xmax, 1):
-							rgb = im.getpixel((x, y))
-							i3 = rgbToI3(rgb[0],rgb[1],rgb[2])
-							im3.putpixel((x,y), (0,i3,0))
-
+					print "calling i3"
+					I3image = rgb2I3(im)
 					#calculate histogram
 					print "Calculating Histogram for I3 pixels of image..."
-					Red_Band, Green_Band, Blue_Band = im3.split()
+					Red_Band, Green_Band, Blue_Band = I3image.split()
 					Histogram = CalcHistogram(Green_Band)
 					#save I3 Histogram to file in certain format
 					f_handle = open("I3bandclassid.txt", 'a')
@@ -230,27 +290,16 @@ if count > 0:
 						f_handle.write(" ")
 					f_handle.write('\n')
 					f_handle.close()
-
-					#im.show()
-					im3.show()
 				
-				Green_Band.show()
-				im2= ImageOps.grayscale(im)
-				#print im2.getcolors(), im2.mode
-				
-				im3 = Image.new("L", (320,240))
-				im4 = Image.new("L", (320,240))
-				#stop
-				#print im2.getpixel((5, 5)
-				
-
+				"""
 				#Local Binary Patterns
-				print "Computing Local Binary Patterns....", time.time()
+				inittime = time.time()
+				print "Computing Local Binary Patterns....", inittime, time.ctime()
 				neighborRGB = np.empty([8], dtype=int)
 				
-				for y in range(10, ymax-1, 1):	
+				for y in range(1, ymax-1, 1):	
 					#print y				
-					for x in range(10, xmax-1, 1):
+					for x in range(1, xmax-1, 1):
 						meanRGB = 0
 						neighborRGB[0] = 0
 						centerRGB = im2.getpixel((x, y))
@@ -276,26 +325,39 @@ if count > 0:
 						#compute Improved local binary pattern (center pixel vs the mean of neighbors)
 						lbp = 0						
 						for i in range(neighbors):
-							print i, neighborRGB[i], meanRGB, (neighborRGB[i] >= meanRGB)
+							#print i, neighborRGB[i], meanRGB, (neighborRGB[i] >= meanRGB)
 							if neighborRGB[i] >= meanRGB:
 								lbp = lbp + (2**i)
 						im3.putpixel((x,y), lbp)
-						print lbp
-						stop
-						#Compute Uniform local binary pattern (center pixel vs the mean of neighbors)
-						im4.putpixel((x,y), 0)
-						if lbp == 1 or lbp == 3 or lbp == 7 or lbp == 15 or lbp == 31 or lbp == 127 or lbp == 255:
-							im4.putpixel((x,y), lbp)
 
- 				print "Completed Computing Local Binary Patterns....", time.time()
-				im.show()
-				print im3.getcolors()
-				print im3.histogram()				
-				im3.show()
-				stop
-				im4.show()
-				hist1 = CalcHistogram(im3)
-				print hist1
+						#Compute Uniform local binary pattern (center pixel vs the mean of neighbors)
+						#im4.putpixel((x,y), 0)
+						#if lbp == 1 or lbp == 3 or lbp == 7 or lbp == 15 or lbp == 31 or lbp == 127 or lbp == 255:
+						#	im4.putpixel((x,y), lbp)
+
+ 				print "Completed Computing Local Binary Patterns....", (time.time()-inittime)
+				"""
+				I3image.show()
+				#Local Binary Patterns
+				inittime = time.time()
+				print "Computing Local Binary Patterns....", inittime, time.ctime()				
+				im6  = CalcLBP(im)
+				print "Completed Computing Local Binary Patterns....", (time.time()-inittime)
+				im6.show()
+
+#Compute Uniform local binary pattern (center pixel vs the mean of neighbors)
+#im4.putpixel((x,y), 0)
+#if lbp == 1 or lbp == 3 or lbp == 7 or lbp == 15 or lbp == 31 or lbp == 127 or lbp == 255:
+#	im4.putpixel((x,y), lbp)
+
+ 				
+				#
+				#print im3.getcolors()
+				#print im3.histogram()				
+				#im3.show()
+				#im5.show()
+				#hist1 = CalcHistogram(im3)
+				#print hist1
 				#plt.plot(hist1)
 				#plt.show()
 				stop
