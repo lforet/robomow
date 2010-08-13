@@ -125,7 +125,6 @@ def CalcLBP(img):
 	grayimage = ImageOps.grayscale(img)
 	#make a copy to return
 	returnimage = Image.new("L", (xmax,ymax))
-
 	neighborRGB = np.empty([8], dtype=int)
 	meanRGB = 0
 	imagearray = grayimage.load()
@@ -133,27 +132,21 @@ def CalcLBP(img):
 		for x in range(1, xmax-1, 1):
 			centerRGB = imagearray[x, y]
 			meanRGB = centerRGB
-			neighborRGB[0] = imagearray[x+1,y+1]
-			neighborRGB[1] = imagearray[x,y+1]
-			neighborRGB[2] = imagearray[x-1,y+1]
-			neighborRGB[3] = imagearray[x-1,y]
-			neighborRGB[4] = imagearray[x-1,y-1]
-			neighborRGB[5] = imagearray[x,y-1]
-			neighborRGB[6] = imagearray[x+1,y-1]
-			neighborRGB[7] = imagearray[x+1,y]
+			neighborRGB[4] = imagearray[x+1,y+1]
+			neighborRGB[5] = imagearray[x,y+1]
+			neighborRGB[6] = imagearray[x-1,y+1]
+			neighborRGB[7] = imagearray[x-1,y]
+			neighborRGB[0] = imagearray[x-1,y-1]
+			neighborRGB[1] = imagearray[x,y-1]
+			neighborRGB[2] = imagearray[x+1,y-1]
+			neighborRGB[3] = imagearray[x+1,y]
 			#comparing against mean adds a sec vs comparing against center pixel
-			#maybe use a sum function here
-			for i in range(neighbors):		
-				meanRGB = meanRGB + neighborRGB[i]
-			print meanRGB
-			print neighborRGB.sum()
-			stop
+			meanRGB= centerRGB + neighborRGB.sum()
 			meanRGB = meanRGB / (neighbors+1)
 			#compute Improved local binary pattern (center pixel vs the mean of neighbors)
 			lbp = 0						
 			for i in range(neighbors):
 			#comparing against mean adds a sec vs comparing against center pixel
-				#print i, neighborRGB[i], meanRGB, (neighborRGB[i] >= meanRGB)
 				if neighborRGB[i] >= meanRGB:
 				#if neighborRGB[i] >= centerRGB:
 					lbp = lbp + (2**i)
@@ -342,8 +335,14 @@ if count > 0:
 				inittime = time.time()
 				print "Computing Local Binary Patterns....", inittime, time.ctime()				
 				im6  = CalcLBP(im)
+				im7 = CalcLBP(Green_Band)
+				Red_Band, Green_Band, Blue_Band = im.split()
+
+
 				print "Completed Computing Local Binary Patterns....", (time.time()-inittime)
 				im6.show()
+				im7.show()
+
 
 #Compute Uniform local binary pattern (center pixel vs the mean of neighbors)
 #im4.putpixel((x,y), 0)
