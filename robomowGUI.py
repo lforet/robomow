@@ -18,7 +18,15 @@ class PhotoCtrl(wx.App):
         self.panel = wx.Panel(self.frame)
  
         self.PhotoMaxSize = 240
- 
+
+        #panel = wx.Panel(self, -1)
+        #self.listbox = wx.ListBox(self.panel, -1)
+
+        #panel = wx.Panel(self, -1)
+        #self.rightPanel = RightPanel(panel, -1)
+        #leftPanel = LeftPanel(panel, -1)
+        #self.listbox = ListBox(panel, -1)
+
         self.createWidgets()
         self.frame.Show()
  
@@ -59,6 +67,9 @@ class PhotoCtrl(wx.App):
                                style=wx.OPEN)
         if dialog.ShowModal() == wx.ID_OK:
             self.photoTxt.SetValue(dialog.GetPath())
+
+            #print self
+            ListBox.hbox.listbox.Append(dialog.GetPath())
         dialog.Destroy()
         self.onView()
  
@@ -79,7 +90,7 @@ class PhotoCtrl(wx.App):
         self.imageCtrl.SetBitmap(wx.BitmapFromImage(img))
         self.panel.Refresh()
 
-"""
+
 class LeftPanel(wx.Panel):
     def __init__(self, parent, id):
         wx.Panel.__init__(self, parent, id, style=wx.BORDER_SUNKEN)
@@ -165,6 +176,7 @@ class ListBox(wx.Frame):
     def NewItem(self, event):
         text = wx.GetTextFromUser('Enter a new item', 'Insert dialog')
         if text != '':
+            #print self.listbox.Append(text)
             self.listbox.Append(text)
 
     def OnRename(self, event):
@@ -184,11 +196,12 @@ class ListBox(wx.Frame):
     def OnClear(self, event):
         self.listbox.Clear()
 
-"""
-#app = wx.App()
-#Communicate(None, -1, 'widgets communicate')
-#ListBox(None, -1, 'ListBox')
-app = PhotoCtrl()
 
+#app = wx.App()
+#
+
+app = PhotoCtrl()
+ListBox(None, -1, 'ListBox')
+Communicate(None, -1, 'widgets communicate')
 app.MainLoop()
 
