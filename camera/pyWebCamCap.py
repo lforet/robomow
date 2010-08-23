@@ -4,7 +4,9 @@ import ImageDraw, time
 from pygame.locals import *
 import sys
 from PIL import ImageEnhance
-import cv
+from opencv import cv
+from opencv import highgui
+
 
 import opencv
 #this is important for capturing/displaying images

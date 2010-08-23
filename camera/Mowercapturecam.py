@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/python
 
 import sys, pygame, sys, time
 import os
@@ -30,9 +30,9 @@ AC3 = 0x2000
 MP2 = 0x50
 FLV1 = 0x31564C46
 
-res = (320,240)
+res = (640,480)
 pygame.init()
-screen = pygame.display.set_mode((320,240))
+screen = pygame.display.set_mode((640,480))
 pygame.display.set_caption('Webcam')
 pygame.font.init()
 font = pygame.font.SysFont("Courier",11)
@@ -56,13 +56,14 @@ if __name__ == '__main__':
     print "OpenCV Python capture video"
 
     # first, create the necessary window
+   
     highgui.cvNamedWindow ('Camera', highgui.CV_WINDOW_AUTOSIZE)
     highgui.cvNamedWindow ('Color Segmentation', highgui.CV_WINDOW_AUTOSIZE)
     highgui.cvNamedWindow ('Canny', highgui.CV_WINDOW_AUTOSIZE)
 
     # move the new window to a better place
     highgui.cvMoveWindow ('Camera', 10, 10)
-
+   
     try:
         # try to get the device number from the command line
         device = int (sys.argv [1])
@@ -76,8 +77,8 @@ if __name__ == '__main__':
     if len (sys.argv) == 1:
         # no argument on the command line, try to use the camera
         capture = highgui.cvCreateCameraCapture (device)
-        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_WIDTH, 320)
-        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_HEIGHT, 240)
+        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_WIDTH, 640)
+        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_HEIGHT, 480)
         contrast = highgui.cvGetCaptureProperty(capture, highgui.CV_CAP_PROP_CONTRAST)
         print contrast
     else:
@@ -86,6 +87,7 @@ if __name__ == '__main__':
         capture = highgui.cvCreateFileCapture (sys.argv [1])            
 
     # check that capture device is OK
+    print "opening camera"
     if not capture:
         print "Error opening capture device"
         sys.exit (1)
@@ -95,11 +97,12 @@ if __name__ == '__main__':
 
     # get size of the frame
     frame_size = cv.cvGetSize (frame)
-    #print "frame_size = ", frame_size
+    print "frame_size = ", frame_size
     
     # get the frame rate of the capture device
     fps = highgui.cvGetCaptureProperty (capture, highgui.CV_CAP_PROP_FPS)
-    if fps == 0:
+    print "frames per sec = ", fps
+    if fps <= 0:
         # no fps getted, so set it to 30 by default
         fps = 30
 
@@ -224,10 +227,10 @@ if __name__ == '__main__':
             #convert Ipl image to PIL image
             PILimg = opencv.adaptors.Ipl2PIL(img)
             
-            segments = 4              
+            segments = 8              
             
             x, y = PILimg.size
-
+            print "img size = ", x, y
             xsegs = x / segments
             ysegs = y / segments
             
@@ -322,7 +325,9 @@ if __name__ == '__main__':
             #xsegs = x / segments
             #ysegs = y / segments
         #disp("B:" + str(brightness), (10,16))  
-        disp("hello:", (10,28))
+        disp("space: snapshot", (10,20))
+        disp("s: save shot", (10,30))
+        disp("t: stats", (10,40))
         #print "hello"
         pygame.time.wait(10) 
         pygame.display.flip()
