@@ -3,37 +3,47 @@ import socket
 import time
 
 
-HOST = '192.168.1.118'    # The remote host
+HOST = '127.0.0.1'    # The remote host
 PORT = 50008              # The same port as used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+connected = 0
 
-for i in range(3):
-   try:
-      print  s.connect((HOST, PORT))
-      break
-   except IOError as detail:
-      print "No server to connect to...retrying in 3 seconds", detail[0], detail [1]
-      time.sleep(3)
+#try n times to connect
+for i in range(10):  
+    try:
+        s.connect((HOST, PORT))
+        print "connected with server..."
+        connected = 1
+        break
+    except IOError as detail:
+      print "No server to connect to...", detail[0], detail [1]
+      time.sleep(1)
 
-
-for i in range(3):
-   time.sleep(3)
-   try:
-      print "sending data...", i
-      s.send('Hello, world')
-      data = s.recv(1024)
-      print 'Received', repr(data)
-   except IOError as detail:
-      print detail
-      s.close()
-      break
-"""
-time.sleep(6)
+#send 10 heartbeat signals or could just keep s.connect every 1 second
+if connected == 1:
+    while 1:  
+        try:
+            s.send('sending Heartbeat signal...')
+            data = s.recv(1024)
+            if data <> "":
+                print 'Received and ACK from server...', repr(data)
+            else:
+                print "ACK not received from server"
+                break
+            print s.getpeername(), s.family, s.proto, s.type
+            time.sleep(1)
+        except IOError as detail:
+            print detail
+            break
+        #except IOError as detail:
+        #  print "No server to connect to...", detail[0], detail [1]
+        #  break
+else:
+    print "Tried but never reached server..."
+    
 try:
-   s.send('Hello, world')
-   data = s.recv(1024)
-   s.close()
-   print 'Received', repr(data)
-except IOError as detail:
-   print detail
-"""
+    print "closing Socket"
+    s.close()
+except NameError as detail:
+    print "No socket to close", detail
+

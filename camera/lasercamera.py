@@ -3,6 +3,9 @@
 import sys
 from opencv import cv
 from opencv import highgui
+import opencv
+from pygame.locals import *
+
 
 hmin = 4 
 hmax = 18 

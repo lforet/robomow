@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, pygame, sys, time
+import sys, pygame, time
 import os
 from PIL import Image
 from PIL import ImageEnhance, ImageStat
@@ -30,9 +30,9 @@ AC3 = 0x2000
 MP2 = 0x50
 FLV1 = 0x31564C46
 
-res = (640,480)
+res = (320,240)
 pygame.init()
-screen = pygame.display.set_mode((640,480))
+screen = pygame.display.set_mode((320,240))
 pygame.display.set_caption('Webcam')
 pygame.font.init()
 font = pygame.font.SysFont("Courier",11)
@@ -57,13 +57,13 @@ if __name__ == '__main__':
 
     # first, create the necessary window
    
-    highgui.cvNamedWindow ('Camera', highgui.CV_WINDOW_AUTOSIZE)
+    highgui.cvNamedWindow('Camera', highgui.CV_WINDOW_AUTOSIZE)
     highgui.cvNamedWindow ('Color Segmentation', highgui.CV_WINDOW_AUTOSIZE)
     highgui.cvNamedWindow ('Canny', highgui.CV_WINDOW_AUTOSIZE)
 
     # move the new window to a better place
     highgui.cvMoveWindow ('Camera', 10, 10)
-   
+    
     try:
         # try to get the device number from the command line
         device = int (sys.argv [1])
@@ -77,8 +77,8 @@ if __name__ == '__main__':
     if len (sys.argv) == 1:
         # no argument on the command line, try to use the camera
         capture = highgui.cvCreateCameraCapture (device)
-        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_WIDTH, 640)
-        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_HEIGHT, 480)
+        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_WIDTH, 320)
+        highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_FRAME_HEIGHT, 240)
         contrast = highgui.cvGetCaptureProperty(capture, highgui.CV_CAP_PROP_CONTRAST)
         print contrast
     else:
@@ -101,31 +101,33 @@ if __name__ == '__main__':
     
     # get the frame rate of the capture device
     fps = highgui.cvGetCaptureProperty (capture, highgui.CV_CAP_PROP_FPS)
-    print "frames per sec = ", fps
+    
     if fps <= 0:
         # no fps getted, so set it to 30 by default
         fps = 30
-
+    print "frames per sec = ", fps
     # create the writer
-    writer = highgui.cvCreateVideoWriter ("captured.mpg", MPEG1VIDEO,
-                                          fps, frame_size, True)
+    #writer = highgui.cvCreateVideoWriter ("captured.mpg", MPEG1VIDEO,
+    #                                      fps, frame_size, True)
 
     # check the writer is OK
-    if not writer:
-        print "Error opening writer"
-        sys.exit (1)
+    #if not writer:
+    #    print "Error opening writer"
+    #    sys.exit (1)
     print "starting loop"
     while 1:
         # do forever
 
         # 1. capture the current image
-        #frame = highgui.cvQueryFrame (capture)
+        frame = highgui.cvQueryFrame (capture)
+        frame = highgui.cvRetrieveFrame (capture)
         #frame = highgui.cvGrabFrame (capture)
         #img = highgui.cvRetrieveFrame (capture)
         #cvGrabFrame(capture);          // capture a frame
         #img=cvRetrieveFrame(capture);  // retrieve the captured frame
         #cvWriteFrame(writer,img);      // add the frame to the file
-        
+        highgui.cvShowImage ('Camera', frame)
+
 
         # handle events
         #k = highgui.cvWaitKey ()
@@ -144,7 +146,10 @@ if __name__ == '__main__':
         #print "key pressed: ", keyinput
         
         if keyinput[K_SPACE]:
+            #frame = highgui.cvQueryFrame (capture)
+            #frame = highgui.cvGrabFrame (capture)
             img = highgui.cvQueryFrame (capture)
+            img = highgui.cvRetrieveFrame (capture)
             if frame is None:
                 # no image captured... end the processing
                 break
@@ -155,7 +160,7 @@ if __name__ == '__main__':
         
         if keyinput[K_ESCAPE]:
             # user has press the ESC key, so exit
-            highgui.cvReleaseVideoWriter (writer)
+            #highgui.cvReleaseVideoWriter (writer)
             highgui.cvDestroyAllWindows()
             highgui.cvReleaseCapture (capture)
             pygame.quit()

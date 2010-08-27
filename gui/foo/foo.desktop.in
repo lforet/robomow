@@ -1,0 +1,8 @@
+[Desktop Entry]
+_Name=Foo
+_Comment=Foo application
+Categories=GNOME;Utility;
+Exec=foo
+Icon=/usr/share/foo/media/icon.png
+Terminal=false
+Type=Application
