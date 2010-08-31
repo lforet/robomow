@@ -1,10 +1,9 @@
 #! /usr/bin/env python
 
 import sys
-import functools
+
 # import the necessary things for OpenCV
-from opencv import cv
-from opencv import highgui
+from CVtypes import cv
 
 #############################################################################
 # definition of some constants
@@ -19,8 +18,8 @@ vmax = 256
 smin = 30
 
 # the range we want to monitor
-hsv_min = cv.cvScalar (0, smin, vmin, 0)
-hsv_max = cv.cvScalar (180, 256, vmax, 0)
+hsv_min = cv.Scalar (0, smin, vmin, 0)
+hsv_max = cv.Scalar (180, 256, vmax, 0)
 
 #############################################################################
 # some useful functions
@@ -35,8 +34,8 @@ def hsv2rgb (hue):
                    [2, 1, 0],
                    [0, 1, 2]]
     hue *= 0.1 / 3
-    sector = cv.cvFloor (hue)
-    p = cv.cvRound (255 * (hue - sector))
+    sector = int (hue)
+    p = int(round (255 * (hue - sector)))
     if sector & 1:
         p ^= 255
 
@@ -45,76 +44,28 @@ def hsv2rgb (hue):
     rgb [sector_data [sector][1]] = 0
     rgb [sector_data [sector][2]] = p
 
-    return cv.cvScalar (rgb [2], rgb [1], rgb [0], 0)
-
-       
-def on_mouse( event, x, y, flags, param = [] ):
-    global mouse_selection
-    global mouse_origin
-    global mouse_select_object
-    if event == highgui.CV_EVENT_LBUTTONDOWN:
-        print("Mouse down at (%i, %i)" % (x,y))
-        mouse_origin = cv.cvPoint(x,y)
-
-        mouse_selection = cv.cvRect(x,y,0,0)
-        mouse_select_object = True
-        return
-    if event == highgui.CV_EVENT_LBUTTONUP:
-        print("Mouse up at (%i,%i)" % (x,y))
-        mouse_select_object = False
-        if( mouse_selection.width > 0 and mouse_selection.height > 0 ):
-            global track_object
-            track_object = -1
-        return
-    if mouse_select_object:
-        mouse_selection.x = min(x,mouse_origin.x)
-        mouse_selection.y = min(y,mouse_origin.y)
-        mouse_selection.width = mouse_selection.x + cv.CV_IABS(x - mouse_origin.x)
-        mouse_selection.height = mouse_selection.y + cv.CV_IABS(y - mouse_origin.y)
-        mouse_selection.x = max( mouse_selection.x, 0 )
-        mouse_selection.y = max( mouse_selection.y, 0 )
-        mouse_selection.width = min( mouse_selection.width, frame.width )
-        mouse_selection.height = min( mouse_selection.height, frame.height )
-        mouse_selection.width -= mouse_selection.x
-        mouse_selection.height -= mouse_selection.y
-   
+    return cv.Scalar (rgb [2], rgb [1], rgb [0], 0)
 
 #############################################################################
 # so, here is the main part of the program
 
 if __name__ == '__main__':
 
+    # a small welcome
     print "OpenCV Python wrapper test"
-    #print "OpenCV version: %s (%d, %d, %d)" % (cv.CV_VERSION,
-    #                                           cv.CV_MAJOR_VERSION,
-    #                                           cv.CV_MINOR_VERSION,
-    #                                           cv.CV_SUBMINOR_VERSION)
+    print "OpenCV version: %s (%d, %d, %d)" % (cv.VERSION,
+                                               cv.MAJOR_VERSION,
+                                               cv.MINOR_VERSION,
+                                               cv.SUBMINOR_VERSION)
 
     # first, create the necessary windows
-    highgui.cvNamedWindow ('Camera', highgui.CV_WINDOW_AUTOSIZE)
-    highgui.cvNamedWindow ('Histogram', highgui.CV_WINDOW_AUTOSIZE)
+    cv.NamedWindow ('Camera', cv.WINDOW_AUTOSIZE)
+    cv.NamedWindow ('Histogram', cv.WINDOW_AUTOSIZE)
 
     # move the new window to a better place
-    highgui.cvMoveWindow ('Camera', 10, 40)
-    highgui.cvMoveWindow ('Histogram', 10, 270)
+    cv.MoveWindow ('Camera', 10, 40)
+    cv.MoveWindow ('Histogram', 10, 270)
 
-
-    global mouse_origin
-    global mouse_selection
-    global mouse_select_object
-    mouse_select_object = False
-    global track_object
-    track_object = 0
-   
-    global track_comp
-    global track_box
-   
-    track_comp = cv.CvConnectedComp()
-    track_box = cv.CvBox2D()
-           
-    highgui.cvSetMouseCallback( "Camera", on_mouse, 0 )
-   
-   
     try:
         # try to get the device number from the command line
         device = int (sys.argv [1])
@@ -127,80 +78,80 @@ if __name__ == '__main__':
 
     if len (sys.argv) == 1:
         # no argument on the command line, try to use the camera
-        capture = highgui.cvCreateCameraCapture (device)
+        capture = cv.CreateCameraCapture (device)
 
         # set the wanted image size from the camera
-        highgui.cvSetCaptureProperty (capture,
-                                      highgui.CV_CAP_PROP_FRAME_WIDTH, 1600)
-        highgui.cvSetCaptureProperty (capture,
-                                      highgui.CV_CAP_PROP_FRAME_HEIGHT, 1200)
+        cv.SetCaptureProperty (capture,
+                                      cv.CAP_PROP_FRAME_WIDTH, 320)
+        cv.SetCaptureProperty (capture,
+                                      cv.CAP_PROP_FRAME_HEIGHT,240)
     else:
         # we have an argument on the command line,
         # we can assume this is a file name, so open it
-        capture = highgui.cvCreateFileCapture (sys.argv [1])            
+        capture = cv.CreateFileCapture (sys.argv [1])            
 
     # check that capture device is OK
     if not capture:
         print "Error opening capture device"
         sys.exit (1)
-       
+        
     # create an image to put in the histogram
-    histimg = cv.cvCreateImage (cv.cvSize (320,240), 8, 3)
+    histimg = cv.CreateImage (cv.Size (320,240), 8, 3)
 
     # init the image of the histogram to black
-    cv.cvSetZero (histimg)
+    cv.SetZero (histimg)
 
     # capture the 1st frame to get some propertie on it
-    frame = highgui.cvQueryFrame (capture)
-   
+    frame = cv.QueryFrame (capture)
 
-   
     # get some properties of the frame
-    frame_size = cv.cvGetSize (frame)
+    frame_size = cv.GetSize (frame)
 
     # compute which selection of the frame we want to monitor
-    selection = cv.cvRect (0, 0, frame.width, frame.height)
+    selection = cv.Rect (0, 0, frame_size.width, frame_size.height)
 
     # create some images usefull later
-    hue = cv.cvCreateImage (frame_size, 8, 1)
-    mask = cv.cvCreateImage (frame_size, 8, 1)
-    hsv = cv.cvCreateImage (frame_size, 8, 3 )
-    backproject = cv.cvCreateImage( frame_size, 8, 1 )
+    hue = cv.CreateImage (frame_size, 8, 1)
+    mask = cv.CreateImage (frame_size, 8, 1)
+    hsv = cv.CreateImage (frame_size, 8, 3 )
 
     # create the histogram
-    hist = cv.cvCreateHist ([hdims], cv.CV_HIST_ARRAY, hranges, 1)
-    obj_hist = cv.cvCreateHist ([hdims], cv.CV_HIST_ARRAY, hranges, 1)
+    hist = cv.CreateHist (1, [hdims], cv.HIST_ARRAY, hranges, 1)
+
     while 1:
         # do forever
 
         # 1. capture the current image
-        frame = highgui.cvQueryFrame (capture)
+        frame = cv.QueryFrame (capture)
         if frame is None:
             # no image captured... end the processing
             break
 
         # mirror the captured image
-        #cv.cvFlip (frame, None, 1)
+        cv.Flip (frame, None, 1)
 
-        # compute the hsv version of the image
-        cv.cvCvtColor (frame, hsv, cv.CV_BGR2HSV)
+        # compute the hsv version of the image 
+        cv.CvtColor (frame, hsv, cv.BGR2HSV)
 
         # compute which pixels are in the wanted range
-        cv.cvInRangeS (hsv, hsv_min, hsv_max, mask)
+        cv.InRangeS (hsv, hsv_min, hsv_max, mask)
 
         # extract the hue from the hsv array
-        cv.cvSplit (hsv, hue, None, None, None)
+        cv.Split (hsv, hue, None, None, None)
 
         # select the rectangle of interest in the hue/mask arrays
-        hue_roi = cv.cvGetSubRect (hue, selection)
-        mask_roi = cv.cvGetSubRect (mask, selection)
+        cv.SetImageROI(hue, selection)
+        cv.SetImageROI(mask, selection)
 
         # it's time to compute the histogram
-        cv.cvCalcHist (hue_roi, hist, 0, mask_roi)
+        cv.CalcHist ([hue], hist, 0, mask)
+
+        # clear the ROIs
+        cv.ResetImageROI(hue)
+        cv.ResetImageROI(mask)
 
         # extract the min and max value of the histogram
-        min_val, max_val, min_idx, max_idx = cv.cvGetMinMaxHistValue (hist)
-
+        min_val, max_val, min_ndx, max_ndx = cv.GetMinMaxHistValue (hist)
 
         # compute the scale factor
         if max_val > 0:
@@ -209,75 +160,37 @@ if __name__ == '__main__':
             scale = 0.
 
         # scale the histograms
-        cv.cvConvertScale (hist.bins, hist.bins, scale, 0)
+        cv.ConvertScale (hist[0].bins, hist[0].bins, scale, 0)
 
         # clear the histogram image
-        cv.cvSetZero (histimg)
+        cv.SetZero (histimg)
 
         # compute the width for each bin do display
-        bin_w = histimg.width / hdims
-       
+        bin_w = histimg[0].width / hdims
+        
         for  i in range (hdims):
             # for all the bins
 
             # get the value, and scale to the size of the hist image
-            val = cv.cvRound (cv.cvGetReal1D (hist.bins, i)
-                              * histimg.height / 255)
+            val = int(round (cv.GetReal1D (hist[0].bins, i)
+                              * histimg[0].height / 255))
 
             # compute the color
             color = hsv2rgb (i * 180. / hdims)
 
             # draw the rectangle in the wanted color
-            cv.cvRectangle (histimg,
-                            cv.cvPoint (i * bin_w, histimg.height),
-                            cv.cvPoint ((i + 1) * bin_w, histimg.height - val),
+            cv.Rectangle (histimg,
+                            cv.Point (i * bin_w, histimg[0].height),
+                            cv.Point ((i + 1) * bin_w, histimg[0].height - val),
                             color, -1, 8, 0)
-        # Make the sweet negative selection box
-        if mouse_select_object and mouse_selection.width > 0 and mouse_selection.height > 0:
-            a = cv.cvGetSubRect(frame,mouse_selection)
-            cv.cvXorS(a,cv.cvScalarAll(255), a)   # Take the negative of the image..
-            del a
 
-        # Carry out the histogram tracking...
-        if track_object != 0:            
-            cv.cvInRangeS( hsv, cv.cvScalar(0,smin ,min(vmin, vmax), 0), cv.cvScalar(180, 256, max(vmin,vmax), 0), mask )
-            cv.cvSplit(hsv, hue, None, None, None)
-           
-            if track_object < 0:
-                # Calculate the histogram for the mouse_selection box
-                hue_roi_rect = cv.cvGetSubRect( hue, mouse_selection )
-                mask_roi_rect = cv.cvGetSubRect( mask, mouse_selection )
-                cv.cvCalcHist (hue_roi_rect, obj_hist, 0, mask_roi_rect)
-                min_val, max_val, min_idx, max_idx = cv.cvGetMinMaxHistValue (obj_hist)
-               
-                track_window = mouse_selection
-                track_object = 1
-               
-            cv.cvCalcBackProject( hue, backproject, obj_hist )
-            cv.cvAnd(backproject, mask, backproject)
-
-            #niter, track_comp, track_box =
-            cv.cvCamShift( backproject, track_window,
-                    cv.cvTermCriteria( cv.CV_TERMCRIT_EPS | cv.CV_TERMCRIT_ITER, 10, 1 ), track_comp, track_box)
-            track_window = track_comp.rect
-           
-            #if backproject_mode:
-            #    cvCvtColor( backproject, image, CV_GRAY2BGR )
-           
-            if not frame.origin:
-                track_box.angle = -track_box.angle
-            cv.cvEllipseBox( frame, track_box, cv.CV_RGB(255,0,0), 3, cv.CV_AA, 0 )
-
-       
         # we can now display the images
-        highgui.cvShowImage ('Camera', frame)
-        highgui.cvShowImage ('Histogram', histimg)
+        cv.ShowImage ('Camera', frame)
+        cv.ShowImage ('Histogram', histimg)
 
         # handle events
-        k = highgui.cvWaitKey (10)
+        k = cv.WaitKey (10)
 
-        if k == '\x1b':
+        if k == 0x1b:
             # user has press the ESC key, so exit
             break
-    highgui.cvReleaseCapture(capture)
-

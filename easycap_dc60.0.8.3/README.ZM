@@ -1,0 +1,80 @@
+Driver version 0.8.3 has been tested with
+
+ZoneMinder version 1.24.2-2build3
+
+which is the standard package on Ubuntu 10.04.  The computer used for the
+test has a single-core Intel Celeron 3.06 GHz processor and 1GB RAM.
+
+ZoneMinder was configured for two inputs from a single EasyCAP.  Options
+remained as their default values, except as follows:
+
+------------------------------------------------------------------------------
+
+Configured for Low Bandwidth
+
+
+Options->Config          V4L_MULTI_BUFFER    UNTICKED
+                         CAPTURES_PER_FRAME  8
+
+
+Source /dev/easycap0(1) ->General  Name              Monitor-1
+                                   Source Type       Local
+                                   Function          Monitor
+                                   Enabled           TICKED
+                                   Linked Monitors   Monitor-2
+                                   Maximum FPS       30.00
+                                   Alarm Maximum FPS BLANK
+
+                        ->Source   Device Path       /dev/easycap0
+                                   Capture Method    Video For Linux version 2
+                                   Device Channel    1
+                                   Device Format     NTSC
+                                   Capture Palette   YUYV
+                                   Capture Width     320
+                                   Capture Height    240
+
+
+Source /dev/easycap0(4) ->General  Name              Monitor-2
+                                   Source Type       Local
+                                   Function          Monitor
+                                   Enabled           TICKED
+                                   Linked Monitors   Monitor-1
+                                   Maximum FPS       30.00
+                                   Alarm Maximum FPS BLANK
+
+                        ->Source   Device Path       /dev/easycap0
+                                   Capture Method    Video For Linux version 2
+                                   Device Channel    4
+                                   Device Format     NTSC
+                                   Capture Palette   YUYV
+                                   Capture Width     320
+                                   Capture Height    240
+
+------------------------------------------------------------------------------
+
+REMARKS:
+
+After changing any configuration settings it's a good idea to unplug the
+EasyCAP, reinstall the driver, plug in the EasyCAP and then run
+
+/etc/init.d/zoneminder restart
+
+It's important to disable the ZoneMinder daemons before attempting to use
+the EasyCAP with applications such as mplayer.  If this step is forgotten the
+computer may freeze, necessitating a reboot.
+
+All the cameras should have the same standard, in other words all PAL, all
+NTSC etc.  Surprisingly, I find that my PAL camera actually works (in
+black-and-white) if I set its standard to NTSC in ZoneMinder.  Using the
+configuration parameters given above I was able to test the combination of
+an NTSC_443 signal on input 1 from a videotape machine and a PAL signal from
+the camera on input 4.  When I use a PAL videotape and set the standards of
+both inputs to PAL in ZoneMinder the two displays are in colour, as one would
+expect.
+
+I could not get ZoneMinder to handle the settings NTSC_443 and NTSC_M properly
+so I just used the setting NTSC instead.
+
+I get framerates of about 1 fps for each of the two inputs.  The CPU load
+is undetectably small according to the graphical System Monitor.
+

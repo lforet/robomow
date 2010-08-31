@@ -1,0 +1,3 @@
+ACTION!="add|change", GOTO="easycap_rules_end"
+ATTRS{idVendor}=="05e1", ATTRS{idProduct}=="0408", MODE="0666", OWNER="root", GROUP="root"
+LABEL="easycap_rules_end"

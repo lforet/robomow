@@ -1,0 +1,211 @@
+VLC media player 1.0.6 Goldeneye
+[0x94ed668] main libvlc debug: VLC media player - version 1.0.6 Goldeneye - (c) 1996-2010 the VideoLAN team
+[0x94ed668] main libvlc debug: libvlc was configured with ./configure  '--build=i486-linux-gnu' '--config-cache' '--disable-maintainer-mode' '--disable-update-check' '--enable-fast-install' '--enable-release' '--prefix=/usr' '--with-binary-version=1ubuntu1.2' '--disable-atmo' '--disable-fluidsynth' '--disable-gnomevfs' '--disable-kate' '--disable-mtp' '--enable-x264' '--disable-zvbi' '--enable-a52' '--enable-aa' '--enable-bonjour' '--enable-caca' '--enable-dca' '--enable-dvb' '--enable-dvbpsi' '--enable-dvdnav' '--enable-faad' '--enable-flac' '--enable-freetype' '--enable-fribidi' '--enable-ggi' '--enable-gnutls' '--enable-jack' '--enable-libass' '--enable-libmpeg2' '--enable-lirc' '--enable-live555' '--enable-mad' '--enable-mkv' '--enable-mod' '--enable-mozilla' '--enable-mpc' '--enable-ncurses' '--enable-notify' '--enable-ogg' '--enable-pulse' '--enable-qt4' '--enable-realrtsp' '--enable-sdl' '--enable-shout' '--enable-skins2' '--enable-smb' '--enable-speex' '--enable-svg' '--enable-taglib' '--enable-telx' '--enable-theora' '--enable-twolame' '--enable-vcd' '--enable-vcdx' '--enable-vorbis' '--with-mozilla-pkg=libxul' '--enable-alsa' '--enable-dv' '--enable-pvr' '--enable-v4l' '--enable-v4l2' '--enable-svgalib' 'build_alias=i486-linux-gnu' 'CFLAGS=-g -O2' 'LDFLAGS=-Wl,--as-needed' 'CPPFLAGS=' 'CXXFLAGS=-g -O2'
+[0x94ed668] main libvlc debug: translation test: code is "C"
+[0x94ed668] main libvlc debug: checking plugin modules
+[0x94ed668] main libvlc debug: loading plugins cache file /home/lforet/.cache/vlc/plugins-04041e.dat
+[0x94ed668] main libvlc warning: could not open plugins cache file /home/lforet/.cache/vlc/plugins-04041e.dat for reading
+[0x94ed668] main libvlc debug: recursively browsing `/usr/lib/vlc'
+[0x94ed668] main libvlc debug: module bank initialized (380 modules)
+[0x94ed668] main libvlc debug: opening config file (/home/lforet/.config/vlc/vlcrc)
+[0x94ed668] main libvlc debug: CPU has capabilities 486 586 MMX MMXEXT FPU 
+[0x94ed668] main libvlc debug: looking for memcpy module: 3 candidates
+[0x94ed668] main libvlc debug: using memcpy module "memcpymmxext"
+[0x95113e0] main playlist debug: Activated
+[0x95137b8] main interface debug: looking for interface module: 1 candidate
+[0x95137b8] main interface debug: using interface module "hotkeys"
+[0x95137b8] main interface debug: TIMER module_need() : 0.162 ms - Total 0.162 ms / 1 intvls (Avg 0.162 ms)
+[0x95137b8] main interface debug: thread (interface) created at priority 0 (interface/interface.c:151)
+[0x9513e80] main interface debug: looking for interface module: 1 candidate
+[0x9513e80] main interface debug: using interface module "inhibit"
+[0x9513e80] main interface debug: TIMER module_need() : 2.877 ms - Total 2.877 ms / 1 intvls (Avg 2.877 ms)
+[0x9513e80] main interface debug: thread (interface) created at priority 0 (interface/interface.c:151)
+[0x95f7fa8] main interface debug: looking for interface module: 1 candidate
+[0x95f7fa8] main interface debug: using interface module "screensaver"
+[0x95f7fa8] main interface debug: TIMER module_need() : 0.060 ms - Total 0.060 ms / 1 intvls (Avg 0.060 ms)
+[0x95f7fa8] main interface debug: thread (interface) created at priority 0 (interface/interface.c:151)
+[0x95113e0] main playlist debug: adding item `v4l2:///dev/easycap0:width=720:height=480' ( v4l2:///dev/easycap0:width=720:height=480 )
+[0x95f8a30] main interface debug: looking for interface module: 1 candidate
+[0x95f8a30] main interface debug: using interface module "signals"
+[0x95f8a30] main interface debug: TIMER module_need() : 0.094 ms - Total 0.094 ms / 1 intvls (Avg 0.094 ms)
+[0x95113e0] main playlist debug: rebuilding array of current - root Playlist
+[0x95113e0] main playlist debug: rebuild done - 1 items, index -1
+[0x95137b8] main interface debug: thread started
+[0x95f8a30] main interface debug: thread (interface) created at priority 0 (interface/interface.c:151)
+[0x95fad80] main interface debug: looking for interface module: 1 candidate
+[0x9513e80] main interface debug: thread started
+[0x95f7fa8] main interface debug: thread started
+[0x95f8a30] main interface debug: thread started
+[0x95f8a30] main interface debug: thread ended
+[0x95fad80] main interface debug: using interface module "globalhotkeys"
+[0x95fad80] main interface debug: TIMER module_need() : 7.144 ms - Total 7.144 ms / 1 intvls (Avg 7.144 ms)
+[0x95fad80] main interface debug: thread (interface) created at priority 0 (interface/interface.c:151)
+[0x95fb6b8] main interface debug: looking for interface module: 1 candidate
+[0x95fb6b8] dummy interface: using the dummy interface module...
+[0x95fb6b8] main interface debug: using interface module "dummy"
+[0x95fb6b8] main interface debug: TIMER module_need() : 0.150 ms - Total 0.150 ms / 1 intvls (Avg 0.150 ms)
+[0x95fb6b8] main interface debug: thread (interface) created at priority 0 (interface/interface.c:151)
+[0x95113e0] main playlist debug: processing request item null node Playlist skip 0
+[0x95113e0] main playlist debug: starting new item
+[0x95113e0] main playlist debug: creating new input thread
+[0x95fc270] main input debug: Creating an input for 'v4l2:///dev/easycap0:width=720:height=480'
+[0x95fc270] main input debug: thread (input) created at priority 10 (input/input.c:230)
+[0x95fc270] main input debug: thread started
+[0x95fc270] main input debug: using timeshift granularity of 50 MBytes
+[0x95fc270] main input debug: using timeshift path '/tmp'
+[0x95fc270] main input debug: `v4l2:///dev/easycap0:width=720:height=480' gives access `v4l2' demux `' path `/dev/easycap0:width=720:height=480'
+[0x95fc270] main input debug: enforced demux ` rawvideo'
+[0x95fc270] main input debug: creating demux: access='v4l2' demux='rawvideo' path='/dev/easycap0:width=720:height=480'
+[0x95fd448] main demux debug: looking for access_demux module: 1 candidate
+[0x95fd448] v4l2 demux debug: Trying direct kernel v4l2
+[0x95fd448] v4l2 demux debug: opening device '/dev/easycap0'
+[0x95fb6b8] main interface debug: thread started
+[0x95fb6b8] main interface debug: thread ended
+[0x95fad80] main interface debug: thread started
+[0x95fad80] main interface debug: thread ended
+[0x95fd448] v4l2 demux debug: V4L2 device: EasyCAP DC60 using driver: easycap (version: 0.8.3) on usb-0000:02:03.0-1
+[0x95fd448] v4l2 demux debug: the device has the capabilities: (X) Video Capure, (X) Audio, ( ) Tuner, ( ) Radio
+[0x95fd448] v4l2 demux debug: supported I/O methods are: (X) Read/Write, (X) Streaming, ( ) Asynchronous
+[0x95fd448] v4l2 demux debug: video input 0 (CVBS0) has type: External analog input *
+[0x95fd448] v4l2 demux debug: video input 1 (CVBS1) has type: External analog input  
+[0x95fd448] v4l2 demux debug: video input 2 (CVBS2) has type: External analog input  
+[0x95fd448] v4l2 demux debug: video input 3 (CVBS3) has type: External analog input  
+[0x95fd448] v4l2 demux debug: video input 4 (CVBS4) has type: External analog input  
+[0x95fd448] v4l2 demux debug: video input 5 (S-VIDEO) has type: External analog input  
+[0x95fd448] v4l2 demux debug: video standard 0 is: PAL_BGHIN *
+[0x95fd448] v4l2 demux debug: video standard 1 is: NTSC_N_443  
+[0x95fd448] v4l2 demux debug: video standard 2 is: PAL_Nc  
+[0x95fd448] v4l2 demux debug: video standard 3 is: NTSC_N  
+[0x95fd448] v4l2 demux debug: video standard 4 is: SECAM  
+[0x95fd448] v4l2 demux debug: video standard 5 is: NTSC_M  
+[0x95fd448] v4l2 demux debug: video standard 6 is: NTSC_M_JP  
+[0x95fd448] v4l2 demux debug: video standard 7 is: PAL_60  
+[0x95fd448] v4l2 demux debug: video standard 8 is: NTSC_443  
+[0x95fd448] v4l2 demux debug: video standard 9 is: PAL_M  
+[0x95fd448] v4l2 demux debug: device supports chroma UYVY [uyvy, UYVY]
+[0x95fd448] v4l2 demux debug:     device supports size 640x480
+[0x95fd448] v4l2 demux debug:     device supports size 704x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x480
+[0x95fd448] v4l2 demux debug:     device supports size 320x240
+[0x95fd448] v4l2 demux debug:     device supports size 360x288
+[0x95fd448] v4l2 demux debug:     device supports size 360x240
+[0x95fd448] v4l2 demux debug: device supports chroma YUY2 [yuy2, YUYV]
+[0x95fd448] v4l2 demux debug:     device supports size 640x480
+[0x95fd448] v4l2 demux debug:     device supports size 704x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x480
+[0x95fd448] v4l2 demux debug:     device supports size 320x240
+[0x95fd448] v4l2 demux debug:     device supports size 360x288
+[0x95fd448] v4l2 demux debug:     device supports size 360x240
+[0x95fd448] v4l2 demux debug: device supports chroma YUYV [yuy2, YUYV]
+[0x95fd448] v4l2 demux debug:     device supports size 640x480
+[0x95fd448] v4l2 demux debug:     device supports size 704x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x480
+[0x95fd448] v4l2 demux debug:     device supports size 320x240
+[0x95fd448] v4l2 demux debug:     device supports size 360x288
+[0x95fd448] v4l2 demux debug:     device supports size 360x240
+[0x95fd448] v4l2 demux debug: device supports chroma RV24 [rgb24, RGB3]
+[0x95fd448] v4l2 demux debug:     device supports size 640x480
+[0x95fd448] v4l2 demux debug:     device supports size 704x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x480
+[0x95fd448] v4l2 demux debug:     device supports size 320x240
+[0x95fd448] v4l2 demux debug:     device supports size 360x288
+[0x95fd448] v4l2 demux debug:     device supports size 360x240
+[0x95fd448] v4l2 demux debug: device supports chroma RV32 [rgb32, RGB4]
+[0x95fd448] v4l2 demux debug:     device supports size 640x480
+[0x95fd448] v4l2 demux debug:     device supports size 704x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x480
+[0x95fd448] v4l2 demux debug:     device supports size 320x240
+[0x95fd448] v4l2 demux debug:     device supports size 360x288
+[0x95fd448] v4l2 demux debug:     device supports size 360x240
+[0x95fd448] v4l2 demux debug: device supports chroma RV24 [bgr24, BGR3]
+[0x95fd448] v4l2 demux debug:     device supports size 640x480
+[0x95fd448] v4l2 demux debug:     device supports size 704x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x480
+[0x95fd448] v4l2 demux debug:     device supports size 320x240
+[0x95fd448] v4l2 demux debug:     device supports size 360x288
+[0x95fd448] v4l2 demux debug:     device supports size 360x240
+[0x95fd448] v4l2 demux debug: device supports chroma RV32 [bgr32, BGR4]
+[0x95fd448] v4l2 demux debug:     device supports size 640x480
+[0x95fd448] v4l2 demux debug:     device supports size 704x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x576
+[0x95fd448] v4l2 demux debug:     device supports size 720x480
+[0x95fd448] v4l2 demux debug:     device supports size 320x240
+[0x95fd448] v4l2 demux debug:     device supports size 360x288
+[0x95fd448] v4l2 demux debug:     device supports size 360x240
+[0x95fd448] v4l2 demux debug: '/dev/easycap0' is a video device
+[0x95fd448] v4l2 demux debug: Extended control API not supported by v4l2 driver
+[0x95fd448] v4l2 demux debug: Available control: Brightness (980900)
+[0x95fd448] v4l2 demux debug:     integer control
+[0x95fd448] v4l2 demux debug:     valid values: 0 to 255 by steps of 1
+[0x95fd448] v4l2 demux debug:     default value: 127
+[0x95fd448] v4l2 demux debug:     current value: 127
+[0x95fd448] v4l2 demux debug: Available control: Contrast (980901)
+[0x95fd448] v4l2 demux debug:     integer control
+[0x95fd448] v4l2 demux debug:     valid values: 0 to 255 by steps of 1
+[0x95fd448] v4l2 demux debug:     default value: 191
+[0x95fd448] v4l2 demux debug:     current value: 191
+[0x95fd448] v4l2 demux debug: Available control: Saturation (980902)
+[0x95fd448] v4l2 demux debug:     integer control
+[0x95fd448] v4l2 demux debug:     valid values: 0 to 255 by steps of 1
+[0x95fd448] v4l2 demux debug:     default value: 175
+[0x95fd448] v4l2 demux debug:     current value: 175
+[0x95fd448] v4l2 demux debug: Available control: Hue (980903)
+[0x95fd448] v4l2 demux debug:     integer control
+[0x95fd448] v4l2 demux debug:     valid values: 0 to 255 by steps of 1
+[0x95fd448] v4l2 demux debug:     default value: 128
+[0x95fd448] v4l2 demux debug:     current value: 128
+[0x95fd448] v4l2 demux debug: Available control: Volume (980905)
+[0x95fd448] v4l2 demux debug:     integer control
+[0x95fd448] v4l2 demux debug:     valid values: 0 to 31 by steps of 1
+[0x95fd448] v4l2 demux debug:     default value: 16
+[0x95fd448] v4l2 demux debug:     current value: 0
+[0x95fd448] v4l2 demux debug: Available control: Mute (980909)
+[0x95fd448] v4l2 demux debug:     boolean control
+[0x95fd448] v4l2 demux debug:     default value: 1
+[0x95fd448] v4l2 demux debug:     current value: 0
+[0x95fd448] v4l2 demux debug: video audio-mute: 0
+[0x95fd448] v4l2 demux debug: using streaming i/o (mmap)
+[0x95fd448] v4l2 demux debug: trying specified size 720x480
+[0x95fd448] v4l2 demux debug: Driver requires at most 691200 bytes to store a complete image
+[0x95fd448] v4l2 demux debug: Interlacing setting: progressive
+[0x95fd448] v4l2 demux debug: supported frame intervals for YUY2, 720x480:
+[0x95fd448] v4l2 demux debug:     supported frame interval: 1/30
+[0x95fd448] v4l2 demux debug: added new video es YUY2 720x480
+[0x95fc270] main input debug: selecting program id=0
+[0x95fd448] main demux debug: using access_demux module "v4l2"
+[0x95fd448] main demux debug: TIMER module_need() : 6517.114 ms - Total 6517.114 ms / 1 intvls (Avg 6517.114 ms)
+[0x95fc270] main input debug: adding slave input 'oss:///dev/easysnd1'
+[0x95fc270] main input debug: `oss:///dev/easysnd1' gives access `oss' demux `' path `/dev/easysnd1'
+[0x95fc270] main input debug: enforced demux ` rawvideo'
+[0x95fc270] main input debug: creating demux: access='oss' demux='rawvideo' path='/dev/easysnd1'
+[0x964d368] main demux debug: looking for access_demux module: 1 candidate
+[0x964d368] access_oss demux debug: opening device '/dev/easysnd1'
+[0x964d368] access_oss demux debug: '/dev/easysnd1' is an audio device
+[0x964d368] access_oss demux debug: opened adev=`/dev/easysnd1' stereo 32000Hz
+[0x964d368] access_oss demux debug: new audio es 2 channels 32000Hz
+[0x964d368] main demux debug: using access_demux module "access_oss"
+[0x964d368] main demux debug: TIMER module_need() : 4873.439 ms - Total 4873.439 ms / 1 intvls (Avg 4873.439 ms)
+[0x964e460] main decoder debug: looking for decoder module: 31 candidates
+[0x964e460] rawvideo decoder warning: invalid frame rate 0/0, using 25 fps instead
+[0x964e460] main decoder debug: using decoder module "rawvideo"
+[0x964e460] main decoder debug: TIMER module_need() : 0.445 ms - Total 0.445 ms / 1 intvls (Avg 0.445 ms)
+[0x964e460] main decoder debug: thread (decoder) created at priority 0 (input/decoder.c:315)
+[0x964e460] main decoder debug: thread started
+[0x9652930] main decoder debug: looking for decoder module: 31 candidates
+[0x9652930] araw decoder debug: samplerate:32000Hz channels:2 bits/sample:16
+[0x9652930] main decoder debug: using decoder module "araw"
+[0x9652930] main decoder debug: TIMER module_need() : 0.318 ms - Total 0.318 ms / 1 intvls (Avg 0.318 ms)
+[0x9652930] main decoder debug: thread (decoder) created at priority 5 (input/decoder.c:315)
+[0x9652930] main decoder debug: thread started
+[0x95fc270] main input debug: `v4l2:///dev/easycap0:width=720:height=480' successfully opened
+[0x95f8a30] signals interface error: Caught Interrupt signal, exiting...
+[0x94ed668] main libvlc debug: deactivating the playlist
+[0x95113e0] main playlist debug: Deactivate
+[0x95113e0] main playlist debug: incoming request - stopping current input
+[0x95113e0] main playlist debug: dying input

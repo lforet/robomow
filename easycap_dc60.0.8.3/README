@@ -1,0 +1,296 @@
+
+        ***********************************************************
+        *   EasyCAP USB 2.0 Video Adapter with Audio, Model DC60  *
+        *                            and                          *
+        *             EasyCAP002 4-Channel USB 2.0 DVR            *
+        ***********************************************************
+                     Mike Thomas  <rmthomas@sciolus.org>
+
+
+NOTICE
+------
+This is beta software.  Please be aware that it might crash your computer.
+Also see note in script test.sh regarding mencoder.
+
+
+HARDWARE
+--------
+
+This driver is intended for use with hardware having USB ID 05e1:0408.
+The command `lsusb` can be used to confirm that your EasyCAP is of this
+type.  Two kinds of EasyCAP have USB ID 05e1:0408, namely:
+
+Type "CVBS+S-VIDEO" has input cables labelled CVBS,S-VIDEO,AUDIO(L),AUDIO(R).
+Type "FOUR-CVBS" has video input cables labelled 1,2,3,4 and an audio cable.
+
+
+QUICK START GUIDE
+-----------------
+
+Make sure that the kernel headers are present.  On Debian the relevant
+packages are called "linux-headers-...".  The command `uname -r` can be
+used to find out which of these is the right one for your system.  When
+installed the package populates /usr/src/linux-headers-X.X.XX-.../* or
+some other directory under /usr/src, depending on the distribution.
+
+Make sure the EasyCAP device is physically unplugged.  Then, as root:
+
+Create a directory to work in:
+
+mkdir ~/EASYCAP
+cd ~/EASYCAP
+
+Next, depending on where the file was downloaded to:
+
+cp -p ~/Desktop/easycap_dc60.x.y.tar.gz .
+tar zxf ./easycap_dc60.x.y.tar.gz
+cd easycap_dc60.x.y
+./install.sh
+
+Check that the module has been successfully loaded:
+
+lsmod | grep easycap
+
+Physically plug in the EasyCAP device, and check that the following
+special files have been successfully created:
+
+/dev/easycap0
+/dev/easysnd1
+
+If you wish to perform the subsequent testing as an unprivileged user
+you may need to give these special files the correct permissions:
+
+chmod ugo+rw /dev/easycap0
+chmod ugo+rw /dev/easysnd1
+
+You can use the script ./permit.sh provided in the distribution to perform
+this step if you wish.  (If the installation script has been successful the
+permissions on /dev/easycap0 and /dev/easysnd1 will already be correct
+whenever the EasyCAP is plugged in, and no manual action will be needed.)
+
+If /dev/dsp is not present on your system install the package which
+provides it.  On Debian the package is called oss-compat.  Optionally,
+check that /dev/dsp has rw permissions for unprivileged users.
+
+If all has gone well so far, check that the EasyCAP's input cables are
+correctly connected to the videotape machine (or whatever) and test the
+setup using mplayer.  This is most easily done with the aid of the supplied
+scripts test.sh and test4.sh, as follows:
+
+          ./test.sh 1             for PAL  and a "CVBS+S-VIDEO" EasyCAP
+          ./test4.sh 1            for PAL  and a "FOUR-CVBS" EasyCAP
+
+          ./test.sh 5             for NTSC and a "CVBS+S-VIDEO" EasyCAP
+          ./test4.sh 5            for NTSC and a "FOUR-CVBS" EasyCAP
+
+You may wish to recall Mplayer's keybindings:  1 and 2 for contrast;  3 and 4
+for brightness; 5 and 6 for hue;  7 and 8 for saturation;  / and * for volume;
+m for mute.
+
+The scripts test.sh and test4.sh can then be used to explore the capabilities
+of the driver in a systematic way.  An explanation is given near the top of
+each of the two scripts.
+  
+If the tests with mplayer are successful, you may wish to try using the
+driver with other programs, possibly with the help of the supplied scripts:
+
+          ./tvtime.sh PAL         for PAL  and a "CVBS+S-VIDEO" EasyCAP
+          ./tvtime.sh NTSC        for NTSC and a "CVBS+S-VIDEO" EasyCAP
+          ./tvtime4.sh PAL        for PAL  and a "FOUR-CVBS" EasyCAP
+          ./tvtime4.sh NTSC       for NTSC and a "FOUR-CVBS" EasyCAP
+          ./vlc.sh PAL            for PAL  and a "CVBS+S-VIDEO" EasyCAP
+          ./vlc.sh NTSC           for NTSC and a "CVBS+S-VIDEO" EasyCAP
+          ./vlc4.sh PAL           for PAL  and a "FOUR-CVBS" EasyCAP
+          ./vlc4.sh NTSC          for NTSC and a "FOUR-CVBS" EasyCAP
+          ./xawtv.sh PAL          for PAL  and either EasyCAP (input 0 or 1)
+          ./xawtv.sh NTSC         for NTSC and either EasyCAP (input 0 or 1)
+
+It is necessary to have sox installed (together with its oss library, called
+libsox-fmt-oss in Debian for example) to provide the audio output for tvtime.
+Because vlc must be run as an unprivileged user, it may be necessary for root
+to run the script ./permit.sh in order to set the correct permissions for
+/dev/easycap0 and /dev/easysnd1 after the EasyCAP is plugged in (see above).
+
+
+INSTALLATION PROBLEMS
+---------------------
+
+(1) If the installation fails for any reason, first try installing the driver
+using the command
+
+./install_simple.sh
+
+instead of the usual ./install.sh.  Trouble-shooting may be easier with the
+script ./install_simple.sh because, unlike ./install.sh, it does not overwrite
+Makefiles.
+
+(2) If the installation fails with a message similar to:
+
+     warning: the frame size of .... bytes is larger than 1024 bytes
+
+try editing the file src/Makefile_default by removing the # character at the
+beginning of the line:
+
+     #EXTRA_CFLAGS += -Wframe-larger-than=8192
+
+and then installing the driver using the command
+
+./install_simple.sh
+
+
+KNOWN RUNTIME ISSUES
+--------------------
+
+(1) Randomly (maybe 5 to 10% of occasions) the driver is very slow to produce
+any output at start-up.  When using mplayer, for example, it is sometimes
+nearly ten seconds before the first video frame appears, and it then takes
+several more seconds for audio/video synchronization to stabilize.  In
+extreme cases the display freezes after one or two frames.  Closing mplayer
+(or whatever the user program is) and restarting it usually restores good
+behaviour without any other remedial action being necessary.  The reason for
+this is not fully understood.
+
+(2) Intentionally, this driver will not stream material which is unambiguously
+identified by the hardware as copy-protected.  Normal video output will be
+present for about a minute but will then freeze when this situation arises.
+
+(3) The controls for luminance, contrast, saturation, hue and volume may not
+always work properly.
+
+(4) Reduced-resolution S-Video seems to suffer from moire artefacts.
+
+
+SUPPORTED TV STANDARDS AND RESOLUTIONS
+--------------------------------------
+
+The following TV standards are natively supported by the hardware and are
+usable as the "norm=" parameter in the mplayer command:
+    PAL_BGHIN,    NTSC_N_443,
+    PAL_Nc,       NTSC_N,
+    SECAM,        NTSC_M,        NTSC_M_JP,
+    PAL_60,       NTSC_443,
+    PAL_M.
+Most of these are as yet untested (see below).
+
+The supported picture sizes are:
+     at 25 frames per second:   720x576, 704x576, 640x480, 360x288, 320x240;
+     at 30 frames per second:   720x480, 640x480, 360x240, 320x240.
+
+
+IF THINGS GO WRONG
+------------------
+
+Running the script uninstall.sh will normally remove the module and prevent
+it from reloading.  If you get a message of the kind "easycap module cannot
+be removed" you will need to reboot.  As a last resort, issue the command
+
+rm /lib/modules/`uname -r`/kernel/drivers/media/video/easycap.ko
+
+before rebooting.
+
+If you are interested in investigating the cause of any problems you can
+edit the script install.sh so that the line
+
+DEBUG=0
+
+becomes
+
+DEBUG=9
+
+Then run ./install.sh again, followed by ./test.sh or ./test4.sh.
+This will generate a lot diagnostic output in file /var/log/kern.log.
+On Debian the same output appears in other files as well - the behaviour 
+depends on the distribution.  Running the script ./tail.sh automatically
+extracts the relevant information from /var/log/kern.log and displays it
+on the screen (assuming you have one of the vim editors installed).  It
+is then straightforward to save the interesting parts of the diagnostics
+and report them to the appropriate forum.  Afterwards, don't forget to change
+install.sh back to DEBUG=0 in order to avoid wasting disk space on subsequent
+runs.  It may be necessary to run ./tail.sh as root.
+
+
+REVISION HISTORY
+----------------
+
+Version 0.1:  First release.
+Version 0.2:  Added input selection CVBS/S-VIDEO. Cannot test S-VIDEO chroma.
+              Added NTSC variations (used Ben Trask's patch).  No colour yet.
+              Fixed bug preventing 32-bit compilation when DEBUG enabled.
+              Purged some fossil code.
+              Added uninstall.sh and test.sh to the package.
+Version 0.3:  NTSC has colour (of sorts) now, but user still needs to tweak.
+              Fixed the brightness/colour controls.
+              Improved test.sh.
+Version 0.4:  Removed faulty error-exit routine from easycap_usb_probe().
+              Altered procedure for choosing video altsetting during probing.
+              Corrected IOCTL logic to permit streaming direct to ffmpeg.
+              Tidied color controls and the PREFER_NTSC conditional code.
+Version 0.5:  Added formats yuy2, rgb24, rgb32, bgr24, bgr32.
+              Augmented test.sh.
+              Now prefers no output rather than wrong colours.  More to do.
+              Fixed field order (thanks due to DA).
+              Early urb submission allows audio capture by `cat /dev/easysnd1`.
+              Register 0x1F of SAA7113H read and acted upon.
+              Removed extraneous code from urb handler easycap_complete().
+              Support for openSUSE build variations.
+Version 0.6:  Implemented IOCTL interface to tvtime.  Added script tvtime.sh.
+              Implemented IOCTL interface to vlc.  Added script vlc.sh.
+              Moved status averaging to DQBUF (fixes bug introduced at v. 0.5).
+              Extended the README.
+Version 0.7:  Added tvtime_PAL.xml and tvtime_NTSC.xml (forgotten in v. 0.6).
+              Corrected YUV->RGB conversion (lookup tables were wrong).
+              Avoid compiler warning about frame size (static struct mess).
+              Added volume control - but neither mplayer nor vlc use it.
+              Tried audio timebase for timestamps but unsuccessful so not used.
+Version 0.7.1:No abort on null poll table pointer (thanks to thx8411).
+              Frame buffers are cleared in easycap_open().
+              Fixed "__divdi3 undefined" in calculating audio dynamic range.
+              Avoid compiler warning about frame size (statics in case blocks).
+              Added remarks to README about Fedora Core.
+Version 0.8:  Added resolutions 320x240, 360x288, 360x240.
+              Improved speed of YUV->RGB conversion by cleanup of inner loops.
+              #ifdef bracketing of V4L parameters allows build on old kernels.
+              Installation script now does some configuration before compiling.
+              Installation script creates /etc/udev/rules.d/57-easycap.rules.
+              Possible now to build as client of videodev (but not by default).
+              Added support for FOUR-CVBS hardware with 8-bit 8000 Hz sound.
+Version 0.8.1:Padded 8-bit 8000 Hz mono to 16-bit little-ended 32000 Hz stereo.
+Version 0.8.2:Corrected 16-bit 32000 Hz stereo (endedness was wrong).
+Version 0.8.3:Substantially changed initializations to accommodate ZoneMinder.
+              Added script xawtv.sh and files xawtvrc_PAL and  xawtvrc_NTSC.
+              Removed easycap_format[1+SETTINGS_MANY] from struct easycap.
+
+
+WHAT'S TESTED AND WHAT'S NOT
+----------------------------
+
+This driver is known to work with mplayer, mencoder, tvtime, zoneminder,
+xawtv and sufficiently recent versions of vlc.  An interface to ffmpeg is
+implemented, but serious audio-video synchronization problems remain.
+
+Please see the separate text file ./README.ZM for notes on ZoneMinder.
+
+The driver fails partially or wholly for some applications on some
+distributions/kernels.  See separate text file ./README.TESTMATRIX for
+(non-exhaustive) examples.
+
+The driver is designed to support all the TV standards accepted by the
+hardware, but as yet it has actually been tested on only a few of these.
+I will try to fix any problems which are reported relating to TV standards,
+but since I myself have access only to PAL and a single NTSC videotape I shall
+need a rather detailed bug report.
+
+I cannot test and calibrate the S-video input myself because I do not possess
+any equipment with S-video output.  
+
+Camorama is not compatible with this driver.
+
+
+ACKNOWLEGEMENTS AND REFERENCES
+------------------------------
+This driver makes use of information contained in the Syntek Semicon DC-1125
+Driver, presently maintained at http://sourceforge.net/projects/syntekdriver/
+by Nicolas Vivien.  Particularly useful has been a patch to the latter driver
+provided by Ivor Hewitt in January 2009.  The NTSC implementation is taken 
+from the work of Ben Trask.  
+

@@ -1,0 +1,66 @@
+    PLATFORMS:
+
+    [1] Debian Lenny 64-bit:  kernel 2.6.26-2-amd64
+
+        mplayer     1:1.0.rc2svn20080706-0.1lenny2
+        tvtime      1.0.2-1
+        vlc         0.8.6.h-4+lenny2.3
+        ffmpeg      3:20080706-0.3lenny1
+        zoneminder  N/A
+        xawtv       3.95.dfsg.1-8
+
+    [2] OpenSUSE 11.2 64-bit:  kernel 2.6.31.12-0.2-desktop
+
+        mplayer     1.0rc4_r31930-1.pm.3.1
+        tvtime      1.0.2-241.3
+        vlc         1.1.2-1.pm.2.10
+        ffmpeg      0.6-1.pm.2.10
+        zoneminder  N/A
+        xawtv       3.95-211.1
+
+    [3] Ubuntu 10.04 32-bit:  kernel 2.6.32-24-generic
+
+        mplayer     2:1.0~rc3+svn20090426-1ubuntu16
+        tvtime      1.0.2-5ubuntu2
+        vlc         1.0.6-1ubuntu1.1
+        ffmpeg      4:0.5.1-1ubuntu1
+        zoneminder  1.24.2-2build3
+        xawtv       3.95.dfsg.1-8.1ubuntu1
+
+
+    RESULTS:
+
+               EasyCAP      standard   [1]         [2]          [3]
+
+    mplayer    CVBS+S-VIDEO PAL        OK                       OK
+    mplayer    CVBS+S-VIDEO NTSC       OK          NO*
+    mplayer    FOUR-CVBS    PAL        OK          NO*
+    mplayer    FOUR-CVBS    NTSC       OK                       OK
+
+    tvtime     CVBS+S-VIDEO PAL        OK                       OK
+    tvtime     CVBS+S-VIDEO NTSC       OK          OK
+    tvtime     FOUR-CVBS    PAL        OK          OK
+    tvtime     FOUR-CVBS    NTSC       OK                       OK
+
+    vlc        CVBS+S-VIDEO PAL        N/A                      NO
+    vlc        CVBS+S-VIDEO NTSC       N/A         OK
+    vlc        FOUR-CVBS    PAL        N/A         OK
+    vlc        FOUR-CVBS    NTSC       N/A                      NO
+
+    ffmpeg     CVBS+S-VIDEO PAL        NO@                      OK
+    ffmpeg     CVBS+S-VIDEO NTSC       NO@ 
+    ffmpeg     FOUR-CVBS    PAL        NO@         OK
+    ffmpeg     FOUR-CVBS    NTSC                                OK
+
+    zoneminder FOUR-CVBS    PAL        N/A         N/A          OK
+    zoneminder FOUR-CVBS    NTSC       N/A         N/A          OK
+
+    xawtv      CVBS+S-VIDEO PAL        OK#                      OK#
+    xawtv      CVBS+S-VIDEO NTSC       OK#         NO
+    xawtv      FOUR-CVBS    PAL        OK#         NO
+    xawtv      FOUR-CVBS    NTSC       OK#                      OK#
+
+
+           # Video only, no sound
+           * No error messages, but no video visible
+           @ Most frames dropped, poor sound

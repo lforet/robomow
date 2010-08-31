@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE tvtime PUBLIC "-//tvtime//DTD tvtime 1.0//EN" "http://tvtime.sourceforge.net/DTD/tvtime1.dtd">
+<tvtime xmlns="http://tvtime.sourceforge.net/DTD/">
+  <option name="Widescreen" value="0"/>
+  <option name="Fullscreen" value="0"/>
+  <option name="Verbose" value="0"/>
+  <option name="WindowGeometry" value="0x576"/>
+  <option name="InputWidth" value="720"/>
+  <option name="V4LDevice" value="/dev/easycap0"/>
+  <option name="VBIDevice" value="/dev/vbi0"/>
+  <option name="V4LInput" value="0"/>
+  <option name="Norm" value="PAL"/>
+  <option name="Frequencies" value="europe"/>
+  <option name="MixerDevice" value="/dev/mixer:line"/>
+  <option name="XMLTVFile" value="none"/>
+  <option name="XMLTVLanguage" value="none"/>
+  <option name="ProcessPriority" value="-10"/>
+<option name="DeinterlaceMethod" value="TelevisionFull"/><option name="ColourInvert" value="0"/><option name="DefaultBrightness" value="-1"/><option name="DefaultContrast" value="-1"/><option name="DefaultSaturation" value="-1"/><option name="DefaultHue" value="-1"/><option name="PrevChannel" value="140"/><option name="Channel" value="2"/><option name="FramerateMode" value="1"/><option name="OverScan" value="3.5"/><option name="CheckForSignal" value="1"/><option name="AudioBoost" value="-1"/><option name="AlwaysOnTop" value="0"/><option name="QuietScreenshots" value="0"/><option name="UnmuteVolume" value="12850"/><option name="Muted" value="0"/><option name="AudioMode" value="mono"/><option name="PalDKMode" value="0"/></tvtime>

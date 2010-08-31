@@ -213,7 +213,6 @@ if __name__ == '__main__':
             highgui.cvShowImage ('Canny', opencvimg)
             
         if keyinput[K_1]:
-            img = highgui.cvQueryFrame (capture)
             contrast += 0.1
             #highgui.cvSetCaptureProperty(capture, highgui.CV_CAP_PROP_CONTRAST, contrast)
             print "contrast =", contrast

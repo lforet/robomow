@@ -1,0 +1,1 @@
+cmd_/home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap.ko := ld -r -m elf_i386 -T /usr/src/linux-headers-2.6.32-21-generic/scripts/module-common.lds --build-id -o /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap.ko /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap.o /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap.mod.o

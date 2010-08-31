@@ -1,0 +1,15 @@
+#
+#
+#    ~/.xawtvrc
+#
+#    for NTSC
+#
+#------------------------------
+
+[global]
+fullscreen = 640x480
+
+[defaults]
+input = CVBS0
+norm  = NTSC_M
+audio = stereo

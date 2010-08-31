@@ -1,0 +1,969 @@
+Config pushed level is now 2
+Config pushed level is now 3
+Setting tv=driver=v4l2:norm=NTSC_M:width=640:height=480:outfmt=uyvy:device=/dev/easycap0:input=0:fps=30:adevice=/dev/easysnd1:forceaudio:immediatemode=0
+Setting hardframedrop=-vo
+Setting vo=xv
+Setting ao=oss
+MPlayer SVN-r1.0~rc3+svn20090426-4.4.3 (C) 2000-2009 MPlayer Team
+CPU vendor name: GenuineIntel  max cpuid level: 11
+CPU: Intel(R) Core(TM) i7 CPU       Q 820  @ 1.73GHz (Family: 6, Model: 30, Stepping: 5)
+extended cpuid-level: 8
+extended cache-info: 16801856
+Detected cache-line size is 64 bytes
+Testing OS support for SSE... yes.
+Tests of OS support for SSE passed.
+CPUflags:  MMX: 1 MMX2: 1 3DNow: 0 3DNowExt: 0 SSE: 1 SSE2: 1 SSSE3: 1
+Compiled with runtime CPU detection.
+get_path('codecs.conf') -> '/home/lforet/.mplayer/codecs.conf'
+Reading /home/lforet/.mplayer/codecs.conf: Can't open '/home/lforet/.mplayer/codecs.conf': No such file or directory
+Reading /etc/mplayer/codecs.conf: Can't open '/etc/mplayer/codecs.conf': No such file or directory
+Using built-in default codecs.conf.
+Configuration: --prefix=/usr --confdir=/etc/mplayer --enable-xvmc --enable-menu --enable-largefiles --language=all --disable-libdvdcss-internal --disable-dvdread-internal --disable-libavutil_a --disable-libavcodec_a --disable-libavformat_a --disable-libpostproc_a --disable-libswscale_a --target=i586-linux --enable-runtime-cpudetection --enable-debug --enable-mga --enable-3dfx --enable-tdfxfb --disable-gui
+CommandLine: 'tv://' '-tv' 'driver=v4l2:norm=NTSC_M:width=640:height=480:outfmt=uyvy:device=/dev/easycap0:input=0:fps=30:adevice=/dev/easysnd1:forceaudio:immediatemode=0' '-hardframedrop' '-vo' 'xv' '-ao' 'oss' '-msglevel' 'all=9'
+init_freetype
+Using MMX (with tiny bit MMX2) Optimized OnScreenDisplay
+get_path('fonts') -> '/home/lforet/.mplayer/fonts'
+Using nanosleep() timing
+get_path('input.conf') -> '/home/lforet/.mplayer/input.conf'
+Can't open input config file /home/lforet/.mplayer/input.conf: No such file or directory
+Parsing input config file /etc/mplayer/input.conf
+Input config file /etc/mplayer/input.conf parsed: 89 binds
+Setting up LIRC support...
+mplayer: could not connect to socket
+mplayer: No such file or directory
+Failed to open LIRC support. You will not be able to use your remote control.
+get_path('.conf') -> '/home/lforet/.mplayer/.conf'
+
+[[[init getch2]]]
+
+Playing tv://.
+get_path('sub/') -> '/home/lforet/.mplayer/sub/'
+STREAM: [tv] tv://
+STREAM: Description: TV Input
+STREAM: Author: Benjamin Zores, Albeu
+STREAM: Comment: 
+seek to 0x0
+s->pos=0  newpos=0  new_bufpos=0  buflen=0  
+TV file format detected.
+Selected driver: v4l2
+ name: Video 4 Linux 2 input
+ author: Martin Olschewski <olschewski@zpr.uni-koeln.de>
+ comment: first try, more to come ;-)
+v4l2: video fd: /dev/easycap0: 3
+Selected device: EasyCAP DC60
+ Capabilites:  video capture  audio  read/write  streaming
+ supported norms: 0 = PAL_BGHIN; 1 = NTSC_N_443; 2 = PAL_Nc; 3 = NTSC_N; 4 = SECAM; 5 = NTSC_M; 6 = NTSC_M_JP; 7 = PAL_60; 8 = NTSC_443; 9 = PAL_M;
+ inputs: 0 = CVBS0; 1 = CVBS1; 2 = CVBS2; 3 = CVBS3; 4 = CVBS4; 5 = S-VIDEO;
+ Current input: 0
+ Format UYVY   (16 bits, uyvy): Packed UYVY
+ Format YUYV   (16 bits, yuy2): Packed YUY2
+ Format RGB24  (24 bits, rgb24): RGB 24-bit
+ Format RGB32  (32 bits, rgb32): RGBA
+ Format BGR24  (24 bits, bgr24): BGR 24-bit
+ Format BGR32  (32 bits, bgr32): BGRA
+ Current format: YUYV
+v4l2: set format: UYVY
+v4l2: set input: 0
+Selected norm : NTSC_M
+v4l2: set norm: NTSC_M
+v4l2: set width: 640
+v4l2: set height: 480
+Selected input hasn't got a tuner!
+==> Found video stream: 0
+v4l2: get format: UYVY
+v4l2: get fps: 30.000000
+v4l2: get width: 640
+v4l2: get height: 480
+ioctl dsp getfmt: 0
+Supported formats: 10
+ioctl dsp setfmt: 0
+ioctl dsp stereo: 0 (req: 1)
+ioctl dsp speed: 0
+ioctl dsp trigger: 0
+trigger: 1
+ioctl dsp trigger: 0
+ioctl dsp getblocksize: 0
+blocksize: 16384
+v4l2: set audio samplerate: 44100
+v4l2: get audio format: 9
+==> Found audio stream: 0
+v4l2: get audio samplerate: 32000
+v4l2: get audio samplesize: 2
+v4l2: get audio channels: 2
+  TV audio: 2 channels, 16 bits, 32000 Hz
+Audio capture - buffer 256 blocks of 16384 bytes, skew average from 16 meas.
+Using a ring buffer for maximum 912 frames, 534 MB total size.
+v4l2: set Brightness: 127 [0, 255]
+v4l2: set Hue: 128 [0, 255]
+v4l2: set Saturation: 175 [0, 255]
+v4l2: set Contrast: 191 [0, 255]
+[V] filefmt:9  fourcc:0x59565955  size:640x480  fps:30.000  ftime:=0.0333
+get_path('sub/') -> '/home/lforet/.mplayer/sub/'
+X11 opening display: :0.0
+vo: X11 color mask:  FFFFFF  (R:FF0000 G:FF00 B:FF)
+vo: X11 running at 1920x1080 with depth 24 and 32 bpp (":0.0" => local display)
+[x11] Detected wm supports NetWM.
+[x11] Detected wm supports FULLSCREEN state.
+[x11] Detected wm supports ABOVE state.
+[x11] Detected wm supports BELOW state.
+[x11] Current fstype setting honours FULLSCREEN ABOVE BELOW X atoms
+[VO_XV] Using Xv Adapter #0 (VMware Video Engine)
+[xv common] Drawing colorkey manually.
+[xv common] Using colorkey from Xv (0x080810).
+[xv common] Maximum source image dimensions: 2048x2048
+==========================================================================
+Opening video decoder: [raw] RAW Uncompressed Video
+VDec: vo config request - 640 x 480 (preferred colorspace: Packed UYVY)
+Trying filter chain: vo
+vo_debug: query(Packed UYVY) returned 0x437 (i=0) 
+VDec: using Packed UYVY as output csp (no 0)
+Movie-Aspect is undefined - no prescaling applied.
+VO Config (640x480->640x480,flags=0,'MPlayer',0x59565955)
+VO: [xv] 640x480 => 640x480 Packed UYVY 
+VO: Description: X11/Xv
+VO: Author: Gerd Knorr <kraxel@goldbach.in-berlin.de> and others
+Xvideo image format: 0x32315659 (YV12) planar
+Xvideo image format: 0x32595559 (YUY2) packed
+Xvideo image format: 0x59565955 (UYVY) packed
+using Xvideo port 62 for hw scaling
+Selected video codec: [rawuyvy] vfm: raw (RAW UYVY)
+==========================================================================
+==========================================================================
+Opening audio decoder: [pcm] Uncompressed PCM audio decoder
+dec_audio: Allocating 2048 + 65536 = 67584 bytes for output buffer.
+AUDIO: 32000 Hz, 2 ch, s16le, 1024.0 kbit/100.00% (ratio: 128000->128000)
+Selected audio codec: [pcm] afm: pcm (Uncompressed PCM)
+==========================================================================
+Building audio filter chain for 32000Hz/2ch/s16le -> 0Hz/0ch/??...
+[libaf] Adding filter dummy 
+[dummy] Was reinitialized: 32000Hz/2ch/s16le
+[dummy] Was reinitialized: 32000Hz/2ch/s16le
+Trying preferred audio driver 'oss', options '[none]'
+ao2: 32000 Hz  2 chans  s16le
+audio_setup: using '/dev/dsp' dsp device
+audio_setup: using '/dev/mixer' mixer device
+audio_setup: using 'pcm' mixer device
+audio_setup: sample format: s16le (requested: s16le)
+audio_setup: using 2 channels (requested: 2)
+audio_setup: using 32000 Hz samplerate (requested: 32000)
+audio_setup: frags:   8/8  (8192 bytes/frag)  free:  65536
+AO: [oss] 32000Hz 2ch s16le (2 bytes per sample)
+AO: Description: OSS/ioctl audio output
+AO: Author: A'rpi
+Building audio filter chain for 32000Hz/2ch/s16le -> 32000Hz/2ch/s16le...
+[dummy] Was reinitialized: 32000Hz/2ch/s16le
+[dummy] Was reinitialized: 32000Hz/2ch/s16le
+Starting playback...
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=0.128  pos=0  [packs: A=1 V=0]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=0.256  pos=0  [packs: A=1 V=0]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=0.384  pos=0  [packs: A=1 V=0]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=0.512  pos=0  [packs: A=1 V=0]
+Increasing filtered audio buffer size from 0 to 65536
+ds_fill_buffer(d_video) called
+v4l2: going to capture
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** [vo] Exporting mp_image_t, 640x480x16bpp YUV packed, 614400 bytes
+(imgfmt: 59565955, planes: (nil),(nil),(nil) strides: 0,0,0, chroma: 0x0, shift: h:0,v:0)
+*** ftime=0.000 ***
+Warping cursor to disable gnome-screensaver.
+delay=0.000000
+A:   0.6 V:   0.0 A-V:  0.640 ct:  0.000   1/  1 ??% ??% ??,?% 1 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=0.640  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=0.768  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=0.896  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.024  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   1.2 V:   0.0 A-V:  1.152 ct:  0.003   2/  2 ??% ??% ??,?% 2 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.152  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.280  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.408  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.536  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   1.7 V:   0.0 A-V:  1.664 ct:  0.007   3/  3 ??% ??% ??,?% 3 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.664  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.792  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=1.920  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.048  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   2.2 V:   0.0 A-V:  2.176 ct:  0.010   4/  4 ??% ??% ??,?% 4 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.176  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.304  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.432  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.560  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   2.7 V:   0.0 A-V:  2.688 ct:  0.013   5/  5 ??% ??% ??,?% 5 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.688  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.816  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=2.944  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.072  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   3.2 V:   0.0 A-V:  3.200 ct:  0.017   6/  6 ??% ??% ??,?% 6 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.200  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.328  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.456  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.584  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   3.7 V:   0.0 A-V:  3.712 ct:  0.020   7/  7 ??% ??% ??,?% 7 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.712  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.840  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=3.968  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.096  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   4.2 V:   0.0 A-V:  4.224 ct:  0.023   8/  8 ??% ??% ??,?% 8 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.224  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.352  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.480  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.608  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   4.7 V:   0.0 A-V:  4.736 ct:  0.027   9/  9 ??% ??% ??,?% 9 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.736  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.864  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=4.992  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=5.120  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   5.2 V:   0.0 A-V:  5.248 ct:  0.030  10/ 10 ??% ??% ??,?% 10 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=5.248  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=5.376  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=5.504  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=5.632  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   5.8 V:   0.0 A-V:  5.760 ct:  0.033  11/ 11 ??% ??% ??,?% 11 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=5.760  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=5.888  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.016  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.144  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   6.3 V:   0.0 A-V:  6.272 ct:  0.037  12/ 12 ??% ??% ??,?% 12 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.272  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.400  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.528  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.656  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   6.8 V:   0.0 A-V:  6.784 ct:  0.040  13/ 13 ??% ??% ??,?% 13 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.784  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=6.912  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.040  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.168  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   7.3 V:   0.0 A-V:  7.296 ct:  0.043  14/ 14 ??% ??% ??,?% 14 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.296  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.424  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.552  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.680  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   7.8 V:   0.0 A-V:  7.808 ct:  0.047  15/ 15 ??% ??% ??,?% 15 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.808  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=7.936  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.064  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.192  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   8.3 V:   0.0 A-V:  8.320 ct:  0.050  16/ 16 ??% ??% ??,?% 16 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.320  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.448  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.576  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.704  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+Warping cursor to disable gnome-screensaver.
+delay=0.000000
+A:   8.8 V:   0.0 A-V:  8.832 ct:  0.053  17/ 17 ??% ??% ??,?% 17 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.832  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=8.960  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.088  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.216  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   9.3 V:   0.0 A-V:  9.344 ct:  0.057  18/ 18 ??% ??% ??,?% 18 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.344  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.472  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.600  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.728  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:   9.9 V:   0.0 A-V:  9.856 ct:  0.060  19/ 19 ??% ??% ??,?% 19 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.856  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=9.984  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=10.112  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=10.240  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  10.4 V:   0.0 A-V: 10.368 ct:  0.063  20/ 20 ??% ??% ??,?% 20 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=10.368  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=10.496  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=10.624  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=10.752  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  10.9 V:   0.0 A-V: 10.880 ct:  0.067  21/ 21 ??% ??% ??,?% 21 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=10.880  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.008  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.136  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.264  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  11.4 V:   0.0 A-V: 11.392 ct:  0.070  22/ 22 ??% ??% ??,?% 22 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.392  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.520  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.648  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.776  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  11.9 V:   0.0 A-V: 11.904 ct:  0.073  23/ 23 ??% ??% ??,?% 23 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=11.904  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.032  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.160  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.288  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  12.4 V:   0.0 A-V: 12.416 ct:  0.077  24/ 24 ??% ??% ??,?% 24 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.416  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.544  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.672  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.800  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  12.9 V:   0.0 A-V: 12.928 ct:  0.080  25/ 25 ??% ??% ??,?% 25 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=12.928  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.056  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.184  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.312  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  13.4 V:   0.0 A-V: 13.440 ct:  0.083  26/ 26 ??% ??% ??,?% 26 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.440  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.568  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.696  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.824  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  14.0 V:   0.0 A-V: 13.952 ct:  0.087  27/ 27 ??% ??% ??,?% 27 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=13.952  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.080  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.208  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.336  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  14.5 V:   0.0 A-V: 14.464 ct:  0.090  28/ 28 ??% ??% ??,?% 28 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.464  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.592  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.720  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.848  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  15.0 V:   0.0 A-V: 14.976 ct:  0.093  29/ 29 ??% ??% ??,?% 29 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=14.976  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=15.104  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=15.232  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=15.360  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  15.5 V:   0.0 A-V: 15.488 ct:  0.097  30/ 30 ??% ??% ??,?% 30 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=15.488  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=15.616  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=15.744  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=15.872  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  16.0 V:   0.0 A-V: 16.000 ct:  0.100  31/ 31 ??% ??% ??,?% 31 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.000  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.128  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.256  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.384  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  16.5 V:   0.0 A-V: 16.512 ct:  0.103  32/ 32 ??% ??% ??,?% 32 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.512  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.640  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.768  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=16.896  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+Warping cursor to disable gnome-screensaver.
+delay=0.000000
+A:  17.0 V:   0.0 A-V: 17.024 ct:  0.105  33/ 33 ??% ??% ??,?% 33 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.024  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.152  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.280  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.408  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  17.5 V:   0.0 A-V: 17.536 ct:  0.107  34/ 34 ??% ??% ??,?% 34 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.536  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.664  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.792  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=17.920  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  18.0 V:   0.0 A-V: 18.048 ct:  0.109  35/ 35 ??% ??% ??,?% 35 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.048  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.176  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.304  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.432  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  18.6 V:   0.0 A-V: 18.560 ct:  0.111  36/ 36 ??% ??% ??,?% 36 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.560  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.688  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.816  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=18.944  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  19.1 V:   0.0 A-V: 19.072 ct:  0.113  37/ 37 ??% ??% ??,?% 37 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.072  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.200  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.328  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.456  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  19.6 V:   0.0 A-V: 19.584 ct:  0.115  38/ 38 ??% ??% ??,?% 38 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.584  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.712  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.840  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=19.968  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  20.1 V:   0.0 A-V: 20.096 ct:  0.116  39/ 39 ??% ??% ??,?% 39 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.096  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.224  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.352  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.480  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  20.6 V:   0.0 A-V: 20.608 ct:  0.117  40/ 40 ??% ??% ??,?% 40 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.608  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.736  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.864  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=20.992  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  21.1 V:   0.0 A-V: 21.120 ct:  0.118  41/ 41 ??% ??% ??,?% 41 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=21.120  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=21.248  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=21.376  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=21.504  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  21.6 V:   0.0 A-V: 21.632 ct:  0.119  42/ 42 ??% ??% ??,?% 42 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=21.632  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=21.760  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=21.888  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.016  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  22.1 V:   0.0 A-V: 22.144 ct:  0.120  43/ 43 ??% ??% ??,?% 43 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.144  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.272  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.400  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.528  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  22.7 V:   0.0 A-V: 22.656 ct:  0.121  44/ 44 ??% ??% ??,?% 44 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.656  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.784  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=22.912  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.040  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  23.2 V:   0.0 A-V: 23.168 ct:  0.122  45/ 45 ??% ??% ??,?% 45 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.168  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.296  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.424  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.552  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  23.7 V:   0.0 A-V: 23.680 ct:  0.122  46/ 46 ??% ??% ??,?% 46 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.680  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.808  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=23.936  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.064  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  24.2 V:   0.0 A-V: 24.192 ct:  0.123  47/ 47 ??% ??% ??,?% 47 0 [Jds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.192  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.320  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.448  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.576  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  24.7 V:   0.0 A-V: 24.704 ct:  0.123  48/ 48 ??% ??% ??,?% 48 0 [JNo bind found for key 'MOUSE_BTN0'.                         
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.704  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.832  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=24.960  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_audio) called
+grab_audio_frame(priv=0x86a2e18, buffer=0x86ca178, len=16384)
+DEMUX: Append packet to d_audio, len=16384  pts=25.088  pos=0  [packs: A=1 V=1]
+ds_fill_buffer(d_video) called
+DEMUX: Append packet to d_video, len=614400  pts=0.000  pos=0  [packs: A=0 V=1]
+*** ftime=0.000 ***
+delay=0.000000
+A:  25.2 V:   0.0 A-V: 25.216 ct:  0.124  49/ 49 ??% ??% ??,?% 49 0 [J
+*** uninit(0xECB)
+Uninit audio filters...
+[libaf] Removing filter dummy 
+Uninit audio: pcm
+Uninit video: raw
+DEMUXER: freeing demuxer at 0x86a21a8
+
+fps = -1.000000, interval = 0.000000, a_skew = 0.000000, corr_skew = 0.000000
+vcnt = 0, acnt = 0
+v4l2: 1 frames successfully processed, 0 frames dropped.
+v4l2: up to 1 video frames buffered.
+DEMUXER: freeing sh_audio at 0x86a0f48
+DEMUXER: freeing sh_video at 0x86a31c8
+
+[[[uninit getch2]]]
+vo: uninit ...
+
+Exiting... (Quit)
+max framesize was 614400 bytes

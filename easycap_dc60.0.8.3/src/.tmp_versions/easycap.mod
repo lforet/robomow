@@ -1,0 +1,2 @@
+/home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap.ko
+/home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap_main.o /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap_low.o /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap_sound.o /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap_ioctl.o /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap_settings.o /home/lforet/projects/robomow/easycap_dc60.0.8.3/src/easycap_testcard.o

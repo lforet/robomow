@@ -1,0 +1,16 @@
+#
+#
+#    ~/.xawtvrc
+#
+#    for PAL
+#
+#------------------------------
+
+[global]
+fullscreen = 640x480
+
+[defaults]
+input = CVBS0
+norm  = PAL_BGHIN
+audio = stereo
+

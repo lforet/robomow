@@ -52,9 +52,9 @@ while 1:
    #cv.cvInRangeS(hsv,hsv_min,hsv_max,mask)
    #cv.cvSplit(hsv,hue,satuation,value,None)
 
-   #cv.cvInRangeS(hue,hmin,hmax,hue)
+   cv.cvInRangeS(hue,hmin,hmax,hue)
    highgui.cvShowImage('Camera',frame)
-   #highgui.cvShowImage('Hue',hue)
+   highgui.cvShowImage('Hue',hue)
 
    highgui.cvWaitKey(10)
 """
