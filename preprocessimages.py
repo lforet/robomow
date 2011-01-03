@@ -336,7 +336,7 @@ if count > 0:
 				print "Computing Local Binary Patterns....", inittime, time.ctime()				
 				im6  = CalcLBP(im)
 				im7 = CalcLBP(Green_Band)
-				Red_Band, Green_Band, Blue_Band = im.split()
+				#Red_Band, Green_Band, Blue_Band = im.split()
 
 
 				print "Completed Computing Local Binary Patterns....", (time.time()-inittime)
@@ -359,7 +359,7 @@ if count > 0:
 				#print hist1
 				#plt.plot(hist1)
 				#plt.show()
-				stop
+				#stop
 
 
 
