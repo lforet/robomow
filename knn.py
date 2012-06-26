@@ -27,7 +27,7 @@ f_handle3.close()
 
 training = Dataset(samples=features,labels=classes)
 clf = kNN(k=2)
-print clf
+print "clf = ", clf
 clf.train(training)
 #print np.mean(clf.predict(training.samples) == training.labels)
 print clf.predict(predictdata)
