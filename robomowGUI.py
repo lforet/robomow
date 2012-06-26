@@ -106,6 +106,7 @@ class LeftPanel(wx.Panel):
     def OnPlus(self, event):
         value = int(self.text.GetLabel())
         value = value + 1
+        ListBox.listbox.Append("ko")
         self.text.SetLabel(str(value))
 
     def OnMinus(self, event):
@@ -178,6 +179,9 @@ class ListBox(wx.Frame):
         if text != '':
             #print self.listbox.Append(text)
             self.listbox.Append(text)
+        if text == '':
+            #print self.listbox.Append(text)
+            self.listbox.Append("hi")		
 
     def OnRename(self, event):
         sel = self.listbox.GetSelection()
