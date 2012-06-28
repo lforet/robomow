@@ -8,7 +8,7 @@ import ImageOps
 import ImageStat
 
 #load image
-im = Image.open("grass11.jpg")
+im = Image.open("images/1.grass11.jpg")
 print "image loaded", im
 print "image is in mode = " , im.mode
 print "image size = ", im.size

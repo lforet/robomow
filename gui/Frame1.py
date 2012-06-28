@@ -89,9 +89,9 @@ class Frame1(wx.Frame):
         #self.textCtrl1.SetValue("New Text")
         self.textCtrl1.SetValue(ggg)
         hhh = self.txtStatus.GetValue()
-        hhh = hhh + "jjj" + "\n"
+        hhh = hhh + "data.." + "\n"
         self.txtStatus.SetValue(hhh)
-        Initialize_HeartBeat()
+        self.Initialize_HeartBeat
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
