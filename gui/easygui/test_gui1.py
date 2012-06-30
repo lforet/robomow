@@ -1,30 +1,74 @@
+#!/usr/bin/env python
+
 import easygui as eg
 import sys
 from img_processing_tools import *
 #from PIL import Image
 from PIL import ImageStat
-
-
+import cv 
+import time
 
 if __name__=="__main__":
+	loop = 1
 
-	image   = "1.grass10.gif"
-	msg     = "Is this mowable?"
-	choices = ["Grab Frame","No"]
-	reply   = eg.buttonbox(msg,image=image,choices=choices)
-	cam_img = Image.open("1.grass10.jpg")
-	#print cam_img
-	#cam_img.show()
-	#choice = choicebox(msg, title, choices)
-	# note that we convert choice to string, in case
-	# the user cancelled the choice, and we got None.
-	#eg.msgbox("You chose: " + str(reply), "Result")
-
-	# data file schema
-	# classID, next 256 integers are I3 greenband histogram, I3 sum, I3 sum2, I3 median, I3 mean, 
-	# I3 variance, I3 Standard Deviation, I3 root mean square
+	while loop == 1:
+		#directory = eg.diropenbox(msg=None, title=None, default=None)
+		#print directory
+		filename = eg.fileopenbox(msg=None, title=None, default='*', filetypes=None)
+		print filename	
+		#img1 = cv.LoadImage(filename)
+		img1 = Image.open(filename)
+		if img1.size[0] <> 320 or img1.size[1] <> 240:
+			print "Image is not right size. Resizing image...."
+			img1 = img1.resize((320, 240))
+			print "Resized to 320, 340"
 
 
+		#img1 = Image.open(filename).convert('RGB').save('temp.gif')
+		img1.save('temp.gif')
+		print img1
+		#cv.ShowImage("Frame1", img1)
+		#time.sleep(1)
+		#cv.WaitKey()
+		#time.sleep(1)
+		#cv.DestroyWindow("Frame1")
+		#print "window destroyed"
+		time.sleep(.5)
+		#reply   = eg.buttonbox(msg,image=None,choices=choices)	
+		reply =	eg.buttonbox(msg='Mow This?', title='Should I process ', choices=('Yes', 'No', 'Re-Snap', 'Quit'), image='temp.gif', root=None)
+		#print "Press any key to continue....."
+		print "calling i3"
+		I3image = rgb2I3(img1)
+		#cv.WaitKey()
+
+	
+		#print cam_img
+		#cam_img.show()
+		#choice = choicebox(msg, title, choices)
+		# note that we convert choice to string, in case
+		# the user cancelled the choice, and we got None.
+		#eg.msgbox("You chose: " + str(reply), "Result")
+
+		# data file schema
+		# classID, next 256 integers are I3 greenband histogram, I3 sum, I3 sum2, I3 median, I3 mean, 
+		# I3 variance, I3 Standard Deviation, I3 root mean square
+
+
+		if reply == "Yes":
+			#eg.msgbox("Going to mow....:")
+			classID = "1"
+			WriteMeterics(I3image, classID)
+			
+
+		if reply == "No":
+			classID = "2"
+			WriteMeterics(I3image, classID)
+
+		if reply == "Quit":
+			print "Quitting...."
+			loop = 2
+
+"""
 	if reply == "Grab Frame":
 		try:
 			#img1 = cv.LoadImage(sys.argv[1],cv.CV_LOAD_IMAGE_GRAYSCALE)
@@ -40,76 +84,8 @@ if __name__=="__main__":
 			cv.ShowImage("Frame1", frame)
 			cv.MoveWindow ('Frame1',50 ,50 )
 		except:
-			print "******* Could not open image files *******"
-			sys.exit(-1)
-
-
-
-
-	if reply == "Yes":
-		#eg.msgbox("Going to mow....:")
-		print "calling i3"
-	
-		I3image = rgb2I3(cam_img)
-	
-		#calculate histogram
-		print "Calculating Histogram for I3 pixels of image..."
-		Red_Band, Green_Band, Blue_Band = I3image.split()
-		Histogram = CalcHistogram(Green_Band)
-		classid = "1"
-		#save I3 Histogram to file in certain format
-		f_handle = open('I3banddata.txt', 'a')
-		f_handle.write(str(classid))
-		f_handle.write(' ')
-		f_handle.close()
-		print "saving I3 histogram to dictionary..."
-		f_handle = open("I3banddata.txt", 'a')
-		for i in range(len(Histogram)):
-			f_handle.write(str(Histogram[i]))
-			f_handle.write(" ")
-		#f_handle.write('\n')
-		f_handle.close()
-
-		I3_sum =    ImageStat.Stat(I3image).sum
-		I3_sum2 =   ImageStat.Stat(I3image).sum2
-		I3_median = ImageStat.Stat(I3image).median
-		I3_mean =   ImageStat.Stat(I3image).mean
-		I3_var =    ImageStat.Stat(I3image).var
-		I3_stddev = ImageStat.Stat(I3image).stddev
-		I3_rms =    ImageStat.Stat(I3image).rms
-		print "saving I3 meterics to dictionary..."
-		f_handle = open("I3banddata.txt", 'a')
-
-		print "sum img1_I3: ",    I3_sum[1]
-		print "sum2 img1_I3: ",   I3_sum2[1]
-		print "median img1_I3: ", I3_median[1]
-		print "avg img1_I3: ",    I3_mean[1]
-		print "var img1_I3: ",    I3_var[1]
-		print "stddev img1_I3: ", I3_stddev[1]
-		print "rms img1_I3: ",    I3_rms[1]
-		#print "extrema img1_I3: ", ImageStat.Stat(img1_I3).extrema
-		#print "histogram I3: ", len(img1_I3.histogram())
-
-		f_handle.write(str(I3_sum[1]))
-		f_handle.write(" ")
-		f_handle.write(str(I3_sum2[1]))
-		f_handle.write(" ")
-		f_handle.write(str(I3_median[1]))
-		f_handle.write(" ")
-		f_handle.write(str(I3_mean[1]))
-		f_handle.write(" ")
-		f_handle.write(str(I3_var[1]))
-		f_handle.write(" ")
-		f_handle.write(str(I3_stddev[1]))
-		f_handle.write(" ")
-		f_handle.write(str(I3_rms[1]))
-		f_handle.write(" ")
-		f_handle.write('\n')
-		f_handle.close()
-
-
-
-	if reply == "No":
-		eg.msgbox("NOT Going to mow....:")
-
+			print "******* Could not open camera *******"
+			frame = Image.open("1.grass10.jpg")
+			#sys.exit(-1)
+"""
 

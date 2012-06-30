@@ -30,6 +30,11 @@ clf = kNN(k=2)
 print "clf = ", clf
 clf.train(training)
 #print np.mean(clf.predict(training.samples) == training.labels)
-print clf.predict(predictdata)
-print clf.trained_labels
+classID =  clf.predict(predictdata)
+print "classID = ", classID
+#print clf.trained_labels
+if classID[0] == 1: print "Image is of class: GRASS"
+if classID[0] == 2: print "Image is of class: DIRT/GRAVEL"
+if classID[0] == 3: print "Image is of class: CEMENT/ASPHALT"
+
 
