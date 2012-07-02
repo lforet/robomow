@@ -3,7 +3,7 @@ Ubuntu 12.04 LTS – Precise Pangolin
 Install OpenCV 2.3.1
 
     sudo apt-get install libopencv-*
-    sudo apt-get isntall python-opencv
+    sudo apt-get install python-opencv
     sudo apt-get install python-numpy
 
 That’s it! OpenCV 2.3.1 is installed completely in Ubuntu 12.04 (Thanks for the package).
