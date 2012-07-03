@@ -34,3 +34,16 @@ sudo apt-get install python-tk
 ######################################
 
 
+<<<<<<< HEAD
+sudo apt-get install python-scipy
+
+##################################
+sudo apt-get install python-webkit
+
+####################################
+
+
+
+
+=======
+>>>>>>> 1913a95278006c0804cc4be5488ed2531ea753d8

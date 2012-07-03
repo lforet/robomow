@@ -1,0 +1,11 @@
+include mahotas/numpypp/*.hpp
+include mahotas/*cpp
+include mahotas/*hpp
+include mahotas/*h
+include mahotas/*py
+include README.rst
+include docs/source/*.rst
+include ChangeLog
+include COPYING
+include LICENSE.BOOST
+include mahotas/tests/data/*
