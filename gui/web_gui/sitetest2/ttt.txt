@@ -1,0 +1,5 @@
+cgi-bin
+index.html
+index.html~
+server.py
+ttt.txt
