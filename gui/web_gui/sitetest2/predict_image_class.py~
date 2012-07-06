@@ -84,6 +84,6 @@ print i3_histo_predictdata
 predicted_classID = model.predict(xts)
 print "lpb_knn_clf: ", predicted_classID 
 if predicted_classID[0] == 1: print "Image is of class: GRASS - MOWABLE"
-if predicted_classID[0] == 2: print "Image is of class: DIRT/GRAVEL/ASPHALT - NON-MOWABLE"
+if predicted_classID[0] == -1: print "Image is of class: DIRT/GRAVEL/ASPHALT - NON-MOWABLE"
 
 

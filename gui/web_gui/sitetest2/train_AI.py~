@@ -169,10 +169,10 @@ model = learner.train(xtr, ytr)
 print "milk: ", model.apply(xts[0])
 
 
-from sklearn.externals import joblib
-joblib.dump(model, 'saved_model.pkl') 
-model2 = joblib.load('saved_model.pkl') 
-print "milk: ", model2.apply(xts[0])
+#from sklearn.externals import joblib
+#joblib.dump(model, 'saved_model.pkl') 
+#model2 = joblib.load('saved_model.pkl') 
+#print "milk: ", model2.apply(xts[0])
 
 from sklearn.neighbors import KNeighborsClassifier
 knn = KNeighborsClassifier(leaf_size=30, n_neighbors=5, p=2,
@@ -180,10 +180,55 @@ knn = KNeighborsClassifier(leaf_size=30, n_neighbors=5, p=2,
 
 model3 = knn.fit(xtr, ytr)
 print "knn sclearn: ", model3.predict(xts)
+
+from sklearn.externals import joblib
+
+try:
+	os.remove('lbp_knn_clf.pkl')
+except:
+	print "did not del file lbp_knn_clf.pkl"
+
+ 
 joblib.dump(model3, 'lbp_knn_clf.pkl')
 
 #print" feature ranking"
 #myrank = Ranking()                 # initialize ranking class
 #mysvm = Svm()                      # initialize svm class
 #print myrank.compute(xtr, ytr, mysvm) 
+'''
+n_neighbors = 15
+h = .02  # step size in the mesh
+import pylab as pl
+from matplotlib.colors import ListedColormap
+# display graphs
+# Create color maps
+cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA', '#AAAAFF'])
+cmap_bold = ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
 
+
+for weights in ['uniform', 'distance']:
+    # we create an instance of Neighbours Classifier and fit the data.
+    #clf = neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
+    #clf.fit(X, y)
+
+    # Plot the decision boundary. For that, we will asign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = xtr[:, 0].min() - 1, xtr[:, 0].max() + 1
+    y_min, y_max = xtr[:, 1].min() - 1, xtr[:, 1].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    Z = knn.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+    pl.figure()
+    pl.pcolormesh(xx, yy, Z, cmap=cmap_light)
+
+    # Plot also the training points
+    pl.scatter(xtr[:, 0], xtr[:, 1], c=ytr, cmap=cmap_bold)
+    pl.title("3-Class classification (k = %i, weights = '%s')"
+             % (n_neighbors, weights))
+    pl.axis('tight')
+
+pl.show()
+'''

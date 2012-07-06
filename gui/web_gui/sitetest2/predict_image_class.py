@@ -83,6 +83,13 @@ print "Image sample data: i3_histo_predictdata"
 print i3_histo_predictdata
 predicted_classID = model.predict(xts)
 print "lpb_knn_clf: ", predicted_classID 
+svm_model = joblib.load('lbp_svm_clf.pkl') 
+from sklearn import svm
+svm_predicted_classID = svm_model.predict(xts)
+print "lpb_svm_clf: ", svm_predicted_classID
+	
+
+
 if predicted_classID[0] == 1: print "Image is of class: GRASS - MOWABLE"
 if predicted_classID[0] == -1: print "Image is of class: DIRT/GRAVEL/ASPHALT - NON-MOWABLE"
 
