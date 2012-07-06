@@ -1,9 +1,7 @@
-
-
-<img src="temp.gif" /> 
-
-
+<img src="temp.jpg" /> 
 <form action="/cgi-bin/script.py" method="get">
-<input type="submit" value="Submit" name="Submit1"/>
-<input type="submit" value="Submit" name="Submit2"/>
+<input type="submit" value="New Image" name="New Image"/>
+<input type="submit" value="Mowable" name="Mowable"/>
+<input type="submit" value="Non-Mowable" name="Non-Mowable"/>
 </form>
+

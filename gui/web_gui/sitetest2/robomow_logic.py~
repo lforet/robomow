@@ -22,15 +22,15 @@ def snap_shot():
 		print "Resized to 320, 340"
 
 	#img1 = Image.open(filename).convert('RGB').save('temp.gif')
-	img1.save('temp.gif')
-	print img1
+	img1.save('temp.jpg')
+	#print img1
 	#cv.ShowImage("Frame1", img1)
 	#time.sleep(1)
 	#cv.WaitKey()
 	#time.sleep(1)
 	#cv.DestroyWindow("Frame1")
 	#print "window destroyed"
-	time.sleep(.5)
+	#time.sleep(.5)
 	return img1
 
 if __name__=="__main__":
@@ -56,14 +56,14 @@ if __name__=="__main__":
 		#eg.msgbox("Going to mow....:")
 		classID = "1"
 		print "calling i3"
-		I3image = rgb2I3(image)
+		I3image = rgb2I3(Image.open('temp.jpg'))
 		WriteMeterics(I3image, classID)
 		
 
 	if sys.argv[1] == "non_nowable":
 		classID = "2"
 		print "calling i3"
-		I3image = rgb2I3(image)
+		I3image = rgb2I3(Image.open('temp.jpg'))
 		WriteMeterics(I3image, classID)
 
 	if sys.argv[1] == "quit":

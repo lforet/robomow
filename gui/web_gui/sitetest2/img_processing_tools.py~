@@ -41,11 +41,11 @@ def CalcHistogram(img):
 	H, xedges = np.histogram(np.ravel(hist1), bins=bins, normed=False)
 	return H	
 
-def WriteMeterics(image, classID, data_filename):
+def WriteMeterics(image, classID, filename):
 	
 	if len(image.getbands()) == 3:
 		#write class data to file
-		f_handle = open(data_filename, 'a')
+		f_handle = open('mower_image_data.csv', 'a')
 		f_handle.write(str(classID))
 		f_handle.write(', ')
 		f_handle.close()
@@ -55,7 +55,7 @@ def WriteMeterics(image, classID, data_filename):
 		#print lbp1.ndim, lbp1.size
 		print "LBP Histogram: ", lbp1
 		print "LBP Length:", len(lbp1)
-		f_handle = open(data_filename, 'a')
+		f_handle = open('mower_image_data.csv', 'a')
 		for i in range(len(lbp1)):
 			f_handle.write(str(lbp1[i]))
 			f_handle.write(" ")
@@ -67,7 +67,7 @@ def WriteMeterics(image, classID, data_filename):
 		I3_Histogram = CalcHistogram(Green_Band)
 		#save I3 Histogram to file in certain format
 		print "saving I3 histogram to dictionary..."
-		f_handle = open(data_filename, 'a')
+		f_handle = open("mower_image_data.csv", 'a')
 		for i in range(len(I3_Histogram)):
 			f_handle.write(str(I3_Histogram[i]))
 			f_handle.write(" ")
@@ -76,7 +76,7 @@ def WriteMeterics(image, classID, data_filename):
 		#calculate RGB histogram on raw image
 		rgb_histo = image.histogram()
 		print "saving RGB histogram to dictionary..."
-		f_handle = open(data_filename, 'a')
+		f_handle = open("mower_image_data.csv", 'a')
 		for i in range(len(rgb_histo)):
 			f_handle.write(str(rgb_histo[i]))
 			f_handle.write(" ")
@@ -92,7 +92,7 @@ def WriteMeterics(image, classID, data_filename):
 		I3_stddev = ImageStat.Stat(image).stddev
 		I3_rms =    ImageStat.Stat(image).rms
 		print "saving I3 meterics to dictionary..."
-		f_handle = open(data_filename, 'a')
+		f_handle = open("mower_image_data.csv", 'a')
 
 		print "sum img1_I3: ",    I3_sum[1]
 		print "sum2 img1_I3: ",   I3_sum2[1]

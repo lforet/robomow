@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import os
+import img_processing_tools
+import Image 
+
+path = "/home/lforet/images"
+
+
+if __name__=="__main__":
+	###########################
+	#process class 1 files (mowable)
+	###########################
+	count = 0
+	path = path + "/class1"
+	for subdir, dirs, files in os.walk(path):
+		count = len(files)
+
+	if count > 0:
+		#delete classid and classdata files to completely rebuild them
+		print "Processing images: CLASS 1 (MOWABLE)"
+		classID = 1 
+		print "Files to Process: ", count
+		for subdir, dirs, files in os.walk(path):
+			for file in files:
+				filename1= os.path.join(path, file)
+				print "Processing file: ", filename1
+				img = Image.open(filename1)
+				WriteMeterics(img, classID)
