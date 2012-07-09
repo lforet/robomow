@@ -5,6 +5,7 @@ from img_processing_tools import *
 import Image 
 import time
 import sys
+import cv
 
 root_path = "/home/lforet/images"
 num_of_classes = 2
@@ -49,11 +50,28 @@ if __name__=="__main__":
 								print "Image is not right size. Resizing image...."
 								img = img.resize((640, 480))
 								print "Resized to 640, 480"
+								#cv.WaitKey()
+							cv_image = PILtoCV(img)
+							cv.ShowImage("Image", cv_image)
+							cv.MoveWindow ('Image',50 ,50 )
+							cv.WaitKey(100)
+							#strg = "python show_histogram.py " + filename1
+							#print strg
+							#os.system(strg);
+							plot_rgb_histogram(img)
+							time.sleep(.1)
+							cv_image2 = cv.LoadImage('histogram.png')
+							cv.ShowImage("RGB Histogram", cv_image2)
+							cv.MoveWindow ('RGB Histogram',50 ,580 )
+							cv.WaitKey(100)
+							#cv.WaitKey()
+							time.sleep(.2)
+
 							WriteMeterics(img, classID, data_filename)
-							#time.sleep(1)
+							
 						else:
 							print "image not valid for processing: ", filename1
-							time.sleep(5)
+							time.sleep(3)
 						print
 
 	if len(sys.argv) > 1:
@@ -74,7 +92,12 @@ if __name__=="__main__":
 			if img.size[0] <> 640 or img.size[1] <> 480:
 				print "Image is not right size. Resizing image...."
 				img = img.resize((640, 480))
-				print "Resized to 640, 480"
+			print "Resized to 640, 480"
+			cv_image = PILtoCV(img)
+			cv.ShowImage("Image", cv_image)
+			cv.MoveWindow ('Image',50 ,50 )
+			cv.WaitKey(100)
+			time.sleep(.2)
 			WriteMeterics(img, classID, data_filename)
 			#time.sleep(1)
 		else:

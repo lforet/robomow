@@ -3,7 +3,6 @@
 from PIL import Image
 import numpy as np
 from PIL import ImageStat
-import cv
 
 def image2array(img):
 	"""given an image, returns an array. i.e. create array of image using numpy """
