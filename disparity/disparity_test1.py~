@@ -1,0 +1,139 @@
+import cv
+import sys
+import cv2
+import time
+
+def cut(disparity, image, threshold):
+ for i in range(0, image.height):
+  for j in range(0, image.width):
+   # keep closer object
+   if cv.GetReal2D(disparity,i,j) > threshold:
+    cv.Set2D(disparity,i,j,cv.Get2D(image,i,j))
+
+###########################################################
+
+def resize_img(original_img, scale_percentage):
+	print original_img.height, original_img.width, original_img.nChannels
+	#resized_img = cv.CreateMat(original_img.rows * scale_percentage , original.cols * scale_percenta, cv.CV_8UC3)
+	resized_img = cv.CreateImage((cv.Round(original_img.width * scale_percentage) , cv.Round(original_img.height * scale_percentage)), original_img.depth, original_img.nChannels)
+	print "resizing image:", resized_img
+	Resize(original_img, resized_img)
+	"""
+	if visual == True:
+		print "resizing image..."
+		cv.ShowImage("original_img", original_img)
+		cv.ShowImage("resized_img", resized_img)
+		print "Press any key to continue....."
+		cv.WaitKey()
+		cv.DestroyWindow("original_img")
+		cv.DestroyWindow("resized_img")
+	"""
+	return(resized_img)
+	
+###########################################################
+
+
+def grab_frame(camera):
+	#capture =  cv.CreateCameraCapture(camera)
+	capture = cv.CaptureFromCAM(camera)
+	time.sleep(.1)
+	frame = cv.QueryFrame(capture)
+	time.sleep(.1)
+	temp = cv.CloneImage(frame)
+	#cv.ReleaseCapture(capture)
+	return temp
+
+def CVtoGray(img):
+	grey_image = cv.CreateImage(cv.GetSize(img), cv.IPL_DEPTH_8U, 1)
+	temp_img = cv.CloneImage(img)
+	cv.CvtColor(temp_img, grey_image, cv.CV_RGB2GRAY)
+	return grey_image
+
+###########################################################
+
+def resize_img(original_img, scale_percentage):
+	#print original_img.height, original_img.width, original_img.nChannels
+	#resized_img = cv.CreateMat(original_img.rows * scale_percentage , original.cols * scale_percenta, cv.CV_8UC3)
+	resized_img = cv.CreateImage((cv.Round(original_img.width * scale_percentage) , cv.Round(original_img.height * scale_percentage)), original_img.depth, original_img.nChannels)
+	cv.Resize(original_img, resized_img)
+	"""
+	if visual == True:
+		print "resizing image..."
+		cv.ShowImage("original_img", original_img)
+		cv.ShowImage("resized_img", resized_img)
+		print "Press any key to continue....."
+		cv.WaitKey()
+		cv.DestroyWindow("original_img")
+		cv.DestroyWindow("resized_img")
+	"""
+	return(resized_img)
+	
+###########################################################
+
+
+#if __name__=="__main__":
+while 1:
+
+	#try:
+	#img1 = cv.LoadImage(sys.argv[1],cv.CV_LOAD_IMAGE_GRAYSCALE)
+	left = grab_frame(0)
+	left = resize_img(left, .3)
+	print "retuned:", left
+	time.sleep(.1)
+	#cv.ShowImage("cam-test2",frame_l)
+	#cv.WaitKey(0)
+	right = grab_frame(1)
+	right = resize_img(right, .3)
+	print "retuned:", right
+	time.sleep(.1)
+	#left = cv.CreateImage(cv.GetSize(frame_l), cv.IPL_DEPTH_8U, 1)
+	#left = CVtoGray(frame_l)
+	#right = cv.CreateImage(cv.GetSize(frame_r), cv.IPL_DEPTH_8U, 1)
+	#right = CVtoGray(frame_r)
+
+	#except:
+	#print "******* Could not open image files *******"
+	#sys.exit(-1)
+
+	print "done grabbing.."
+	left = CVtoGray(left)
+	right = CVtoGray(right)
+	cv.NamedWindow("Left",cv.CV_WINDOW_AUTOSIZE)
+	cv.ShowImage("Left",left)
+	cv.MoveWindow ('Left',50 ,50 )
+	cv.NamedWindow("Right",cv.CV_WINDOW_AUTOSIZE)
+	cv.ShowImage("Right",right)
+	cv.MoveWindow ('Right', (50 + (1 * (cv.GetSize(right)[0]))) , 50)
+	cv.WaitKey(150)
+	#time.sleep(1)
+	#	cv.ShowImage("Coin 3", img3)
+	#	cv.MoveWindow ('Coin 3', 375, 325)
+	# loading the stereo pair
+	#left  = cv.LoadImage('scene_l1.jpg',cv.CV_LOAD_IMAGE_GRAYSCALE)
+	#right = cv.LoadImage('scene_r1.jpg',cv.CV_LOAD_IMAGE_GRAYSCALE)
+
+	print "processing disparity"
+	disparity_left  = cv.CreateMat(left.height, left.width, cv.CV_16S)
+	disparity_right = cv.CreateMat(left.height, left.width, cv.CV_16S)
+	#cv.WaitKey()
+	# data structure initialization
+	state = cv.CreateStereoGCState(16,2)
+	# running the graph-cut algorithm
+	cv.FindStereoCorrespondenceGC(left,right,
+			                  disparity_left,disparity_right,state)
+
+	disp_left_visual = cv.CreateMat(left.height, left.width, cv.CV_8U)
+	cv.ConvertScale( disparity_left, disp_left_visual, -16 );
+	cv.Save( "disparity.pgm", disp_left_visual ); # save the map
+
+	# cutting the object farthest of a threshold (120)
+	cut(disp_left_visual,left,80)
+	temp2 = cv.GetImage(disp_left_visual)
+	
+	temp2 = resize_img(temp2, 3)
+	cv.NamedWindow('Disparity map', cv.CV_WINDOW_AUTOSIZE)
+	cv.ShowImage('Disparity map', temp2)
+	cv.WaitKey(150)
+	time.sleep(1)
+
+

@@ -1,0 +1,106 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Phidgets.PhidgetLibrary</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="Phidgets.html"><font color="#ffffff">Phidgets</font></a>.PhidgetLibrary</strong></big></big> (version 2.1.8, May 17 2010)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>&nbsp;</font></td></tr></table>
+    <p><tt>Copyright&nbsp;2010&nbsp;Phidgets&nbsp;Inc.<br>
+This&nbsp;work&nbsp;is&nbsp;licensed&nbsp;under&nbsp;the&nbsp;Creative&nbsp;Commons&nbsp;Attribution&nbsp;2.5&nbsp;Canada&nbsp;License.&nbsp;<br>
+To&nbsp;view&nbsp;a&nbsp;copy&nbsp;of&nbsp;this&nbsp;license,&nbsp;visit&nbsp;<a href="http://creativecommons.org/licenses/by/2.5/ca/">http://creativecommons.org/licenses/by/2.5/ca/</a></tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="threading.html">threading</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.PhidgetLibrary.html#PhidgetLibrary">PhidgetLibrary</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="PhidgetLibrary">class <strong>PhidgetLibrary</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Static methods defined here:<br>
+<dl><dt><a name="PhidgetLibrary-getDll"><strong>getDll</strong></a>()</dt></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-FormatError"><strong>FormatError</strong></a>(...)</dt><dd><tt><a href="#-FormatError">FormatError</a>([integer])&nbsp;-&gt;&nbsp;string<br>
+&nbsp;<br>
+Convert&nbsp;a&nbsp;win32&nbsp;error&nbsp;code&nbsp;into&nbsp;a&nbsp;string.&nbsp;If&nbsp;the&nbsp;error&nbsp;code&nbsp;is&nbsp;not<br>
+given,&nbsp;the&nbsp;return&nbsp;value&nbsp;of&nbsp;a&nbsp;call&nbsp;to&nbsp;GetLastError()&nbsp;is&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-POINTER"><strong>POINTER</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-addressof"><strong>addressof</strong></a>(...)</dt><dd><tt><a href="#-addressof">addressof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;address&nbsp;of&nbsp;the&nbsp;C&nbsp;instance&nbsp;internal&nbsp;buffer</tt></dd></dl>
+ <dl><dt><a name="-alignment"><strong>alignment</strong></a>(...)</dt><dd><tt><a href="#-alignment">alignment</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-alignment">alignment</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;alignment&nbsp;requirements&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-byref"><strong>byref</strong></a>(...)</dt><dd><tt><a href="#-byref">byref</a>(C&nbsp;instance[,&nbsp;offset=0])&nbsp;-&gt;&nbsp;byref-object<br>
+Return&nbsp;a&nbsp;pointer&nbsp;lookalike&nbsp;to&nbsp;a&nbsp;C&nbsp;instance,&nbsp;only&nbsp;usable<br>
+as&nbsp;function&nbsp;argument</tt></dd></dl>
+ <dl><dt><a name="-get_errno"><strong>get_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-get_last_error"><strong>get_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-pointer"><strong>pointer</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-resize"><strong>resize</strong></a>(...)</dt><dd><tt>Resize&nbsp;the&nbsp;memory&nbsp;buffer&nbsp;of&nbsp;a&nbsp;ctypes&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-set_conversion_mode"><strong>set_conversion_mode</strong></a>(...)</dt><dd><tt><a href="#-set_conversion_mode">set_conversion_mode</a>(encoding,&nbsp;errors)&nbsp;-&gt;&nbsp;(previous-encoding,&nbsp;previous-errors)<br>
+&nbsp;<br>
+Set&nbsp;the&nbsp;encoding&nbsp;and&nbsp;error&nbsp;handling&nbsp;ctypes&nbsp;uses&nbsp;when&nbsp;converting<br>
+between&nbsp;unicode&nbsp;and&nbsp;strings.&nbsp;&nbsp;Returns&nbsp;the&nbsp;previous&nbsp;values.</tt></dd></dl>
+ <dl><dt><a name="-set_errno"><strong>set_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-set_last_error"><strong>set_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-sizeof"><strong>sizeof</strong></a>(...)</dt><dd><tt><a href="#-sizeof">sizeof</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-sizeof">sizeof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;size&nbsp;in&nbsp;bytes&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>DEFAULT_MODE</strong> = 0<br>
+<strong>GetLastError</strong> = &lt;_FuncPtr object at 0x009C3990&gt;<br>
+<strong>RTLD_GLOBAL</strong> = 0<br>
+<strong>RTLD_LOCAL</strong> = 0<br>
+<strong>__author__</strong> = 'Adam Stelmack'<br>
+<strong>__date__</strong> = 'May 17 2010'<br>
+<strong>__package__</strong> = 'Phidgets'<br>
+<strong>__version__</strong> = '2.1.8'<br>
+<strong>cdll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE890&gt;<br>
+<strong>memmove</strong> = &lt;CFunctionType object at 0x009C3A08&gt;<br>
+<strong>memset</strong> = &lt;CFunctionType object at 0x009C3BE8&gt;<br>
+<strong>oledll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE930&gt;<br>
+<strong>pydll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8B0&gt;<br>
+<strong>pythonapi</strong> = &lt;PyDLL 'python dll', handle 1e000000 at bfe8d0&gt;<br>
+<strong>windll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8F0&gt;</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Adam&nbsp;Stelmack</td></tr></table>
+</body></html>

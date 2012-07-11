@@ -1,0 +1,794 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Phidgets.Devices.MotorControl</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="Phidgets.html"><font color="#ffffff">Phidgets</font></a>.<a href="Phidgets.Devices.html"><font color="#ffffff">Devices</font></a>.MotorControl</strong></big></big> (version 2.1.8, May 17 2010)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>&nbsp;</font></td></tr></table>
+    <p><tt>Copyright&nbsp;2010&nbsp;Phidgets&nbsp;Inc.<br>
+This&nbsp;work&nbsp;is&nbsp;licensed&nbsp;under&nbsp;the&nbsp;Creative&nbsp;Commons&nbsp;Attribution&nbsp;2.5&nbsp;Canada&nbsp;License.&nbsp;<br>
+To&nbsp;view&nbsp;a&nbsp;copy&nbsp;of&nbsp;this&nbsp;license,&nbsp;visit&nbsp;<a href="http://creativecommons.org/licenses/by/2.5/ca/">http://creativecommons.org/licenses/by/2.5/ca/</a></tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="threading.html">threading</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.Devices.MotorControl.html#MotorControl">MotorControl</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MotorControl">class <strong>MotorControl</strong></a>(<a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;class&nbsp;represents&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Motor&nbsp;Controller.&nbsp;All&nbsp;methods&nbsp;to&nbsp;to&nbsp;control&nbsp;a&nbsp;motor&nbsp;controller&nbsp;and&nbsp;read&nbsp;back&nbsp;motor&nbsp;data&nbsp;are&nbsp;implemented&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+The&nbsp;Motor&nbsp;Control&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;able&nbsp;to&nbsp;control&nbsp;1&nbsp;or&nbsp;more&nbsp;DC&nbsp;motors.&nbsp;Both&nbsp;speed&nbsp;and&nbsp;acceleration&nbsp;are&nbsp;controllable.&nbsp;Speed&nbsp;is&nbsp;controlled&nbsp;via&nbsp;PWM.<br>
+The&nbsp;size&nbsp;of&nbsp;the&nbsp;motors&nbsp;that&nbsp;can&nbsp;be&nbsp;driven&nbsp;depends&nbsp;on&nbsp;the&nbsp;motor&nbsp;controller.&nbsp;See&nbsp;your&nbsp;hardware&nbsp;documentation&nbsp;for&nbsp;more&nbsp;information.<br>
+&nbsp;<br>
+The&nbsp;motor&nbsp;Controller&nbsp;boards&nbsp;also&nbsp;has&nbsp;0&nbsp;or&nbsp;more&nbsp;digital&nbsp;inputs.<br>
+&nbsp;<br>
+Extends:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="MotorControl-__del__"><strong>__del__</strong></a>(self)</dt><dd><tt>The&nbsp;Destructor&nbsp;Method&nbsp;for&nbsp;the&nbsp;<a href="#MotorControl">MotorControl</a>&nbsp;Class</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>The&nbsp;Constructor&nbsp;Method&nbsp;for&nbsp;the&nbsp;<a href="#MotorControl">MotorControl</a>&nbsp;Class<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getAcceleration"><strong>getAcceleration</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;a&nbsp;motor's&nbsp;acceleration.<br>
+&nbsp;<br>
+The&nbsp;valid&nbsp;range&nbsp;is&nbsp;between&nbsp;getAccelerationMin&nbsp;and&nbsp;getAccelerationMax,<br>
+and&nbsp;refers&nbsp;to&nbsp;how&nbsp;fast&nbsp;the&nbsp;Motor&nbsp;Controller&nbsp;will&nbsp;change&nbsp;the&nbsp;speed&nbsp;of&nbsp;a&nbsp;motor.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;index&nbsp;of&nbsp;motor.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;acceleration&nbsp;of&nbsp;the&nbsp;motor&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;is&nbsp;invalid.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getAccelerationMax"><strong>getAccelerationMax</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;the&nbsp;maximum&nbsp;acceleration&nbsp;that&nbsp;a&nbsp;motor&nbsp;will&nbsp;accept,&nbsp;or&nbsp;return.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;Index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum&nbsp;acceleration&nbsp;of&nbsp;the&nbsp;motor&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getAccelerationMin"><strong>getAccelerationMin</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;the&nbsp;minimum&nbsp;acceleration&nbsp;that&nbsp;a&nbsp;motor&nbsp;will&nbsp;accept,&nbsp;or&nbsp;return.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;Index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Minimum&nbsp;acceleration&nbsp;of&nbsp;the&nbsp;motor&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getBackEMF"><strong>getBackEMF</strong></a>(self, index)</dt><dd><tt>Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;does&nbsp;not&nbsp;support&nbsp;this&nbsp;feature.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getBackEMFSensingState"><strong>getBackEMFSensingState</strong></a>(self, index)</dt><dd><tt>Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;the&nbsp;supplied&nbsp;index&nbsp;is&nbsp;out&nbsp;of&nbsp;range,&nbsp;or&nbsp;if&nbsp;this&nbsp;motor&nbsp;controller&nbsp;does&nbsp;not&nbsp;support&nbsp;braking.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getBraking"><strong>getBraking</strong></a>(self, index)</dt><dd><tt>Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;the&nbsp;supplied&nbsp;index&nbsp;is&nbsp;out&nbsp;of&nbsp;range,&nbsp;or&nbsp;if&nbsp;this&nbsp;motor&nbsp;controller&nbsp;does&nbsp;not&nbsp;support&nbsp;braking.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getCurrent"><strong>getCurrent</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;a&nbsp;motor's&nbsp;current&nbsp;usage.<br>
+&nbsp;<br>
+The&nbsp;valid&nbsp;range&nbsp;is&nbsp;0&nbsp;-&nbsp;255.&nbsp;Note&nbsp;that&nbsp;this&nbsp;is&nbsp;not&nbsp;supported&nbsp;on&nbsp;all&nbsp;motor&nbsp;controllers.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;usage&nbsp;of&nbsp;the&nbsp;motor&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;is&nbsp;invalid.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getEncoderCount"><strong>getEncoderCount</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MotorControl-getEncoderPosition"><strong>getEncoderPosition</strong></a>(self, index)</dt></dl>
+
+<dl><dt><a name="MotorControl-getInputCount"><strong>getInputCount</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;number&nbsp;of&nbsp;digital&nbsp;inputs.<br>
+&nbsp;<br>
+Not&nbsp;all&nbsp;Motor&nbsp;Controllers&nbsp;have&nbsp;digital&nbsp;inputs.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;digital&nbsp;Inputs&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getInputState"><strong>getInputState</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;the&nbsp;state&nbsp;of&nbsp;a&nbsp;digital&nbsp;input.<br>
+&nbsp;<br>
+True&nbsp;means&nbsp;that&nbsp;the&nbsp;input&nbsp;is&nbsp;activated,&nbsp;and&nbsp;False&nbsp;indicated&nbsp;the&nbsp;default&nbsp;state.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;&nbsp;index&nbsp;of&nbsp;the&nbsp;input.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;state&nbsp;of&nbsp;the&nbsp;input&nbsp;&lt;boolean&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;is&nbsp;invalid.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getMotorCount"><strong>getMotorCount</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;number&nbsp;of&nbsp;motors&nbsp;supported&nbsp;by&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;does&nbsp;not&nbsp;neccesarily&nbsp;correspond&nbsp;to&nbsp;the&nbsp;number&nbsp;of&nbsp;motors&nbsp;actually&nbsp;attached&nbsp;to&nbsp;the&nbsp;board.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;supported&nbsp;motors&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getRatiometric"><strong>getRatiometric</strong></a>(self)</dt><dd><tt>Gets&nbsp;the&nbsp;ratiometric&nbsp;state&nbsp;for&nbsp;the&nbsp;analog&nbsp;sensors<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;State&nbsp;of&nbsp;the&nbsp;Ratiometric&nbsp;setting.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;this&nbsp;phidget&nbsp;does&nbsp;not&nbsp;support&nbsp;ratiometric.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getSensorCount"><strong>getSensorCount</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;number&nbsp;of&nbsp;analog&nbsp;inputs&nbsp;on&nbsp;the&nbsp;Motor&nbsp;Control.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;analog&nbsp;inputs&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getSensorRawValue"><strong>getSensorRawValue</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;the&nbsp;raw&nbsp;value&nbsp;of&nbsp;a&nbsp;analog&nbsp;input.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;a&nbsp;more&nbsp;accurate&nbsp;version&nbsp;of&nbsp;getSensorValue.&nbsp;The&nbsp;valid&nbsp;range&nbsp;is&nbsp;0-4095.<br>
+Note&nbsp;however&nbsp;that&nbsp;the&nbsp;analog&nbsp;outputs&nbsp;on&nbsp;the&nbsp;Motor&nbsp;Control&nbsp;are&nbsp;only&nbsp;10-bit&nbsp;values&nbsp;and&nbsp;this&nbsp;value&nbsp;represents&nbsp;an&nbsp;oversampling&nbsp;to&nbsp;12-bit.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;Index&nbsp;of&nbsp;the&nbsp;sensor.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Raw&nbsp;Sensor&nbsp;value&nbsp;&lt;int&gt;<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;is&nbsp;out&nbsp;of&nbsp;range.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getSensorValue"><strong>getSensorValue</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;analog&nbsp;input.<br>
+&nbsp;<br>
+The&nbsp;analog&nbsp;inputs&nbsp;are&nbsp;where&nbsp;analog&nbsp;sensors&nbsp;are&nbsp;attached&nbsp;on&nbsp;the&nbsp;Motor&nbsp;Control.<br>
+&nbsp;<br>
+The&nbsp;valid&nbsp;range&nbsp;is&nbsp;0-1000.&nbsp;In&nbsp;the&nbsp;case&nbsp;of&nbsp;a&nbsp;sensor,&nbsp;this&nbsp;value&nbsp;can&nbsp;be&nbsp;converted&nbsp;to&nbsp;an&nbsp;actual&nbsp;sensor<br>
+value&nbsp;using&nbsp;the&nbsp;formulas&nbsp;provided&nbsp;in&nbsp;the&nbsp;sensor&nbsp;product&nbsp;manual.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;Index&nbsp;of&nbsp;the&nbsp;sensor.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Sensor&nbsp;value&nbsp;&lt;int&gt;<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;is&nbsp;out&nbsp;of&nbsp;range.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getSupplyVoltage"><strong>getSupplyVoltage</strong></a>(self)</dt><dd><tt>Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;does&nbsp;not&nbsp;support&nbsp;this&nbsp;feature.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getVelocity"><strong>getVelocity</strong></a>(self, index)</dt><dd><tt>Returns&nbsp;a&nbsp;motor's&nbsp;velocity.<br>
+&nbsp;<br>
+The&nbsp;valid&nbsp;range&nbsp;is&nbsp;-100&nbsp;-&nbsp;100,&nbsp;with&nbsp;0&nbsp;being&nbsp;stopped.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;velocity&nbsp;of&nbsp;the&nbsp;motor&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;is&nbsp;invalid.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setAcceleration"><strong>setAcceleration</strong></a>(self, index, value)</dt><dd><tt>Sets&nbsp;a&nbsp;motor's&nbsp;acceleration.<br>
+&nbsp;<br>
+The&nbsp;valid&nbsp;range&nbsp;is&nbsp;between&nbsp;getAccelerationMin&nbsp;and&nbsp;getAccelerationMax.<br>
+This&nbsp;controls&nbsp;how&nbsp;fast&nbsp;the&nbsp;motor&nbsp;changes&nbsp;speed.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&lt;double&gt;:&nbsp;requested&nbsp;acceleration&nbsp;for&nbsp;that&nbsp;motor.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;or&nbsp;acceleration&nbsp;value&nbsp;are&nbsp;invalid.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setBackEMFSensingState"><strong>setBackEMFSensingState</strong></a>(self, index, state)</dt><dd><tt>Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;state&lt;boolean&gt;:<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;the&nbsp;supplied&nbsp;index&nbsp;is&nbsp;out&nbsp;of&nbsp;range,&nbsp;or&nbsp;if&nbsp;this&nbsp;Motor&nbsp;Controller&nbsp;does&nbsp;not&nbsp;support&nbsp;braking.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setBraking"><strong>setBraking</strong></a>(self, index, braking)</dt><dd><tt>Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;braking&lt;double&gt;:&nbsp;<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;the&nbsp;supplied&nbsp;index&nbsp;is&nbsp;out&nbsp;of&nbsp;range,&nbsp;or&nbsp;if&nbsp;this&nbsp;Motor&nbsp;Controller&nbsp;does&nbsp;not&nbsp;support&nbsp;braking.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setEncoderPosition"><strong>setEncoderPosition</strong></a>(self, index, encoderPosition)</dt></dl>
+
+<dl><dt><a name="MotorControl-setOnBackEMFUpdateHandler"><strong>setOnBackEMFUpdateHandler</strong></a>(self, backEMFUpdateHandler)</dt><dd><tt>Set&nbsp;the&nbsp;BackEMF&nbsp;Update&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sensorUpdateHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;sensorUpdateHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnCurrentChangeHandler"><strong>setOnCurrentChangeHandler</strong></a>(self, currentChangeHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;CurrentCHange&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;current&nbsp;change&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;the&nbsp;current&nbsp;consumed&nbsp;by&nbsp;a&nbsp;motor&nbsp;changes.<br>
+Note&nbsp;that&nbsp;this&nbsp;event&nbsp;is&nbsp;not&nbsp;supported&nbsp;with&nbsp;the&nbsp;current&nbsp;motor&nbsp;controller,&nbsp;but&nbsp;will&nbsp;be&nbsp;supported&nbsp;in&nbsp;the&nbsp;future<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;currentChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;currentChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnCurrentUpdateHandler"><strong>setOnCurrentUpdateHandler</strong></a>(self, currentUpdateHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;CurrentCHange&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;current&nbsp;change&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;the&nbsp;current&nbsp;consumed&nbsp;by&nbsp;a&nbsp;motor&nbsp;changes.<br>
+Note&nbsp;that&nbsp;this&nbsp;event&nbsp;is&nbsp;not&nbsp;supported&nbsp;with&nbsp;the&nbsp;current&nbsp;motor&nbsp;controller,&nbsp;but&nbsp;will&nbsp;be&nbsp;supported&nbsp;in&nbsp;the&nbsp;future<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;currentChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;currentChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnInputChangeHandler"><strong>setOnInputChangeHandler</strong></a>(self, inputChangeHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;InputChange&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;input&nbsp;change&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;an&nbsp;input&nbsp;on&nbsp;this&nbsp;Motor&nbsp;Controller&nbsp;board&nbsp;has&nbsp;changed.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inputChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;inputChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnPositionChangeHandler"><strong>setOnPositionChangeHandler</strong></a>(self, positionChangeHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;position&nbsp;change&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;position&nbsp;change&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;the&nbsp;position&nbsp;of&nbsp;an&nbsp;encoder&nbsp;changes.<br>
+The&nbsp;position&nbsp;change&nbsp;event&nbsp;provides&nbsp;data&nbsp;about&nbsp;how&nbsp;many&nbsp;ticks&nbsp;have&nbsp;occured,&nbsp;and&nbsp;how&nbsp;much&nbsp;time&nbsp;has&nbsp;passed&nbsp;since&nbsp;the&nbsp;last&nbsp;position&nbsp;change&nbsp;event,<br>
+but&nbsp;does&nbsp;not&nbsp;contain&nbsp;an&nbsp;absolute&nbsp;position.<br>
+This&nbsp;can&nbsp;be&nbsp;obtained&nbsp;from&nbsp;getEncoderPosition.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;positionChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;positionChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnPositionUpdateHandler"><strong>setOnPositionUpdateHandler</strong></a>(self, positionUpdateHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;position&nbsp;change&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;position&nbsp;change&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;the&nbsp;position&nbsp;of&nbsp;an&nbsp;encoder&nbsp;changes.<br>
+The&nbsp;position&nbsp;change&nbsp;event&nbsp;provides&nbsp;data&nbsp;about&nbsp;how&nbsp;many&nbsp;ticks&nbsp;have&nbsp;occured,&nbsp;and&nbsp;how&nbsp;much&nbsp;time&nbsp;has&nbsp;passed&nbsp;since&nbsp;the&nbsp;last&nbsp;position&nbsp;change&nbsp;event,<br>
+but&nbsp;does&nbsp;not&nbsp;contain&nbsp;an&nbsp;absolute&nbsp;position.<br>
+This&nbsp;can&nbsp;be&nbsp;obtained&nbsp;from&nbsp;getEncoderPosition.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;positionChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;positionChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnSensorUpdateHandler"><strong>setOnSensorUpdateHandler</strong></a>(self, sensorUpdateHandler)</dt><dd><tt>Set&nbsp;the&nbsp;SensorChange&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;sensor&nbsp;change&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;sensor&nbsp;on<br>
+this&nbsp;Motor&nbsp;Controller&nbsp;has&nbsp;changed&nbsp;by&nbsp;at&nbsp;least&nbsp;the&nbsp;Trigger&nbsp;that&nbsp;has&nbsp;been&nbsp;set&nbsp;for&nbsp;this&nbsp;sensor.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sensorUpdateHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;sensorUpdateHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnVelocityChangeHandler"><strong>setOnVelocityChangeHandler</strong></a>(self, velocityChangeHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;VelocityChange&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;velocity&nbsp;change&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;the&nbsp;velocity&nbsp;of&nbsp;a&nbsp;motor&nbsp;changes.<br>
+These&nbsp;velocity&nbsp;changes&nbsp;are&nbsp;reported&nbsp;back&nbsp;from&nbsp;the&nbsp;Motor&nbsp;Controller&nbsp;and&nbsp;so&nbsp;correspond&nbsp;to&nbsp;actual&nbsp;motor&nbsp;velocity&nbsp;over&nbsp;time.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;velocityChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;velocityChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setRatiometric"><strong>setRatiometric</strong></a>(self, state)</dt><dd><tt>Sets&nbsp;the&nbsp;ratiometric&nbsp;state&nbsp;for&nbsp;the&nbsp;analog&nbsp;inputs.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;is&nbsp;for&nbsp;ratiometric&nbsp;to&nbsp;be&nbsp;set&nbsp;on&nbsp;and&nbsp;this&nbsp;is&nbsp;appropriate&nbsp;for&nbsp;most&nbsp;sensors.<br>
+&nbsp;<br>
+False&nbsp;-&nbsp;off<br>
+True&nbsp;-&nbsp;on<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;state&lt;boolean&gt;:&nbsp;State&nbsp;of&nbsp;the&nbsp;ratiometric&nbsp;setting.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;does&nbsp;not&nbsp;support&nbsp;ratiometric.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setVelocity"><strong>setVelocity</strong></a>(self, index, value)</dt><dd><tt>Sets&nbsp;a&nbsp;motor's&nbsp;velocity.<br>
+&nbsp;<br>
+The&nbsp;valid&nbsp;range&nbsp;is&nbsp;from&nbsp;-100&nbsp;to&nbsp;100,&nbsp;with&nbsp;0&nbsp;being&nbsp;stopped.&nbsp;-100&nbsp;and&nbsp;100&nbsp;both&nbsp;corespond&nbsp;to&nbsp;full&nbsp;voltage,<br>
+with&nbsp;the&nbsp;value&nbsp;in&nbsp;between&nbsp;corresponding&nbsp;to&nbsp;different&nbsp;widths&nbsp;of&nbsp;PWM.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&lt;double&gt;:&nbsp;requested&nbsp;velocity&nbsp;for&nbsp;the&nbsp;motor.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;the&nbsp;index&nbsp;or&nbsp;velocity&nbsp;value&nbsp;are&nbsp;invalid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>:<br>
+<dl><dt><a name="MotorControl-closePhidget"><strong>closePhidget</strong></a>(self)</dt><dd><tt>Closes&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;will&nbsp;shut&nbsp;down&nbsp;all&nbsp;threads&nbsp;dealing&nbsp;with&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;and&nbsp;you&nbsp;won't&nbsp;recieve&nbsp;any&nbsp;more&nbsp;events.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getDeviceClass"><strong>getDeviceClass</strong></a>(self)</dt><dd><tt>Gets&nbsp;the&nbsp;class&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+Classes&nbsp;represent&nbsp;a&nbsp;group&nbsp;of&nbsp;Phidgets&nbsp;that&nbsp;use&nbsp;the&nbsp;same&nbsp;API&nbsp;type.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;Class&nbsp;number&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getDeviceID"><strong>getDeviceID</strong></a>(self)</dt><dd><tt>Gets&nbsp;the&nbsp;ID&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;ID&nbsp;specifies&nbsp;a&nbsp;specific&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;device,&nbsp;within&nbsp;the&nbsp;phidget&nbsp;class.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;ID&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getDeviceLabel"><strong>getDeviceLabel</strong></a>(self)</dt><dd><tt>Gets&nbsp;the&nbsp;label&nbsp;associated&nbsp;with&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;label&nbsp;is&nbsp;a&nbsp;String&nbsp;-&nbsp;up&nbsp;to&nbsp;ten&nbsp;digits&nbsp;-&nbsp;that&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;Flash&nbsp;memory&nbsp;of&nbsp;newer&nbsp;Phidgets.<br>
+This&nbsp;label&nbsp;can&nbsp;be&nbsp;set&nbsp;programatically&nbsp;(see&nbsp;setDeviceLabel),&nbsp;and&nbsp;is&nbsp;non-volatile&nbsp;-&nbsp;so&nbsp;it&nbsp;is&nbsp;remembered&nbsp;even&nbsp;if&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;unplugged.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;label&nbsp;associated&nbsp;with&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;does&nbsp;not&nbsp;support&nbsp;labels.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getDeviceName"><strong>getDeviceName</strong></a>(self)</dt><dd><tt>Return&nbsp;the&nbsp;name&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;a&nbsp;string&nbsp;that&nbsp;describes&nbsp;the&nbsp;device.&nbsp;For&nbsp;example,&nbsp;a&nbsp;PhidgetInterfaceKit&nbsp;<br>
+could&nbsp;be&nbsp;described&nbsp;as&nbsp;"<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;InterfaceKit&nbsp;8/8/8",&nbsp;or&nbsp;"<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;InterfaceKit&nbsp;0/0/4",&nbsp;among&nbsp;others,&nbsp;depending&nbsp;on&nbsp;the&nbsp;specific&nbsp;device.<br>
+&nbsp;<br>
+This&nbsp;lets&nbsp;you&nbsp;determine&nbsp;the&nbsp;specific&nbsp;type&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>,&nbsp;within&nbsp;the&nbsp;broader&nbsp;classes&nbsp;of&nbsp;Phidgets,&nbsp;such&nbsp;as&nbsp;PhidgetInterfaceKit,&nbsp;or&nbsp;PhidgetServo.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;device&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getDeviceType"><strong>getDeviceType</strong></a>(self)</dt><dd><tt>Return&nbsp;the&nbsp;device&nbsp;type&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;a&nbsp;string&nbsp;that&nbsp;describes&nbsp;the&nbsp;device&nbsp;as&nbsp;a&nbsp;class&nbsp;of&nbsp;devices.&nbsp;For&nbsp;example,&nbsp;all&nbsp;PhidgetInterfaceKit&nbsp;Phidgets<br>
+will&nbsp;returns&nbsp;the&nbsp;String&nbsp;"PhidgetInterfaceKit".<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;Type&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getDeviceVersion"><strong>getDeviceVersion</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;device&nbsp;version&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;number&nbsp;is&nbsp;simply&nbsp;a&nbsp;way&nbsp;of&nbsp;distinguishing&nbsp;between&nbsp;different&nbsp;revisions&nbsp;of&nbsp;a&nbsp;specific&nbsp;type&nbsp;of&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>,&nbsp;and&nbsp;is<br>
+only&nbsp;really&nbsp;of&nbsp;use&nbsp;if&nbsp;you&nbsp;need&nbsp;to&nbsp;troubleshoot&nbsp;device&nbsp;problems&nbsp;with&nbsp;Phidgets&nbsp;Inc.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;Version&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getLibraryVersion"><strong>getLibraryVersion</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;library&nbsp;version.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;library&nbsp;version&nbsp;of&nbsp;the&nbsp;underlying&nbsp;phidget21&nbsp;C&nbsp;library&nbsp;and&nbsp;not&nbsp;the&nbsp;version&nbsp;of&nbsp;the&nbsp;Python&nbsp;wrapper&nbsp;module&nbsp;implementation.<br>
+The&nbsp;version&nbsp;is&nbsp;retured&nbsp;as&nbsp;a&nbsp;string&nbsp;which&nbsp;contains&nbsp;the&nbsp;version&nbsp;number&nbsp;and&nbsp;build&nbsp;date.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Library&nbsp;Version&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getSerialNum"><strong>getSerialNum</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;unique&nbsp;serial&nbsp;number&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;number&nbsp;is&nbsp;set&nbsp;during&nbsp;manufacturing,&nbsp;and&nbsp;is&nbsp;unique&nbsp;across&nbsp;all&nbsp;Phidgets.&nbsp;This&nbsp;number&nbsp;can&nbsp;be&nbsp;used&nbsp;in&nbsp;calls&nbsp;to&nbsp;open&nbsp;to&nbsp;specify&nbsp;this&nbsp;specific&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;to&nbsp;be&nbsp;opened.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Serial&nbsp;Number&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getServerAddress"><strong>getServerAddress</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;Address&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice.<br>
+&nbsp;<br>
+Returns&nbsp;the&nbsp;Address&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;opened&nbsp;as&nbsp;remote.<br>
+This&nbsp;may&nbsp;be&nbsp;an&nbsp;IP&nbsp;Address&nbsp;or&nbsp;a&nbsp;hostname.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Address&nbsp;of&nbsp;the&nbsp;Webservice&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;open&nbsp;opened&nbsp;as&nbsp;a&nbsp;remote&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-getServerID"><strong>getServerID</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;Server&nbsp;ID&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice.<br>
+&nbsp;<br>
+Returns&nbsp;the&nbsp;Server&nbsp;ID&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;opened&nbsp;as&nbsp;remote.<br>
+This&nbsp;is&nbsp;an&nbsp;arbitrary&nbsp;server&nbsp;identifier,&nbsp;independant&nbsp;of&nbsp;IP&nbsp;address&nbsp;and&nbsp;Port.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ServerID&nbsp;of&nbsp;the&nbsp;Webservice&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;open&nbsp;opened&nbsp;as&nbsp;a&nbsp;remote&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-isAttached"><strong>isAttached</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;attached&nbsp;status&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;returns&nbsp;True&nbsp;or&nbsp;False,&nbsp;depending&nbsp;on&nbsp;whether&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;phisically&nbsp;plugged&nbsp;into&nbsp;the&nbsp;computer,&nbsp;initialized,&nbsp;and&nbsp;ready&nbsp;to&nbsp;use&nbsp;-&nbsp;or&nbsp;not.<br>
+If&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;attached,&nbsp;many&nbsp;functions&nbsp;calls&nbsp;will&nbsp;fail&nbsp;with&nbsp;a&nbsp;PhidgetException,&nbsp;so&nbsp;either&nbsp;checking&nbsp;this&nbsp;function,&nbsp;or&nbsp;using&nbsp;the&nbsp;Attach&nbsp;and&nbsp;Detach&nbsp;events,&nbsp;is&nbsp;recommended,&nbsp;if&nbsp;a&nbsp;device&nbsp;is&nbsp;likely&nbsp;to&nbsp;be&nbsp;attached&nbsp;or&nbsp;detached&nbsp;during&nbsp;use.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Attached&nbsp;Status&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;&lt;boolean&gt;<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-isAttachedToServer"><strong>isAttachedToServer</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;network&nbsp;attached&nbsp;status&nbsp;for&nbsp;remotely&nbsp;opened&nbsp;Phidgets.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;returns&nbsp;True&nbsp;or&nbsp;False,&nbsp;depending&nbsp;on&nbsp;whether&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;WebService&nbsp;is&nbsp;open&nbsp;-&nbsp;or&nbsp;not.<br>
+If&nbsp;this&nbsp;is&nbsp;false&nbsp;for&nbsp;a&nbsp;remote&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;then&nbsp;the&nbsp;connection&nbsp;is&nbsp;not&nbsp;active&nbsp;-&nbsp;either&nbsp;because&nbsp;a&nbsp;connection&nbsp;has&nbsp;not&nbsp;yet&nbsp;been&nbsp;established,<br>
+or&nbsp;because&nbsp;the&nbsp;connection&nbsp;was&nbsp;terminated.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Network&nbsp;Attached&nbsp;Status&nbsp;&lt;boolean&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;remotely.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-openPhidget"><strong>openPhidget</strong></a>(self, serial<font color="#909090">=-1</font>)</dt><dd><tt>Open&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;with&nbsp;or&nbsp;without&nbsp;a&nbsp;serial&nbsp;number.<br>
+&nbsp;<br>
+Open&nbsp;is&nbsp;pervasive.&nbsp;What&nbsp;this&nbsp;means&nbsp;is&nbsp;that&nbsp;you&nbsp;can&nbsp;call&nbsp;open&nbsp;on&nbsp;a&nbsp;device&nbsp;before&nbsp;it&nbsp;is&nbsp;plugged&nbsp;in,&nbsp;and&nbsp;keep&nbsp;the&nbsp;device&nbsp;opened&nbsp;across&nbsp;device&nbsp;dis-&nbsp;and&nbsp;re-connections.<br>
+&nbsp;<br>
+Open&nbsp;is&nbsp;Asynchronous.&nbsp;&nbsp;What&nbsp;this&nbsp;means&nbsp;is&nbsp;that&nbsp;open&nbsp;will&nbsp;return&nbsp;immediately&nbsp;--&nbsp;before&nbsp;the&nbsp;device&nbsp;being&nbsp;opened&nbsp;is&nbsp;actually&nbsp;available,<br>
+so&nbsp;you&nbsp;need&nbsp;to&nbsp;use&nbsp;either&nbsp;the&nbsp;attach&nbsp;event&nbsp;or&nbsp;the&nbsp;waitForAttachment&nbsp;method&nbsp;to&nbsp;determine&nbsp;if&nbsp;a&nbsp;device&nbsp;is&nbsp;available&nbsp;before&nbsp;using&nbsp;it.<br>
+&nbsp;<br>
+If&nbsp;no&nbsp;arguement&nbsp;is&nbsp;provided,&nbsp;the&nbsp;first&nbsp;available&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;opened.&nbsp;If&nbsp;there&nbsp;are&nbsp;two&nbsp;Phidgets&nbsp;of&nbsp;the&nbsp;same&nbsp;type&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,<br>
+you&nbsp;should&nbsp;specify&nbsp;a&nbsp;serial&nbsp;number,&nbsp;as&nbsp;there&nbsp;is&nbsp;no&nbsp;guarantee&nbsp;which&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;selected&nbsp;by&nbsp;the&nbsp;call&nbsp;to&nbsp;open().<br>
+&nbsp;<br>
+The&nbsp;serial&nbsp;number&nbsp;is&nbsp;a&nbsp;unique&nbsp;number&nbsp;assigned&nbsp;to&nbsp;each&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;during&nbsp;production&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;uniquely&nbsp;identify&nbsp;specific&nbsp;phidgets.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serial&lt;int&gt;:&nbsp;The&nbsp;serial&nbsp;number&nbsp;of&nbsp;the&nbsp;device<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-openRemote"><strong>openRemote</strong></a>(self, serverID, serial<font color="#909090">=-1</font>, password<font color="#909090">=''</font>)</dt><dd><tt>Open&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;remotely&nbsp;using&nbsp;a&nbsp;Server&nbsp;ID,&nbsp;securely&nbsp;providing&nbsp;a&nbsp;password,&nbsp;and&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;connect&nbsp;to&nbsp;a&nbsp;specific&nbsp;serial&nbsp;number.<br>
+&nbsp;<br>
+Providing&nbsp;a&nbsp;password&nbsp;will&nbsp;open&nbsp;the&nbsp;connection&nbsp;securely&nbsp;depending&nbsp;on&nbsp;if&nbsp;a&nbsp;password&nbsp;is&nbsp;set&nbsp;on&nbsp;the&nbsp;host&nbsp;machine's&nbsp;webservice.<br>
+&nbsp;<br>
+If&nbsp;no&nbsp;serial&nbsp;number&nbsp;is&nbsp;provided,&nbsp;the&nbsp;first&nbsp;available&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;opened.&nbsp;If&nbsp;there&nbsp;are&nbsp;two&nbsp;Phidgets&nbsp;of&nbsp;the&nbsp;same&nbsp;type&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,<br>
+you&nbsp;should&nbsp;specify&nbsp;a&nbsp;serial&nbsp;number,&nbsp;as&nbsp;there&nbsp;is&nbsp;no&nbsp;guarantee&nbsp;which&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;selected&nbsp;by&nbsp;the&nbsp;call&nbsp;to&nbsp;open().<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serverID&lt;string&gt;:&nbsp;ServerID&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serial&lt;int&gt;:&nbsp;The&nbsp;serial&nbsp;number&nbsp;of&nbsp;the&nbsp;device<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password&lt;string&gt;:&nbsp;The&nbsp;secure&nbsp;password&nbsp;for&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;cannot&nbsp;be&nbsp;contacted</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-openRemoteIP"><strong>openRemoteIP</strong></a>(self, IPAddress, port, serial<font color="#909090">=-1</font>, password<font color="#909090">=''</font>)</dt><dd><tt>Open&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;remotely&nbsp;using&nbsp;an&nbsp;IP&nbsp;Address,&nbsp;securely&nbsp;providing&nbsp;a&nbsp;password,and&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;connect&nbsp;to&nbsp;a&nbsp;specific&nbsp;serial&nbsp;number.<br>
+&nbsp;<br>
+Providing&nbsp;a&nbsp;password&nbsp;will&nbsp;open&nbsp;the&nbsp;connection&nbsp;securely&nbsp;depending&nbsp;on&nbsp;if&nbsp;a&nbsp;password&nbsp;is&nbsp;set&nbsp;on&nbsp;the&nbsp;host&nbsp;machine's&nbsp;webservice.<br>
+&nbsp;<br>
+If&nbsp;no&nbsp;serial&nbsp;number&nbsp;is&nbsp;provided,&nbsp;the&nbsp;first&nbsp;available&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;opened.&nbsp;If&nbsp;there&nbsp;are&nbsp;two&nbsp;Phidgets&nbsp;of&nbsp;the&nbsp;same&nbsp;type&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,<br>
+you&nbsp;should&nbsp;specify&nbsp;a&nbsp;serial&nbsp;number,&nbsp;as&nbsp;there&nbsp;is&nbsp;no&nbsp;guarantee&nbsp;which&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;selected&nbsp;by&nbsp;the&nbsp;call&nbsp;to&nbsp;open().<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IPAddress&lt;string&gt;:&nbsp;IP&nbsp;Address&nbsp;or&nbsp;hostname&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;port&lt;int&gt;:&nbsp;Port&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serial&lt;int&gt;:&nbsp;The&nbsp;serial&nbsp;number&nbsp;of&nbsp;the&nbsp;device<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password&lt;string&gt;:&nbsp;The&nbsp;secure&nbsp;password&nbsp;for&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;cannot&nbsp;be&nbsp;contacted</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnAttachHandler"><strong>setOnAttachHandler</strong></a>(self, attachHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Attach&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;attach&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;physically&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,&nbsp;and&nbsp;has&nbsp;gone&nbsp;through&nbsp;its&nbsp;initalization,&nbsp;and&nbsp;so&nbsp;is&nbsp;ready&nbsp;to&nbsp;be&nbsp;used.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;attachHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;attachHandler&nbsp;callback&nbsp;function<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnDetachHandler"><strong>setOnDetachHandler</strong></a>(self, detachHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Detach&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;detach&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;phisically&nbsp;detached&nbsp;from&nbsp;the&nbsp;system,&nbsp;and&nbsp;is&nbsp;no&nbsp;longer&nbsp;available.<br>
+This&nbsp;is&nbsp;particularly&nbsp;usefull&nbsp;for&nbsp;applications&nbsp;when&nbsp;a&nbsp;phisical&nbsp;detach&nbsp;would&nbsp;be&nbsp;expected.<br>
+&nbsp;<br>
+Remember&nbsp;that&nbsp;many&nbsp;of&nbsp;the&nbsp;methods,&nbsp;if&nbsp;called&nbsp;on&nbsp;an&nbsp;unattached&nbsp;device,&nbsp;will&nbsp;throw&nbsp;a&nbsp;PhidgetException.<br>
+This&nbsp;Exception&nbsp;can&nbsp;be&nbsp;checked&nbsp;to&nbsp;see&nbsp;if&nbsp;it&nbsp;was&nbsp;caused&nbsp;by&nbsp;a&nbsp;device&nbsp;being&nbsp;unattached,&nbsp;but&nbsp;a&nbsp;better&nbsp;method&nbsp;would&nbsp;be&nbsp;to&nbsp;regiter&nbsp;the&nbsp;detach&nbsp;handler,<br>
+which&nbsp;could&nbsp;notify&nbsp;the&nbsp;main&nbsp;program&nbsp;logic&nbsp;that&nbsp;the&nbsp;device&nbsp;is&nbsp;no&nbsp;longer&nbsp;available,&nbsp;disable&nbsp;GUI&nbsp;controls,&nbsp;etc.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;detachHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;detachHandler&nbsp;callback&nbsp;function<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnErrorhandler"><strong>setOnErrorhandler</strong></a>(self, errorHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Error&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;error&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;an&nbsp;asynchronous&nbsp;error&nbsp;occurs.<br>
+Error&nbsp;events&nbsp;are&nbsp;not&nbsp;currently&nbsp;used,&nbsp;but&nbsp;will&nbsp;be&nbsp;in&nbsp;the&nbsp;future&nbsp;to&nbsp;report&nbsp;any&nbsp;problems&nbsp;that&nbsp;happen&nbsp;out&nbsp;of&nbsp;context&nbsp;from&nbsp;a&nbsp;direct&nbsp;function&nbsp;call.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;errorHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;errorHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnServerConnectHandler"><strong>setOnServerConnectHandler</strong></a>(self, serverConnectHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Server&nbsp;Connect&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;serverConnect&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;connection&nbsp;to&nbsp;a&nbsp;server&nbsp;is&nbsp;made.&nbsp;This&nbsp;is&nbsp;only&nbsp;usefull&nbsp;for&nbsp;Phidgets&nbsp;opened&nbsp;remotely.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serverConnectHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;serverConnectHandler&nbsp;callback&nbsp;function<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-setOnServerDisconnectHandler"><strong>setOnServerDisconnectHandler</strong></a>(self, serverDisconnectHandler)</dt><dd><tt>Set&nbsp;the&nbsp;Server&nbsp;Disconnect&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;serverDisconnect&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;connection&nbsp;to&nbsp;a&nbsp;server&nbsp;is&nbsp;terminated.&nbsp;This&nbsp;is&nbsp;only&nbsp;usefull&nbsp;for&nbsp;Phidgets&nbsp;opened&nbsp;remotely.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-waitForAttach"><strong>waitForAttach</strong></a>(self, timeout)</dt><dd><tt>Waits&nbsp;for&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;to&nbsp;become&nbsp;available.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;can&nbsp;be&nbsp;called&nbsp;after&nbsp;open&nbsp;has&nbsp;been&nbsp;called&nbsp;to&nbsp;wait&nbsp;for&nbsp;thid&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;to&nbsp;become&nbsp;available.<br>
+This&nbsp;is&nbsp;usefull&nbsp;because&nbsp;open&nbsp;is&nbsp;asynchronous&nbsp;(and&nbsp;thus&nbsp;returns&nbsp;immediately),&nbsp;and&nbsp;most&nbsp;methods&nbsp;will&nbsp;throw&nbsp;a&nbsp;PhidgetException&nbsp;is&nbsp;they&nbsp;are&nbsp;called&nbsp;before&nbsp;a&nbsp;device&nbsp;is&nbsp;actually&nbsp;ready.<br>
+This&nbsp;method&nbsp;is&nbsp;synonymous&nbsp;with&nbsp;polling&nbsp;the&nbsp;isAttached&nbsp;method&nbsp;until&nbsp;it&nbsp;returns&nbsp;True,&nbsp;or&nbsp;using&nbsp;the&nbsp;Attach&nbsp;event.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;blocks&nbsp;for&nbsp;up&nbsp;to&nbsp;the&nbsp;timeout,&nbsp;at&nbsp;which&nbsp;point&nbsp;it&nbsp;will&nbsp;throw&nbsp;a&nbsp;PhidgetException.&nbsp;Otherwise,&nbsp;it&nbsp;returns&nbsp;when&nbsp;the&nbsp;phidget&nbsp;is&nbsp;attached&nbsp;and&nbsp;initialized.<br>
+&nbsp;<br>
+A&nbsp;timeout&nbsp;of&nbsp;0&nbsp;is&nbsp;infinite.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout&lt;long&gt;:&nbsp;Timeout&nbsp;in&nbsp;milliseconds<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<hr>
+Static methods inherited from <a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>:<br>
+<dl><dt><a name="MotorControl-disableLogging"><strong>disableLogging</strong></a>()</dt><dd><tt>Turns&nbsp;off&nbsp;logging&nbsp;in&nbsp;the&nbsp;native&nbsp;C&nbsp;Library.<br>
+&nbsp;<br>
+This&nbsp;only&nbsp;needs&nbsp;to&nbsp;be&nbsp;called&nbsp;if&nbsp;enableLogging&nbsp;was&nbsp;called&nbsp;to&nbsp;turn&nbsp;logging&nbsp;on.<br>
+This&nbsp;will&nbsp;turn&nbsp;logging&nbsp;back&nbsp;off.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-dispose"><strong>dispose</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MotorControl-enableLogging"><strong>enableLogging</strong></a>(level, file)</dt><dd><tt>Turns&nbsp;on&nbsp;logging&nbsp;in&nbsp;the&nbsp;native&nbsp;C&nbsp;Library.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;mostly&nbsp;usefull&nbsp;for&nbsp;debugging&nbsp;purposes&nbsp;-&nbsp;when&nbsp;an&nbsp;issue&nbsp;needs&nbsp;to&nbsp;be&nbsp;resolved&nbsp;by&nbsp;Phidgets&nbsp;Inc.<br>
+The&nbsp;output&nbsp;is&nbsp;mostly&nbsp;low-level&nbsp;library&nbsp;information,&nbsp;that&nbsp;won't&nbsp;be&nbsp;usefull&nbsp;for&nbsp;most&nbsp;users.<br>
+&nbsp;<br>
+Logging&nbsp;may&nbsp;be&nbsp;usefull&nbsp;for&nbsp;users&nbsp;trying&nbsp;to&nbsp;debug&nbsp;their&nbsp;own&nbsp;problems,&nbsp;as&nbsp;logs&nbsp;can&nbsp;be&nbsp;inserted&nbsp;by&nbsp;the&nbsp;user&nbsp;using&nbsp;log.<br>
+The&nbsp;level&nbsp;can&nbsp;be&nbsp;one&nbsp;of:<br>
+PhidgetLogLevel.PHIDGET_LOG_VERBOSE&nbsp;(1),<br>
+PhidgetLogLevel.PHIDGET_LOG_INFO&nbsp;(2),<br>
+PhidgetLogLevel.PHIDGET_LOG_DEBUG&nbsp;(3),<br>
+PhidgetLogLevel.PHIDGET_LOG_WARNING&nbsp;(4),<br>
+PhidgetLogLevel.PHIDGET_LOG_ERROR&nbsp;(5)or<br>
+PhidgetLogLevel.PHIDGET_LOG_CRITICAL&nbsp;(6)<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;level&lt;int&gt;:&nbsp;highest&nbsp;level&nbsp;of&nbsp;logging&nbsp;that&nbsp;will&nbsp;be&nbsp;output,&nbsp;the&nbsp;PhidgetLogLevel&nbsp;object&nbsp;has&nbsp;been&nbsp;provided&nbsp;for&nbsp;a&nbsp;readable&nbsp;way&nbsp;to&nbsp;set&nbsp;this.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;file&lt;string&gt;:&nbsp;path&nbsp;and&nbsp;name&nbsp;of&nbsp;file&nbsp;to&nbsp;output&nbsp;to.&nbsp;&nbsp;specify&nbsp;NULL&nbsp;to&nbsp;output&nbsp;to&nbsp;the&nbsp;console.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="MotorControl-log"><strong>log</strong></a>(level, id, log)</dt><dd><tt>Adds&nbsp;a&nbsp;log&nbsp;entry&nbsp;into&nbsp;the&nbsp;phidget&nbsp;log.<br>
+&nbsp;<br>
+This&nbsp;log&nbsp;is&nbsp;enabled&nbsp;by&nbsp;calling&nbsp;enableLogging&nbsp;and&nbsp;this&nbsp;allows&nbsp;the&nbsp;entry&nbsp;of&nbsp;user&nbsp;logs&nbsp;in&nbsp;amongst&nbsp;the&nbsp;phidget&nbsp;library&nbsp;logs.<br>
+&nbsp;<br>
+The&nbsp;level&nbsp;can&nbsp;be&nbsp;one&nbsp;of:<br>
+PhidgetLogLevel.PHIDGET_LOG_VERBOSE,<br>
+PhidgetLogLevel.PHIDGET_LOG_INFO,<br>
+PhidgetLogLevel.PHIDGET_LOG_DEBUG,<br>
+PhidgetLogLevel.PHIDGET_LOG_WARNING,<br>
+PhidgetLogLevel.PHIDGET_LOG_ERROR&nbsp;or<br>
+PhidgetLogLevel.PHIDGET_LOG_CRITICAL<br>
+&nbsp;<br>
+Note:&nbsp;PhidgetLogLevel.PHIDGET_LOG_DEBUG&nbsp;should&nbsp;not&nbsp;be&nbsp;used,&nbsp;as&nbsp;these&nbsp;logs&nbsp;are&nbsp;only&nbsp;printed&nbsp;when&nbsp;using&nbsp;the&nbsp;debug&nbsp;library,<br>
+which&nbsp;is&nbsp;not&nbsp;generally&nbsp;available.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;level&lt;int&gt;:&nbsp;level&nbsp;to&nbsp;enter&nbsp;the&nbsp;log&nbsp;at.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&lt;string&gt;:&nbsp;an&nbsp;arbitrary&nbsp;identifier&nbsp;for&nbsp;this&nbsp;log.&nbsp;&nbsp;This&nbsp;can&nbsp;be&nbsp;NULL.&nbsp;The&nbsp;C&nbsp;library&nbsp;uses&nbsp;this&nbsp;field&nbsp;for&nbsp;source&nbsp;filename&nbsp;and&nbsp;line&nbsp;number.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log&lt;string&gt;:&nbsp;the&nbsp;message&nbsp;to&nbsp;log.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-FormatError"><strong>FormatError</strong></a>(...)</dt><dd><tt><a href="#-FormatError">FormatError</a>([integer])&nbsp;-&gt;&nbsp;string<br>
+&nbsp;<br>
+Convert&nbsp;a&nbsp;win32&nbsp;error&nbsp;code&nbsp;into&nbsp;a&nbsp;string.&nbsp;If&nbsp;the&nbsp;error&nbsp;code&nbsp;is&nbsp;not<br>
+given,&nbsp;the&nbsp;return&nbsp;value&nbsp;of&nbsp;a&nbsp;call&nbsp;to&nbsp;GetLastError()&nbsp;is&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-POINTER"><strong>POINTER</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-addressof"><strong>addressof</strong></a>(...)</dt><dd><tt><a href="#-addressof">addressof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;address&nbsp;of&nbsp;the&nbsp;C&nbsp;instance&nbsp;internal&nbsp;buffer</tt></dd></dl>
+ <dl><dt><a name="-alignment"><strong>alignment</strong></a>(...)</dt><dd><tt><a href="#-alignment">alignment</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-alignment">alignment</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;alignment&nbsp;requirements&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-byref"><strong>byref</strong></a>(...)</dt><dd><tt><a href="#-byref">byref</a>(C&nbsp;instance[,&nbsp;offset=0])&nbsp;-&gt;&nbsp;byref-object<br>
+Return&nbsp;a&nbsp;pointer&nbsp;lookalike&nbsp;to&nbsp;a&nbsp;C&nbsp;instance,&nbsp;only&nbsp;usable<br>
+as&nbsp;function&nbsp;argument</tt></dd></dl>
+ <dl><dt><a name="-get_errno"><strong>get_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-get_last_error"><strong>get_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-pointer"><strong>pointer</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-resize"><strong>resize</strong></a>(...)</dt><dd><tt>Resize&nbsp;the&nbsp;memory&nbsp;buffer&nbsp;of&nbsp;a&nbsp;ctypes&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-set_conversion_mode"><strong>set_conversion_mode</strong></a>(...)</dt><dd><tt><a href="#-set_conversion_mode">set_conversion_mode</a>(encoding,&nbsp;errors)&nbsp;-&gt;&nbsp;(previous-encoding,&nbsp;previous-errors)<br>
+&nbsp;<br>
+Set&nbsp;the&nbsp;encoding&nbsp;and&nbsp;error&nbsp;handling&nbsp;ctypes&nbsp;uses&nbsp;when&nbsp;converting<br>
+between&nbsp;unicode&nbsp;and&nbsp;strings.&nbsp;&nbsp;Returns&nbsp;the&nbsp;previous&nbsp;values.</tt></dd></dl>
+ <dl><dt><a name="-set_errno"><strong>set_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-set_last_error"><strong>set_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-sizeof"><strong>sizeof</strong></a>(...)</dt><dd><tt><a href="#-sizeof">sizeof</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-sizeof">sizeof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;size&nbsp;in&nbsp;bytes&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>DEFAULT_MODE</strong> = 0<br>
+<strong>GetLastError</strong> = &lt;_FuncPtr object at 0x009C3990&gt;<br>
+<strong>RTLD_GLOBAL</strong> = 0<br>
+<strong>RTLD_LOCAL</strong> = 0<br>
+<strong>__author__</strong> = 'Adam Stelmack'<br>
+<strong>__date__</strong> = 'May 17 2010'<br>
+<strong>__package__</strong> = 'Phidgets.Devices'<br>
+<strong>__version__</strong> = '2.1.8'<br>
+<strong>cdll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE890&gt;<br>
+<strong>memmove</strong> = &lt;CFunctionType object at 0x009C3A08&gt;<br>
+<strong>memset</strong> = &lt;CFunctionType object at 0x009C3BE8&gt;<br>
+<strong>oledll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE930&gt;<br>
+<strong>pydll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8B0&gt;<br>
+<strong>pythonapi</strong> = &lt;PyDLL 'python dll', handle 1e000000 at bfe8d0&gt;<br>
+<strong>windll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8F0&gt;</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Adam&nbsp;Stelmack</td></tr></table>
+</body></html>

@@ -1,0 +1,283 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Phidgets.Manager</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="Phidgets.html"><font color="#ffffff">Phidgets</font></a>.Manager</strong></big></big> (version 2.1.8, May 17 2010)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>&nbsp;</font></td></tr></table>
+    <p><tt>Copyright&nbsp;2010&nbsp;Phidgets&nbsp;Inc.<br>
+This&nbsp;work&nbsp;is&nbsp;licensed&nbsp;under&nbsp;the&nbsp;Creative&nbsp;Commons&nbsp;Attribution&nbsp;2.5&nbsp;Canada&nbsp;License.&nbsp;<br>
+To&nbsp;view&nbsp;a&nbsp;copy&nbsp;of&nbsp;this&nbsp;license,&nbsp;visit&nbsp;<a href="http://creativecommons.org/licenses/by/2.5/ca/">http://creativecommons.org/licenses/by/2.5/ca/</a></tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="threading.html">threading</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.Manager.html#Manager">Manager</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Manager">class <strong>Manager</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;class&nbsp;represents&nbsp;a&nbsp;Phidget&nbsp;<a href="#Manager">Manager</a>.<br>
+&nbsp;<br>
+The&nbsp;Phidget&nbsp;manager&nbsp;is&nbsp;a&nbsp;way&nbsp;to&nbsp;keep&nbsp;track&nbsp;of&nbsp;attached&nbsp;phidgets,<br>
+it&nbsp;will&nbsp;send&nbsp;Attach&nbsp;and&nbsp;Detach&nbsp;events&nbsp;as&nbsp;Phidgets&nbsp;are&nbsp;added&nbsp;and&nbsp;removed&nbsp;fromt&nbsp;the&nbsp;system.<br>
+&nbsp;<br>
+The&nbsp;Phidget&nbsp;manager&nbsp;deals&nbsp;in&nbsp;base&nbsp;Phidget&nbsp;objects.<br>
+These&nbsp;objects&nbsp;are&nbsp;not&nbsp;actually&nbsp;connected&nbsp;to&nbsp;opened&nbsp;Phidgets&nbsp;but&nbsp;can&nbsp;be&nbsp;used<br>
+to&nbsp;get&nbsp;serial&nbsp;number,&nbsp;name,&nbsp;version,&nbsp;etc.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Manager-__del__"><strong>__del__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Manager-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>The&nbsp;Constructor&nbsp;Method&nbsp;for&nbsp;the&nbsp;<a href="#Manager">Manager</a>&nbsp;Class<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;Phidget&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="Manager-closeManager"><strong>closeManager</strong></a>(self)</dt><dd><tt>Shuts&nbsp;down&nbsp;the&nbsp;Phidget&nbsp;<a href="#Manager">Manager</a>.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;should&nbsp;be&nbsp;called&nbsp;to&nbsp;close&nbsp;down&nbsp;the&nbsp;Phidget&nbsp;<a href="#Manager">Manager</a>.<br>
+Events&nbsp;will&nbsp;no&nbsp;longer&nbsp;be&nbsp;recieved.&nbsp;This&nbsp;method&nbsp;gets&nbsp;calledd&nbsp;automatically&nbsp;when&nbsp;the&nbsp;class&nbsp;is&nbsp;destroyed&nbsp;so&nbsp;calling&nbsp;it&nbsp;is&nbsp;not&nbsp;required.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;manager&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="Manager-getAttachedDevices"><strong>getAttachedDevices</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;list&nbsp;of&nbsp;Phidgets&nbsp;attached&nbsp;to&nbsp;the&nbsp;host&nbsp;computer.<br>
+&nbsp;<br>
+This&nbsp;list&nbsp;is&nbsp;updated&nbsp;right&nbsp;before&nbsp;the&nbsp;attach&nbsp;and&nbsp;detach&nbsp;events,&nbsp;and&nbsp;so&nbsp;will&nbsp;be&nbsp;up&nbsp;to&nbsp;date&nbsp;within&nbsp;these&nbsp;events.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;list&nbsp;of&nbsp;attached&nbsp;phidgets&nbsp;&lt;array&nbsp;of&nbsp;Phidget&nbsp;objects&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="Manager-getServerAddress"><strong>getServerAddress</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;Address&nbsp;of&nbsp;a&nbsp;Phidget&nbsp;Webservice&nbsp;when&nbsp;this&nbsp;<a href="#Manager">Manager</a>&nbsp;was&nbsp;opened&nbsp;as&nbsp;remote.<br>
+&nbsp;<br>
+This&nbsp;may&nbsp;be&nbsp;an&nbsp;IP&nbsp;Address&nbsp;or&nbsp;a&nbsp;hostname.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;server&nbsp;address&nbsp;for&nbsp;the&nbsp;webservice&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;<a href="#Manager">Manager</a>&nbsp;was&nbsp;not&nbsp;opened&nbsp;or&nbsp;opened&nbsp;remotely.</tt></dd></dl>
+
+<dl><dt><a name="Manager-getServerID"><strong>getServerID</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;Server&nbsp;ID&nbsp;of&nbsp;a&nbsp;Phidget&nbsp;Webservice&nbsp;when&nbsp;this&nbsp;<a href="#Manager">Manager</a>&nbsp;was&nbsp;opened&nbsp;as&nbsp;remote.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;an&nbsp;arbitrary&nbsp;server&nbsp;identifier,&nbsp;independant&nbsp;of&nbsp;IP&nbsp;address&nbsp;and&nbsp;Port.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;serverID&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;manager&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;opened&nbsp;remotely.</tt></dd></dl>
+
+<dl><dt><a name="Manager-getServerPort"><strong>getServerPort</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;Port&nbsp;of&nbsp;a&nbsp;Phidget&nbsp;Webservice&nbsp;when&nbsp;this&nbsp;<a href="#Manager">Manager</a>&nbsp;was&nbsp;opened&nbsp;as&nbsp;remote.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;server&nbsp;port&nbsp;for&nbsp;the&nbsp;webservice.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;<a href="#Manager">Manager</a>&nbsp;was&nbsp;not&nbsp;opened&nbsp;or&nbsp;opened&nbsp;remotely.</tt></dd></dl>
+
+<dl><dt><a name="Manager-isAttachedToServer"><strong>isAttachedToServer</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;network&nbsp;attached&nbsp;status&nbsp;for&nbsp;remotely&nbsp;opened&nbsp;Phidgets.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;returns&nbsp;True&nbsp;or&nbsp;False,&nbsp;depending&nbsp;on&nbsp;whether&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;WebService&nbsp;is&nbsp;open&nbsp;-&nbsp;or&nbsp;not.<br>
+If&nbsp;this&nbsp;is&nbsp;false&nbsp;for&nbsp;a&nbsp;remote&nbsp;Phidget&nbsp;then&nbsp;the&nbsp;connection&nbsp;is&nbsp;not&nbsp;active&nbsp;-&nbsp;either&nbsp;because&nbsp;a&nbsp;connection&nbsp;has&nbsp;not&nbsp;yet&nbsp;been&nbsp;established,<br>
+or&nbsp;because&nbsp;the&nbsp;connection&nbsp;was&nbsp;terminated.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;attached&nbsp;status&nbsp;&lt;boolean&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;<a href="#Manager">Manager</a>&nbsp;was&nbsp;not&nbsp;opened&nbsp;or&nbsp;opened&nbsp;remotely.</tt></dd></dl>
+
+<dl><dt><a name="Manager-openManager"><strong>openManager</strong></a>(self)</dt><dd><tt>Starts&nbsp;the&nbsp;PhidgetManager.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;starts&nbsp;the&nbsp;phidget&nbsp;manager&nbsp;running&nbsp;in&nbsp;the&nbsp;base&nbsp;Phidget21&nbsp;C&nbsp;library.<br>
+If&nbsp;attach&nbsp;and&nbsp;detach&nbsp;listeners&nbsp;are&nbsp;to&nbsp;be&nbsp;used,&nbsp;they&nbsp;should&nbsp;be&nbsp;registered&nbsp;before&nbsp;start&nbsp;is&nbsp;called&nbsp;so&nbsp;that&nbsp;no&nbsp;events&nbsp;are&nbsp;missed.<br>
+Once&nbsp;start&nbsp;is&nbsp;called,&nbsp;the&nbsp;Phidget&nbsp;<a href="#Manager">Manager</a>&nbsp;will&nbsp;be&nbsp;active&nbsp;until&nbsp;close&nbsp;is&nbsp;called.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="Manager-openRemote"><strong>openRemote</strong></a>(self, serverID, password<font color="#909090">=''</font>)</dt><dd><tt>Open&nbsp;this&nbsp;<a href="#Manager">Manager</a>&nbsp;remotely&nbsp;using&nbsp;a&nbsp;Server&nbsp;ID,&nbsp;and&nbsp;securely&nbsp;using&nbsp;a&nbsp;Password.<br>
+&nbsp;<br>
+ServerID&nbsp;can&nbsp;be&nbsp;NULL&nbsp;to&nbsp;get&nbsp;a&nbsp;listing&nbsp;of&nbsp;all&nbsp;Phidgets&nbsp;on&nbsp;all&nbsp;Servers<br>
+&nbsp;<br>
+This&nbsp;password&nbsp;can&nbsp;be&nbsp;set&nbsp;as&nbsp;a&nbsp;parameter&nbsp;when&nbsp;starting&nbsp;the&nbsp;Phidget&nbsp;Webservice.<br>
+The&nbsp;use&nbsp;of&nbsp;a&nbsp;password&nbsp;is&nbsp;optional&nbsp;and&nbsp;calling&nbsp;the&nbsp;function&nbsp;without&nbsp;providing&nbsp;a&nbsp;password&nbsp;will<br>
+connect&nbsp;normally.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serverID&lt;string&gt;:&nbsp;ServerID&nbsp;of&nbsp;the&nbsp;Phidget&nbsp;Webservice.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password&lt;string&gt;:&nbsp;The&nbsp;secure&nbsp;password&nbsp;for&nbsp;the&nbsp;Phidget&nbsp;Webservice.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;Phidget&nbsp;Webservice&nbsp;cannot&nbsp;be&nbsp;contacted</tt></dd></dl>
+
+<dl><dt><a name="Manager-openRemoteIP"><strong>openRemoteIP</strong></a>(self, IPAddress, port, password<font color="#909090">=''</font>)</dt><dd><tt>Open&nbsp;this&nbsp;<a href="#Manager">Manager</a>&nbsp;remotely&nbsp;using&nbsp;an&nbsp;IP&nbsp;Address&nbsp;and&nbsp;port,&nbsp;and&nbsp;securely&nbsp;using&nbsp;a&nbsp;password.<br>
+&nbsp;<br>
+This&nbsp;password&nbsp;can&nbsp;be&nbsp;set&nbsp;as&nbsp;a&nbsp;parameter&nbsp;when&nbsp;starting&nbsp;the&nbsp;Phidget&nbsp;Webservice.<br>
+The&nbsp;use&nbsp;of&nbsp;a&nbsp;password&nbsp;is&nbsp;optional&nbsp;and&nbsp;calling&nbsp;the&nbsp;function&nbsp;without&nbsp;providing&nbsp;a&nbsp;password&nbsp;will<br>
+connect&nbsp;normally.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IPAddress&lt;string&gt;:&nbsp;IP&nbsp;Address&nbsp;or&nbsp;hostname&nbsp;of&nbsp;the&nbsp;Phidget&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;port&lt;int&gt;:&nbsp;Port&nbsp;of&nbsp;the&nbsp;Phidget&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password&lt;string&gt;:&nbsp;The&nbsp;secure&nbsp;password&nbsp;for&nbsp;the&nbsp;Phidget&nbsp;Webservice<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;Phidget&nbsp;Webservice&nbsp;cannot&nbsp;be&nbsp;contacted</tt></dd></dl>
+
+<dl><dt><a name="Manager-setOnAttachHandler"><strong>setOnAttachHandler</strong></a>(self, attachHandler)</dt><dd><tt>Set&nbsp;the&nbsp;Attach&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;attach&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;Phidget&nbsp;is&nbsp;phisically&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,<br>
+and&nbsp;has&nbsp;gone&nbsp;through&nbsp;its&nbsp;initalization,&nbsp;and&nbsp;so&nbsp;is&nbsp;ready&nbsp;to&nbsp;be&nbsp;used.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;attachHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;attachHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="Manager-setOnDetachHandler"><strong>setOnDetachHandler</strong></a>(self, detachHandler)</dt><dd><tt>Set&nbsp;the&nbsp;Detach&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;detach&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;Phidget&nbsp;is&nbsp;phisically&nbsp;detached&nbsp;from&nbsp;the&nbsp;system,&nbsp;and&nbsp;is&nbsp;no&nbsp;longer&nbsp;available.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;detachHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;detachHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="Manager-setOnErrorHandler"><strong>setOnErrorHandler</strong></a>(self, errorHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;error&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;error&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;an&nbsp;asynchronous&nbsp;error&nbsp;occurs.<br>
+Error&nbsp;events&nbsp;are&nbsp;not&nbsp;currently&nbsp;used,&nbsp;but&nbsp;will&nbsp;be&nbsp;in&nbsp;the&nbsp;future&nbsp;to&nbsp;report&nbsp;any&nbsp;problems&nbsp;that&nbsp;happen&nbsp;out&nbsp;of&nbsp;context&nbsp;from&nbsp;a&nbsp;direct&nbsp;function&nbsp;call.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;errorHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;errorHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="Manager-setOnServerConnectHandler"><strong>setOnServerConnectHandler</strong></a>(self, serverConnectHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;ServerConnect&nbsp;event&nbsp;handler<br>
+&nbsp;<br>
+The&nbsp;serverConnect&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;connection&nbsp;to&nbsp;a&nbsp;server&nbsp;is&nbsp;made<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serverConnectHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;serverConnectHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="Manager-setOnServerDisconnectHandler"><strong>setOnServerDisconnectHandler</strong></a>(self, serverDisconnectHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;ServerDisconnect&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;serverDisconnect&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;connection&nbsp;to&nbsp;a&nbsp;server&nbsp;is&nbsp;terminated.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serverDisconnectHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;serverDisconnectHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-FormatError"><strong>FormatError</strong></a>(...)</dt><dd><tt><a href="#-FormatError">FormatError</a>([integer])&nbsp;-&gt;&nbsp;string<br>
+&nbsp;<br>
+Convert&nbsp;a&nbsp;win32&nbsp;error&nbsp;code&nbsp;into&nbsp;a&nbsp;string.&nbsp;If&nbsp;the&nbsp;error&nbsp;code&nbsp;is&nbsp;not<br>
+given,&nbsp;the&nbsp;return&nbsp;value&nbsp;of&nbsp;a&nbsp;call&nbsp;to&nbsp;GetLastError()&nbsp;is&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-POINTER"><strong>POINTER</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-addressof"><strong>addressof</strong></a>(...)</dt><dd><tt><a href="#-addressof">addressof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;address&nbsp;of&nbsp;the&nbsp;C&nbsp;instance&nbsp;internal&nbsp;buffer</tt></dd></dl>
+ <dl><dt><a name="-alignment"><strong>alignment</strong></a>(...)</dt><dd><tt><a href="#-alignment">alignment</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-alignment">alignment</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;alignment&nbsp;requirements&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-byref"><strong>byref</strong></a>(...)</dt><dd><tt><a href="#-byref">byref</a>(C&nbsp;instance[,&nbsp;offset=0])&nbsp;-&gt;&nbsp;byref-object<br>
+Return&nbsp;a&nbsp;pointer&nbsp;lookalike&nbsp;to&nbsp;a&nbsp;C&nbsp;instance,&nbsp;only&nbsp;usable<br>
+as&nbsp;function&nbsp;argument</tt></dd></dl>
+ <dl><dt><a name="-get_errno"><strong>get_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-get_last_error"><strong>get_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-pointer"><strong>pointer</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-resize"><strong>resize</strong></a>(...)</dt><dd><tt>Resize&nbsp;the&nbsp;memory&nbsp;buffer&nbsp;of&nbsp;a&nbsp;ctypes&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-set_conversion_mode"><strong>set_conversion_mode</strong></a>(...)</dt><dd><tt><a href="#-set_conversion_mode">set_conversion_mode</a>(encoding,&nbsp;errors)&nbsp;-&gt;&nbsp;(previous-encoding,&nbsp;previous-errors)<br>
+&nbsp;<br>
+Set&nbsp;the&nbsp;encoding&nbsp;and&nbsp;error&nbsp;handling&nbsp;ctypes&nbsp;uses&nbsp;when&nbsp;converting<br>
+between&nbsp;unicode&nbsp;and&nbsp;strings.&nbsp;&nbsp;Returns&nbsp;the&nbsp;previous&nbsp;values.</tt></dd></dl>
+ <dl><dt><a name="-set_errno"><strong>set_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-set_last_error"><strong>set_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-sizeof"><strong>sizeof</strong></a>(...)</dt><dd><tt><a href="#-sizeof">sizeof</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-sizeof">sizeof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;size&nbsp;in&nbsp;bytes&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>DEFAULT_MODE</strong> = 0<br>
+<strong>GetLastError</strong> = &lt;_FuncPtr object at 0x009C3990&gt;<br>
+<strong>RTLD_GLOBAL</strong> = 0<br>
+<strong>RTLD_LOCAL</strong> = 0<br>
+<strong>__author__</strong> = 'Adam Stelmack'<br>
+<strong>__date__</strong> = 'May 17 2010'<br>
+<strong>__package__</strong> = 'Phidgets'<br>
+<strong>__version__</strong> = '2.1.8'<br>
+<strong>cdll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE890&gt;<br>
+<strong>memmove</strong> = &lt;CFunctionType object at 0x009C3A08&gt;<br>
+<strong>memset</strong> = &lt;CFunctionType object at 0x009C3BE8&gt;<br>
+<strong>oledll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE930&gt;<br>
+<strong>pydll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8B0&gt;<br>
+<strong>pythonapi</strong> = &lt;PyDLL 'python dll', handle 1e000000 at bfe8d0&gt;<br>
+<strong>windll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8F0&gt;</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Adam&nbsp;Stelmack</td></tr></table>
+</body></html>

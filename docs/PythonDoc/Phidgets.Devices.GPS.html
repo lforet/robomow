@@ -1,0 +1,663 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Phidgets.Devices.GPS</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="Phidgets.html"><font color="#ffffff">Phidgets</font></a>.<a href="Phidgets.Devices.html"><font color="#ffffff">Devices</font></a>.GPS</strong></big></big> (version 2.1.8, 13-Jan-2011 12:29:34 PM)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>&nbsp;</font></td></tr></table>
+    <p><tt>Copyright&nbsp;2011&nbsp;Phidgets&nbsp;Inc.<br>
+This&nbsp;work&nbsp;is&nbsp;licensed&nbsp;under&nbsp;the&nbsp;Creative&nbsp;Commons&nbsp;Attribution&nbsp;2.5&nbsp;Canada&nbsp;License.<br>
+To&nbsp;view&nbsp;a&nbsp;copy&nbsp;of&nbsp;this&nbsp;license,&nbsp;visit&nbsp;<a href="http://creativecommons.org/licenses/by/2.5/ca/">http://creativecommons.org/licenses/by/2.5/ca/</a></tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="threading.html">threading</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.Devices.GPS.html#GPSDate">GPSDate</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Devices.GPS.html#GPSTime">GPSTime</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.Devices.GPS.html#GPS">GPS</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="_ctypes.html#Structure">_ctypes.Structure</a>(_ctypes._CData)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.Devices.GPS.html#CPhidgetGPS_GPSDate">CPhidgetGPS_GPSDate</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Devices.GPS.html#CPhidgetGPS_GPSTime">CPhidgetGPS_GPSTime</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CPhidgetGPS_GPSDate">class <strong>CPhidgetGPS_GPSDate</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Phidgets.Devices.GPS.html#CPhidgetGPS_GPSDate">CPhidgetGPS_GPSDate</a></dd>
+<dd><a href="_ctypes.html#Structure">_ctypes.Structure</a></dd>
+<dd>_ctypes._CData</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>tm_mday</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
+<dl><dt><strong>tm_mon</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
+<dl><dt><strong>tm_year</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="_ctypes.html#Structure">_ctypes.Structure</a>:<br>
+<dl><dt><a name="CPhidgetGPS_GPSDate-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#CPhidgetGPS_GPSDate-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="_ctypes.html#Structure">_ctypes.Structure</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of _ctypes.StructType object at 0x1D1B18A8&gt;<dd><tt>T.<a href="#CPhidgetGPS_GPSDate-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from _ctypes._CData:<br>
+<dl><dt><a name="CPhidgetGPS_GPSDate-__ctypes_from_outparam__"><strong>__ctypes_from_outparam__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="CPhidgetGPS_GPSDate-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#CPhidgetGPS_GPSDate-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="CPhidgetGPS_GPSDate-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="CPhidgetGPS_GPSDate-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CPhidgetGPS_GPSTime">class <strong>CPhidgetGPS_GPSTime</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Phidgets.Devices.GPS.html#CPhidgetGPS_GPSTime">CPhidgetGPS_GPSTime</a></dd>
+<dd><a href="_ctypes.html#Structure">_ctypes.Structure</a></dd>
+<dd>_ctypes._CData</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>tm_hour</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
+<dl><dt><strong>tm_min</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
+<dl><dt><strong>tm_ms</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
+<dl><dt><strong>tm_sec</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="_ctypes.html#Structure">_ctypes.Structure</a>:<br>
+<dl><dt><a name="CPhidgetGPS_GPSTime-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#CPhidgetGPS_GPSTime-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="_ctypes.html#Structure">_ctypes.Structure</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of _ctypes.StructType object at 0x1D1B18A8&gt;<dd><tt>T.<a href="#CPhidgetGPS_GPSTime-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from _ctypes._CData:<br>
+<dl><dt><a name="CPhidgetGPS_GPSTime-__ctypes_from_outparam__"><strong>__ctypes_from_outparam__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="CPhidgetGPS_GPSTime-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#CPhidgetGPS_GPSTime-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="CPhidgetGPS_GPSTime-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="CPhidgetGPS_GPSTime-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GPS">class <strong>GPS</strong></a>(<a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;class&nbsp;represents&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;<a href="#GPS">GPS</a>.<br>
+&nbsp;<br>
+All&nbsp;methods&nbsp;to&nbsp;control&nbsp;a&nbsp;<a href="#GPS">GPS</a>&nbsp;are&nbsp;implemented&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+See&nbsp;the&nbsp;product&nbsp;manual&nbsp;for&nbsp;more&nbsp;specific&nbsp;API&nbsp;details,&nbsp;supported&nbsp;functionality,&nbsp;units,&nbsp;etc.<br>
+&nbsp;<br>
+Extends:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GPS-__del__"><strong>__del__</strong></a>(self)</dt><dd><tt>The&nbsp;Destructor&nbsp;Method&nbsp;for&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;Class</tt></dd></dl>
+
+<dl><dt><a name="GPS-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>The&nbsp;Constructor&nbsp;Method&nbsp;for&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;Class<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found</tt></dd></dl>
+
+<dl><dt><a name="GPS-getAltitude"><strong>getAltitude</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;current&nbsp;altitude&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;from&nbsp;mean&nbsp;sea&nbsp;level(geoid),&nbsp;ranges&nbsp;from&nbsp;-9999.9&nbsp;to&nbsp;17999.9.<br>
+&nbsp;<br>
+Units&nbsp;are&nbsp;in&nbsp;meters.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;altitude&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;meters&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getDate"><strong>getDate</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;date&nbsp;of&nbsp;the&nbsp;last&nbsp;received&nbsp;position.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;date&nbsp;of&nbsp;the&nbsp;last&nbsp;received&nbsp;position&nbsp;&lt;<a href="#GPSDate">GPSDate</a>&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getHeading"><strong>getHeading</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;current&nbsp;true&nbsp;course&nbsp;over&nbsp;ground&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;degrees&nbsp;(000.0&nbsp;-&nbsp;359.9).<br>
+&nbsp;<br>
+000.0&nbsp;indicates&nbsp;True&nbsp;North,&nbsp;180.0&nbsp;indicates&nbsp;True&nbsp;South.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;true&nbsp;course&nbsp;over&nbsp;ground&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getLatitude"><strong>getLatitude</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;current&nbsp;latitude&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;signed&nbsp;decimal&nbsp;degree&nbsp;format.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;latitude&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;signed&nbsp;decimal&nbsp;degree&nbsp;format&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getLongitude"><strong>getLongitude</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;current&nbsp;longitude&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;signed&nbsp;decimal&nbsp;degree&nbsp;format.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;longitude&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;signed&nbsp;decimal&nbsp;degree&nbsp;format&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getPositionFixStatus"><strong>getPositionFixStatus</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="GPS-getTime"><strong>getTime</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;current&nbsp;time&nbsp;as&nbsp;transmitted&nbsp;by&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;receiver.<br>
+&nbsp;<br>
+Time&nbsp;is&nbsp;in&nbsp;UTC&nbsp;format.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;time&nbsp;as&nbsp;transmitted&nbsp;by&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;receiver&nbsp;&lt;<a href="#GPSTime">GPSTime</a>&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getVelocity"><strong>getVelocity</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;current&nbsp;speed&nbsp;over&nbsp;ground&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;km/h.<br>
+&nbsp;<br>
+Has&nbsp;a&nbsp;maximum&nbsp;value&nbsp;of&nbsp;1800.0.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;current&nbsp;speed&nbsp;over&nbsp;ground&nbsp;of&nbsp;the&nbsp;active&nbsp;antenna&nbsp;in&nbsp;km/h&nbsp;&lt;double&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-setOnPositionChangeHandler"><strong>setOnPositionChangeHandler</strong></a>(self, positionChangeHandler)</dt><dd><tt>Set&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;Positon&nbsp;Change&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+An&nbsp;event&nbsp;that&nbsp;is&nbsp;issued&nbsp;whenever&nbsp;a&nbsp;change&nbsp;in&nbsp;position&nbsp;occurs.&nbsp;Event&nbsp;arguments&nbsp;are&nbsp;latitude,&nbsp;longitude,&nbsp;altitude.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;positionChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;positionChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="GPS-setOnPositionFixStatusChangeHandler"><strong>setOnPositionFixStatusChangeHandler</strong></a>(self, positionFixStatusChangeHandler)</dt><dd><tt>Set&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;Position&nbsp;Fix&nbsp;Status&nbsp;Change&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+An&nbsp;event&nbsp;that&nbsp;is&nbsp;issued&nbsp;when&nbsp;a&nbsp;position&nbsp;fix&nbsp;is&nbsp;obtained&nbsp;or&nbsp;lost.&nbsp;The&nbsp;event&nbsp;argument&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;inform&nbsp;you&nbsp;whether&nbsp;or&nbsp;not&nbsp;you&nbsp;are&nbsp;getting&nbsp;a&nbsp;signal.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;positionFixStatusChangeHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;positionFixStatusChangeHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>:<br>
+<dl><dt><a name="GPS-closePhidget"><strong>closePhidget</strong></a>(self)</dt><dd><tt>Closes&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;will&nbsp;shut&nbsp;down&nbsp;all&nbsp;threads&nbsp;dealing&nbsp;with&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;and&nbsp;you&nbsp;won't&nbsp;recieve&nbsp;any&nbsp;more&nbsp;events.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getDeviceClass"><strong>getDeviceClass</strong></a>(self)</dt><dd><tt>Gets&nbsp;the&nbsp;class&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+Classes&nbsp;represent&nbsp;a&nbsp;group&nbsp;of&nbsp;Phidgets&nbsp;that&nbsp;use&nbsp;the&nbsp;same&nbsp;API&nbsp;type.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;Class&nbsp;number&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getDeviceID"><strong>getDeviceID</strong></a>(self)</dt><dd><tt>Gets&nbsp;the&nbsp;ID&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;ID&nbsp;specifies&nbsp;a&nbsp;specific&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;device,&nbsp;within&nbsp;the&nbsp;phidget&nbsp;class.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;ID&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getDeviceLabel"><strong>getDeviceLabel</strong></a>(self)</dt><dd><tt>Gets&nbsp;the&nbsp;label&nbsp;associated&nbsp;with&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;label&nbsp;is&nbsp;a&nbsp;String&nbsp;-&nbsp;up&nbsp;to&nbsp;ten&nbsp;digits&nbsp;-&nbsp;that&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;Flash&nbsp;memory&nbsp;of&nbsp;newer&nbsp;Phidgets.<br>
+This&nbsp;label&nbsp;can&nbsp;be&nbsp;set&nbsp;programatically&nbsp;(see&nbsp;setDeviceLabel),&nbsp;and&nbsp;is&nbsp;non-volatile&nbsp;-&nbsp;so&nbsp;it&nbsp;is&nbsp;remembered&nbsp;even&nbsp;if&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;unplugged.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;label&nbsp;associated&nbsp;with&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached,&nbsp;or&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;does&nbsp;not&nbsp;support&nbsp;labels.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getDeviceName"><strong>getDeviceName</strong></a>(self)</dt><dd><tt>Return&nbsp;the&nbsp;name&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;a&nbsp;string&nbsp;that&nbsp;describes&nbsp;the&nbsp;device.&nbsp;For&nbsp;example,&nbsp;a&nbsp;PhidgetInterfaceKit&nbsp;<br>
+could&nbsp;be&nbsp;described&nbsp;as&nbsp;"<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;InterfaceKit&nbsp;8/8/8",&nbsp;or&nbsp;"<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;InterfaceKit&nbsp;0/0/4",&nbsp;among&nbsp;others,&nbsp;depending&nbsp;on&nbsp;the&nbsp;specific&nbsp;device.<br>
+&nbsp;<br>
+This&nbsp;lets&nbsp;you&nbsp;determine&nbsp;the&nbsp;specific&nbsp;type&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>,&nbsp;within&nbsp;the&nbsp;broader&nbsp;classes&nbsp;of&nbsp;Phidgets,&nbsp;such&nbsp;as&nbsp;PhidgetInterfaceKit,&nbsp;or&nbsp;PhidgetServo.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;device&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;phidget&nbsp;is&nbsp;not&nbsp;opened&nbsp;or&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getDeviceType"><strong>getDeviceType</strong></a>(self)</dt><dd><tt>Return&nbsp;the&nbsp;device&nbsp;type&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;a&nbsp;string&nbsp;that&nbsp;describes&nbsp;the&nbsp;device&nbsp;as&nbsp;a&nbsp;class&nbsp;of&nbsp;devices.&nbsp;For&nbsp;example,&nbsp;all&nbsp;PhidgetInterfaceKit&nbsp;Phidgets<br>
+will&nbsp;returns&nbsp;the&nbsp;String&nbsp;"PhidgetInterfaceKit".<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;Type&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getDeviceVersion"><strong>getDeviceVersion</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;device&nbsp;version&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;number&nbsp;is&nbsp;simply&nbsp;a&nbsp;way&nbsp;of&nbsp;distinguishing&nbsp;between&nbsp;different&nbsp;revisions&nbsp;of&nbsp;a&nbsp;specific&nbsp;type&nbsp;of&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>,&nbsp;and&nbsp;is<br>
+only&nbsp;really&nbsp;of&nbsp;use&nbsp;if&nbsp;you&nbsp;need&nbsp;to&nbsp;troubleshoot&nbsp;device&nbsp;problems&nbsp;with&nbsp;Phidgets&nbsp;Inc.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Device&nbsp;Version&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;there&nbsp;is&nbsp;no&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getLibraryVersion"><strong>getLibraryVersion</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;library&nbsp;version.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;library&nbsp;version&nbsp;of&nbsp;the&nbsp;underlying&nbsp;phidget21&nbsp;C&nbsp;library&nbsp;and&nbsp;not&nbsp;the&nbsp;version&nbsp;of&nbsp;the&nbsp;Python&nbsp;wrapper&nbsp;module&nbsp;implementation.<br>
+The&nbsp;version&nbsp;is&nbsp;retured&nbsp;as&nbsp;a&nbsp;string&nbsp;which&nbsp;contains&nbsp;the&nbsp;version&nbsp;number&nbsp;and&nbsp;build&nbsp;date.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Library&nbsp;Version&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getSerialNum"><strong>getSerialNum</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;unique&nbsp;serial&nbsp;number&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;number&nbsp;is&nbsp;set&nbsp;during&nbsp;manufacturing,&nbsp;and&nbsp;is&nbsp;unique&nbsp;across&nbsp;all&nbsp;Phidgets.&nbsp;This&nbsp;number&nbsp;can&nbsp;be&nbsp;used&nbsp;in&nbsp;calls&nbsp;to&nbsp;open&nbsp;to&nbsp;specify&nbsp;this&nbsp;specific&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;to&nbsp;be&nbsp;opened.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Serial&nbsp;Number&nbsp;&lt;int&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;and&nbsp;attached.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getServerAddress"><strong>getServerAddress</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;Address&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice.<br>
+&nbsp;<br>
+Returns&nbsp;the&nbsp;Address&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;opened&nbsp;as&nbsp;remote.<br>
+This&nbsp;may&nbsp;be&nbsp;an&nbsp;IP&nbsp;Address&nbsp;or&nbsp;a&nbsp;hostname.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Address&nbsp;of&nbsp;the&nbsp;Webservice&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;open&nbsp;opened&nbsp;as&nbsp;a&nbsp;remote&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getServerID"><strong>getServerID</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;Server&nbsp;ID&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice.<br>
+&nbsp;<br>
+Returns&nbsp;the&nbsp;Server&nbsp;ID&nbsp;of&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;opened&nbsp;as&nbsp;remote.<br>
+This&nbsp;is&nbsp;an&nbsp;arbitrary&nbsp;server&nbsp;identifier,&nbsp;independant&nbsp;of&nbsp;IP&nbsp;address&nbsp;and&nbsp;Port.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ServerID&nbsp;of&nbsp;the&nbsp;Webservice&nbsp;&lt;string&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;was&nbsp;open&nbsp;opened&nbsp;as&nbsp;a&nbsp;remote&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.</tt></dd></dl>
+
+<dl><dt><a name="GPS-isAttached"><strong>isAttached</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;attached&nbsp;status&nbsp;of&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;returns&nbsp;True&nbsp;or&nbsp;False,&nbsp;depending&nbsp;on&nbsp;whether&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;phisically&nbsp;plugged&nbsp;into&nbsp;the&nbsp;computer,&nbsp;initialized,&nbsp;and&nbsp;ready&nbsp;to&nbsp;use&nbsp;-&nbsp;or&nbsp;not.<br>
+If&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;attached,&nbsp;many&nbsp;functions&nbsp;calls&nbsp;will&nbsp;fail&nbsp;with&nbsp;a&nbsp;PhidgetException,&nbsp;so&nbsp;either&nbsp;checking&nbsp;this&nbsp;function,&nbsp;or&nbsp;using&nbsp;the&nbsp;Attach&nbsp;and&nbsp;Detach&nbsp;events,&nbsp;is&nbsp;recommended,&nbsp;if&nbsp;a&nbsp;device&nbsp;is&nbsp;likely&nbsp;to&nbsp;be&nbsp;attached&nbsp;or&nbsp;detached&nbsp;during&nbsp;use.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Attached&nbsp;Status&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;&lt;boolean&gt;<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="GPS-isAttachedToServer"><strong>isAttachedToServer</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;network&nbsp;attached&nbsp;status&nbsp;for&nbsp;remotely&nbsp;opened&nbsp;Phidgets.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;returns&nbsp;True&nbsp;or&nbsp;False,&nbsp;depending&nbsp;on&nbsp;whether&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;WebService&nbsp;is&nbsp;open&nbsp;-&nbsp;or&nbsp;not.<br>
+If&nbsp;this&nbsp;is&nbsp;false&nbsp;for&nbsp;a&nbsp;remote&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;then&nbsp;the&nbsp;connection&nbsp;is&nbsp;not&nbsp;active&nbsp;-&nbsp;either&nbsp;because&nbsp;a&nbsp;connection&nbsp;has&nbsp;not&nbsp;yet&nbsp;been&nbsp;established,<br>
+or&nbsp;because&nbsp;the&nbsp;connection&nbsp;was&nbsp;terminated.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Network&nbsp;Attached&nbsp;Status&nbsp;&lt;boolean&gt;.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened&nbsp;remotely.</tt></dd></dl>
+
+<dl><dt><a name="GPS-openPhidget"><strong>openPhidget</strong></a>(self, serial<font color="#909090">=-1</font>)</dt><dd><tt>Open&nbsp;a&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;with&nbsp;or&nbsp;without&nbsp;a&nbsp;serial&nbsp;number.<br>
+&nbsp;<br>
+Open&nbsp;is&nbsp;pervasive.&nbsp;What&nbsp;this&nbsp;means&nbsp;is&nbsp;that&nbsp;you&nbsp;can&nbsp;call&nbsp;open&nbsp;on&nbsp;a&nbsp;device&nbsp;before&nbsp;it&nbsp;is&nbsp;plugged&nbsp;in,&nbsp;and&nbsp;keep&nbsp;the&nbsp;device&nbsp;opened&nbsp;across&nbsp;device&nbsp;dis-&nbsp;and&nbsp;re-connections.<br>
+&nbsp;<br>
+Open&nbsp;is&nbsp;Asynchronous.&nbsp;&nbsp;What&nbsp;this&nbsp;means&nbsp;is&nbsp;that&nbsp;open&nbsp;will&nbsp;return&nbsp;immediately&nbsp;--&nbsp;before&nbsp;the&nbsp;device&nbsp;being&nbsp;opened&nbsp;is&nbsp;actually&nbsp;available,<br>
+so&nbsp;you&nbsp;need&nbsp;to&nbsp;use&nbsp;either&nbsp;the&nbsp;attach&nbsp;event&nbsp;or&nbsp;the&nbsp;waitForAttachment&nbsp;method&nbsp;to&nbsp;determine&nbsp;if&nbsp;a&nbsp;device&nbsp;is&nbsp;available&nbsp;before&nbsp;using&nbsp;it.<br>
+&nbsp;<br>
+If&nbsp;no&nbsp;arguement&nbsp;is&nbsp;provided,&nbsp;the&nbsp;first&nbsp;available&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;opened.&nbsp;If&nbsp;there&nbsp;are&nbsp;two&nbsp;Phidgets&nbsp;of&nbsp;the&nbsp;same&nbsp;type&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,<br>
+you&nbsp;should&nbsp;specify&nbsp;a&nbsp;serial&nbsp;number,&nbsp;as&nbsp;there&nbsp;is&nbsp;no&nbsp;guarantee&nbsp;which&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;selected&nbsp;by&nbsp;the&nbsp;call&nbsp;to&nbsp;open().<br>
+&nbsp;<br>
+The&nbsp;serial&nbsp;number&nbsp;is&nbsp;a&nbsp;unique&nbsp;number&nbsp;assigned&nbsp;to&nbsp;each&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;during&nbsp;production&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;uniquely&nbsp;identify&nbsp;specific&nbsp;phidgets.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serial&lt;int&gt;:&nbsp;The&nbsp;serial&nbsp;number&nbsp;of&nbsp;the&nbsp;device<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="GPS-openRemote"><strong>openRemote</strong></a>(self, serverID, serial<font color="#909090">=-1</font>, password<font color="#909090">=''</font>)</dt><dd><tt>Open&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;remotely&nbsp;using&nbsp;a&nbsp;Server&nbsp;ID,&nbsp;securely&nbsp;providing&nbsp;a&nbsp;password,&nbsp;and&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;connect&nbsp;to&nbsp;a&nbsp;specific&nbsp;serial&nbsp;number.<br>
+&nbsp;<br>
+Providing&nbsp;a&nbsp;password&nbsp;will&nbsp;open&nbsp;the&nbsp;connection&nbsp;securely&nbsp;depending&nbsp;on&nbsp;if&nbsp;a&nbsp;password&nbsp;is&nbsp;set&nbsp;on&nbsp;the&nbsp;host&nbsp;machine's&nbsp;webservice.<br>
+&nbsp;<br>
+If&nbsp;no&nbsp;serial&nbsp;number&nbsp;is&nbsp;provided,&nbsp;the&nbsp;first&nbsp;available&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;opened.&nbsp;If&nbsp;there&nbsp;are&nbsp;two&nbsp;Phidgets&nbsp;of&nbsp;the&nbsp;same&nbsp;type&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,<br>
+you&nbsp;should&nbsp;specify&nbsp;a&nbsp;serial&nbsp;number,&nbsp;as&nbsp;there&nbsp;is&nbsp;no&nbsp;guarantee&nbsp;which&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;selected&nbsp;by&nbsp;the&nbsp;call&nbsp;to&nbsp;open().<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serverID&lt;string&gt;:&nbsp;ServerID&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serial&lt;int&gt;:&nbsp;The&nbsp;serial&nbsp;number&nbsp;of&nbsp;the&nbsp;device<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password&lt;string&gt;:&nbsp;The&nbsp;secure&nbsp;password&nbsp;for&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;cannot&nbsp;be&nbsp;contacted</tt></dd></dl>
+
+<dl><dt><a name="GPS-openRemoteIP"><strong>openRemoteIP</strong></a>(self, IPAddress, port, serial<font color="#909090">=-1</font>, password<font color="#909090">=''</font>)</dt><dd><tt>Open&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;remotely&nbsp;using&nbsp;an&nbsp;IP&nbsp;Address,&nbsp;securely&nbsp;providing&nbsp;a&nbsp;password,and&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;connect&nbsp;to&nbsp;a&nbsp;specific&nbsp;serial&nbsp;number.<br>
+&nbsp;<br>
+Providing&nbsp;a&nbsp;password&nbsp;will&nbsp;open&nbsp;the&nbsp;connection&nbsp;securely&nbsp;depending&nbsp;on&nbsp;if&nbsp;a&nbsp;password&nbsp;is&nbsp;set&nbsp;on&nbsp;the&nbsp;host&nbsp;machine's&nbsp;webservice.<br>
+&nbsp;<br>
+If&nbsp;no&nbsp;serial&nbsp;number&nbsp;is&nbsp;provided,&nbsp;the&nbsp;first&nbsp;available&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;opened.&nbsp;If&nbsp;there&nbsp;are&nbsp;two&nbsp;Phidgets&nbsp;of&nbsp;the&nbsp;same&nbsp;type&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,<br>
+you&nbsp;should&nbsp;specify&nbsp;a&nbsp;serial&nbsp;number,&nbsp;as&nbsp;there&nbsp;is&nbsp;no&nbsp;guarantee&nbsp;which&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;will&nbsp;be&nbsp;selected&nbsp;by&nbsp;the&nbsp;call&nbsp;to&nbsp;open().<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IPAddress&lt;string&gt;:&nbsp;IP&nbsp;Address&nbsp;or&nbsp;hostname&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;port&lt;int&gt;:&nbsp;Port&nbsp;of&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serial&lt;int&gt;:&nbsp;The&nbsp;serial&nbsp;number&nbsp;of&nbsp;the&nbsp;device<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password&lt;string&gt;:&nbsp;The&nbsp;secure&nbsp;password&nbsp;for&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;if&nbsp;the&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;Webservice&nbsp;cannot&nbsp;be&nbsp;contacted</tt></dd></dl>
+
+<dl><dt><a name="GPS-setOnAttachHandler"><strong>setOnAttachHandler</strong></a>(self, attachHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Attach&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;attach&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;physically&nbsp;attached&nbsp;to&nbsp;the&nbsp;system,&nbsp;and&nbsp;has&nbsp;gone&nbsp;through&nbsp;its&nbsp;initalization,&nbsp;and&nbsp;so&nbsp;is&nbsp;ready&nbsp;to&nbsp;be&nbsp;used.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;attachHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;attachHandler&nbsp;callback&nbsp;function<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="GPS-setOnDetachHandler"><strong>setOnDetachHandler</strong></a>(self, detachHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Detach&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;detach&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;phisically&nbsp;detached&nbsp;from&nbsp;the&nbsp;system,&nbsp;and&nbsp;is&nbsp;no&nbsp;longer&nbsp;available.<br>
+This&nbsp;is&nbsp;particularly&nbsp;usefull&nbsp;for&nbsp;applications&nbsp;when&nbsp;a&nbsp;phisical&nbsp;detach&nbsp;would&nbsp;be&nbsp;expected.<br>
+&nbsp;<br>
+Remember&nbsp;that&nbsp;many&nbsp;of&nbsp;the&nbsp;methods,&nbsp;if&nbsp;called&nbsp;on&nbsp;an&nbsp;unattached&nbsp;device,&nbsp;will&nbsp;throw&nbsp;a&nbsp;PhidgetException.<br>
+This&nbsp;Exception&nbsp;can&nbsp;be&nbsp;checked&nbsp;to&nbsp;see&nbsp;if&nbsp;it&nbsp;was&nbsp;caused&nbsp;by&nbsp;a&nbsp;device&nbsp;being&nbsp;unattached,&nbsp;but&nbsp;a&nbsp;better&nbsp;method&nbsp;would&nbsp;be&nbsp;to&nbsp;regiter&nbsp;the&nbsp;detach&nbsp;handler,<br>
+which&nbsp;could&nbsp;notify&nbsp;the&nbsp;main&nbsp;program&nbsp;logic&nbsp;that&nbsp;the&nbsp;device&nbsp;is&nbsp;no&nbsp;longer&nbsp;available,&nbsp;disable&nbsp;GUI&nbsp;controls,&nbsp;etc.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;detachHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;detachHandler&nbsp;callback&nbsp;function<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="GPS-setOnErrorhandler"><strong>setOnErrorhandler</strong></a>(self, errorHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Error&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;error&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;an&nbsp;asynchronous&nbsp;error&nbsp;occurs.<br>
+Error&nbsp;events&nbsp;are&nbsp;not&nbsp;currently&nbsp;used,&nbsp;but&nbsp;will&nbsp;be&nbsp;in&nbsp;the&nbsp;future&nbsp;to&nbsp;report&nbsp;any&nbsp;problems&nbsp;that&nbsp;happen&nbsp;out&nbsp;of&nbsp;context&nbsp;from&nbsp;a&nbsp;direct&nbsp;function&nbsp;call.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;errorHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;errorHandler&nbsp;callback&nbsp;function.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<dl><dt><a name="GPS-setOnServerConnectHandler"><strong>setOnServerConnectHandler</strong></a>(self, serverConnectHandler)</dt><dd><tt>Sets&nbsp;the&nbsp;Server&nbsp;Connect&nbsp;Event&nbsp;Handler.<br>
+&nbsp;<br>
+The&nbsp;serverConnect&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;connection&nbsp;to&nbsp;a&nbsp;server&nbsp;is&nbsp;made.&nbsp;This&nbsp;is&nbsp;only&nbsp;usefull&nbsp;for&nbsp;Phidgets&nbsp;opened&nbsp;remotely.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;serverConnectHandler:&nbsp;hook&nbsp;to&nbsp;the&nbsp;serverConnectHandler&nbsp;callback&nbsp;function<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened</tt></dd></dl>
+
+<dl><dt><a name="GPS-setOnServerDisconnectHandler"><strong>setOnServerDisconnectHandler</strong></a>(self, serverDisconnectHandler)</dt><dd><tt>Set&nbsp;the&nbsp;Server&nbsp;Disconnect&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;serverDisconnect&nbsp;handler&nbsp;is&nbsp;a&nbsp;method&nbsp;that&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;a&nbsp;connection&nbsp;to&nbsp;a&nbsp;server&nbsp;is&nbsp;terminated.&nbsp;This&nbsp;is&nbsp;only&nbsp;usefull&nbsp;for&nbsp;Phidgets&nbsp;opened&nbsp;remotely.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened</tt></dd></dl>
+
+<dl><dt><a name="GPS-waitForAttach"><strong>waitForAttach</strong></a>(self, timeout)</dt><dd><tt>Waits&nbsp;for&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;to&nbsp;become&nbsp;available.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;can&nbsp;be&nbsp;called&nbsp;after&nbsp;open&nbsp;has&nbsp;been&nbsp;called&nbsp;to&nbsp;wait&nbsp;for&nbsp;thid&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;to&nbsp;become&nbsp;available.<br>
+This&nbsp;is&nbsp;usefull&nbsp;because&nbsp;open&nbsp;is&nbsp;asynchronous&nbsp;(and&nbsp;thus&nbsp;returns&nbsp;immediately),&nbsp;and&nbsp;most&nbsp;methods&nbsp;will&nbsp;throw&nbsp;a&nbsp;PhidgetException&nbsp;is&nbsp;they&nbsp;are&nbsp;called&nbsp;before&nbsp;a&nbsp;device&nbsp;is&nbsp;actually&nbsp;ready.<br>
+This&nbsp;method&nbsp;is&nbsp;synonymous&nbsp;with&nbsp;polling&nbsp;the&nbsp;isAttached&nbsp;method&nbsp;until&nbsp;it&nbsp;returns&nbsp;True,&nbsp;or&nbsp;using&nbsp;the&nbsp;Attach&nbsp;event.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;blocks&nbsp;for&nbsp;up&nbsp;to&nbsp;the&nbsp;timeout,&nbsp;at&nbsp;which&nbsp;point&nbsp;it&nbsp;will&nbsp;throw&nbsp;a&nbsp;PhidgetException.&nbsp;Otherwise,&nbsp;it&nbsp;returns&nbsp;when&nbsp;the&nbsp;phidget&nbsp;is&nbsp;attached&nbsp;and&nbsp;initialized.<br>
+&nbsp;<br>
+A&nbsp;timeout&nbsp;of&nbsp;0&nbsp;is&nbsp;infinite.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout&lt;long&gt;:&nbsp;Timeout&nbsp;in&nbsp;milliseconds<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException:&nbsp;If&nbsp;this&nbsp;<a href="Phidgets.Phidget.html#Phidget">Phidget</a>&nbsp;is&nbsp;not&nbsp;opened.</tt></dd></dl>
+
+<hr>
+Static methods inherited from <a href="Phidgets.Phidget.html#Phidget">Phidgets.Phidget.Phidget</a>:<br>
+<dl><dt><a name="GPS-disableLogging"><strong>disableLogging</strong></a>()</dt><dd><tt>Turns&nbsp;off&nbsp;logging&nbsp;in&nbsp;the&nbsp;native&nbsp;C&nbsp;Library.<br>
+&nbsp;<br>
+This&nbsp;only&nbsp;needs&nbsp;to&nbsp;be&nbsp;called&nbsp;if&nbsp;enableLogging&nbsp;was&nbsp;called&nbsp;to&nbsp;turn&nbsp;logging&nbsp;on.<br>
+This&nbsp;will&nbsp;turn&nbsp;logging&nbsp;back&nbsp;off.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="GPS-dispose"><strong>dispose</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="GPS-enableLogging"><strong>enableLogging</strong></a>(level, file)</dt><dd><tt>Turns&nbsp;on&nbsp;logging&nbsp;in&nbsp;the&nbsp;native&nbsp;C&nbsp;Library.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;mostly&nbsp;usefull&nbsp;for&nbsp;debugging&nbsp;purposes&nbsp;-&nbsp;when&nbsp;an&nbsp;issue&nbsp;needs&nbsp;to&nbsp;be&nbsp;resolved&nbsp;by&nbsp;Phidgets&nbsp;Inc.<br>
+The&nbsp;output&nbsp;is&nbsp;mostly&nbsp;low-level&nbsp;library&nbsp;information,&nbsp;that&nbsp;won't&nbsp;be&nbsp;usefull&nbsp;for&nbsp;most&nbsp;users.<br>
+&nbsp;<br>
+Logging&nbsp;may&nbsp;be&nbsp;usefull&nbsp;for&nbsp;users&nbsp;trying&nbsp;to&nbsp;debug&nbsp;their&nbsp;own&nbsp;problems,&nbsp;as&nbsp;logs&nbsp;can&nbsp;be&nbsp;inserted&nbsp;by&nbsp;the&nbsp;user&nbsp;using&nbsp;log.<br>
+The&nbsp;level&nbsp;can&nbsp;be&nbsp;one&nbsp;of:<br>
+PhidgetLogLevel.PHIDGET_LOG_VERBOSE&nbsp;(1),<br>
+PhidgetLogLevel.PHIDGET_LOG_INFO&nbsp;(2),<br>
+PhidgetLogLevel.PHIDGET_LOG_DEBUG&nbsp;(3),<br>
+PhidgetLogLevel.PHIDGET_LOG_WARNING&nbsp;(4),<br>
+PhidgetLogLevel.PHIDGET_LOG_ERROR&nbsp;(5)or<br>
+PhidgetLogLevel.PHIDGET_LOG_CRITICAL&nbsp;(6)<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;level&lt;int&gt;:&nbsp;highest&nbsp;level&nbsp;of&nbsp;logging&nbsp;that&nbsp;will&nbsp;be&nbsp;output,&nbsp;the&nbsp;PhidgetLogLevel&nbsp;object&nbsp;has&nbsp;been&nbsp;provided&nbsp;for&nbsp;a&nbsp;readable&nbsp;way&nbsp;to&nbsp;set&nbsp;this.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;file&lt;string&gt;:&nbsp;path&nbsp;and&nbsp;name&nbsp;of&nbsp;file&nbsp;to&nbsp;output&nbsp;to.&nbsp;&nbsp;specify&nbsp;NULL&nbsp;to&nbsp;output&nbsp;to&nbsp;the&nbsp;console.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+<dl><dt><a name="GPS-log"><strong>log</strong></a>(level, id, log)</dt><dd><tt>Adds&nbsp;a&nbsp;log&nbsp;entry&nbsp;into&nbsp;the&nbsp;phidget&nbsp;log.<br>
+&nbsp;<br>
+This&nbsp;log&nbsp;is&nbsp;enabled&nbsp;by&nbsp;calling&nbsp;enableLogging&nbsp;and&nbsp;this&nbsp;allows&nbsp;the&nbsp;entry&nbsp;of&nbsp;user&nbsp;logs&nbsp;in&nbsp;amongst&nbsp;the&nbsp;phidget&nbsp;library&nbsp;logs.<br>
+&nbsp;<br>
+The&nbsp;level&nbsp;can&nbsp;be&nbsp;one&nbsp;of:<br>
+PhidgetLogLevel.PHIDGET_LOG_VERBOSE,<br>
+PhidgetLogLevel.PHIDGET_LOG_INFO,<br>
+PhidgetLogLevel.PHIDGET_LOG_DEBUG,<br>
+PhidgetLogLevel.PHIDGET_LOG_WARNING,<br>
+PhidgetLogLevel.PHIDGET_LOG_ERROR&nbsp;or<br>
+PhidgetLogLevel.PHIDGET_LOG_CRITICAL<br>
+&nbsp;<br>
+Note:&nbsp;PhidgetLogLevel.PHIDGET_LOG_DEBUG&nbsp;should&nbsp;not&nbsp;be&nbsp;used,&nbsp;as&nbsp;these&nbsp;logs&nbsp;are&nbsp;only&nbsp;printed&nbsp;when&nbsp;using&nbsp;the&nbsp;debug&nbsp;library,<br>
+which&nbsp;is&nbsp;not&nbsp;generally&nbsp;available.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;level&lt;int&gt;:&nbsp;level&nbsp;to&nbsp;enter&nbsp;the&nbsp;log&nbsp;at.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&lt;string&gt;:&nbsp;an&nbsp;arbitrary&nbsp;identifier&nbsp;for&nbsp;this&nbsp;log.&nbsp;&nbsp;This&nbsp;can&nbsp;be&nbsp;NULL.&nbsp;The&nbsp;C&nbsp;library&nbsp;uses&nbsp;this&nbsp;field&nbsp;for&nbsp;source&nbsp;filename&nbsp;and&nbsp;line&nbsp;number.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log&lt;string&gt;:&nbsp;the&nbsp;message&nbsp;to&nbsp;log.<br>
+&nbsp;<br>
+Exceptions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RuntimeError&nbsp;-&nbsp;If&nbsp;current&nbsp;platform&nbsp;is&nbsp;not&nbsp;supported/phidget&nbsp;c&nbsp;dll&nbsp;cannot&nbsp;be&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PhidgetException</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GPSDate">class <strong>GPSDate</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GPSDate-__init__"><strong>__init__</strong></a>(self, GPSDate_struct)</dt></dl>
+
+<dl><dt><a name="GPSDate-toCPhidgetGPS_GPSDate"><strong>toCPhidgetGPS_GPSDate</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="GPSDate-toString"><strong>toString</strong></a>(self)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GPSTime">class <strong>GPSTime</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GPSTime-__init__"><strong>__init__</strong></a>(self, GPSTime_struct)</dt></dl>
+
+<dl><dt><a name="GPSTime-toCPhidgetGPS_GPSTime"><strong>toCPhidgetGPS_GPSTime</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="GPSTime-toString"><strong>toString</strong></a>(self)</dt></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-byref"><strong>byref</strong></a>(...)</dt><dd><tt><a href="#-byref">byref</a>(C&nbsp;instance[,&nbsp;offset=0])&nbsp;-&gt;&nbsp;byref-object<br>
+Return&nbsp;a&nbsp;pointer&nbsp;lookalike&nbsp;to&nbsp;a&nbsp;C&nbsp;instance,&nbsp;only&nbsp;usable<br>
+as&nbsp;function&nbsp;argument</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Adam Stelmack'<br>
+<strong>__date__</strong> = '13-Jan-2011 12:29:34 PM'<br>
+<strong>__package__</strong> = 'Phidgets.Devices'<br>
+<strong>__version__</strong> = '2.1.8'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Adam&nbsp;Stelmack</td></tr></table>
+</body></html>

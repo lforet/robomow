@@ -1,0 +1,623 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Phidgets.Events.Events</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="Phidgets.html"><font color="#ffffff">Phidgets</font></a>.<a href="Phidgets.Events.html"><font color="#ffffff">Events</font></a>.Events</strong></big></big> (version 2.1.8, May 17 2010)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>&nbsp;</font></td></tr></table>
+    <p><tt>Copyright&nbsp;2010&nbsp;Phidgets&nbsp;Inc.<br>
+This&nbsp;work&nbsp;is&nbsp;licensed&nbsp;under&nbsp;the&nbsp;Creative&nbsp;Commons&nbsp;Attribution&nbsp;2.5&nbsp;Canada&nbsp;License.&nbsp;<br>
+To&nbsp;view&nbsp;a&nbsp;copy&nbsp;of&nbsp;this&nbsp;license,&nbsp;visit&nbsp;<a href="http://creativecommons.org/licenses/by/2.5/ca/">http://creativecommons.org/licenses/by/2.5/ca/</a></tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#AccelerationChangeEventArgs">AccelerationChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#AttachEventArgs">AttachEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#BackEMFEventArgs">BackEMFEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#BridgeDataEventArgs">BridgeDataEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#CurrentChangeEventArgs">CurrentChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#CurrentUpdateEventArgs">CurrentUpdateEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#DetachEventArgs">DetachEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#EncoderPositionChangeEventArgs">EncoderPositionChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#EncoderPositionUpdateEventArgs">EncoderPositionUpdateEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#ErrorEventArgs">ErrorEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#FrequencyCounterCountEventArgs">FrequencyCounterCountEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#GPSPositionChangeEventArgs">GPSPositionChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#GPSPositionFixStatusChangeEventArgs">GPSPositionFixStatusChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#IRCodeEventArgs">IRCodeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#IRLearnEventArgs">IRLearnEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#IRRawDataEventArgs">IRRawDataEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#InputChangeEventArgs">InputChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#KeyChangeEventArgs">KeyChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#OutputChangeEventArgs">OutputChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#PHChangeEventArgs">PHChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#PositionChangeEventArgs">PositionChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#SensorChangeEventArgs">SensorChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#SensorUpdateEventArgs">SensorUpdateEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#ServerConnectArgs">ServerConnectArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#ServerDisconnectArgs">ServerDisconnectArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#SpatialDataEventArgs">SpatialDataEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#StepperPositionChangeEventArgs">StepperPositionChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#TagEventArgs">TagEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#TemperatureChangeEventArgs">TemperatureChangeEventArgs</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Phidgets.Events.Events.html#VelocityChangeEventArgs">VelocityChangeEventArgs</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="AccelerationChangeEventArgs">class <strong>AccelerationChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Acceleration&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;axis&nbsp;that&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;acceleration&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;axis&nbsp;index&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;acceleration&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;acceleration&nbsp;value&nbsp;that&nbsp;was&nbsp;read&nbsp;to&nbsp;generate&nbsp;the&nbsp;event.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="AccelerationChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, acceleration)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="AttachEventArgs">class <strong>AttachEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Attach&nbsp;event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+The&nbsp;data&nbsp;stored&nbsp;in&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;that&nbsp;triggered&nbsp;the&nbsp;event.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="AttachEventArgs-__init__"><strong>__init__</strong></a>(self, device)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="BackEMFEventArgs">class <strong>BackEMFEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="BackEMFEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, voltage)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="BridgeDataEventArgs">class <strong>BridgeDataEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="BridgeDataEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CurrentChangeEventArgs">class <strong>CurrentChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Current&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor&nbsp;whose&nbsp;current&nbsp;draw&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;current&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;current&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;the&nbsp;current&nbsp;of&nbsp;the&nbsp;motor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="CurrentChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, current)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CurrentUpdateEventArgs">class <strong>CurrentUpdateEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Current&nbsp;Update&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor&nbsp;whose&nbsp;current&nbsp;draw&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;current&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;current&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;the&nbsp;current&nbsp;of&nbsp;the&nbsp;motor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="CurrentUpdateEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, current)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DetachEventArgs">class <strong>DetachEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Detach&nbsp;event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+The&nbsp;data&nbsp;stored&nbsp;in&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;that&nbsp;triggered&nbsp;the&nbsp;event.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="DetachEventArgs-__init__"><strong>__init__</strong></a>(self, device)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="EncoderPositionChangeEventArgs">class <strong>EncoderPositionChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Encoder&nbsp;Position&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;encoder&nbsp;that&nbsp;is&nbsp;changing,&nbsp;the&nbsp;position&nbsp;change&nbsp;value&nbsp;read,<br>
+and&nbsp;the&nbsp;elapsed&nbsp;time&nbsp;between&nbsp;position&nbsp;changes.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;encoder&nbsp;index&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;time&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;elapsed&nbsp;time&nbsp;between&nbsp;change&nbsp;events.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;positionChange&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;position&nbsp;change&nbsp;value&nbsp;that&nbsp;was&nbsp;read&nbsp;to&nbsp;generate&nbsp;the&nbsp;event.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="EncoderPositionChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, time, positionChange)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="EncoderPositionUpdateEventArgs">class <strong>EncoderPositionUpdateEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Encoder&nbsp;Position&nbsp;Update&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;encoder&nbsp;that&nbsp;is&nbsp;changing,&nbsp;the&nbsp;position&nbsp;change&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;encoder&nbsp;index&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;positionChange&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;position&nbsp;change&nbsp;value&nbsp;that&nbsp;was&nbsp;read&nbsp;to&nbsp;generate&nbsp;the&nbsp;event.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="EncoderPositionUpdateEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, positionChange)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ErrorEventArgs">class <strong>ErrorEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Error&nbsp;event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+The&nbsp;data&nbsp;stored&nbsp;in&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;the&nbsp;error&nbsp;description&nbsp;and&nbsp;the&nbsp;error&nbsp;code.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description&lt;string&gt;:&nbsp;&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;error&nbsp;description&nbsp;string&nbsp;generated&nbsp;by&nbsp;the&nbsp;event.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;eCode&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;error&nbsp;code&nbsp;value&nbsp;generated&nbsp;by&nbsp;the&nbsp;event.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ErrorEventArgs-__init__"><strong>__init__</strong></a>(self, device, description, eCode)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="FrequencyCounterCountEventArgs">class <strong>FrequencyCounterCountEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="FrequencyCounterCountEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, time, counts)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GPSPositionChangeEventArgs">class <strong>GPSPositionChangeEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GPSPositionChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, latitude, longitude, altitude)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GPSPositionFixStatusChangeEventArgs">class <strong>GPSPositionFixStatusChangeEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GPSPositionFixStatusChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, status)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="IRCodeEventArgs">class <strong>IRCodeEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="IRCodeEventArgs-__init__"><strong>__init__</strong></a>(self, device, code, repeat)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="IRLearnEventArgs">class <strong>IRLearnEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="IRLearnEventArgs-__init__"><strong>__init__</strong></a>(self, device, code, codeInfo)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="IRRawDataEventArgs">class <strong>IRRawDataEventArgs</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="IRRawDataEventArgs-__init__"><strong>__init__</strong></a>(self, device, rawData)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="InputChangeEventArgs">class <strong>InputChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Input&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;digital&nbsp;input&nbsp;that&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;state&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;digital&nbsp;input&nbsp;index&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;bool&nbsp;state&nbsp;value&nbsp;that&nbsp;was&nbsp;read&nbsp;to&nbsp;generate&nbsp;the&nbsp;event.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="InputChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, state)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="KeyChangeEventArgs">class <strong>KeyChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Key&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;the&nbsp;value&nbsp;data&nbsp;and&nbsp;the&nbsp;key.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;key&lt;string&gt;:&nbsp;The&nbsp;Key&nbsp;that&nbsp;is&nbsp;changing&nbsp;in&nbsp;the&nbsp;Dictionary.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&lt;string&gt;:&nbsp;The&nbsp;value&nbsp;data&nbsp;that&nbsp;is&nbsp;being&nbsp;associated&nbsp;with&nbsp;that&nbsp;key&nbsp;in&nbsp;the&nbsp;Dictionary.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="KeyChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, key, value, reason)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="OutputChangeEventArgs">class <strong>OutputChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Output&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;digital&nbsp;output&nbsp;that&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;state&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;output.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;output.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="OutputChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, state)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="PHChangeEventArgs">class <strong>PHChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>PH&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;the&nbsp;PH&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PH&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;pH&nbsp;value.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="PHChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, PH)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="PositionChangeEventArgs">class <strong>PositionChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Servo&nbsp;Position&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor&nbsp;whose&nbsp;position&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;position&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;position&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;servo&nbsp;motor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="PositionChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, position)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SensorChangeEventArgs">class <strong>SensorChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Analog&nbsp;Sensor&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;analog&nbsp;sensor&nbsp;input&nbsp;that&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;sensor&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;analog&nbsp;sensor&nbsp;input&nbsp;index&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;sensor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SensorChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SensorUpdateEventArgs">class <strong>SensorUpdateEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Analog&nbsp;Sensor&nbsp;Update&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;analog&nbsp;sensor&nbsp;input&nbsp;that&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;sensor&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;analog&nbsp;sensor&nbsp;input&nbsp;index&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;sensor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SensorUpdateEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ServerConnectArgs">class <strong>ServerConnectArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Server&nbsp;connect&nbsp;event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+The&nbsp;data&nbsp;stored&nbsp;in&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Phidget,&nbsp;or&nbsp;Dictionary,&nbsp;or&nbsp;Manager&nbsp;object&nbsp;that&nbsp;triggered&nbsp;the&nbsp;event.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget,&nbsp;or&nbsp;Dictionary,&nbsp;or&nbsp;Manager&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ServerConnectArgs-__init__"><strong>__init__</strong></a>(self, device)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ServerDisconnectArgs">class <strong>ServerDisconnectArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Server&nbsp;Disconnect&nbsp;event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+The&nbsp;data&nbsp;stored&nbsp;in&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Phidget,&nbsp;or&nbsp;Dictionary,&nbsp;or&nbsp;Manager&nbsp;object&nbsp;that&nbsp;triggered&nbsp;the&nbsp;event.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget,&nbsp;or&nbsp;Dictionary,&nbsp;or&nbsp;Manager&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ServerDisconnectArgs-__init__"><strong>__init__</strong></a>(self, device)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SpatialDataEventArgs">class <strong>SpatialDataEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;spatialData&lt;list&nbsp;of&nbsp;objects&gt;:&nbsp;list&nbsp;of&nbsp;spatialData&nbsp;objects<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SpatialDataEventArgs-__init__"><strong>__init__</strong></a>(self, device, spatialDataCollection)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="StepperPositionChangeEventArgs">class <strong>StepperPositionChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Stepper&nbsp;Position&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;stepper&nbsp;motor&nbsp;whose&nbsp;position&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;position&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;stepper&nbsp;motor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;position&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;stepper&nbsp;motor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="StepperPositionChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, position)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TagEventArgs">class <strong>TagEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Tag&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;the&nbsp;Tag&nbsp;data&nbsp;that&nbsp;is&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag&lt;string&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;gained&nbsp;or&nbsp;lost&nbsp;tag.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="TagEventArgs-__init__"><strong>__init__</strong></a>(self, device, tag)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TemperatureChangeEventArgs">class <strong>TemperatureChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Temperature&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;is&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;temperature&nbsp;sensor&nbsp;and&nbsp;the&nbsp;temperature&nbsp;data.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;sensor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;temperature&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;temperature&nbsp;of&nbsp;the&nbsp;sensor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;potential&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;potential&nbsp;of&nbsp;the&nbsp;sensor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="TemperatureChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, temperature, potential)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="VelocityChangeEventArgs">class <strong>VelocityChangeEventArgs</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Velocity&nbsp;Change&nbsp;Event&nbsp;data&nbsp;and&nbsp;information&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;this&nbsp;class.<br>
+&nbsp;<br>
+Data&nbsp;specific&nbsp;to&nbsp;this&nbsp;event&nbsp;args&nbsp;class&nbsp;are&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor&nbsp;whose&nbsp;velocity&nbsp;is&nbsp;changing&nbsp;and&nbsp;the&nbsp;velocity&nbsp;value&nbsp;read.<br>
+&nbsp;<br>
+Properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&lt;object&gt;:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;Phidget&nbsp;object&nbsp;from&nbsp;which&nbsp;this&nbsp;event&nbsp;originated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index&lt;int&gt;:&nbsp;&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;motor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;velocity&lt;double&gt;:&nbsp;The&nbsp;reference&nbsp;to&nbsp;the&nbsp;velocity&nbsp;of&nbsp;the&nbsp;motor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="VelocityChangeEventArgs-__init__"><strong>__init__</strong></a>(self, device, index, velocity)</dt></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-FormatError"><strong>FormatError</strong></a>(...)</dt><dd><tt><a href="#-FormatError">FormatError</a>([integer])&nbsp;-&gt;&nbsp;string<br>
+&nbsp;<br>
+Convert&nbsp;a&nbsp;win32&nbsp;error&nbsp;code&nbsp;into&nbsp;a&nbsp;string.&nbsp;If&nbsp;the&nbsp;error&nbsp;code&nbsp;is&nbsp;not<br>
+given,&nbsp;the&nbsp;return&nbsp;value&nbsp;of&nbsp;a&nbsp;call&nbsp;to&nbsp;GetLastError()&nbsp;is&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-Lock"><strong>Lock</strong></a> = allocate_lock(...)</dt><dd><tt>allocate_lock()&nbsp;-&gt;&nbsp;lock&nbsp;object<br>
+(allocate()&nbsp;is&nbsp;an&nbsp;obsolete&nbsp;synonym)<br>
+&nbsp;<br>
+Create&nbsp;a&nbsp;new&nbsp;lock&nbsp;object.&nbsp;&nbsp;See&nbsp;LockType.__doc__&nbsp;for&nbsp;information&nbsp;about&nbsp;locks.</tt></dd></dl>
+ <dl><dt><a name="-POINTER"><strong>POINTER</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-addressof"><strong>addressof</strong></a>(...)</dt><dd><tt><a href="#-addressof">addressof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;address&nbsp;of&nbsp;the&nbsp;C&nbsp;instance&nbsp;internal&nbsp;buffer</tt></dd></dl>
+ <dl><dt><a name="-alignment"><strong>alignment</strong></a>(...)</dt><dd><tt><a href="#-alignment">alignment</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-alignment">alignment</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;alignment&nbsp;requirements&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-byref"><strong>byref</strong></a>(...)</dt><dd><tt><a href="#-byref">byref</a>(C&nbsp;instance[,&nbsp;offset=0])&nbsp;-&gt;&nbsp;byref-object<br>
+Return&nbsp;a&nbsp;pointer&nbsp;lookalike&nbsp;to&nbsp;a&nbsp;C&nbsp;instance,&nbsp;only&nbsp;usable<br>
+as&nbsp;function&nbsp;argument</tt></dd></dl>
+ <dl><dt><a name="-get_errno"><strong>get_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-get_last_error"><strong>get_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-pointer"><strong>pointer</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-resize"><strong>resize</strong></a>(...)</dt><dd><tt>Resize&nbsp;the&nbsp;memory&nbsp;buffer&nbsp;of&nbsp;a&nbsp;ctypes&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-set_conversion_mode"><strong>set_conversion_mode</strong></a>(...)</dt><dd><tt><a href="#-set_conversion_mode">set_conversion_mode</a>(encoding,&nbsp;errors)&nbsp;-&gt;&nbsp;(previous-encoding,&nbsp;previous-errors)<br>
+&nbsp;<br>
+Set&nbsp;the&nbsp;encoding&nbsp;and&nbsp;error&nbsp;handling&nbsp;ctypes&nbsp;uses&nbsp;when&nbsp;converting<br>
+between&nbsp;unicode&nbsp;and&nbsp;strings.&nbsp;&nbsp;Returns&nbsp;the&nbsp;previous&nbsp;values.</tt></dd></dl>
+ <dl><dt><a name="-set_errno"><strong>set_errno</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-set_last_error"><strong>set_last_error</strong></a>(...)</dt></dl>
+ <dl><dt><a name="-sizeof"><strong>sizeof</strong></a>(...)</dt><dd><tt><a href="#-sizeof">sizeof</a>(C&nbsp;type)&nbsp;-&gt;&nbsp;integer<br>
+<a href="#-sizeof">sizeof</a>(C&nbsp;instance)&nbsp;-&gt;&nbsp;integer<br>
+Return&nbsp;the&nbsp;size&nbsp;in&nbsp;bytes&nbsp;of&nbsp;a&nbsp;C&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-stack_size"><strong>stack_size</strong></a>(...)</dt><dd><tt><a href="#-stack_size">stack_size</a>([size])&nbsp;-&gt;&nbsp;size<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;thread&nbsp;stack&nbsp;size&nbsp;used&nbsp;when&nbsp;creating&nbsp;new&nbsp;threads.&nbsp;&nbsp;The<br>
+optional&nbsp;size&nbsp;argument&nbsp;specifies&nbsp;the&nbsp;stack&nbsp;size&nbsp;(in&nbsp;bytes)&nbsp;to&nbsp;be&nbsp;used<br>
+for&nbsp;subsequently&nbsp;created&nbsp;threads,&nbsp;and&nbsp;must&nbsp;be&nbsp;0&nbsp;(use&nbsp;platform&nbsp;or<br>
+configured&nbsp;default)&nbsp;or&nbsp;a&nbsp;positive&nbsp;integer&nbsp;value&nbsp;of&nbsp;at&nbsp;least&nbsp;32,768&nbsp;(32k).<br>
+If&nbsp;changing&nbsp;the&nbsp;thread&nbsp;stack&nbsp;size&nbsp;is&nbsp;unsupported,&nbsp;a&nbsp;ThreadError<br>
+exception&nbsp;is&nbsp;raised.&nbsp;&nbsp;If&nbsp;the&nbsp;specified&nbsp;size&nbsp;is&nbsp;invalid,&nbsp;a&nbsp;ValueError<br>
+exception&nbsp;is&nbsp;raised,&nbsp;and&nbsp;the&nbsp;stack&nbsp;size&nbsp;is&nbsp;unmodified.&nbsp;&nbsp;32k&nbsp;bytes<br>
+&nbsp;currently&nbsp;the&nbsp;minimum&nbsp;supported&nbsp;stack&nbsp;size&nbsp;value&nbsp;to&nbsp;guarantee<br>
+sufficient&nbsp;stack&nbsp;space&nbsp;for&nbsp;the&nbsp;interpreter&nbsp;itself.<br>
+&nbsp;<br>
+Note&nbsp;that&nbsp;some&nbsp;platforms&nbsp;may&nbsp;have&nbsp;particular&nbsp;restrictions&nbsp;on&nbsp;values&nbsp;for<br>
+the&nbsp;stack&nbsp;size,&nbsp;such&nbsp;as&nbsp;requiring&nbsp;a&nbsp;minimum&nbsp;stack&nbsp;size&nbsp;larger&nbsp;than&nbsp;32kB&nbsp;or<br>
+requiring&nbsp;allocation&nbsp;in&nbsp;multiples&nbsp;of&nbsp;the&nbsp;system&nbsp;memory&nbsp;page&nbsp;size<br>
+-&nbsp;platform&nbsp;documentation&nbsp;should&nbsp;be&nbsp;referred&nbsp;to&nbsp;for&nbsp;more&nbsp;information<br>
+(4kB&nbsp;pages&nbsp;are&nbsp;common;&nbsp;using&nbsp;multiples&nbsp;of&nbsp;4096&nbsp;for&nbsp;the&nbsp;stack&nbsp;size&nbsp;is<br>
+the&nbsp;suggested&nbsp;approach&nbsp;in&nbsp;the&nbsp;absence&nbsp;of&nbsp;more&nbsp;specific&nbsp;information).</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>DEFAULT_MODE</strong> = 0<br>
+<strong>GetLastError</strong> = &lt;_FuncPtr object at 0x009C3990&gt;<br>
+<strong>RTLD_GLOBAL</strong> = 0<br>
+<strong>RTLD_LOCAL</strong> = 0<br>
+<strong>__author__</strong> = 'Adam Stelmack'<br>
+<strong>__date__</strong> = 'May 17 2010'<br>
+<strong>__package__</strong> = 'Phidgets.Events'<br>
+<strong>__version__</strong> = '2.1.8'<br>
+<strong>cdll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE890&gt;<br>
+<strong>memmove</strong> = &lt;CFunctionType object at 0x009C3A08&gt;<br>
+<strong>memset</strong> = &lt;CFunctionType object at 0x009C3BE8&gt;<br>
+<strong>oledll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE930&gt;<br>
+<strong>pydll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8B0&gt;<br>
+<strong>pythonapi</strong> = &lt;PyDLL 'python dll', handle 1e000000 at bfe8d0&gt;<br>
+<strong>windll</strong> = &lt;ctypes.LibraryLoader object at 0x00BFE8F0&gt;</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Adam&nbsp;Stelmack</td></tr></table>
+</body></html>
