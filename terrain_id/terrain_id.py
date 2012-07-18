@@ -5,9 +5,27 @@ from img_processing_tools import *
 import Image, ImageDraw
 import time
 import sys
-import cv
+import cv, cv2
 from PIL import ImageStat
 import numpy as np
+
+
+def grab_frame_from_video(video):
+	frame = video.read()
+	
+	#counter = 0
+	#while video.grab():
+	#	    counter += 1
+	#	    flag, frame = video.retrieve()
+	#	    if flag:
+		            #gray_frm = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+		            #cv2.imwrite('frame_'+str(counter)+'.png',gray_frm)
+					#cv.ShowImage("Video",frame)
+					#cv2.imshow("Video",frame)
+					#cv.WaitKey(1000/fps)
+	return frame
+				
+
 
 def classifiy_section(img):
 	#class_ID: 1=grass, 2=non-mowable, 3=unknown
@@ -88,7 +106,7 @@ def subsection_image(pil_img, sections, visual):
 				cv_img = PILtoCV(pil_img)
 				cv.ShowImage("Image",cv_img)
 				cv.MoveWindow("Image", 50,50)
-				cv.WaitKey(5)
+				cv.WaitKey(50)
 				#time.sleep(.05)
 	#print "FINGERPRINT: ", fingerprint
 	#cv.WaitKey()
@@ -96,10 +114,8 @@ def subsection_image(pil_img, sections, visual):
 
 ###########################################################
 
-
-if __name__=="__main__":
-
- 
+def main(args):
+ 	 
 #	if len(sys.argv) < 4:
 #		print "******* Requires 3 image files of the same size."
 #		print "This program will return the angle at which the second is in relation to the first. ***"
@@ -108,7 +124,15 @@ if __name__=="__main__":
 	try:
 		#img1 = cv.LoadImage(sys.argv[1])
 		#frame = grab_frame(1)
-		img1 = Image.open(sys.argv[1])
+
+		#video = cv2.VideoCapture(sys.argv[1])
+		#img1 = np.array(grab_frame_from_video(video)[1])
+		#cv.NamedWindow("Video",cv.CV_WINDOW_AUTOSIZE)
+		#cv2.imshow("Video",img1)
+		
+		#cv.ShowImage("Video", frame)
+		#cv.WaitKey(1000)
+		#img1 = Image.open(sys.argv[1])
 		#img1 = cv.CreateImage(cv.GetSize(frame), cv.IPL_DEPTH_8U, 1)
 		#img1 = CVtoGray(frame)
 		#cv.WaitKey()
@@ -117,13 +141,14 @@ if __name__=="__main__":
 		#img2 = cv.LoadImage(sys.argv[1],cv.CV_LOAD_IMAGE_GRAYSCALE)
 		#img3 = cv.LoadImage(sys.argv[2],cv.CV_LOAD_IMAGE_GRAYSCALE)
 	except:
-		print "******* Could not open image files *******"
+		print "******* Could not open image/video file *******"
 		sys.exit(-1)
 	print len (sys.argv)
 	if len(sys.argv) == 2:
 		resolution = 32
 	else:
 		resolution = int(sys.argv[2])
+	img1 = array2image(img1)
 	image_fingerprint = np.array(subsection_image(img1, resolution, True))
 	print "FINGERPRINT: ",image_fingerprint
 	print 'len(image_fingerprint):', len(image_fingerprint)
@@ -147,4 +172,11 @@ if __name__=="__main__":
 	if direction > 0: print "grass on right"
 	if direction < 0: print "grass on left"
 	cv.WaitKey()
+
+
+
+if __name__=="__main__":
+	while 1:
+		main(1)
+		#sys.exit(main(sys.argv))
 

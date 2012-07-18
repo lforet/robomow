@@ -25,3 +25,12 @@ install easygui
 
 sudo apt-get install python-easygui
 
+###################################
+
+install tk
+
+sudo apt-get install python-tk
+
+######################################
+
+

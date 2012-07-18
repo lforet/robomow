@@ -33,4 +33,5 @@ sudo apt-get install python-tk
 
 ######################################
 
+hg clone https://code.google.com/p/pymeanshift/
 
