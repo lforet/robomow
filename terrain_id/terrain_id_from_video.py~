@@ -164,22 +164,37 @@ def direction_I3_sum(pil_img):
 	I3_sum_cleft_g =   ImageStat.Stat(l_center_img).sum[1]
 	I3_sum_cright_g =  ImageStat.Stat(r_center_img).sum[1]
 
-	print 'I3_sum_left, I3_sum_right, I3_center_sum : ' , I3_sum_cleft_g+I3_sum_cright_g,I3_center_sum 
+	print 'I3_sum_left, I3_sum_right, I3_center_sum : ' , I3_sum_cleft_g , I3_sum_cright_g,I3_center_sum 
 	#percent =  int(I3_sum_left_g/(I3_sum_left_g+I3_sum_right_g ) * 100)
 	l_percent = I3_sum_cleft_g / I3_center_sum
 	r_percent = I3_sum_cright_g / I3_center_sum 
 	print 'l_percent, r_percent, I3_center_sum: ', l_percent, r_percent, I3_center_sum
 	#cv.WaitKey()
-	"""
-	thres1 = .75
-	print I3_sum_left/I3_sum, I3_sum_right/I3_sum 
-	if I3_sum_left > (I3_sum * thres1):
-		print 'grass is on left'
-		side = "L"
-	if I3_sum_right > (I3_sum * thres1):
-		print 'grass is on right'
-		side = "R"
-
+	
+	thres1=.65
+	if I3_center_sum > 50000 and ( l_percent > thres1 or r_percent > thres1):
+		print "................ ON EDGE ..............."
+		thres1 = .50
+		thres2 = .90
+		thres3 = .95
+		print 'I3_sum_cleft_g , (I3_center_sum * thres1):',I3_sum_cleft_g , (I3_center_sum * thres1)
+		if I3_sum_cleft_g  > (I3_center_sum * thres1) and I3_sum_cleft_g  < (I3_center_sum * thres2): 
+			print 'turn right' 
+			cv.WaitKey(100)
+			#side = "L"
+		if I3_sum_cleft_g  > (I3_center_sum * thres2) and I3_sum_cleft_g  < (I3_center_sum * thres3):
+			print '.............continue foward.............'
+			cv.WaitKey()
+		if I3_sum_cleft_g  > (I3_center_sum * thres2) and I3_sum_cleft_g  > (I3_center_sum * thres3):
+			print '.............turn left.............'
+			cv.WaitKey()
+		if I3_sum_cright_g  > (I3_center_sum * thres2):
+			print '.............turn left.............edge on left'
+			cv.WaitKey()
+		#side = "R"
+	if I3_center_sum < 50000:
+		print "NOT ON EDGE"
+	'''
 	#is there enough data
 	if I3_center_sum > 100000:
 		print "continue foward"
@@ -190,8 +205,8 @@ def direction_I3_sum(pil_img):
 		if I3_sum_cleft_g < I3_sum_cright_g:
 			print "turn right"
 			cv.WaitKey(1000)
-	"""	
-	print
+	'''	
+	
 
 	#i think this!!
 	thres2 = .90
@@ -203,7 +218,7 @@ def direction_I3_sum(pil_img):
 			print "turn left toward edge"
 		else:
 			print "turn right toward edge"
-		cv.WaitKey(1000)
+		cv.WaitKey(10)
 
 	thres3 = 150000
 	print I3_sum_cleft_g
@@ -214,8 +229,9 @@ def direction_I3_sum(pil_img):
 			print "turn left toward grass"
 		else:
 			print "turn right toward grass"
-		cv.WaitKey(1000)
-	cv.WaitKey(10)
+		cv.WaitKey(10)
+	print
+	cv.WaitKey(5)
 
 
 if __name__=="__main__":
