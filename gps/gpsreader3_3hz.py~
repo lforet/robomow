@@ -2,13 +2,27 @@
 
 import gps, os, time
 
+<<<<<<< HEAD
 session = gps.gps()
 session.poll()
+=======
+session = gps.gps(host='localhost', port='2947')
+session.next()
+#session.stream(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
+>>>>>>> 78be0997b45240f2ebe866134278c1ad46e91d87
 session.stream()
+
+
+#from gps import *
+#session = gps() # assuming gpsd running with default options on port 2947
+#session.stream(WATCH_ENABLE|WATCH_NEWSTYLE)
+#report = session.next()
+#print report
 
 while 1:
 	os.system('clear')
-	session.poll()
+	session.next()
+	time.sleep(1)
 	# a = altitude, d = date/time, m=mode,
 	# o=postion/fix, s=status, y=satellites
 
@@ -28,7 +42,7 @@ while 1:
 	print
 	print ' Satellites (total of', len(session.satellites) , ' in view)'
 	for i in session.satellites:
-	print '\t', i
+		print '\t', i
 
 time.sleep(3)
 
