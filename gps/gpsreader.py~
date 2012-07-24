@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #sudo apt-get install gpsd gpsd-clients
-#sudo gpsd /dev/gps0
+#gpsd /dev/ttyUSB0 -b -n
 #The gpsd server reads NMEA sentences from the gps unit and is accessed on port 2947. You can test if everything is working by running a pre-built gpsd client such as xgps.
 
 from math import asin,cos,pi,sin
@@ -166,18 +166,19 @@ def ActiveSatelliteCount(session):
 
 def GetHomePosition():
    os.system("clear")
-   print "Acquiring at least 6 GPS Satellites..."
    while ActiveSatelliteCount(session.satellites) < 6:
+      print "Acquiring at least 6 GPS Satellites..."
+      print "Number of acquired satellites: ", ActiveSatelliteCount(session.satellites)
       time.sleep(1)
-      #os.system("clear")
+      os.system("clear")
       session.next()
    Lat = 0
    Long = 0
    print "Have Acquired at least 6 GPS Satellites..."
-   print "Saving Home Position....(about 15 secs)....."
-   for i in range(15):
-      time.sleep(1.5)
-      session.poll()
+   print "Saving Home Position....(about 3 secs)....."
+   for i in range(3):
+      time.sleep(1.2)
+      session.next()
       Lat = Lat + session.fix.latitude
       Long = Long + session.fix.longitude
       print session.fix.latitude, session.fix.longitude
@@ -239,4 +240,14 @@ while 1:
    print "Distance from home in meters = " ,(distancefromhome/1000)
    print "new calc =", calculate_distance(HomeLat2, HomeLong2, session.fix.latitude, session.fix.longitude)
    print "new calc 2 =:", lldistance((HomeLat2, HomeLong2), (session.fix.latitude, session.fix.longitude))
+   #time.sleep(1.5)
+   print 'track:', session.fix.track
+   print help(session)
+   print 'mode ' , session.fix.mode
+   #print 'type' , session.fixType
+   print 'quality ', session.satellites
    time.sleep(1.5)
+   
+
+
+
