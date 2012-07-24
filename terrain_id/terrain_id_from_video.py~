@@ -171,29 +171,38 @@ def direction_I3_sum(pil_img):
 	print 'l_percent, r_percent, I3_center_sum: ', l_percent, r_percent, I3_center_sum
 	#cv.WaitKey()
 	
-	thres1=.65
+	thres1=.55
 	if I3_center_sum > 50000 and ( l_percent > thres1 or r_percent > thres1):
+		
 		print "................ ON EDGE ..............."
+		cv.WaitKey(250)
 		thres1 = .50
 		thres2 = .90
-		thres3 = .95
+		thres3 = .96
 		print 'I3_sum_cleft_g , (I3_center_sum * thres1):',I3_sum_cleft_g , (I3_center_sum * thres1)
 		if I3_sum_cleft_g  > (I3_center_sum * thres1) and I3_sum_cleft_g  < (I3_center_sum * thres2): 
-			print 'turn right' 
-			cv.WaitKey(100)
+			print '.............turn right -> 50%-90%.............'
+			cv.WaitKey()
 			#side = "L"
+		#if within 90-95 %continue forward
 		if I3_sum_cleft_g  > (I3_center_sum * thres2) and I3_sum_cleft_g  < (I3_center_sum * thres3):
-			print '.............continue foward.............'
+			print '.............continue foward -> within 90-95 %.............'
 			cv.WaitKey()
-		if I3_sum_cleft_g  > (I3_center_sum * thres2) and I3_sum_cleft_g  > (I3_center_sum * thres3):
-			print '.............turn left.............'
+		# if over 96% turn towards grass
+		if  I3_sum_cleft_g  > (I3_center_sum * thres3):
+			print '.............turn left -> over 96%.............'
 			cv.WaitKey()
-		if I3_sum_cright_g  > (I3_center_sum * thres2):
-			print '.............turn left.............edge on left'
+		# if over 96% turn towards grass
+		if  I3_sum_cright_g  > (I3_center_sum * thres3):
+			print '.............turn right -> over 96%.............'
 			cv.WaitKey()
+		#if I3_sum_cright_g  > (I3_center_sum * thres2):
+		#	print '.............turn left.............edge on left'
+		#	cv.WaitKey()
 		#side = "R"
-	if I3_center_sum < 50000:
-		print "NOT ON EDGE"
+	else:
+
+		print "................ NOT ON EDGE so ????????????????"
 	'''
 	#is there enough data
 	if I3_center_sum > 100000:
@@ -209,7 +218,7 @@ def direction_I3_sum(pil_img):
 	
 
 	#i think this!!
-	thres2 = .90
+	thres2 = .55
 	print I3_sum_cleft_g , (I3_center_sum * thres2)/2
 	if (I3_sum_cleft_g > (I3_center_sum * thres2)/2) and (I3_sum_cright_g > (I3_center_sum * thres2)/2):
 		print "too much grass...maybe in a field away from edge"

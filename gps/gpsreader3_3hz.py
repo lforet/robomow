@@ -2,7 +2,7 @@
 
 import gps, os, time
 
-session = session = gps.gps(host='localhost', port='2947')
+session = gps.gps()
 session.poll()
 session.stream()
 
@@ -31,6 +31,5 @@ while 1:
 		print '\t', i
 
 time.sleep(3)
-
 
 
