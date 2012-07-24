@@ -2,13 +2,22 @@
 
 import gps, os, time
 
-session = gps.gps()
-session.poll()
-session.stream()
+session = gps.gps(host='localhost', port='2947')
+session.next()
+session.stream(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
+#session.stream()
+
+
+#from gps import *
+#session = gps() # assuming gpsd running with default options on port 2947
+#session.stream(WATCH_ENABLE|WATCH_NEWSTYLE)
+#report = session.next()
+#print report
 
 while 1:
 	os.system('clear')
-	session.poll()
+	session.next()
+	time.sleep(1)
 	# a = altitude, d = date/time, m=mode,
 	# o=postion/fix, s=status, y=satellites
 

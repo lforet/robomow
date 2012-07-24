@@ -177,7 +177,7 @@ def GetHomePosition():
    print "Saving Home Position....(about 15 secs)....."
    for i in range(15):
       time.sleep(1.5)
-      session.next()
+      session.poll()
       Lat = Lat + session.fix.latitude
       Long = Long + session.fix.longitude
       print session.fix.latitude, session.fix.longitude
