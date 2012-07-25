@@ -7,9 +7,9 @@ print motor1.stats()
 print motor1.isInitialized
 
 
-for i in xrange(0, 101, 1):
-	motor1.reverse(i)
+for i in xrange(0, 110, 10):
+	print motor1.reverse(i)
 	time.sleep(.05)
 	print " engine at speed: ", i, '%'
 
-print i
+print motor1.lmotor_speed

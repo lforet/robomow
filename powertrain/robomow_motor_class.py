@@ -23,6 +23,8 @@ class robomow_motor(object):
 			self.com.close()
 			self.com.open()
 			self.isInitialized = True
+			self.lmotor_speed = 0
+			self.rmotor_speed = 0
 			log ("Link to motor driver -", com_port, "- successful")
 			#log (self.com.portstr, self.com.baudrate,self.com.bytesize,self.com.parity,self.com.stopbits)
 
@@ -51,7 +53,8 @@ class robomow_motor(object):
 		self.com.write (chr(int(hex(motor2_spd),16)))
 		#print "sending command: ",  int(hex(speed),16)
 		#print "sending command: ",  int(hex(speed+127),16)
-		return motor1_spd, motor2_spd
+		self.lmotor_speed = motor1_spd 
+		self.rmotor_speed = motor2_spd 
 
 	def reverse(self,speed):
 		##takes desired speed as percentage, returns 2 ints indicating each current motor speed
@@ -67,12 +70,15 @@ class robomow_motor(object):
 		self.com.write (chr(int(hex(motor2_spd ),16)))
 		#print "sending command: ",  int(hex(speed),16)
 		#print "sending command: ",  int(hex(speed+127),16)
-		return motor1_spd, motor2_spd
+		self.lmotor_speed = motor1_spd 
+		self.rmotor_speed = motor2_spd 
 
 	def stop(self):
 		self.com.write (chr(int(hex(64),16)))
 		#time.sleep(.01)
 		self.com.write (chr(int(hex(192),16)))
+		self.lmotor_speed = 64 
+		self.rmotor_speed = 192
 
 	def left(self,motor1_spd, motor2_spd, degree):
 		motor1_spd = motor1_spd - degree
@@ -84,6 +90,8 @@ class robomow_motor(object):
 		self.com.write (chr(int(hex(motor1_spd),16)))
 		#time.sleep(.01)
 		self.com.write (chr(int(hex(motor2_spd ),16)))
+		self.lmotor_speed = motor1_spd 
+		self.rmotor_speed = motor2_spd 
 
 	def right(self,motor1_spd, motor2_spd, degree):
 		motor1_spd = motor1_spd + degree
@@ -95,4 +103,6 @@ class robomow_motor(object):
 		self.com.write (chr(int(hex(motor1_spd),16)))
 		#time.sleep(.01)
 		self.com.write (chr(int(hex(motor2_spd ),16)))
+		self.lmotor_speed = motor1_spd 
+		self.rmotor_speed = motor2_spd 
 
