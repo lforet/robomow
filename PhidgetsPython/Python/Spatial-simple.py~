@@ -103,7 +103,7 @@ except PhidgetException as e:
     print("Exiting....")
     exit(1)
 else:
-    spatial.setDataRate(1000)
+    spatial.setDataRate(8)
     DisplayDeviceInfo()
 
 print("Press Enter to quit....")
