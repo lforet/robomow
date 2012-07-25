@@ -80,7 +80,7 @@ class robomow_motor(object):
 		self.lmotor_speed = 64 
 		self.rmotor_speed = 192
 
-	def left(self,motor1_spd, motor2_spd, degree):
+	def left(self, degree):
 		motor1_spd = motor1_spd - degree
 		motor2_spd = motor2_spd + degree
 		if motor1_spd < 1: motor1_spd = 1
@@ -93,7 +93,7 @@ class robomow_motor(object):
 		self.lmotor_speed = motor1_spd 
 		self.rmotor_speed = motor2_spd 
 
-	def right(self,motor1_spd, motor2_spd, degree):
+	def right(self, degree):
 		motor1_spd = motor1_spd + degree
 		motor2_spd = motor2_spd - degree
 		if motor1_spd < 1: motor1_spd = 1
@@ -105,4 +105,7 @@ class robomow_motor(object):
 		self.com.write (chr(int(hex(motor2_spd ),16)))
 		self.lmotor_speed = motor1_spd 
 		self.rmotor_speed = motor2_spd 
+
+
+
 

@@ -20,7 +20,7 @@ def send_command(cmd, read_response = False):
     ser = serial.Serial('/dev/ttyACM0', 9600)
     ser.write(chr(cmd)+'\n')
     response = read_response and ser.read() or None
-    #print "response:", int(response)
+    print "response:", int(response)
     ser.close()
     return response
     
