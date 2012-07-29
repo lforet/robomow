@@ -1,0 +1,15 @@
+pip-egg-info/pyusb.egg-info/PKG-INFO
+pip-egg-info/pyusb.egg-info/SOURCES.txt
+pip-egg-info/pyusb.egg-info/dependency_links.txt
+pip-egg-info/pyusb.egg-info/top_level.txt
+usb/__init__.py
+usb/_debug.py
+usb/_interop.py
+usb/control.py
+usb/core.py
+usb/legacy.py
+usb/util.py
+usb/backend/__init__.py
+usb/backend/libusb01.py
+usb/backend/libusb10.py
+usb/backend/openusb.py

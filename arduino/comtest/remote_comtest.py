@@ -16,16 +16,18 @@ print ser.stopbits
 
 while 1:
     print "Trying to connect..."
-    time.sleep(1)
+    time.sleep(.5)
     ser.write("a")      # write a string
+    #time.sleep(.05)
     s = ser.read()
+    #print s
     if len(s) > 0: break
 
 #s = ser.read(100)       # read up to one hundred bytes
 #
 while 1:
     s = ser.readline()
-    print s
+    print "recieved from arduino: ", s
     if len(s) < 1: break
     if ser.isOpen():
         print "Connected..."
