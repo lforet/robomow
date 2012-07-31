@@ -1,0 +1,253 @@
+#!/usr/bin/python
+
+#sudo apt-get install gpsd gpsd-clients
+#gpsd /dev/ttyUSB0 -b -n
+#The gpsd server reads NMEA sentences from the gps unit and is accessed on port 2947. You can test if everything is working by running a pre-built gpsd client such as xgps.
+
+from math import asin,cos,pi,sin
+import gps, os, time
+import math
+#from future import division
+from math import sin, cos, radians, sqrt, atan2
+
+rEarth = 6371.01 # Earth's average radius in km
+epsilon = 0.000001 # threshold for floating-point equality
+
+
+def lldistance(a, b):
+   """
+   Calculates the distance between two GPS points (decimal)
+   @param a: 2-tuple of point A
+   @param b: 2-tuple of point B
+   @return: distance in m
+   """
+   r = 6367442.5             # average earth radius in m
+   dLat = radians(a[0]-b[0])
+   dLon = radians(a[1]-b[1])
+   x = sin(dLat/2) ** 2 + \
+       cos(radians(a[0])) * cos(radians(b[0])) *\
+       sin(dLon/2) ** 2
+   #original# y = 2 * atan2(sqrt(x), sqrt(1-x))
+   y = 2 * asin(sqrt(x))
+   d = r * y
+
+   return d
+
+
+
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+        '''
+        * Calculates the distance between two points given their (lat, lon) co-ordinates.
+        * It uses the Spherical Law Of Cosines (http://en.wikipedia.org/wiki/Spherical_law_of_cosines):
+        *
+        * cos(c) = cos(a) * cos(b) + sin(a) * sin(b) * cos(C)                        (1)
+        *
+        * In this case:
+        * a = lat1 in radians, b = lat2 in radians, C = (lon2 - lon1) in radians
+        * and because the latitude range is  [-pie/2, pie/2] instead of [0, pie]
+        * and the longitude range is [-pie, pie] instead of [0, 2pie]
+        * (1) transforms into:
+        *
+        * x = cos(c) = sin(a) * sin(b) + cos(a) * cos(b) * cos(C)
+        *
+        * Finally the distance is arccos(x)
+        '''
+
+        if ((lat1 == lat2) and (lon1 == lon2)):
+            return 0
+
+        try:
+            delta = lon2 - lon1
+            a = math.radians(lat1)
+            b = math.radians(lat2)
+            C = math.radians(delta)
+            x = math.sin(a) * math.sin(b) + math.cos(a) * math.cos(b) * math.cos(C)
+            distance = math.acos(x) # in radians
+            distance  = math.degrees(distance) # in degrees
+            distance  = distance * 60 # 60 nautical miles / lat degree
+            distance = distance * 1852 # conversion to meters
+            #distance  = round(distance)
+            return distance;
+        except:
+            return 0
+
+
+def deg2rad(angle):
+    return angle*pi/180
+
+
+def rad2deg(angle):
+    return angle*180/pi
+
+
+def pointRadialDistance(lat1, lon1, bearing, distance):
+    """
+    Return final coordinates (lat2,lon2) [in degrees] given initial coordinates
+    (lat1,lon1) [in degrees] and a bearing [in degrees] and distance [in km]
+    """
+    rlat1 = deg2rad(lat1)
+    rlon1 = deg2rad(lon1)
+    rbearing = deg2rad(bearing)
+    rdistance = distance / rEarth # normalize linear distance to radian angle
+
+    rlat = asin( sin(rlat1) * cos(rdistance) + cos(rlat1) * sin(rdistance) * cos(rbearing) )
+
+    if cos(rlat) == 0 or abs(cos(rlat)) < epsilon: # Endpoint a pole
+        rlon=rlon1
+    else:
+        rlon = ( (rlon1 - asin( sin(rbearing)* sin(rdistance) / cos(rlat) ) + pi ) % (2*pi) ) - pi
+
+    lat = rad2deg(rlat)
+    lon = rad2deg(rlon)
+    return (lat, lon)
+
+def recalculate_coordinate(val,  _as=None):
+  """
+    Accepts a coordinate as a tuple (degree, minutes, seconds)
+    You can give only one of them (e.g. only minutes as a floating point number) 
+    and it will be duly recalculated into degrees, minutes and seconds.
+    Return value can be specified as 'deg', 'min' or 'sec'; default return value is 
+    a proper coordinate tuple.
+This formula is only an approximation when applied to the Earth, because the Earth is not a perfect sphere: the Earth radius R varies from 6356.78 km at the poles to 6378.14 km at the equator. There are small corrections, typically on the order of 0.1% (assuming the geometric mean R = 6367.45 km is used everywhere, for example), because of this slight ellipticity  of the planet. A more accurate method, which takes into account the Earth's ellipticity, is given by Vincenty's formulae.
+  """
+  deg,  min,  sec = val
+  # pass outstanding values from right to left
+  min = (min or 0) + int(sec) / 60
+  sec = sec % 60
+  deg = (deg or 0) + int(min) / 60
+  min = min % 60
+  # pass decimal part from left to right
+  dfrac,  dint = math.modf(deg)
+  min = min + dfrac * 60
+  deg = dint
+  mfrac,  mint = math.modf(min)
+  sec = sec + mfrac * 60
+  min = mint
+  if _as:
+    sec = sec + min * 60 + deg * 3600
+    if _as == 'sec': return sec
+    if _as == 'min': return sec / 60
+    if _as == 'deg': return sec / 3600
+  return deg,  min,  sec
+      
+
+def points2distance(start,  end):
+  """
+    Calculate distance (in kilometers) between two points given as (long, latt) pairs
+    based on Haversine formula (http://en.wikipedia.org/wiki/Haversine_formula).
+    Implementation inspired by JavaScript implementation from 
+    http://www.movable-type.co.uk/scripts/latlong.html
+    Accepts coordinates as tuples (deg, min, sec), but coordinates can be given 
+    in any form - e.g. can specify only minutes:
+    (0, 3133.9333, 0) 
+    is interpreted as 
+    (52.0, 13.0, 55.998000000008687)
+    which, not accidentally, is the lattitude of Warsaw, Poland.
+  """
+  start_long = math.radians(recalculate_coordinate(start[0],  'deg'))
+  start_latt = math.radians(recalculate_coordinate(start[1],  'deg'))
+  end_long = math.radians(recalculate_coordinate(end[0],  'deg'))
+  end_latt = math.radians(recalculate_coordinate(end[1],  'deg'))
+  d_latt = end_latt - start_latt
+  d_long = end_long - start_long
+  a = math.sin(d_latt/2)**2 + math.cos(start_latt) * math.cos(end_latt) * math.sin(d_long/2)**2
+  c = 2 * math.atan2(math.sqrt(a),  math.sqrt(1-a))
+  return 6367.45 * c
+
+
+def ActiveSatelliteCount(session):
+   count = 0
+   for i in range(len(session)):
+      s = str(session[i])
+      if s[-1] == "y":
+			count = count + 1
+   return count
+
+def GetHomePosition():
+   os.system("clear")
+   while ActiveSatelliteCount(session.satellites) < 6:
+      print "Acquiring at least 6 GPS Satellites..."
+      print "Number of acquired satellites: ", ActiveSatelliteCount(session.satellites)
+      time.sleep(1)
+      os.system("clear")
+      session.next()
+   Lat = 0
+   Long = 0
+   print "Have Acquired at least 6 GPS Satellites..."
+   print "Saving Home Position....(about 3 secs)....."
+   for i in range(3):
+      time.sleep(1.2)
+      session.next()
+      Lat = Lat + session.fix.latitude
+      Long = Long + session.fix.longitude
+      print session.fix.latitude, session.fix.longitude
+   Lat = Lat / 15
+   Long = Long / 15
+   print "avgs =", Lat, Long
+   return Lat, Long, session.utc, session.fix.time, session.fix.altitude
+
+def decdeg2dms(dd):
+   mnt,sec = divmod(dd*3600,60)
+   deg,mnt = divmod(mnt,60)
+   return deg,mnt,sec
+
+session = gps.gps()
+print gps.gps()
+session.next()
+session.stream()
+
+home = GetHomePosition()
+print home
+HomeLat2 =  home[0]
+HomeLong2 = home[1]
+HomeLat = decdeg2dms(home[0])
+HomeLong = decdeg2dms(home[1])
+print HomeLat, HomeLong
+
+
+#(lat,lon) = pointRadialDistance(lat1,lon1,bear,dist)
+#        print "%6.2f \t %6.2f \t %4.1f \t %6.1f \t %6.2f \t %6.2f" % (lat1,lon1,bear,dist,lat,lon)
+
+while 1:
+   os.system("clear")
+   session.next()
+   # a = altitude, d = date/time, m=mode,
+   # o=postion/fix, s=status, y=satellites
+   
+   print " GPS reading"
+   print "-------------"
+   print 'Start latitude ' , HomeLat
+   print 'Start longitude ' , HomeLong
+   print 'latitude ' , decdeg2dms(session.fix.latitude)
+   print 'longitude ' , decdeg2dms(session.fix.longitude)
+   print 'time utc ' , session.utc, session.fix.time
+   print 'altitude ' , session.fix.altitude
+   print 'epx ', session.fix.epx
+   print 'epv ', session.fix.epv
+   print 'ept ', session.fix.ept
+   print "speed ", session.fix.speed
+   print "climb " , session.fix.climb
+   print
+   print 'Satellites (total of', len(session.satellites) , ' in view)'
+   for i in session.satellites:
+      print '\t', i
+   print "Active satellites used: ", ActiveSatelliteCount(session.satellites)
+   currentLat = decdeg2dms(session.fix.latitude)
+   currentLong = decdeg2dms(session.fix.longitude)
+   distancefromhome = points2distance((HomeLat, HomeLong), (currentLat, currentLong))
+   print "Distance from home = %8.8f \t" %distancefromhome
+   print "Distance from home in meters = " ,(distancefromhome/1000)
+   print "new calc =", calculate_distance(HomeLat2, HomeLong2, session.fix.latitude, session.fix.longitude)
+   print "new calc 2 =:", lldistance((HomeLat2, HomeLong2), (session.fix.latitude, session.fix.longitude))
+   #time.sleep(1.5)
+   print 'track:', session.fix.track
+   print help(session)
+   print 'mode ' , session.fix.mode
+   #print 'type' , session.fixType
+   print 'quality ', session.satellites
+   time.sleep(1.5)
+   
+
+
+

@@ -19,7 +19,7 @@ while 1:
     time.sleep(.5)
     ser.write("a")      # write a string
     #time.sleep(.05)
-    s = ser.read()
+    s = ser.readline()
     #print s
     if len(s) > 0: break
 
@@ -28,6 +28,7 @@ while 1:
 while 1:
     s = ser.readline()
     print "recieved from arduino: ", s
+    time.sleep(.5)
     if len(s) < 1: break
     if ser.isOpen():
         print "Connected..."
