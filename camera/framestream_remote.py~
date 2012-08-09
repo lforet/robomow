@@ -6,9 +6,9 @@
 #import the necessary things for Socket
 import sys, socket
 # import the necessary things for OpenCV
-from opencv import cv
+import cv
 #this is important for capturing/displaying images
-from opencv import highgui
+#from opencv import highgui
 import pygame
 import Image
 from pygame.locals import *

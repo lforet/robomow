@@ -49,7 +49,7 @@ new_html_page = new_html_page + "Hello this is some new data"
 
 #print new_html_page 
 #time.sleep(10)
-f_handle = open('testhtml.html', 'w')
+f_handle = open('index.html', 'w')
 f_handle.write(str(new_html_page))
 f_handle.write(' ')
 f_handle.close()
@@ -62,6 +62,8 @@ page = '''
 </head>
 <body></body>
 </html>'''
+
+time.sleep(.5)
 
 print page
 
