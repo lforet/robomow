@@ -30,7 +30,7 @@ def check_heartbeat():
 	print "listening..."
 	try:
 		#next line spcifies how long in seconds to wait for a connection
-		sock.settimeout(.5)
+		sock.settimeout(.3)
 		#while True:
 		data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
 		print "received message:", data

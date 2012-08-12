@@ -3,7 +3,7 @@ import socket
 import time
 
 HOST = '127.0.0.1'                 # Symbolic name meaning the local host
-PORT = 5005             # Arbitrary non-privileged port
+PORT = 50008              # Arbitrary non-privileged port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT)) 
 #next line spcifies how long in seconds to wait for a connection
