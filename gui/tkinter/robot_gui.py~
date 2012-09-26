@@ -81,6 +81,8 @@ B2 = Tkinter.Button(top, text=button_txt, command = helloCallBack)
 L1 = Tkinter.Label(top, textvariable=text1).pack()
 Label_HeartBeat = Tkinter.Label(top, textvariable=heartbeat).pack()
 
+
+
 photo = ImageTk.PhotoImage(image)
 label = Tkinter.Label(image=photo)
 label.image = photo # keep a reference!

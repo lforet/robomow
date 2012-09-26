@@ -12,7 +12,7 @@ Install SimpleCV.
 
     sudo apt-get install python-pygame
     sudo apt-get install python-setuptools
-    sudo apt-get install ipython ipython-netbook # Not a necessity
+    sudo apt-get install ipython
 
 Download the latest SimpleCV version from GitHub.
 Extract it and change the directroy.
@@ -38,14 +38,5 @@ hg clone https://code.google.com/p/pymeanshift/
 
 ###################################################
 
-
-to give permissions to user to ttyUSB0:
-
-0 down vote
-	
-
-The device is most likely attached to user group dialout. Just add your user to the dialout group so you have appropriate permissions on the device.
-
-sudo usermod -a -G dialout $USER
 
 

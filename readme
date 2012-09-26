@@ -12,7 +12,7 @@ Install SimpleCV.
 
     sudo apt-get install python-pygame
     sudo apt-get install python-setuptools
-    sudo apt-get install ipython ipython-netbook # Not a necessity
+    sudo apt-get install ipython
 
 Download the latest SimpleCV version from GitHub.
 Extract it and change the directroy.
@@ -37,6 +37,8 @@ hg clone https://code.google.com/p/pymeanshift/
 
 
 ###################################################
+
+sudo apt-get install python-imaging-tk
 
 
 
