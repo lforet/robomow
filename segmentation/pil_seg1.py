@@ -15,12 +15,12 @@ def array2PIL(arr, size):
         arr = numpy.c_[arr, 255*numpy.ones((len(arr),1), numpy.uint8)]
     return Image.frombuffer(mode, size, arr.tostring(), 'raw', mode, 0, 1)
 
-def segment_img(original_image, spatial_radius=10,range_radius=10, min_density=60):
+def segment_img(original_image, spatial_radius=5,range_radius=5, min_density=60):
 	(segmented_image, labels_image, number_regions) = pms.segment(original_image, spatial_radius, 
                                                               range_radius, min_density)
 
 
-original_image = Image.open("/home/lforet/Downloads/sidewalk12.jpg")
+original_image = Image.open("/home/lforet/images/class1/1.grass3.jpg")
 
 
 (segmented_image, labels_image, number_regions) = pms.segment(original_image, spatial_radius=10, 

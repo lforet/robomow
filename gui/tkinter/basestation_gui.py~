@@ -40,6 +40,19 @@ def move(direction):
 	#time.sleep(1)
 
 
+def send_command_to_robot(command):
+	
+	#time.sleep(1)
+	IP="192.168.1.87"
+	PORT=5005
+	print "target IP:", IP
+	print "target port:", PORT
+	print "Command:", command
+	sock = socket.socket( socket.AF_INET, socket.SOCK_STREAM)  #TCP
+	sock.sendto(command, (IP, PORT) )
+	
+
+
 def toggle_heartbeat():
 	global heartbeat_enabled
 	if heartbeat_enabled == True: 
@@ -48,6 +61,7 @@ def toggle_heartbeat():
 		heartbeat_enabled = True
 
 def hide_buttons():
+		EM.pack_forget()
 		MF.pack_forget()
 		MB.pack_forget()
 		ML.pack_forget()
@@ -55,11 +69,15 @@ def hide_buttons():
 		camera_1.pack_forget()
 		
 
-def show_buttons():	
+def enable_drive_motors():
+		move("edm")
 		MF.pack()
 		MB.pack()
 		ML.pack()
 		MR.pack()
+
+def show_buttons():	
+		EM.pack()
 		camera_1.pack()
 
 def update_images():
@@ -123,7 +141,7 @@ def update_display():
 			HB["text"]= "Stop Heartbeat"
 			send_heartbeat()
 			show_buttons()
-			update_images()
+			#update_images()
 		else:
 			HB["text"]= "Start Heartbeat"
 			hide_buttons()
@@ -139,11 +157,14 @@ if __name__== "__main__":
 	image = Image.open("temp.jpg")
 
 	HB = Tkinter.Button(main_gui, text="Start Heartbeat",command=toggle_heartbeat);HB.pack();
+	EM = Tkinter.Button(main_gui, text="Enable Drive Motors", command= enable_drive_motors); EM.pack();
 	MF = Tkinter.Button(main_gui, text="Forward", command=lambda: move('f')); MF.pack();
 	MB = Tkinter.Button(main_gui, text="Reverse", command=lambda: move('b')); MB.pack();
 	ML = Tkinter.Button(main_gui, text="Left", command=lambda: move('l')); ML.pack();
 	MR = Tkinter.Button(main_gui, text="Right", command=lambda: move('r')); MR.pack();
 	UI = Tkinter.Button(main_gui, text="Grab Images", command=update_images); UI.pack();
+	
+
 	photo = ImageTk.PhotoImage(image)
 	camera_1 = Tkinter.Label(image=photo); camera_1.pack()
 
