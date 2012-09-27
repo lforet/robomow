@@ -8,7 +8,6 @@ import socket
 
 heartbeat_enabled = False
 
-
 def send_heartbeat():
 	IP="192.168.1.87"
 	PORT=5005
@@ -41,15 +40,27 @@ def move(direction):
 
 
 def send_command_to_robot(command):
-	
-	#time.sleep(1)
+	#try n times to connect
 	IP="192.168.1.87"
-	PORT=5005
+	PORT=50005
 	print "target IP:", IP
 	print "target port:", PORT
 	print "Command:", command
 	sock = socket.socket( socket.AF_INET, socket.SOCK_STREAM)  #TCP
+	
+	for i in range(10):  
+		try:
+			sock.connect((IP, PORT))
+			print "connected with server..."
+			connected = 1
+			time.sleep(5)
+			break
+		except IOError as detail:
+		  print "No server to connect to...", detail[0], detail [1]
+		  time.sleep(1)
 	sock.sendto(command, (IP, PORT) )
+	#time.sleep(1)
+
 	
 
 
@@ -158,10 +169,10 @@ if __name__== "__main__":
 
 	HB = Tkinter.Button(main_gui, text="Start Heartbeat",command=toggle_heartbeat);HB.pack();
 	EM = Tkinter.Button(main_gui, text="Enable Drive Motors", command= enable_drive_motors); EM.pack();
-	MF = Tkinter.Button(main_gui, text="Forward", command=lambda: move('f')); MF.pack();
-	MB = Tkinter.Button(main_gui, text="Reverse", command=lambda: move('b')); MB.pack();
-	ML = Tkinter.Button(main_gui, text="Left", command=lambda: move('l')); ML.pack();
-	MR = Tkinter.Button(main_gui, text="Right", command=lambda: move('r')); MR.pack();
+	MF = Tkinter.Button(main_gui, text="Forward", command=lambda: send_command_to_robot('f')); MF.pack();
+	MB = Tkinter.Button(main_gui, text="Reverse", command=lambda: send_command_to_robot('b')); MB.pack();
+	ML = Tkinter.Button(main_gui, text="Left", command=lambda: send_command_to_robot('l')); ML.pack();
+	MR = Tkinter.Button(main_gui, text="Right", command=lambda: send_command_to_robot('r')); MR.pack();
 	UI = Tkinter.Button(main_gui, text="Grab Images", command=update_images); UI.pack();
 	
 
