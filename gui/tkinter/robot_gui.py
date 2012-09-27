@@ -8,37 +8,38 @@ import socket
 
 def check_heartbeat():
 
-	#HOST = '127.0.0.1'                 # Symbolic name meaning the local host
-	#PORT = 50008              # Arbitrary non-privileged port
-	#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	#s.bind((HOST, PORT)) 
+	HOST = '192.168.1.87'                 # Symbolic name meaning the local host
+	PORT = 50005             # Arbitrary non-privileged port
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.bind((HOST, PORT)) 
 	#next line spcifies how long in seconds to wait for a connection
-	#s.settimeout(5.0)
+	s.settimeout(1.0)
 
-
-
-	#print "listening..."
-	#s.listen(1)
-	#print "made connection..."
-
-	reply = True
-	UDP_IP="192.168.1.87"
-	UDP_PORT=5005
-	sock = socket.socket( socket.AF_INET, # Internet
-		                  socket.SOCK_DGRAM ) # UDP
-	sock.bind( (UDP_IP,UDP_PORT) )
 	print "listening..."
+	s.listen(1)
+	print "made connection..."
+
 	try:
-		#next line spcifies how long in seconds to wait for a connection
-		sock.settimeout(.3)
-		#while True:
-		data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
-		print "received message:", data
-		if data !="ACK": reply = False
+	    print "waiting to accept.."
+	    conn, addr = s.accept()
+	    print "accepted connection from client.."
+	    while conn <> "":
+		s.listen(1)
+		#print time.time()
+		#print s.gettimeout()
+		print 'Connected by', addr
+		data = conn.recv(1024)
+		if not data: break
+		print 'Received from remote: ', data 
+		conn.send("ACK") 
 	except IOError as detail:
-   		print "connection lost", detail
-		reply = False
-	return reply
+	    print "connection lost", detail
+
+	try:
+	    print "closing Socket"
+	    s.close()
+	except NameError as detail:
+	    print "No socket to close", detail
 
 
 image = Image.open("temp.jpg")
