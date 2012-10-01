@@ -7,20 +7,42 @@ from datetime import datetime
 import socket 
 
 heartbeat_enabled = False
+sock = None
 
-def send_heartbeat():
-	IP="192.168.1.87"
-	PORT=5005
-	MESSAGE="ACK"
-	print " target IP:", IP
-	print " target port:", PORT
-	print "message:", MESSAGE
-	sock = socket.socket( socket.AF_INET, # Internet
-		            socket.SOCK_DGRAM ) # UDP
-					#socket.SOCK_STREAM)  #TCP
-	#while 1:
-	sock.sendto( MESSAGE, (IP, PORT) )
-	#time.sleep(.05)
+def open_com(address, port):
+	global sock
+	#print "sock:", sock
+	if sock == None:
+		try:
+			print "Attempting to connect to %s on port %s" % (address, port)	
+			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			sock.connect((address, port))
+			print "Connected to %s on port %s" % (address, port)
+			HB.configure(bg = "green")
+			return True
+		except socket.error, e:
+			print "Connection to %s on port %s failed: %s" % (address, port, e)
+			HB.configure(bg = "red")
+			return False
+	else:
+		check_com(address, port)
+
+def check_com(address, port):
+	global sock
+	try:
+		sock.send("ack")
+		print "already connected..."
+		HB.configure(bg = "green")			
+		time.sleep(.5)
+		return True
+	except socket.error, e:
+		print "not connected"
+		sock = None
+		HB.configure(bg = "red")
+		time.sleep(.5)
+		return False
+
+
 
 def move(direction):
 	print "move called"
@@ -141,23 +163,24 @@ def update_images():
 
 
 def update_display():
-		global heartbeat_enabled
-
+		#global heartbeat_enabled
+		IP = "192.168.1.87"
+		PORT = 50005
 		#text1.set( str(datetime.now()) )
 		#top.update_idletasks()
 		print "update called"
-		print "check heartbeat", heartbeat_enabled 
+		#print "check com", check_com(IP,PORT)
 		#if check_heartbeat() == True: Label_HeartBeat["text"]='HEARTBEAT' 
-		if heartbeat_enabled == True: 
+		if open_com(IP,PORT) == True: 
 			HB["text"]= "Stop Heartbeat"
-			send_heartbeat()
+			#send_heartbeat()
 			show_buttons()
 			#update_images()
 		else:
 			HB["text"]= "Start Heartbeat"
 			hide_buttons()
 		main_gui.update()	
-		main_gui.after(50, update_display)
+		main_gui.after(1000, update_display)
 
 
 #Label_HeartBeat = Tkinter.Label(top, textvariable=heartbeat).pack()
