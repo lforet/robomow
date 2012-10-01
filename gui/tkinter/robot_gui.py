@@ -28,12 +28,15 @@ def check_heartbeat():
 		#print time.time()
 		#print s.gettimeout()
 		print 'Connected by', addr
-		data = conn.recv(1024)
+		data = conn.recv(256)
 		if not data: break
-		print 'Received from remote: ', data 
+		print 'Received from remote: ', data
+		time.sleep(.01)
+		return True 
 		conn.send("ACK") 
 	except IOError as detail:
-	    print "connection lost", detail
+		print "connection lost", detail
+		return False
 
 	try:
 	    print "closing Socket"
@@ -72,6 +75,7 @@ def update_display():
 		heart_check = check_heartbeat()
 		if heart_check == True: heartbeat.set('HEARTBEAT')
 		if heart_check == False: heartbeat.set('NO HEARTBEAT')
+		time.sleep(.01)
 		top.update()
 
 		top.after(50, update_display)
