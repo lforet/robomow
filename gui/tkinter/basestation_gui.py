@@ -6,10 +6,9 @@ from datetime import datetime
 #from ThreadedBeatServer import *
 import socket 
 
-heartbeat_enabled = False
 sock = None
 
-def open_com(address, port):
+def com_loop(address, port):
 	global sock
 	#print "sock:", sock
 	if sock == None:
@@ -18,31 +17,21 @@ def open_com(address, port):
 			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			sock.connect((address, port))
 			print "Connected to %s on port %s" % (address, port)
-			HB.configure(bg = "green")
 			return True
 		except socket.error, e:
 			print "Connection to %s on port %s failed: %s" % (address, port, e)
-			HB.configure(bg = "red")
 			return False
 	else:
-		check_com(address, port)
-
-def check_com(address, port):
-	global sock
-	try:
-		sock.send("ack")
-		print "already connected..."
-		HB.configure(bg = "green")			
-		time.sleep(.5)
-		return True
-	except socket.error, e:
-		print "not connected"
-		sock = None
-		HB.configure(bg = "red")
-		time.sleep(.5)
-		return False
-
-
+		try:
+			sock.send("PING")
+			print "communication to robot: ACTIVE"		
+			time.sleep(.5)
+			return True
+		except socket.error, e:
+			print "communication to robot: NOT ACTIVE"
+			sock = None
+			time.sleep(.5)
+			return False
 
 def move(direction):
 	print "move called"
@@ -83,34 +72,27 @@ def send_command_to_robot(command):
 	sock.sendto(command, (IP, PORT) )
 	#time.sleep(1)
 
-	
-
-
-def toggle_heartbeat():
-	global heartbeat_enabled
-	if heartbeat_enabled == True: 
-		heartbeat_enabled = False 
-	else:
-		heartbeat_enabled = True
-
 def hide_buttons():
-		EM.pack_forget()
+		Button_Enable_Motors.pack_forget()
 		MF.pack_forget()
 		MB.pack_forget()
 		ML.pack_forget()
 		MR.pack_forget()
+		Button_Update_Image.pack_forget()
 		camera_1.pack_forget()
 		
 
 def enable_drive_motors():
-		move("edm")
+		#send_command_to_robot("edm")
+		Button_Enable_Motors.configure(bg = "green")
 		MF.pack()
 		MB.pack()
 		ML.pack()
 		MR.pack()
 
 def show_buttons():	
-		EM.pack()
+		Button_Enable_Motors.pack()
+		Button_Update_Image.pack()
 		camera_1.pack()
 
 def update_images():
@@ -166,21 +148,19 @@ def update_display():
 		#global heartbeat_enabled
 		IP = "192.168.1.87"
 		PORT = 50005
-		#text1.set( str(datetime.now()) )
-		#top.update_idletasks()
 		print "update called"
-		#print "check com", check_com(IP,PORT)
-		#if check_heartbeat() == True: Label_HeartBeat["text"]='HEARTBEAT' 
-		if open_com(IP,PORT) == True: 
-			HB["text"]= "Stop Heartbeat"
+		if com_loop(IP,PORT) == True: 
+			com_status.set('COM ACTIVE')
+			Button_Com_Status.configure(bg = "green")
 			#send_heartbeat()
 			show_buttons()
 			#update_images()
 		else:
-			HB["text"]= "Start Heartbeat"
+			com_status.set('COM NOT ACTIVE')
+			Button_Com_Status.configure(bg = "red")
 			hide_buttons()
 		main_gui.update()	
-		main_gui.after(1000, update_display)
+		main_gui.after(100, update_display)
 
 
 #Label_HeartBeat = Tkinter.Label(top, textvariable=heartbeat).pack()
@@ -189,14 +169,19 @@ if __name__== "__main__":
 	main_gui = Tkinter.Tk()
 	main_gui.geometry("640x480")
 	image = Image.open("temp.jpg")
+	IP = "192.168.1.87"
+	PORT = 50005
+	com_status = Tkinter.StringVar()
+	com_status.set('COM INACTIVE')
 
-	HB = Tkinter.Button(main_gui, text="Start Heartbeat",command=toggle_heartbeat);HB.pack();
-	EM = Tkinter.Button(main_gui, text="Enable Drive Motors", command= enable_drive_motors); EM.pack();
+	#Label_Com_Status = Tkinter.Label(main_gui, text="Helvetica", font=("Helvetica", 16),  textvariable=com_status, bg=com_status_color.get()).pack()
+	Button_Com_Status = Tkinter.Button(main_gui, textvariable=com_status);Button_Com_Status.pack();
+	Button_Enable_Motors = Tkinter.Button(main_gui, text="Enable Drive Motors", command= enable_drive_motors); Button_Enable_Motors.pack();
 	MF = Tkinter.Button(main_gui, text="Forward", command=lambda: send_command_to_robot('f')); MF.pack();
 	MB = Tkinter.Button(main_gui, text="Reverse", command=lambda: send_command_to_robot('b')); MB.pack();
 	ML = Tkinter.Button(main_gui, text="Left", command=lambda: send_command_to_robot('l')); ML.pack();
 	MR = Tkinter.Button(main_gui, text="Right", command=lambda: send_command_to_robot('r')); MR.pack();
-	UI = Tkinter.Button(main_gui, text="Grab Images", command=update_images); UI.pack();
+	Button_Update_Image = Tkinter.Button(main_gui, text="Grab Images", command=update_images); Button_Update_Image.pack();
 	
 
 	photo = ImageTk.PhotoImage(image)
