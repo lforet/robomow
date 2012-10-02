@@ -24,13 +24,16 @@ def com_loop(address, port):
 	else:
 		try:
 			sock.send("PING")
-			print "communication to robot: ACTIVE"		
-			time.sleep(.5)
+			print "communication to robot: ACTIVE"
+			#sock.settimeout(.5)
+			#data = sock.recv(1)	
+			#print "recieved from robot: ", data	
+			time.sleep(.1)
 			return True
 		except socket.error, e:
 			print "communication to robot: NOT ACTIVE"
 			sock = None
-			time.sleep(.5)
+			time.sleep(.1)
 			return False
 
 def move(direction):
@@ -51,26 +54,22 @@ def move(direction):
 
 
 def send_command_to_robot(command):
-	#try n times to connect
+	global sock
 	IP="192.168.1.87"
 	PORT=50005
 	print "target IP:", IP
 	print "target port:", PORT
 	print "Command:", command
-	sock = socket.socket( socket.AF_INET, socket.SOCK_STREAM)  #TCP
-	
-	for i in range(10):  
-		try:
-			sock.connect((IP, PORT))
-			print "connected with server..."
-			connected = 1
-			time.sleep(5)
-			break
-		except IOError as detail:
-		  print "No server to connect to...", detail[0], detail [1]
-		  time.sleep(1)
-	sock.sendto(command, (IP, PORT) )
-	#time.sleep(1)
+	try:
+		sock.send(command)
+		print "Command Sent to Robot:", command
+		time.sleep(.1)
+		return True
+	except socket.error, e:
+		print "communication to robot: NOT ACTIVE"
+		sock = None
+		time.sleep(.5)
+		return False
 
 def hide_buttons():
 		Button_Enable_Motors.pack_forget()
