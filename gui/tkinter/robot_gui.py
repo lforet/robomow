@@ -28,28 +28,28 @@ def com_loop(IP, PORT):
 		except IOError as detail:
 			print "communication to basestation: NOT ACTIVE"
 			conn = None
-			time.sleep(.1)
+			#time.sleep(.1)
 			return False
 	else:
 		try:
 			if conn != None:
 				data = conn.recv(1024)
 				#if not data: break
-				print 'Received from remote: ', data
-				time.sleep(.1)	
+				#print 'Received from remote: ', data
+				#time.sleep(.1)	
 				if len(data) > 0:
-					print "communication to basestation: ACTIVE"		
+					#print "communication to basestation: ACTIVE"		
 					#time.sleep(.5)
-					return True
+					return data
 				else:
-					print "communication to basestation: NOT ACTIVE"
+					#print "communication to basestation: NOT ACTIVE"
 					conn = None
-					time.sleep(.1)
+					#time.sleep(.1)
 					return False
 		except socket.error, e:
-			print "communication to basestation: NOT ACTIVE", e
+			#print "communication to basestation: NOT ACTIVE", e
 			#sock = None
-			time.sleep(.5)
+			#time.sleep(.5)
 			return False
 
 
@@ -72,24 +72,39 @@ def helloCallBack():
 	B["text"]=i
    	#text1.set("New Text!")
 
+def Send_Image():
+	HOST = '192.168.1.43'
+	PORT = 12345
+	#MPORT = 12346
+	FILE = 'temp.jpg'
+	data_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	data_tcp.connect((HOST, PORT))
+	print "data port connected..."
+	f = open(FILE, "rb")
+	print "sending image"
+	data = f.read()
+	f.close()
+	data_tcp.send(data)
+	data_tcp.close()
 	
 def update_display():
 		IP = "192.168.1.87"
 		PORT = 50005
 		text1.set( str(datetime.now()) )
-		print "update called", i
-		if com_loop(IP,PORT) == True:
+		#print "update called", i
+		com_response = com_loop(IP,PORT)
+		if  com_response != False:
 			#time.sleep(.5) 
 			#com_status.set('COM ACTIVE')
 			heartbeat.set('COM ACTIVE')
-			#send_heartbeat()
-			#show_buttons()
-			#update_images()
+			if com_response != "PING\n":
+				print "COM ACTIVE at time: ", str(datetime.now())
+				print "Response from Basestation: ", com_response	
+				if com_response == "IU": Send_Image()
 		else:
 			heartbeat.set('COM NOT ACTIVE')
-			#Button_Com_Status.configure(bg = "red")
-			#hide_buttons()
-		#	time.sleep(.01)
+			print "COM NOT ACTIVE at time: ", str(datetime.now())
+			time.sleep(.5)
 		#com_loop(IP, PORT)
 		#time.sleep(.1)
 		top.update()
