@@ -2,6 +2,7 @@ import Tkinter
 import tkMessageBox
 from PIL import Image, ImageTk
 import time
+from PIL import ImageFile
 from datetime import datetime
 #from ThreadedBeatServer import *
 import socket 
@@ -23,17 +24,17 @@ def com_loop(address, port):
 			return False
 	else:
 		try:
-			sock.send("PING")
+			sock.send("PING\n")
 			print "communication to robot: ACTIVE"
 			#sock.settimeout(.5)
 			#data = sock.recv(1)	
 			#print "recieved from robot: ", data	
-			time.sleep(.5)
+			time.sleep(.1)
 			return True
 		except socket.error, e:
 			print "communication to robot: NOT ACTIVE"
 			sock = None
-			time.sleep(.5)
+			time.sleep(.1)
 			return False
 
 def move(direction):
@@ -95,44 +96,42 @@ def show_buttons():
 		camera_1.pack()
 
 def update_images():
-	HOST = "192.168.1.87"
-	CPORT = 5006
-	MPORT = 5007
-
-	data_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	filename_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	filename_tcp.bind((HOST, CPORT))
-	data_tcp.bind((HOST, MPORT)) 
-	#next line spcifies how long in seconds to wait for a connection
-	#s.settimeout(5.0)
-
-	print "listening..."
-	filename_tcp.listen(1)
-	data_tcp.listen(1)
-
-	#to receive and view pil image
+	IP = '192.168.1.43'
+	PORT = 12345
 	try:
+		sock.send("IU")
+		tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		#tcp.connect(('192.168.1.87', 12345))
+		#tcp.send("1000 4")	
+		tcp.bind((IP,PORT))
+		print "listening..."
+		tcp.listen(1)
+		tcp.settimeout(1)
 		print "waiting for data connection.."
-		conn, addr = data_tcp.accept()
-		print "accepted connection from client.."
-
+		conn, addr = tcp.accept()
+		print "accepted connection from client.."	
 		file = open("rec_image.jpg", "w")
 		parser = ImageFile.Parser()
 		print time.time()
+		#temp = conn.recv(1024)
+		#print temp
 
 		while 1:
-		    jpgdata = conn.recv(65536)
-		    if not jpgdata:
-		        data_tcp.close()
-		        print "no more data"
-		        break
-		    parser.feed(jpgdata)
-		    file.write(jpgdata)
+			print "receiving image data..."
+			jpgdata = conn.recv(65536)
+			#print jpgdata
+			if not jpgdata:
+			#sock.close()
+				print "no more data"
+				break
+			parser.feed(jpgdata)
+			file.write(jpgdata)
+
 		print time.time()
 		print "data received.."
 		file.close()
 		image = parser.close()
-		#image.show()
+		image.show()
 		image = Image.open("rec_image.jpg")
 		photo = ImageTk.PhotoImage(image)
 	 	camera_1 = Tkinter.Label(image=photo); camera_1.pack()
@@ -140,15 +139,13 @@ def update_images():
 	except IOError as detail:
 		print "connection lost", detail
 
-
-
-
 def update_display():
 		#global heartbeat_enabled
 		IP = "192.168.1.87"
 		PORT = 50005
 		print "update called"
-		if com_loop(IP,PORT) == True: 
+		if com_loop(IP,PORT) == True:
+		#if 1 == 1: 
 			com_status.set('COM ACTIVE')
 			Button_Com_Status.configure(bg = "green")
 			#send_heartbeat()
@@ -160,9 +157,6 @@ def update_display():
 			hide_buttons()
 		main_gui.update()	
 		main_gui.after(100, update_display)
-
-
-#Label_HeartBeat = Tkinter.Label(top, textvariable=heartbeat).pack()
 
 if __name__== "__main__":
 	main_gui = Tkinter.Tk()
