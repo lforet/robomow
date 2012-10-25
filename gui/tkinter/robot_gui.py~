@@ -35,7 +35,10 @@ def com_loop(ip, port):
 	else:
 		try:
 			if conn != None:
+				data = ""
 				data = conn.recv(1024)
+				#echo the command received
+				conn.send(data)
 				#if not data: break
 				#print 'Received from remote: ', data
 				#time.sleep(.1)	
@@ -83,17 +86,20 @@ def Send_Image(ip,port):
 	FILE = "/home/mobot/projects/robomow/images/" + image
 	#FILE = 'temp.jpg'
 	print 'ip , port = ', ip, port
-	data_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	data_tcp.connect((ip, port))
-	print "data port connected..."
-	f = open(FILE, "rb")
-	print "sending image:", FILE
-	data = f.read()
-	f.close()
-	data_tcp.send(data)
-	data_tcp.close()
-	print "bytes of image date sent:", len(data)
-	
+	try:
+		data_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		data_tcp.connect((ip, port))
+		print "data port connected..."
+		f = open(FILE, "rb")
+		print "sending image:", FILE
+		data = f.read()
+		f.close()
+		data_tcp.send(data)
+		data_tcp.close()
+		print "bytes of image date sent:", len(data)
+	except:
+		print 'no data sent'
+
 def update_display():
 		global IP, PORT
 		text1.set( str(datetime.now()) )
