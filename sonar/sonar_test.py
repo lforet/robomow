@@ -2,6 +2,11 @@
 
 
 from maxsonar_class import *
+import time
 
+sensor1 = MaxSonar()
 
-sensor1 = MaxSonar('/dev/ttyUSB1')
+while 1:
+	print sensor1.distances_cm()
+	time.sleep(.1)
+

@@ -2,38 +2,73 @@
 
 import serial
 import threading
+import time
+
+# need to find best way to search seria ports for find device
 
 class MaxSonar(object):
-    def __init__(self, port):
-        self._ser = self._open_serial_port(port)
-        self._should_stop = threading.Event()
-        self._start_reading()
+	def __init__(self):
+		self._isConnected = False
+		self._ser = self._open_serial_port()
+		self._should_stop = threading.Event()
+		self._start_reading()
+		self._data = 0
+		#self._port = port
+		
     
-    def _open_serial_port(self, port):
-        ser = serial.Serial(port=port,
-                             baudrate=9600,
-                             bytesize=serial.EIGHTBITS,
-                             parity=serial.PARITY_NONE,
-                             stopbits=serial.STOPBITS_ONE,
-                             xonxoff=False,
-                             rtscts=False,
-                             dsrdtr=False,
-                             )
-        return ser
+	def _open_serial_port(self):
+		while self._isConnected == False:
+			print "class MaxSonar: searching serial ports for ultrasonic sensor package..."
+			for i in range(11):
+				port = "/dev/ttyUSB"
+				port = port[0:11] + str(i)
+				print "class MaxSonar: searching on port:", port
+				time.sleep(.5)
+				try:				
+					ser = serial.Serial(port, 9600, timeout=1)
+					data = ser.readline()
+					#print "data=", int(data[3:(len(data)-1)])
+					if data[0:2] == "cm":
+						#ser.write("a\n")      # write a string
+						print "class MaxSonar: found ultrasonic sensor package on serial port: ", port
+						self._isConnected  = True
+						#self._port = ser
+						time.sleep(.5)
+						break
+				except:
+					pass
+			if self._isConnected == False:
+				print "class MaxSonar: ultrasonic sensor package not found!"
+				time.sleep(1)
+		#print "returning", ser
+		return ser
+  
+	def _start_reading(self):
+		def read():
+			#print self._should_stop.isSet()
+			#print self._ser.isOpen()
+			while not self._should_stop.isSet():
+				try:
+					data = self._ser.readline()
+					#print "recieved: ", data
+					self._data = int(data[3:(len(data)-1)])
+				except:
+					try:
+						print "class MaxSonar:no connection...attempting to reconnect"
+						self._data = 0
+						self._isConnected = False
+						self._ser = self._open_serial_port()
+						time.sleep(.5)
+					except:
+						pass
+
+		thr = threading.Thread(target=read)
+		thr.start()
+		return thr
     
-    def _start_reading(self):
-        def read():
-            while not self._should_stop.isSet():
-                data = self._ser.read(5)
-                print data
-                self._data = int(data[1:3])
-        thr = threading.Thread(target=read)
-        thr.start()
-        return thr
-    
-    def stop(self):
-        self._should_stop.set()
-        self._read_thread.wait()
+	def stop(self):
+		self._should_stop.set()
+		self._read_thread.wait()
         
-    def distances_inches(self):
-        return self._data
+	def distances_cm(self):
+		return self._data
