@@ -108,7 +108,10 @@ def update_display():
 			heartbeat.set('COM ACTIVE')
 			if com_response != "PING\n":
 				print "COM ACTIVE at time: ", str(datetime.now())
-				print "Response from Basestation: ", com_response	
+				print "Response from Basestation: ", com_response
+				#echo the command received
+				sock.send(data)
+					
 				if com_response == "IU": Send_Image(basestation[0], 12345)
 		else:
 			heartbeat.set('COM NOT ACTIVE')
