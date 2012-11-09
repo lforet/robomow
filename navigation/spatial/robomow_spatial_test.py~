@@ -3,6 +3,7 @@
 
 import serial
 import time
+import math
 #Basic imports
 from ctypes import *
 import sys
@@ -45,16 +46,26 @@ print ("zeroing gyro...")
 sp.zeroGyro()
 time.sleep(2.2)
 
-
+north = 0
 for i in range (1000):
 	try:
 		print
 		print "acc:", sp.getAcceleration([0][0]), sp.getAcceleration([1][0]), sp.getAcceleration([2][0])
 		print "AngularRate:", sp.getAngularRate([0][0]), sp.getAngularRate([1][0]), sp.getAngularRate([2][0])
 		print "MagneticField:", sp.getMagneticField([0][0]), sp.getMagneticField([1][0]), sp.getMagneticField([2][0])
+		compass = sp.getMagneticField([1][0])
+		#print "compass = ", compass
+		if compass > 0:		
+			north = north + compass
+			print "north: ", north, (north / i) , i
+		compassBearing = (north / i) * (180.0 / math.pi);
+		if (compassBearing > 360): compassBearing -= 360;
+		if (compassBearing < 0): compassBearing += 360;
+		print "compassBearing: ", compassBearing
+
 	except:
 		print ('..................')
-	time.sleep(.3)
+	time.sleep(.1)
 	#chr = sys.stdin.read(1)
 sp.closePhidget()
 

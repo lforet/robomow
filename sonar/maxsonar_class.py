@@ -28,7 +28,7 @@ class MaxSonar(object):
 					ser = serial.Serial(port, 9600, timeout=1)
 					data = ser.readline()
 					#print "data=", int(data[3:(len(data)-1)])
-					if data[0:2] == "cm":
+					if data[0:2] == "s1":
 						#ser.write("a\n")      # write a string
 						print "class MaxSonar: found ultrasonic sensor package on serial port: ", port
 						self._isConnected  = True
@@ -51,7 +51,8 @@ class MaxSonar(object):
 				try:
 					data = self._ser.readline()
 					#print "recieved: ", data
-					self._data = int(data[3:(len(data)-1)])
+					#self._data = int(data[5:(len(data)-1)])
+					self._data = data[0:(len(data)-1)]
 				except:
 					try:
 						print "class MaxSonar:no connection...attempting to reconnect"

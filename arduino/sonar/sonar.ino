@@ -41,7 +41,15 @@ void loop() {
   //Serial.print(inches);
   //Serial.print("in, ");
   
-  Serial.print("cm:");
+  Serial.print("s1:");
+  Serial.print(cm);
+  Serial.print("s2:");
+  Serial.print(cm);
+  Serial.print("s3:");
+  Serial.print(cm);
+  Serial.print("s4:");
+  Serial.print(cm);
+  Serial.print("s5c:");
   Serial.println(cm);
   //Serial.println();
 
