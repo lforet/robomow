@@ -208,6 +208,7 @@ while arrived == False:
 			the_map[randy][randx] = 1
 	
 	route = pathFind(the_map, n, m, dirs, dx, dy, currentx, currenty, xB, yB)
+
 	if len(route) > 0: 
 
 		print "route:", route

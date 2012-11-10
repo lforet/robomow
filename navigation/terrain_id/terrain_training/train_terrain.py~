@@ -37,11 +37,13 @@ def grab_frame_from_video(video):
 				
 
 def predict_class(img):
-	model = pickle.load( open( "robomow_ai.mdl", "rb" ) )
+	model = pickle.load( open( "robomow_ai_model.mdl", "rb" ) )
 	features = find_features(img)
 	classID = classify(model, features)
+	if classID == 1: answer = "Mowable"
+	if classID == 2: answer = "Non-Mowable"
 	print "predicted classID:", classID
-	eg.msgbox("predicted classID:"+str(classID))
+	eg.msgbox("predicted classID:"+answer)
 
 def save_data(features, classID):
 	data_filename = 'robomow_feature_data.csv'
@@ -160,6 +162,21 @@ if __name__=="__main__":
 			img1 = image2array(img1)
 			cv2.imwrite('temp.png', img1)
 
-		reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Next Frame', 'Predict', 'Retrain AI' ,'Quit'), image='temp.png', root=None)
+		if reply == "Fwd 10 Frames":
+			print "Forward 10 frames..."
+			for i in range(10):
+				img1 = np.array(grab_frame_from_video(video)[1])
+			img1 = array2image(img1)
+			img1 = img1.resize((320,240))
+			img1 = image2array(img1)
+			cv2.imwrite('temp.png', img1)
+
+		if reply == "Del AI File":
+			data_filename = 'robomow_feature_data.csv'
+			f_handle = open(data_filename, 'w')
+			f_handle.write('')
+			f_handle.close()
+
+		reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
 
 

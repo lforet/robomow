@@ -181,13 +181,14 @@ print 'Route:'
 print route
 '''
 #place random obstacles
+'''
 for i in range(200):
 	randx =random.randint(1,n-1)
 	randy =random.randint(1,m-1)
 	if the_map[randy][randx] == 0:
 		#print "randx,randy", randx,randy
 		the_map[randy][randx] = 1
-
+'''
 #until current location = destination location
 currentx = xA
 currenty = yA
@@ -197,7 +198,7 @@ the_map[yB][xB] = 4
 arrived = False
 
 while arrived == False:
-	'''
+	
 	#place random obstacles
 	for i in range(15):
 		randx =random.randint(1,n-1)
@@ -205,7 +206,7 @@ while arrived == False:
 		if the_map[randy][randx] == 0:
 			#print "randx,randy", randx,randy
 			the_map[randy][randx] = 1
-	'''
+	
 	route = pathFind(the_map, n, m, dirs, dx, dy, currentx, currenty, xB, yB)
 	if len(route) > 0: 
 
