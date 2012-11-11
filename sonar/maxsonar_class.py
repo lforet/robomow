@@ -23,7 +23,7 @@ class MaxSonar(object):
 				port = "/dev/ttyUSB"
 				port = port[0:11] + str(i)
 				print "class MaxSonar: searching on port:", port
-				time.sleep(.5)
+				time.sleep(.2)
 				try:				
 					ser = serial.Serial(port, 9600, timeout=1)
 					data = ser.readline()
@@ -33,7 +33,25 @@ class MaxSonar(object):
 						print "class MaxSonar: found ultrasonic sensor package on serial port: ", port
 						self._isConnected  = True
 						#self._port = ser
-						time.sleep(.5)
+						time.sleep(.35)
+						break
+				except:
+					pass
+			for i in range(11):
+				port = "/dev/ttyACM"
+				port = port[0:11] + str(i)
+				print "class MaxSonar: searching on port:", port
+				time.sleep(.2)
+				try:				
+					ser = serial.Serial(port, 9600, timeout=1)
+					data = ser.readline()
+					#print "data=", int(data[3:(len(data)-1)])
+					if data[0:2] == "s1":
+						#ser.write("a\n")      # write a string
+						print "class MaxSonar: found ultrasonic sensor package on serial port: ", port
+						self._isConnected  = True
+						#self._port = ser
+						time.sleep(.35)
 						break
 				except:
 					pass

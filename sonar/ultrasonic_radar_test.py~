@@ -93,7 +93,7 @@ def sonar_graph(ping_reading):
 	cv.ShowImage("Sonar", sonar_image )
 	#cv.MoveWindow ('Sonar',50 ,50 )
 	time.sleep(.01)
-	cv.WaitKey(2)
+	cv.WaitKey(1)
 	#print "finished graph"
 	
 	#garbage cleanup
