@@ -6,6 +6,8 @@ from PIL import ImageFile
 from datetime import datetime
 #from ThreadedBeatServer import *
 import socket 
+import sonar_functions as sf
+
 
 sock = None
 ROBOT_IP = None
@@ -116,6 +118,8 @@ def send_command_to_robot(command, ip, port):
 			sock.send(command)
 			print "Command Sent to Robot:", command
 			TextOut("Command Sent to Robot:" + command)
+			reply = sock.recv(1024)
+			TextOut("Echoed from Robot:" + reply)
 			time.sleep(.1)
 			return True
 		except socket.error, e:
@@ -171,9 +175,62 @@ def show_buttons():
 		Button_Update_Image.pack()
 		camera_1.pack()
 
+
+def update_sonar(ip, port):
+	ip = ''
+	command = 'US'	
+	global sonar_img 
+	try:
+		#send command to robot to send sonar data
+		sock.send(command)
+		print "Command Sent to Robot:", command
+		TextOut("Command Sent to Robot:" + command)
+		#time.sleep(0.01)
+		tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		tcp.bind((ip,port))
+		print "listening..."
+		tcp.listen(3)
+		tcp.settimeout(3)
+		print "waiting for data connection.."
+		conn, addr = tcp.accept()
+		print "accepted connection from client.."
+		now = time.time()
+		print "receiving sonar data..."
+		sonar_data = "" 
+		while 1:	
+			data = conn.recv(1024)
+			sonar_data = sonar_data + data
+			if not data:
+			#sock.close()
+				print "no more data"
+				break
+		print 'time to recieve data: ', (time.time()) - now
+		print "data received..", sonar_data
+		TextOut("data received:" + sonar_data)
+		#time.sleep(.01)
+		#update sonar display
+		
+		tcp.close()
+	except IOError as detail:
+		print "connection lost", detail
+
+	print "calling sonar_display"
+	sonar_image  = sf.sonar_display(sonar_data)
+	print "saving sonar image"
+	sonar_image.save("sonar_image.jpg")
+	print "returning"
+	#refresh with new somar image
+	image = Image.open("sonar_image.jpg")
+	image.thumbnail((320,240))
+	sonar_img = ImageTk.PhotoImage(image)
+	sonar_display.config(image=sonar_img)
+	return
+
+
 def update_images(ip, port):
 	global photo1
 	ip = ''
+	
 	#PORT = 12345
 	try:
 		#send_command_to_robot("IU", ip, 50005)
@@ -187,8 +244,8 @@ def update_images(ip, port):
 		#tcp.send("1000 4")	
 		tcp.bind((ip,port))
 		print "listening..."
-		tcp.listen(1)
-		tcp.settimeout(1)
+		tcp.listen(2)
+		tcp.settimeout(2)
 		print "waiting for data connection.."
 		conn, addr = tcp.accept()
 		print "accepted connection from client.."	
@@ -217,7 +274,7 @@ def update_images(ip, port):
 		#image.show()
 		#camera_1.pack_forget()
 		image = Image.open("rec_image.jpg")
-		image.thumbnail((320,240))
+		#image.thumbnail((320,240))
 		photo1 = ImageTk.PhotoImage(image)
 		camera_1.config(image=photo1)
 		#camera_1.pack()
@@ -238,6 +295,7 @@ def update_display():
 			#if 1 == 1: 
 				com_status.set('COM ACTIVE ON IP: '  + ROBOT_IP)
 				Button_Com_Status.configure(bg = "green")
+				#update_sonar()
 				#show_buttons()
 				#update_images()
 			else:
@@ -259,8 +317,7 @@ if __name__== "__main__":
 				testmode= True
 
 	main_gui = Tk()
-	main_gui.geometry("940x580")
-	image = Image.open("temp.jpg")
+	main_gui.geometry("1100x840")
 
 	com_status = StringVar()
 	com_status.set('COM INACTIVE')
@@ -299,11 +356,11 @@ if __name__== "__main__":
 
 	Button_Update_Image = Button(frame3, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
 	Button_Update_Image.pack(side=LEFT);
-	button_toggle_cameras = Button(frame3, text="Toggle Cameras", command=lambda: send_command_to_robot('tc', ROBOT_IP, PORT));
-	button_toggle_cameras.pack()
+	button_toggle_sonar = Button(frame3, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
+	button_toggle_sonar.pack()
 	#frame3.pack(anchor=NW)
 	frame3.pack()
-
+#
 	paused = StringVar()
 	paused.set('PAUSE')
 	button_pause = Button(main_gui, textvariable=paused, command=toggle_button_pause);button_pause.pack();
@@ -322,8 +379,15 @@ if __name__== "__main__":
 	IP_of_bot = Entry(main_gui, textvariable=var_IP_of_bot)
 	IP_of_bot.pack()
 
+	image = Image.open("temp.jpg")
+	sonar = Image.open('sonar_image.jpg')
+	#sonar.thumbnail((440,440))
 	photo1 = ImageTk.PhotoImage(image)
 	camera_1 = Label(image=photo1, bd=1, relief=SUNKEN); camera_1.pack(padx=5, pady=5)
+	
+
+	sonar_img = ImageTk.PhotoImage(sonar)
+	sonar_display = Label(image=sonar_img, bd=1, relief=SUNKEN); sonar_display.pack(padx=5, pady=5)
 	
 	#frame1.pack_forget()
 	update_display()
