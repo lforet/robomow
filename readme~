@@ -38,5 +38,7 @@ hg clone https://code.google.com/p/pymeanshift/
 
 ###################################################
 
+sudo apt-get install python-imaging-tk
+
 
 

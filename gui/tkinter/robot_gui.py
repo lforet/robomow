@@ -5,11 +5,15 @@ import time
 from datetime import datetime
 #from ThreadedBeatServer import *
 import socket 
-import os
+import os, random
+import cv2
+from maxsonar_class import *
+
 
 sock = None
 conn = None
 basestation = None
+cap = cv2.VideoCapture(0)
 
 def com_loop(ip, port):
 	global sock, conn, basestation
@@ -26,9 +30,9 @@ def com_loop(ip, port):
 			print "waiting to accept.."
 			conn, basestation = sock.accept()
 			print "accepted connection from client..", conn, basestation
-			return True 
+			return 'com with basestation established'
 		except IOError as detail:
-			print "communication to basestation: NOT ACTIVE"
+			print detail
 			conn = None
 			#time.sleep(.1)
 			return False
@@ -66,22 +70,61 @@ heartbeat.set('NO HEARTBEAT')
 i = 0
 button_txt = i
 
+def snap_shot():
 
-def helloCallBack():
-	global i
-   	#tkMessageBox.showinfo( "Hello Python", "Hello World")
-   	print "do some stuff"
-   	i = i + 1
-	B["text"]=i
-   	#text1.set("New Text!")
+	#capture from camera at location 0
+	now = time.time()
+	#cap = cv2.VideoCapture(0)
+	global cap
+	global photo
+	print 'cap=', cap
+	try:
+		#have to capture a few frames as it buffers a few frames..
+		for i in range (5):
+			ret, img = cap.read()		 
+		print (time.time()) - now
+		#img.save('temp.png')
+		#cv2.imshow('grab',img)
+		#cv2.waitKey()
+		cv2.imwrite('temp.jpg', img)
+		img1 = Image.open('temp.jpg')
+		img1.thumbnail((320,240))
+		#if img1.size[0] <> 320 or img1.size[1] <> 240:
+		#	print "Image is not right size. Resizing image...."
+		#	img1 = img1.resize((320, 240))
+		#	print "Resized to 320, 340"
+	
+		#img1 = Image.open(filename).convert('RGB').save('temp.gif')
+		img1.save('temp.jpg')
+		#img1.show()
+		#update display
+		#image = Image.open("temp.jpg")
+		#image.thumbnail((320,240))
+		photo = ImageTk.PhotoImage(img1)
+		label.config(image=photo)	
+		#label.pack()
+		print (time.time()) - now
+	except:
+		print "could not grab webcam"
+	#cap.release()
+	#cap = cv2.VideoCapture(0)
+	return img
+
 
 def Send_Image(ip,port):
-	
+
 	#temparaily just send random image
-	import os, random
-	image =  random.choice(os.listdir("/home/mobot/projects/robomow/images"))
-	FILE = "/home/mobot/projects/robomow/images/" + image
-	#FILE = 'temp.jpg'
+	
+	#use folder to send images
+	#image =  random.choice(os.listdir("/home/mobot/projects/robomow/images"))
+	#FILE = "/home/mobot/projects/robomow/images/" + image
+	####
+	#grab image from webcam
+	now = time.time()
+	snap_shot()
+	print "time to execute:", (time.time()) - now
+	time.sleep(.3)
+	FILE = "temp.jpg"
 	print 'ip , port = ', ip, port
 	try:
 		data_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -97,6 +140,27 @@ def Send_Image(ip,port):
 	except:
 		print 'no data sent'
 
+
+def Send_Sonar_Data(ip,port):
+	global sonar
+	#now = time.time()
+	sonar_data  = str(sonar.distances_cm())
+	print "sonar_data:", sonar_data
+	#print "time to execute:", (time.time()) - now
+	#time.sleep(.1)
+	#print 'ip , port = ', ip, port
+	try:
+		data_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		data_tcp.connect((ip, port))
+		print "data port connected..."
+		data_tcp.send(sonar_data)
+		data_tcp.close()
+		print "bytes of sonar data sent:", len(sonar_data)
+	except:
+		print 'no data sent'
+
+
+
 def update_display():
 		global IP, PORT
 		text1.set( str(datetime.now()) )
@@ -110,12 +174,17 @@ def update_display():
 				print "COM ACTIVE at time: ", str(datetime.now())
 				print "Response from Basestation: ", com_response
 				#echo the command received
-				sock.send(data)
+				#sock.send(com_response)
 					
 				if com_response == "IU": Send_Image(basestation[0], 12345)
+				if com_response == "US": Send_Sonar_Data(basestation[0], 12345)
 		else:
 			heartbeat.set('COM NOT ACTIVE')
 			print "COM NOT ACTIVE at time: ", str(datetime.now())
+			#sock = None
+			conn = None
+			#sock.close()
+			#basestation = None
 			time.sleep(.5)
 		#com_loop(IP, PORT)
 		#time.sleep(.1)
@@ -139,17 +208,21 @@ if __name__== "__main__":
 	#IP = gethostaddress()
 	IP = ''
 	PORT = 50005
-	B = Tkinter.Button(top, text=button_txt, command = helloCallBack)
-	B2 = Tkinter.Button(top, text=button_txt, command = helloCallBack)
+	#B = Tkinter.Button(top, text=button_txt, command = helloCallBack)
+	#B2 = Tkinter.Button(top, text=button_txt, command = helloCallBack)
 	L1 = Tkinter.Label(top, textvariable=text1).pack()
 	Label_HeartBeat = Tkinter.Label(top, textvariable=heartbeat).pack()
 
 	photo = ImageTk.PhotoImage(image)
-	label = Tkinter.Label(image=photo)
-	label.image = photo # keep a reference!
-	label.pack()
-	B.pack()
-	B2.pack()
+	label = Tkinter.Label(image=photo); label.pack()
+	#label.image = photo # keep a reference!
+	
+	#B.pack()
+	#B2.pack()
+	
+	##start sonar
+	sonar= MaxSonar()
+
 
 	update_display()
 	#time.sleep(.01)
