@@ -1,6 +1,6 @@
 //Analog pin 1 for reading in the analog voltage from the MaxSonar device.
 //This variable is a constant because the pin will not change throughout execution of this code.
-const int anPin = 1;
+const int anPin = 0;
 
 //variables needed to store values
 long anVolt, inches, cm, mm;
@@ -49,13 +49,13 @@ void loop() {
   Serial.print(cm);
   Serial.print("s4:");
   Serial.print(cm);
-  Serial.print("s5c:");
+  Serial.print("s5:");
   Serial.println(cm);
   //Serial.println();
 
   //reset sample total
   sum = 0;
 
-  delay(10);
+  delay(50);
 
 } 
