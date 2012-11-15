@@ -1,20 +1,14 @@
 #!/usr/bin/env python
-import serial
 import sys, time
 from threading import Thread
 import numpy as np
-import matplotlib.cm as cm
-from matplotlib.pyplot import figure, show, rc
+#import matplotlib.cm as cm
 import matplotlib.pyplot as P
 from pylab import *
 import Image
 import cv
 from maxsonar_class import *
-
-
-
-
-
+import random
 
 ###########################################################
 
@@ -54,48 +48,46 @@ def fig2data ( fig ):
     return buf
 ###########################################################
 
-def sonar_graph(ping_reading):
-
+def sonar_graph(ping_readings):
+		
 	# force square figure and square axes looks better for polar, IMO
 	fig = figure(figsize=(6,6))
-	#ax = fig.add_axes([0.1, 0.1, 0.8, 0.8], polar=True)
 	ax = P.subplot(1, 1, 1, projection='polar')
-	#ax = fig.add_subplot(2, 2, 2, projection='radar')
 	P.rgrids([28, 61, 91])
- 	#circle = P.Circle((0, 0), 50)
-	#ax.add_artist(circle)	
-
 	ax.set_theta_zero_location('N')
 	ax.set_theta_direction(-1)
-	x = 1
-	theta = 0
+	theta = 356
 	angle = theta * np.pi / 180.0
-	radii = [ping_reading]
+	radii = [ping_readings[0]]
 	width = .15
 	bars1 = ax.bar(0, 100, width=0.001, bottom=0.0)
 	#print "theta, radii, width: ", theta, radii, width
 	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-	
-	#for r,bar in zip(radii, bars):
-#	bar.set_facecolor( cm.jet(r/10.))
-#		bar.set_alpha(1)
+	theta = 86
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[1]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')	
+	theta = 176
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[2]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	theta = 266
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[3]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
 
 	pil_img = fig2img(fig)
-	#pil_img.show()
 
 	#print type(pil_img), pil_img
 	sonar_image = PILtoCV_4Channel(pil_img)
-	#print type(ax)
-	#print type(fig)
-	#print type(pil_img)
-	#print type(sonar_image)
-
 	cv.ShowImage("Sonar", sonar_image )
 	#cv.MoveWindow ('Sonar',50 ,50 )
-	time.sleep(.01)
-	cv.WaitKey(1)
-	#print "finished graph"
-	
+	#time.sleep(.01)
+	cv.WaitKey(10)
+
 	#garbage cleanup
 	fig.clf()
 	P.close()
@@ -118,19 +110,23 @@ def sonar_display(sensor1):
 		s1_data = int(s1_data)
 		if s1_data > 91: s1_data = 91
 		if s1_data < 0: s1_data = 0
-		sonar_graph(s1_data)
+		sonar_graph(s1_data)	
 		print s1_data
 		#time.sleep(.01)
 
 #t = Thread(target=sonar_display)
 #t.start()
 
-sensor1 = MaxSonar()
-time.sleep(1)
-sonar_display(sensor1)
-time.sleep(1)
+#sensor1 = MaxSonar()
+#time.sleep(1)
+#sonar_display(sensor1)
+#time.sleep(1)
 
 for i in range(1000):
-	sonar_display(sensor1)
-	time.sleep(0.01)
+	fake_data = []
+	for i in range(5):
+		fake_data.append(random.randint(28,91))
+	print fake_data
+	sonar_graph(fake_data)
+	#time.sleep(.01)
 
