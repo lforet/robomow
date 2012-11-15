@@ -1,7 +1,7 @@
-from robomow_motor_class import *
+from robomow_motor_class_arduino import *
 
 
-motor1 = robomow_motor("/dev/ttyUSB0")
+motor1 = robomow_motor()
 print motor1.stats()
 
 print motor1.isInitialized
