@@ -41,11 +41,30 @@ void initSabertooth()
   //SaberSerial.begin( SABER_BAUDRATE );
   Serial.begin( SABER_BAUDRATE );
   
+  
+  //establish contact with main pc
+  establishContact();
+  
   // 2 second time delay for the Sabertooth to init
   delay( 2000 );
   // Send full stop command
   //setEngineSpeed( SABER_ALL_STOP );
 }
+
+void establishContact() {
+  byte incomingByte = 0;
+  while (Serial.available() <= 0) {
+    Serial.println('mobot motor driver');
+    delay(100);
+  }
+  // read the incoming byte:
+  incomingByte = Serial.read();
+  // echo data received:
+  Serial.print("I received: ");
+  Serial.println(incomingByte);
+}
+
+
 
 void setup( )
 {
