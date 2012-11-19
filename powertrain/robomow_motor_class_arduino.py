@@ -19,56 +19,52 @@ import time
 
 class robomow_motor(object):
 	def __init__(self):
-		self._isConnected = False
-		self._ser = self._open_serial_port()
+		self.isConnected = False
 		self._should_stop = threading.Event()
-		self._start_reading()
 		self._data = 0
-		#self._port = port
-		self.lmotor_speed = 0
-		self.rmotor_speed = 0
-		
+		self.port = None
+		self.motor1_speed = 0
+		self.motor2_speed = 0
+		self.com = self.open_serial_port()
+
     
-	def _open_serial_port(self):
-		while self._isConnected == False:
+	def open_serial_port(self):
+		while self.isConnected == False:
 			print "class robomow_motor: searching serial ports for motor controller package..."
 			for i in range(11):
-				port = "/dev/ttyUSB"
-				port = port[0:11] + str(i)
-				print "class robomow_motor: searching on port:", port
-				time.sleep(.2)
+				com = "/dev/ttyUSB"
+				com = com[0:11] + str(i)
+				print "class robomow_motor: searching on COM:", com
+				time.sleep(.1)
 				try:				
-					ser = serial.Serial(port, 9600, timeout=1)
+					ser = serial.Serial(com, 9600, timeout=1)
 					data = ser.readline()
 					#print "data=", int(data[3:(len(data)-1)])
 					if data[0:2] == "m1":
-						#ser.write("a\n")      # write a string
-						print "class robomow_motor: found motor controller package on serial port: ", port
-						self._isConnected  = True
-						#self._port = ser
+						#ser.write("X")      # write a string
+						print "class robomow_motor: found motor controller package on COM: ", com
+						self.isConnected  = True
 						time.sleep(.35)
 						break
 				except:
 					pass
-			for i in range(11):
-				port = "/dev/ttyACM"
-				port = port[0:11] + str(i)
-				print "class robomow_motor: searching on port:", port
-				time.sleep(.2)
+				com = "/dev/ttyACM"
+				com = com[0:11] + str(i)
+				print "class robomow_motor: searching on COM:", com
+				time.sleep(.1)
 				try:				
-					ser = serial.Serial(port, 9600, timeout=1)
+					ser = serial.Serial(com, 9600, timeout=1)
 					data = ser.readline()
 					#print "data=", int(data[3:(len(data)-1)])
 					if data[0:2] == "m1":
-						#ser.write("a\n")      # write a string
-						print "class robomow_motor: found robomow_motor package on serial port: ", port
-						self._isConnected  = True
-						#self._port = ser
+						#ser.write("X\n")      # write a string
+						print "class robomow_motor: found robomow_motor package on COM: ", com
+						self.isConnected  = True
 						time.sleep(.35)
 						break
 				except:
 					pass
-			if self._isConnected == False:
+			if self.isConnected == False:
 				print "class robomow_motor: robomow_motor package not found!"
 				time.sleep(1)
 		#print "returning", ser
@@ -77,76 +73,101 @@ class robomow_motor(object):
 	def __del__(self):
 		del(self)
 
-	def stats(self):
-		return (self.com.portstr, self.com.baudrate,self.com.bytesize,self.com.parity,self.com.stopbits)
+	def com_stats(self):
+		#print self.com
+		return (self.com.port,self.com.baudrate,self.com.bytesize,self.com.parity,self.com.stopbits)
 
 	def forward(self,speed):
-		##takes desired speed as percentage, returns 2 ints indicating each current motor speed
-		motor1_spd = int(63.0 * (float(speed)/100) + 65) 
-		motor2_spd = int(63.0 * (float(speed)/100) + 193) 	
-		if motor1_spd < 65: motor1_spd = 65
-		if motor1_spd > 127: motor1_spd = 127
-		if motor2_spd < 193: motor2_spd = 193
-		if motor2_spd > 255: motor2_spd = 255
-		#print motor1_spd, motor2_spd
-		self.com.write (chr(int(hex(motor1_spd),16)))
-		#time.sleep(.01)
-		self.com.write (chr(int(hex(motor2_spd),16)))
-		#print "sending command: ",  int(hex(speed),16)
-		#print "sending command: ",  int(hex(speed+127),16)
-		self.lmotor_speed = motor1_spd 
-		self.rmotor_speed = motor2_spd 
+		##takes desired speed as percentage
+		self.com.flushInput()
+		command_str = ("FD"+str(speed))
+		validate_command(self, command_str)
+		self.motor_stats()
+
 
 	def reverse(self,speed):
-		##takes desired speed as percentage, returns 2 ints indicating each current motor speed
-		motor1_spd = 63 - int(63.0 * (float(speed)/100)) 
-		motor2_spd = 191 - int(63.0 * (float(speed)/100)) 	
-		if motor1_spd < 1: motor1_spd = 1
-		if motor1_spd > 63: motor1_spd = 63
-		if motor2_spd < 128: motor2_spd = 128
-		if motor2_spd > 191: motor2_spd = 191
-		#print motor1_spd, motor2_spd
-		self.com.write (chr(int(hex(motor1_spd),16)))
-		#time.sleep(.01)
-		self.com.write (chr(int(hex(motor2_spd ),16)))
-		#print "sending command: ",  int(hex(speed),16)
-		#print "sending command: ",  int(hex(speed+127),16)
-		self.lmotor_speed = motor1_spd 
-		self.rmotor_speed = motor2_spd 
+		##takes desired speed as percentage
+		self.com.flushInput()
+		command_str = ("RV"+str(speed))
+		validate_command(self, command_str)
+		self.motor_stats()
 
 	def stop(self):
-		self.com.write (chr(int(hex(64),16)))
-		#time.sleep(.01)
-		self.com.write (chr(int(hex(192),16)))
-		self.lmotor_speed = 64 
-		self.rmotor_speed = 192
+		##takes desired speed as percentage
+		command_str = ("ST")
+		validate_command(self, command_str)
+		self.motor_stats()
 
-	def left(self, degree):
-		motor1_spd = motor1_spd - degree
-		motor2_spd = motor2_spd + degree
-		if motor1_spd < 1: motor1_spd = 1
-		if motor1_spd > 127: motor1_spd = 127
-		if motor2_spd < 128: motor1_spd = 128
-		if motor2_spd > 255: motor1_spd = 255
-		self.com.write (chr(int(hex(motor1_spd),16)))
-		#time.sleep(.01)
-		self.com.write (chr(int(hex(motor2_spd ),16)))
-		self.lmotor_speed = motor1_spd 
-		self.rmotor_speed = motor2_spd 
+	def left(self, speed):
+		##takes desired speed as percentage
+		command_str = ("LT"+str(speed))
+		validate_command(self, command_str)
+		self.motor_stats()
 
-	def right(self, degree):
-		motor1_spd = motor1_spd + degree
-		motor2_spd = motor2_spd - degree
-		if motor1_spd < 1: motor1_spd = 1
-		if motor1_spd > 127: motor1_spd = 127
-		if motor2_spd < 128: motor1_spd = 128
-		if motor2_spd > 255: motor1_spd = 255
-		self.com.write (chr(int(hex(motor1_spd),16)))
-		#time.sleep(.01)
-		self.com.write (chr(int(hex(motor2_spd ),16)))
-		self.lmotor_speed = motor1_spd 
-		self.rmotor_speed = motor2_spd 
+	def right(self, speed):
+		##takes desired speed as percentage
+		command_str = ("RT"+str(speed))
+		validate_command(self, command_str)
+		self.motor_stats()
 
+	def motor_stats(self):
+		##takes desired speed as percentage
+		cmd = ("SP")
+		successful = False
+		for n in range (5):
+			time.sleep(0.01)
+			self.com.flushOutput()
+			#print "sending to motor arduino:", cmd
+			self.com.write (cmd)
+			received = ""
+			self.com.flushInput()
+			received = received + self.com.readline()
+			received = received + self.com.readline()
+			received = received + self.com.readline()
+			#print "received back from arduino:", received
+			#print len(received)
+			received = received.replace('\r\n', '')
+			received = received.replace('m1:', '')
+			received = received.replace('m', '')
+			received = received.replace(':', '')
+			#print "stripped:", received, "  cmd:", cmd
+			#cmd = cmd[0] + cmd[1]
+			if (len(received) > 0):
+				if (received[0]+received[1] == cmd[0]+cmd[1]):
+					#print "successful: sending to motor arduino"
+					received = received.strip("SP")
+					#print "received now:", received
+					spd_list = received.split(',')
+					#print spd_list
+					successful = True
+					self.motor1_speed = spd_list[0]
+					self.motor2_speed = spd_list[1] 	 		
+					break
+		if (successful == False):
+				print "NOT successful: sending to motor arduino"
 
+def validate_command(self, cmd):
+		successful = False
+		for n in range (5):
+			time.sleep(0.01)
+			self.com.flushOutput()
+			#print "sending to motor arduino:", cmd
+			self.com.write (cmd)
+			received = ""
+			self.com.flushInput()
+			received = self.com.readline()
+			#print "received back from arduino:", received
+			#print len(received)
+			received = received.replace('\r\n', '')
+			received = received.replace('m1:', '')
+			received = received.replace('m', '')
+			received = received.replace(':', '')
+			#print "stripped:", received, "  cmd:", cmd
+			if (received == cmd):
+				#print "successful: sending to motor arduino"
+				successful = True		 		
+				break
+		if (successful == False):
+				print "NOT successful: sending to motor arduino"
 
 
