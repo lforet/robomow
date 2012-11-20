@@ -5,7 +5,6 @@ import gps, os, time
 
 session = gps.gps()
 session.poll()
-=======
 session = gps.gps(host='localhost', port='2947')
 session.next()
 #session.stream(mode=WATCH_ENABLE|WATCH_NEWSTYLE)

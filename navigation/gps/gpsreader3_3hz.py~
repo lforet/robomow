@@ -2,14 +2,14 @@
 
 import gps, os, time
 
-<<<<<<< HEAD
+
 session = gps.gps()
 session.poll()
 =======
 session = gps.gps(host='localhost', port='2947')
 session.next()
 #session.stream(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
->>>>>>> 78be0997b45240f2ebe866134278c1ad46e91d87
+
 session.stream()
 
 
