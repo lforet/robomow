@@ -2,11 +2,11 @@ from VideoCapture import Device
 import ImageDraw, sys, pygame, time
 from pygame.locals import *
 from PIL import ImageEnhance
-res = (640,480)
+res = (1024,768)
 pygame.init()
 cam = Device()
 cam.setResolution(res[0],res[1])
-screen = pygame.display.set_mode((640,480))
+screen = pygame.display.set_mode((1024,768))
 pygame.display.set_caption('Webcam')
 pygame.font.init()
 font = pygame.font.SysFont("Courier",11)

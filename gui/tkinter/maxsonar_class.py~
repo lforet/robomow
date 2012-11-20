@@ -82,7 +82,6 @@ class MaxSonar(object):
 						pass
 
 		thr = threading.Thread(target=read)
-		thr.daemon=True
 		thr.start()
 		return thr
     

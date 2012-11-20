@@ -9,6 +9,7 @@ import os, random
 import cv2
 from maxsonar_class import *
 from threading import *
+import sys
 
 sock = None
 conn = None
@@ -71,7 +72,6 @@ i = 0
 button_txt = i
 
 def snap_shot():
-
 	#capture from camera at location 0
 	now = time.time()
 	#cap = cv2.VideoCapture(0)
@@ -112,7 +112,7 @@ def snap_shot():
 
 
 def Send_Image():
-	vf = send_video('u1204vm.local', 9091, 9090, 'harris.py')
+	vf = send_video('u1204vm.local', 9091, 9090, 'temp.jpg')
 	vf.daemon=True
 	vf.start()
 
@@ -146,7 +146,7 @@ def Send_Image():
 '''
 
 class send_video(Thread):
-    def __init__(self, host, cport, mport, filetosend):        
+	def __init__(self, host, cport, mport, filetosend):        
 		self.host = host
 		self.cport = cport
 		self.mport = mport
@@ -154,29 +154,33 @@ class send_video(Thread):
 		Thread.__init__(self)
 
 	def run(self):
-			#HOST = 'u1204vm.local'
-			#CPORT = 9091
-			#MPORT = 9090
-			#FILE = sys.argv[1]
-				
-			cs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			cs.connect((HOST, CPORT))
-			cs.send("SEND " + FILE)
-			cs.close()
+			while True:
+				snap_shot()
+				#time.sleep(.05)
 
-			time.sleep(0.5)
+				#HOST = 'u1204vm.local'
+				#CPORT = 9091
+				#MPORT = 9090
+				#FILE = sys.argv[1]
+				print "sending image"
+				cs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				cs.connect((self.host, self.cport))
+				cs.send("SEND " + self.filetosend)
+				cs.close()
 
-			ms = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			ms.connect((HOST, MPORT))
+				time.sleep(0.05)
 
-			f = open(FILE, "rb")
-			data = f.read()
-			f.close()
+				ms = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				ms.connect((self.host, self.mport))
 
-			ms.send(data)
-			ms.close()
-			print "waiting one second before sending another image"
-			time.sleep(1)
+				f = open(self.filetosend, "rb")
+				data = f.read()
+				f.close()
+
+				ms.send(data)
+				ms.close()
+				print "waiting one second before sending another image"
+				#time.sleep(.1)
 
 def Send_Sonar_Data(ip,port):
 	global sonar
@@ -199,31 +203,32 @@ def Send_Sonar_Data(ip,port):
 
 
 def update_display():
-		global IP, PORT
+		global IP, PORT, testmode
 		text1.set( str(datetime.now()) )
 		#print "update called", i
-		com_response = com_loop(IP,PORT)
-		if  com_response != False:
-			#time.sleep(.5) 
-			#com_status.set('COM ACTIVE')
-			heartbeat.set('COM ACTIVE')
-			if com_response != "PING\n":
-				print "COM ACTIVE at time: ", str(datetime.now())
-				print "Response from Basestation: ", com_response
-				#echo the command received
-				#sock.send(com_response)
-					
-				#if com_response == "IU": Send_Image(basestation[0], 12345)
-				if com_response == "IU": Send_Image()
-				if com_response == "US": Send_Sonar_Data(basestation[0], 12345)
-		else:
-			heartbeat.set('COM NOT ACTIVE')
-			print "COM NOT ACTIVE at time: ", str(datetime.now())
-			#sock = None
-			conn = None
-			#sock.close()
-			#basestation = None
-			time.sleep(.5)
+		if (testmode == False):
+			com_response = com_loop(IP,PORT)
+			if  com_response != False:
+				#time.sleep(.5) 
+				#com_status.set('COM ACTIVE')
+				heartbeat.set('COM ACTIVE')
+				if com_response != "PING\n":
+					print "COM ACTIVE at time: ", str(datetime.now())
+					print "Response from Basestation: ", com_response
+					#echo the command received
+					#sock.send(com_response)
+				
+					#if com_response == "IU": Send_Image(basestation[0], 12345)
+					if com_response == "IU": Send_Image()
+					if com_response == "US": Send_Sonar_Data(basestation[0], 12345)
+			else:
+				heartbeat.set('COM NOT ACTIVE')
+				print "COM NOT ACTIVE at time: ", str(datetime.now())
+				#sock = None
+				conn = None
+				#sock.close()
+				#basestation = None
+				time.sleep(.5)
 		#com_loop(IP, PORT)
 		#time.sleep(.1)
 		top.update()
@@ -242,6 +247,12 @@ def gethostaddress():
 
 
 if __name__== "__main__":
+	testmode = False
+
+	if len(sys.argv) > 1:
+		if sys.argv[1] == 'testmode':
+				print 'starting in testing mode'
+				testmode= True
 
 	#IP = gethostaddress()
 	IP = ''
@@ -257,9 +268,10 @@ if __name__== "__main__":
 	
 	#B.pack()
 	#B2.pack()
-	
+	Send_Image()
 	##start sonar
-	sonar= MaxSonar()
+	if (testmode == False):
+		sonar= MaxSonar()
 
 
 	update_display()
