@@ -7,6 +7,8 @@ from datetime import datetime
 #from ThreadedBeatServer import *
 import socket 
 import sonar_functions as sf
+from FileReceiver import *
+from threading import *
 
 
 sock = None
@@ -226,7 +228,7 @@ def update_sonar(ip, port):
 	sonar_display.config(image=sonar_img)
 	return
 
-
+'''
 def update_images(ip, port):
 	global photo1
 	ip = ''
@@ -282,6 +284,23 @@ def update_images(ip, port):
 
 	except IOError as detail:
 		print "connection lost", detail
+'''
+
+def update_images(ip, port):
+	global photo1
+	s = FileReceiver()
+	#line below stops thread when main program stops
+	s.daemon = True
+	s.start()
+	f = testthreadclass()
+	f.start()
+
+class testthreadclass(Thread):
+	def run(self):
+		for i in range (10):
+			print i
+			time.sleep(1)
+
 
 def update_display():
 		global ROBOT_IP
@@ -290,20 +309,21 @@ def update_display():
 		PORT = 50005
 		#print "update called"
 		#print "paused:", paused.get()
-		if ROBOT_IP != None:
-			if com_loop(ROBOT_IP,PORT) == True:
-			#if 1 == 1: 
-				com_status.set('COM ACTIVE ON IP: '  + ROBOT_IP)
-				Button_Com_Status.configure(bg = "green")
-				#update_sonar()
-				#show_buttons()
-				#update_images()
+		if (testmode == False):
+			if ROBOT_IP != None:
+				if com_loop(ROBOT_IP,PORT) == True:
+				#if 1 == 1: 
+					com_status.set('COM ACTIVE ON IP: '  + ROBOT_IP)
+					Button_Com_Status.configure(bg = "green")
+					#update_sonar()
+					#show_buttons()
+					#update_images()
+				else:
+					com_status.set('COM NOT ACTIVE' )
+					Button_Com_Status.configure(bg = "red")
+					#hide_buttons()
 			else:
-				com_status.set('COM NOT ACTIVE' )
-				Button_Com_Status.configure(bg = "red")
-				#hide_buttons()
-		else:
-			 Search_For_Robot()
+				 Search_For_Robot()
 		#main_gui.update()	
 		main_gui.after(50, update_display)
 
@@ -312,7 +332,7 @@ if __name__== "__main__":
 	testmode = False
 
 	if len(sys.argv) > 1:
-		if sys.argv[1] == 'test':
+		if sys.argv[1] == 'testmode':
 				print 'starting in testing mode'
 				testmode= True
 

@@ -85,11 +85,6 @@ void pc_commands(){
     Serial.println ("m1:");
     delay(100);
   }
-  //if (Serial.available() > 0) {
-  //  incomingByte = Serial.read();
-  //  if (incomingByte = 
-  //  Serial.println(incomingByte);
-  // }
   while(Serial.available()) {
       incoming_character = Serial.read();
       cmd.concat(incoming_character);

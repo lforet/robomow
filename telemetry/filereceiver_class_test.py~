@@ -1,0 +1,12 @@
+from FileReceiver import *
+from threading import *
+import time
+
+s = FileReceiver()
+s.daemon = True
+s.start()
+
+for i in range (10):
+	print i
+	time.sleep(1)
+

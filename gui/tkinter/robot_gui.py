@@ -8,7 +8,7 @@ import socket
 import os, random
 import cv2
 from maxsonar_class import *
-
+from threading import *
 
 sock = None
 conn = None
@@ -111,8 +111,12 @@ def snap_shot():
 	return img
 
 
-def Send_Image(ip,port):
+def Send_Image():
+	vf = send_video('u1204vm.local', 9091, 9090, 'harris.py')
+	vf.daemon=True
+	vf.start()
 
+'''
 	#temparaily just send random image
 	
 	#use folder to send images
@@ -139,7 +143,40 @@ def Send_Image(ip,port):
 		print "bytes of image date sent:", len(data)
 	except:
 		print 'no data sent'
+'''
 
+class send_video(Thread):
+    def __init__(self, host, cport, mport, filetosend):        
+		self.host = host
+		self.cport = cport
+		self.mport = mport
+		self.filetosend = filetosend
+		Thread.__init__(self)
+
+	def run(self):
+			#HOST = 'u1204vm.local'
+			#CPORT = 9091
+			#MPORT = 9090
+			#FILE = sys.argv[1]
+				
+			cs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			cs.connect((HOST, CPORT))
+			cs.send("SEND " + FILE)
+			cs.close()
+
+			time.sleep(0.5)
+
+			ms = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			ms.connect((HOST, MPORT))
+
+			f = open(FILE, "rb")
+			data = f.read()
+			f.close()
+
+			ms.send(data)
+			ms.close()
+			print "waiting one second before sending another image"
+			time.sleep(1)
 
 def Send_Sonar_Data(ip,port):
 	global sonar
@@ -176,7 +213,8 @@ def update_display():
 				#echo the command received
 				#sock.send(com_response)
 					
-				if com_response == "IU": Send_Image(basestation[0], 12345)
+				#if com_response == "IU": Send_Image(basestation[0], 12345)
+				if com_response == "IU": Send_Image()
 				if com_response == "US": Send_Sonar_Data(basestation[0], 12345)
 		else:
 			heartbeat.set('COM NOT ACTIVE')
