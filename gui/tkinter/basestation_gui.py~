@@ -9,7 +9,11 @@ import socket
 import sonar_functions as sf
 from FileReceiver import *
 from threading import *
-
+import matplotlib.pyplot as P
+import matplotlib.cm as cm
+from matplotlib.pyplot import figure, show, rc
+import pylab as pl
+import numpy as np
 
 sock = None
 ROBOT_IP = None
@@ -60,6 +64,55 @@ def Search_For_Robot():
 			return False
 		else:
 			return answer
+
+def sonar_graph(ping_readings):
+	print "ping reading:", ping_readings
+	print type(ping_readings[1])
+	# force square figure and square axes looks better for polar, IMO
+	fig = pl.figure(figsize=(6,6))
+	ax = P.subplot(1, 1, 1, projection='polar')
+	P.rgrids([28, 61, 91])
+	ax.set_theta_zero_location('N')
+	ax.set_theta_direction(-1)
+	theta = 356
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[0]]
+	width = .15
+	bars1 = ax.bar(0, 100, width=0.001, bottom=0.0)
+	#print "theta, radii, width: ", theta, radii, width
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	theta = 86
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[1]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')	
+	theta = 176
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[2]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	theta = 266
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[3]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	#print "finshed graph"
+	#pil_img = fig2img(fig)
+	#sonar_image = pil_img
+	#print type(pil_img), pil_img
+	#sonar_image = PILtoCV_4Channel(pil_img)
+	#cv.ShowImage("Sonar", sonar_image )
+	#cv.MoveWindow ('Sonar',50 ,50 )
+	time.sleep(.01)
+	#cv.WaitKey(10)
+	fig.savefig('sonar_image.png')
+	Image.open('sonar_image.png').save('sonar_image.jpg','JPEG')
+	#stop
+	#garbage cleanup
+	#fig.clf()
+	#P.close()
+	return
+
 
 def com_loop(address, port):
 	global sock
@@ -179,127 +232,62 @@ def show_buttons():
 
 
 def update_sonar(ip, port):
-	ip = ''
-	command = 'US'	
-	global sonar_img 
-	try:
-		#send command to robot to send sonar data
-		sock.send(command)
-		print "Command Sent to Robot:", command
-		TextOut("Command Sent to Robot:" + command)
-		#time.sleep(0.01)
-		tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		tcp.bind((ip,port))
-		print "listening..."
-		tcp.listen(3)
-		tcp.settimeout(3)
-		print "waiting for data connection.."
-		conn, addr = tcp.accept()
-		print "accepted connection from client.."
-		now = time.time()
-		print "receiving sonar data..."
-		sonar_data = "" 
-		while 1:	
-			data = conn.recv(1024)
-			sonar_data = sonar_data + data
-			if not data:
-			#sock.close()
-				print "no more data"
-				break
-		print 'time to recieve data: ', (time.time()) - now
-		print "data received..", sonar_data
-		TextOut("data received:" + sonar_data)
-		#time.sleep(.01)
-		#update sonar display
-		
-		tcp.close()
-	except IOError as detail:
-		print "connection lost", detail
-
-	print "calling sonar_display"
-	sonar_image  = sf.sonar_display(sonar_data)
-	print "saving sonar image"
-	sonar_image.save("sonar_image.jpg")
-	print "returning"
-	#refresh with new somar image
-	image = Image.open("sonar_image.jpg")
-	#image.thumbnail((320,240))
-	sonar_img = ImageTk.PhotoImage(image)
-	sonar_display.config(image=sonar_img)
-	return
-
-'''
-def update_images(ip, port):
-	global photo1
-	ip = ''
-	
-	#PORT = 12345
-	try:
-		#send_command_to_robot("IU", ip, 50005)
-		sock.send("IU")
-		print "Command Sent to Robot: IU"
-		TextOut("Command Sent to Robot: IU")
-		#time.sleep(.1)
-		#time.sleep(.01)
-		tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		#tcp.connect(('192.168.1.87', 12345))
-		#tcp.send("1000 4")	
-		tcp.bind((ip,port))
-		print "listening..."
-		tcp.listen(2)
-		tcp.settimeout(2)
-		print "waiting for data connection.."
-		conn, addr = tcp.accept()
-		print "accepted connection from client.."	
-		file = open("rec_image.jpg", "w")
-		parser = ImageFile.Parser()
-		now = time.time()
-		#temp = conn.recv(1024)
-		#print temp
-		print "receiving image data..."
-		while 1:	
-			jpgdata = conn.recv(65536)
-			#print jpgdata
-			if not jpgdata:
-			#sock.close()
-				print "no more data"
-				break
-			parser.feed(jpgdata)
-			file.write(jpgdata)
-
-		print 'time to recieve data: ', (time.time()) - now
-		print "data received.."
-		file.close()
-		image = parser.close()
-		tcp.close()
-
-		#image.show()
-		#camera_1.pack_forget()
-		image = Image.open("rec_image.jpg")
-		image.thumbnail((320,240))
-		photo1 = ImageTk.PhotoImage(image)
-		camera_1.config(image=photo1)
-		#camera_1.pack()
-	 	
-
-	except IOError as detail:
-		print "connection lost", detail
-'''
+	#s = FileReceiver()
+	#line below stops thread when main program stops
+	#s.daemon = True
+	#s.start()
+	sonarfeed = sonar_feed()
+	sonarfeed.daemon=True
+	sonarfeed.start()
+	sonarfeed.join()
 
 def update_images(ip, port):
-	global photo1
 	s = FileReceiver()
 	#line below stops thread when main program stops
 	s.daemon = True
 	s.start()
-	f = testthreadclass()
-	f.start()
+	videofeed = video_feed()
+	videofeed.daemon=True
+	videofeed.start()
 
-class testthreadclass(Thread):
+class video_feed(Thread):
 	def run(self):
-		for i in range (10):
-			print i
-			time.sleep(1)
+		while True:
+			try:
+				image = Image.open("snap_shot.jpg")
+				image.thumbnail((320,240))
+				photo1 = ImageTk.PhotoImage(image)
+				camera_1.config(image=photo1)
+				time.sleep(.3)
+			except:
+				pass
+			
+
+class sonar_feed(Thread):
+	def run(self):
+		while True:
+			try:
+				f = open("sonar_data.txt", "r")
+				sonar_data = f.readline()
+				f.close()
+				processed_sonar_data = []
+				print "calling sonar_display"
+				#sonar_image  = sf.sonar_display(sonar_data)
+				processed_sonar_data = sf.process_sonar_data(sonar_data)
+				print "processed_sonar_data ", processed_sonar_data 
+				sonar_graph(processed_sonar_data)
+				#print "saving sonar image"
+				#sonar_image.save("sonar_image.jpg")
+				#print "returning"
+				#refresh with new somar image
+				image = Image.open("sonar_image.jpg")
+				image.thumbnail((320,240))
+				sonar_img = ImageTk.PhotoImage(image)
+				sonar_display.config(image=sonar_img)
+				time.sleep(1)
+			except:
+				pass
+
 
 
 def update_display():
@@ -325,7 +313,7 @@ def update_display():
 			else:
 				 Search_For_Robot()
 		#main_gui.update()	
-		main_gui.after(50, update_display)
+		main_gui.after(100, update_display)
 
 if __name__== "__main__":
 
