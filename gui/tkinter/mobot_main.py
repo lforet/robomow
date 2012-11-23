@@ -10,6 +10,10 @@ import sys
 from maxsonar_class import *
 import random
 
+hhh = 0
+file_lock = False
+
+
 def snap_shot(filename):
 	#capture from camera at location 0
 	now = time.time()
@@ -23,32 +27,24 @@ def snap_shot(filename):
 		img1 = Image.open(filename)
 		img1.thumbnail((320,240))
 		img1.save(filename)
-		print (time.time()) - now
+		#print (time.time()) - now
 	except:
 		print "could not grab webcam"
 	return 
 
-class send_video(Thread):
-	def __init__(self, filetosend):   
-		self.filetosend = filetosend     
-		Thread.__init__(self)
-
-	def run(self):
-			print self.filetosend
-			while True:
-				snap_shot(self.filetosend)
-				time.sleep(.1)
-				#print "sending image"
-				send_file(filetosend = self.filetosend)
-
 
 def send_file(host="u1204vm.local", cport=9091, mport=9090, filetosend=""):
+	global file_lock
+	file_lock = True
+	#print "file_lock", file_lock
 	try:       
 		cs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		cs.connect((host, cport))
 		cs.send("SEND " + filetosend)
+		print "sending file", filetosend
 		cs.close()
 	except:
+		print "cs failed"
 		pass
 	time.sleep(0.05)
 	try:
@@ -60,7 +56,12 @@ def send_file(host="u1204vm.local", cport=9091, mport=9090, filetosend=""):
 		ms.send(data)
 		ms.close()
 	except:
+		print "ms failed"
 		pass
+	file_lock = False
+	#print "file_lock", file_lock
+		
+		
 '''
 def send_data(host="u1204vm.local", cport=9091, mport=9090, datatosend=""):
 	try:       
@@ -82,13 +83,31 @@ def send_data(host="u1204vm.local", cport=9091, mport=9090, datatosend=""):
 	except:
 		pass
 '''	
-		
+class send_video(Thread):
+	def __init__(self, filetosend):   
+		self.filetosend = filetosend     
+		Thread.__init__(self)
+
+	def run(self):
+			global file_lock, hhh
+			print self.filetosend
+			while True:
+				#print "file_lock", file_lock
+				snap_shot(self.filetosend)	
+				while (file_lock == True):
+					time.sleep(.01)
+					#print "waiting on file unlock"
+				send_file(filetosend = self.filetosend)
+				#print "file_lock", file_lock
+				time.sleep(.01)
+							
 class send_sonar_data(Thread):
 	def __init__(self):   
 		#self.filetosend = filetosend     
 		Thread.__init__(self)
 
 	def run(self):
+			global file_lock, hhh
 			#sonar = MaxSonar()
 			while True:
 				#sonar_data  = str(sonar.distances_cm())
@@ -100,11 +119,13 @@ class send_sonar_data(Thread):
 				f = open("sonar_data.txt", "w")
 				f.write(sonar_data)
 				f.close()
-				time.sleep(.2)
-				#print "sending image"
+				while (file_lock == True):
+					time.sleep(.01)
+					#print "sonar waiting on file unlock"
 				send_file(filetosend="sonar_data.txt")
-
-
+				hhh = hhh +1
+				time.sleep(.01)
+				
 if __name__== "__main__":
 	testmode = False
 	if len(sys.argv) > 1:
@@ -116,11 +137,12 @@ if __name__== "__main__":
 	video1 = send_video("snap_shot.jpg")
 	video1.daemon
 	video1.start()
+	#video1.join()
 	
 	##start sonar
 	if (testmode == False):
 		sonar = send_sonar_data()
 		sonar.daemon=True
 		sonar.start()
-	
+		#sonar.join()
 	
