@@ -27,7 +27,7 @@ class FileReceiver ( Thread ):
     def bindcsock( this ):
         this.csock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         this.csock.bind(('', 9091))
-        this.csock.listen(1)
+        this.csock.listen(2)
         #this.csock.settimeout(2)
         print '[Control] Listening on port 9091'
 
@@ -63,13 +63,24 @@ class FileReceiver ( Thread ):
 
     def process( this ):
         while 1:
-            this.bindcsock()
-            this.acceptcsock()
-            this.bindmsock()
-            this.acceptmsock()
-            this.transfer()
-            this.close()
-
+            try:
+		        this.bindcsock()
+		        #time.sleep(1)
+		        this.acceptcsock()
+		        #time.sleep(1)
+		        this.bindmsock()
+		        #time.sleep(1)
+		        this.acceptmsock()
+		        #time.sleep(1)
+		        this.transfer()
+		        #time.sleep(1)
+		        this.close()
+		        time.sleep(.1)
+            except:
+                print "file xfer failed"
+                this.close()
+                time.sleep(.2)
+                pass
 #------------------------------------------------------------------------
 
 #s = StreamHandler()

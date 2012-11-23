@@ -14,6 +14,7 @@ import matplotlib.cm as cm
 from matplotlib.pyplot import figure, show, rc
 import pylab as pl
 import numpy as np
+import gc
 
 sock = None
 ROBOT_IP = None
@@ -64,54 +65,6 @@ def Search_For_Robot():
 			return False
 		else:
 			return answer
-
-def sonar_graph(ping_readings):
-	print "ping reading:", ping_readings
-	print type(ping_readings[1])
-	# force square figure and square axes looks better for polar, IMO
-	fig = pl.figure(figsize=(6,6))
-	ax = P.subplot(1, 1, 1, projection='polar')
-	P.rgrids([28, 61, 91])
-	ax.set_theta_zero_location('N')
-	ax.set_theta_direction(-1)
-	theta = 356
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[0]]
-	width = .15
-	bars1 = ax.bar(0, 100, width=0.001, bottom=0.0)
-	#print "theta, radii, width: ", theta, radii, width
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-	theta = 86
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[1]]
-	width = .15
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')	
-	theta = 176
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[2]]
-	width = .15
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-	theta = 266
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[3]]
-	width = .15
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-	#print "finshed graph"
-	#pil_img = fig2img(fig)
-	#sonar_image = pil_img
-	#print type(pil_img), pil_img
-	#sonar_image = PILtoCV_4Channel(pil_img)
-	#cv.ShowImage("Sonar", sonar_image )
-	#cv.MoveWindow ('Sonar',50 ,50 )
-	time.sleep(.01)
-	#cv.WaitKey(10)
-	fig.savefig('sonar_image.png')
-	Image.open('sonar_image.png').save('sonar_image.jpg','JPEG')
-	#stop
-	#garbage cleanup
-	#fig.clf()
-	#P.close()
-	return
 
 
 def com_loop(address, port):
@@ -239,7 +192,7 @@ def update_sonar(ip, port):
 	sonarfeed = sonar_feed()
 	sonarfeed.daemon=True
 	sonarfeed.start()
-	sonarfeed.join()
+	#sonarfeed.join()
 
 def update_images(ip, port):
 	s = FileReceiver()
@@ -258,7 +211,7 @@ class video_feed(Thread):
 				image.thumbnail((320,240))
 				photo1 = ImageTk.PhotoImage(image)
 				camera_1.config(image=photo1)
-				time.sleep(.3)
+				time.sleep(.1)
 			except:
 				pass
 			
@@ -275,20 +228,19 @@ class sonar_feed(Thread):
 				#sonar_image  = sf.sonar_display(sonar_data)
 				processed_sonar_data = sf.process_sonar_data(sonar_data)
 				print "processed_sonar_data ", processed_sonar_data 
-				sonar_graph(processed_sonar_data)
+				sf.sonar_graph(processed_sonar_data)
 				#print "saving sonar image"
 				#sonar_image.save("sonar_image.jpg")
 				#print "returning"
 				#refresh with new somar image
-				image = Image.open("sonar_image.jpg")
-				image.thumbnail((320,240))
+				image = Image.open("sonar_image.png")
+				#image.thumbnail((320,240))
 				sonar_img = ImageTk.PhotoImage(image)
 				sonar_display.config(image=sonar_img)
-				time.sleep(1)
+				time.sleep(.15)
+				#gc.collect()
 			except:
 				pass
-
-
 
 def update_display():
 		global ROBOT_IP
@@ -325,7 +277,7 @@ if __name__== "__main__":
 				testmode= True
 
 	main_gui = Tk()
-	main_gui.geometry("1100x840")
+	main_gui.geometry("1150x840")
 
 	com_status = StringVar()
 	com_status.set('COM INACTIVE')
@@ -388,7 +340,7 @@ if __name__== "__main__":
 	IP_of_bot.pack()
 
 	image = Image.open("temp.jpg")
-	sonar = Image.open('sonar_image.jpg')
+	sonar = Image.open('sonar_image.png')
 	#sonar.thumbnail((440,440))
 	photo1 = ImageTk.PhotoImage(image)
 	camera_1 = Label(image=photo1, bd=1, relief=SUNKEN); camera_1.pack(padx=5, pady=5)
