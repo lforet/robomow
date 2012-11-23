@@ -14,7 +14,10 @@ import matplotlib.cm as cm
 from matplotlib.pyplot import figure, show, rc
 import pylab as pl
 import numpy as np
+<<<<<<< HEAD
 import gc
+=======
+>>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 
 sock = None
 ROBOT_IP = None
@@ -66,6 +69,57 @@ def Search_For_Robot():
 		else:
 			return answer
 
+<<<<<<< HEAD
+=======
+def sonar_graph(ping_readings):
+	print "ping reading:", ping_readings
+	print type(ping_readings[1])
+	# force square figure and square axes looks better for polar, IMO
+	fig = pl.figure(figsize=(6,6))
+	ax = P.subplot(1, 1, 1, projection='polar')
+	P.rgrids([28, 61, 91])
+	ax.set_theta_zero_location('N')
+	ax.set_theta_direction(-1)
+	theta = 356
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[0]]
+	width = .15
+	bars1 = ax.bar(0, 100, width=0.001, bottom=0.0)
+	#print "theta, radii, width: ", theta, radii, width
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	theta = 86
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[1]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')	
+	theta = 176
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[2]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	theta = 266
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[3]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	#print "finshed graph"
+	#pil_img = fig2img(fig)
+	#sonar_image = pil_img
+	#print type(pil_img), pil_img
+	#sonar_image = PILtoCV_4Channel(pil_img)
+	#cv.ShowImage("Sonar", sonar_image )
+	#cv.MoveWindow ('Sonar',50 ,50 )
+	time.sleep(.01)
+	#cv.WaitKey(10)
+	fig.savefig('sonar_image.png')
+	Image.open('sonar_image.png').save('sonar_image.jpg','JPEG')
+	#stop
+	#garbage cleanup
+	#fig.clf()
+	#P.close()
+	return
+
+>>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 
 def com_loop(address, port):
 	global sock
@@ -192,7 +246,11 @@ def update_sonar(ip, port):
 	sonarfeed = sonar_feed()
 	sonarfeed.daemon=True
 	sonarfeed.start()
+<<<<<<< HEAD
 	#sonarfeed.join()
+=======
+	sonarfeed.join()
+>>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 
 def update_images(ip, port):
 	s = FileReceiver()
@@ -204,6 +262,7 @@ def update_images(ip, port):
 	videofeed.start()
 
 class video_feed(Thread):
+<<<<<<< HEAD
 	def run(self):
 		while True:
 			try:
@@ -220,6 +279,24 @@ class sonar_feed(Thread):
 	def run(self):
 		while True:
 			try:
+=======
+	def run(self):
+		while True:
+			try:
+				image = Image.open("snap_shot.jpg")
+				image.thumbnail((320,240))
+				photo1 = ImageTk.PhotoImage(image)
+				camera_1.config(image=photo1)
+				time.sleep(.3)
+			except:
+				pass
+			
+
+class sonar_feed(Thread):
+	def run(self):
+		while True:
+			try:
+>>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 				f = open("sonar_data.txt", "r")
 				sonar_data = f.readline()
 				f.close()
@@ -228,11 +305,16 @@ class sonar_feed(Thread):
 				#sonar_image  = sf.sonar_display(sonar_data)
 				processed_sonar_data = sf.process_sonar_data(sonar_data)
 				print "processed_sonar_data ", processed_sonar_data 
+<<<<<<< HEAD
 				sf.sonar_graph(processed_sonar_data)
+=======
+				sonar_graph(processed_sonar_data)
+>>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 				#print "saving sonar image"
 				#sonar_image.save("sonar_image.jpg")
 				#print "returning"
 				#refresh with new somar image
+<<<<<<< HEAD
 				image = Image.open("sonar_image.png")
 				#image.thumbnail((320,240))
 				sonar_img = ImageTk.PhotoImage(image)
@@ -241,6 +323,17 @@ class sonar_feed(Thread):
 				#gc.collect()
 			except:
 				pass
+=======
+				image = Image.open("sonar_image.jpg")
+				image.thumbnail((320,240))
+				sonar_img = ImageTk.PhotoImage(image)
+				sonar_display.config(image=sonar_img)
+				time.sleep(1)
+			except:
+				pass
+
+
+>>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 
 def update_display():
 		global ROBOT_IP
