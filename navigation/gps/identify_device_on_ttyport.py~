@@ -2,7 +2,8 @@ import  glob
 import  os
 import  re
 
-#lsusb to find vendorID and productID
+#lsusb to find vendorID and productID:
+#Bus 002 Device 005: ID 067b:2303 Prolific Technology, Inc. PL2303 Serial Port
 # then call print find_usb_tty("067b","2303")
 def find_usb_tty(vendor_id = None, product_id = None) :
     tty_devs    = []
