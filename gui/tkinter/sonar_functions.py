@@ -63,7 +63,6 @@ def fig2data ( fig ):
     return buf
 
 
-<<<<<<< HEAD
 ###########################################################
 def sonar_graph(ping_readings):
 	#print "ping reading:", ping_readings
@@ -117,8 +116,6 @@ def sonar_graph(ping_readings):
 	
 	return
 
-=======
->>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 def process_sonar_data(sonar_data):
 	#global sensor1
 	#data  = str(sensor1.distances_cm())

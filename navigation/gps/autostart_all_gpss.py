@@ -5,9 +5,9 @@ from subprocess import call
 from identify_device_on_ttyport import *
 import time
 
-#gps_list = find_usb_tty("067b","2303")
+gps_list = find_usb_tty("067b","2303")
 
-gps_list = ["/dev/ttyUSB0", "/dev/ttyUSB1"]
+#gps_list = ["/dev/ttyUSB0", "/dev/ttyUSB1"]
 print "gps_list:", gps_list
 print len(gps_list)
 for n in range(len(gps_list)):

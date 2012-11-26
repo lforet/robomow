@@ -62,20 +62,14 @@ def fig2data ( fig ):
     buf = np.roll ( buf, 3, axis = 2 )
     return buf
 
-<<<<<<< HEAD
 
+<<<<<<< HEAD
 ###########################################################
 def sonar_graph(ping_readings):
 	#print "ping reading:", ping_readings
 	#print type(ping_readings[1])
 	# force square figure and square axes looks better for polar, IMO
 	fig = figure(figsize=(3.8,3.8))
-=======
-def sonar_graph(ping_readings):
-	print "ping reading:", ping_readings
-	# force square figure and square axes looks better for polar, IMO
-	fig = figure(figsize=(6,6))
->>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 	ax = P.subplot(1, 1, 1, projection='polar')
 	P.rgrids([28, 61, 91])
 	ax.set_theta_zero_location('N')
@@ -102,23 +96,18 @@ def sonar_graph(ping_readings):
 	radii = [ping_readings[3]]
 	width = .15
 	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-<<<<<<< HEAD
 	#print "finshed graph"
-=======
-
->>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 	#pil_img = fig2img(fig)
 	#sonar_image = pil_img
 	#print type(pil_img), pil_img
 	#sonar_image = PILtoCV_4Channel(pil_img)
 	#cv.ShowImage("Sonar", sonar_image )
 	#cv.MoveWindow ('Sonar',50 ,50 )
-<<<<<<< HEAD
 	#time.sleep(.01)
 	#cv.WaitKey(10)
 	fig.savefig('sonar_image.png')
 	#Image.open('sonar_image.png').save('sonar_image.jpg','JPEG')
-	print "finished saving"
+	#print "finished saving"
 	#stop
 	#garbage cleanup
 	#fig.clf()
@@ -127,21 +116,9 @@ def sonar_graph(ping_readings):
 	#del fig
 	
 	return
+
 =======
-	time.sleep(.01)
-	#cv.WaitKey(10)
-
-	#garbage cleanup
-	#fig.clf()
-	#P.clf()
-	
-	fig.savefig('sonar_image.jpg')
-	#P.close(fig)
-	return
-
-
 >>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
-
 def process_sonar_data(sonar_data):
 	#global sensor1
 	#data  = str(sensor1.distances_cm())
@@ -167,13 +144,8 @@ def process_sonar_data(sonar_data):
 		#if s1_data > 91: s1_data = 91
 		#if s1_data < 0: s1_data = 0
 		#print "s1:", s1_data
-<<<<<<< HEAD
 		#sonar_img = sonar_graph(data2)
 		return data2
-=======
-		sonar_img = sonar_graph(data2)
-		return sonar_img 
->>>>>>> e0d260f296db2ad7fde958de126416ea81ad932d
 		#time.sleep(.01)
 
 
