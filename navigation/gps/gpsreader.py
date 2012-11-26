@@ -4,12 +4,9 @@
 #gpsd /dev/ttyUSB0 -b -n
 #The gpsd server reads NMEA sentences from the gps unit and is accessed on port 2947. You can test if everything is working by running a pre-built gpsd client such as xgps.
 
-from math import asin,cos,pi,sin
 import gps, os, time
-import math
 #from future import division
-from math import sin, cos, radians, sqrt, atan2
-
+from math import sin, cos, radians, sqrt, atan2, asin, sqrt, pi
 rEarth = 6371.01 # Earth's average radius in km
 epsilon = 0.000001 # threshold for floating-point equality
 
@@ -35,6 +32,20 @@ def lldistance(a, b):
 
 
 
+def haversine(lon1, lat1, lon2, lat2):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    km = 6367 * c
+    return km 
 
 def calculate_distance(lat1, lon1, lat2, lon2):
         '''

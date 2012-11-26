@@ -4,14 +4,27 @@
 #gpsd /dev/ttyUSB0 -b -n
 #The gpsd server reads NMEA sentences from the gps unit and is accessed on port 2947. You can test if everything is working by running a pre-built gpsd client such as xgps.
 
-from math import asin,cos,pi,sin
-import gps, os, time
-import math
-#from future import division
-from math import sin, cos, radians, sqrt, atan2
+#sudo easy_install geopy
+from geopy import distance
+import geopy
+from geopy.distance import VincentyDistance
 
+import gps, os, time
+#from future import division
+from math import sin, cos, radians, sqrt, atan2, asin, sqrt, pi
+import math
 rEarth = 6371.01 # Earth's average radius in km
 epsilon = 0.000001 # threshold for floating-point equality
+
+
+#             model             major (km)   minor (km)     flattening  
+ELLIPSOIDS = {'WGS-84':        (6378.137,    6356.7523142,  1 / 298.257223563),  
+              'GRS-80':        (6378.137,    6356.7523141,  1 / 298.257222101),  
+              'Airy (1830)':   (6377.563396, 6356.256909,   1 / 299.3249646),  
+              'Intl 1924':     (6378.388,    6356.911946,   1 / 297.0),  
+              'Clarke (1880)': (6378.249145, 6356.51486955, 1 / 293.465),  
+              'GRS-67':        (6378.1600,   6356.774719,   1 / 298.25),  
+              } 
 
 
 def lldistance(a, b):
@@ -33,10 +46,11 @@ def lldistance(a, b):
 
    return d
 
-
+def geopyDistance(lat1, lon1, lat2, lon2):
+	x = distance.distance((lat1, lon1), (lat2,lon2)).meters	
+	return x
 
 def haversine(lon1, lat1, lon2, lat2):
-	from math import radians, cos, sin, asin, sqrt
     """
     Calculate the great circle distance between two points 
     on the earth (specified in decimal degrees)
@@ -50,6 +64,36 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a)) 
     km = 6367 * c
     return km 
+
+def calcBearing(lat1, lon1, lat2, lon2):
+	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+	dLon = lon2 - lon1
+	y = sin(dLon) * cos(lat2)
+	x = cos(lat1) * sin(lat2) \
+		- sin(lat1) * cos(lat2) * cos(dLon)
+	return atan2(y, x)
+
+
+#def vertical_angle():
+
+def bearing2(lat1, lon1, lat2, lon2):
+	startLat = math.radians(lat1)
+	startLong = math.radians(lon1)
+	endLat = math.radians(lat2)
+	endLong = math.radians(lon2)
+
+	dLong = endLong - startLong
+
+	dPhi = math.log(math.tan(endLat/2.0+math.pi/4.0)/math.tan(startLat/2.0+math.pi/4.0))
+	if abs(dLong) > math.pi:
+		 if dLong > 0.0:
+		     dLong = -(2.0 * math.pi - dLong)
+		 else:
+		     dLong = (2.0 * math.pi + dLong)
+
+	bearing = (math.degrees(math.atan2(dLong, dPhi)) + 360.0) % 360.0;
+
+	return bearing
 
 def calculate_distance(lat1, lon1, lat2, lon2):
         '''
@@ -170,104 +214,17 @@ def points2distance(start,  end):
   c = 2 * math.atan2(math.sqrt(a),  math.sqrt(1-a))
   return rEarth * c
 
+def meters_to_feet(meters):
+	print "metters", meters
+	return (meters*3.28084)
 
-def ActiveSatelliteCount(session):
-   count = 0
-   for i in range(len(session)):
-      s = str(session[i])
-      if s[-1] == "y":
-			count = count + 1
-   return count
-
-def GetHomePosition():
-   os.system("clear")
-   while ActiveSatelliteCount(session.satellites) < 6:
-      print "Acquiring at least 6 GPS Satellites..."
-      print "Number of acquired satellites: ", ActiveSatelliteCount(session.satellites)
-      time.sleep(1)
-      os.system("clear")
-      session.next()
-   Lat = 0
-   Long = 0
-   print "Have Acquired at least 6 GPS Satellites..."
-   print "Saving Home Position....(about 15 secs)....."
-   for i in range(15):
-      time.sleep(1)
-      session.next()
-      Lat = Lat + session.fix.latitude
-      Long = Long + session.fix.longitude
-      print session.fix.latitude, session.fix.longitude
-   Lat = Lat / 15
-   Long = Long / 15
-   print "avgs =", Lat, Long
-   return Lat, Long, session.utc, session.fix.time, session.fix.altitude
-
-def decdeg2dms(dd):
-   mnt,sec = divmod(dd*3600,60)
-   deg,mnt = divmod(mnt,60)
-   return deg,mnt,sec
-
-session = gps.gps(host="localhost", port="2947")
-gps2 = gps.gps(host="localhost", port="2948")
-print gps.gps()
-print gps2
-session.next()
-session.stream()
-gps2.next()
-gps2.stream()
-
-home = GetHomePosition()
-print home
-HomeLat2 =  home[0]
-HomeLong2 = home[1]
-HomeLat = decdeg2dms(home[0])
-HomeLong = decdeg2dms(home[1])
-print HomeLat, HomeLong
-
-
-#(lat,lon) = pointRadialDistance(lat1,lon1,bear,dist)
-#        print "%6.2f \t %6.2f \t %4.1f \t %6.1f \t %6.2f \t %6.2f" % (lat1,lon1,bear,dist,lat,lon)
-
-while 1:
-   os.system("clear")
-   session.next()
-   gps2.next()
-   # a = altitude, d = date/time, m=mode,
-   # o=postion/fix, s=status, y=satellites
-   
-   print " GPS reading"
-   print "-------------"
-   print 'Start latitude ' , HomeLat
-   print 'Start longitude ' , HomeLong
-   print 'latitude ' , decdeg2dms(session.fix.latitude), decdeg2dms(gps2.fix.latitude)
-   print 'longitude ' , decdeg2dms(session.fix.longitude), decdeg2dms(gps2.fix.longitude)
-   print 'time utc ' , session.utc, session.fix.time
-   print 'altitude ' , session.fix.altitude, gps2.fix.altitude, ((session.fix.altitude+gps2.fix.altitude)/2)
-   print 'epx ', session.fix.epx
-   print 'epv ', session.fix.epv
-   print 'ept ', session.fix.ept
-   print "speed ", session.fix.speed
-   print "climb " , session.fix.climb
-   print
-   print 'Satellites (total of', len(session.satellites) , ' in view)'
-   for i in session.satellites:
-      print '\t', i
-   print "Active satellites used: ", ActiveSatelliteCount(session.satellites), ActiveSatelliteCount(gps2.satellites)
-   currentLat = decdeg2dms(session.fix.latitude)
-   currentLong = decdeg2dms(session.fix.longitude)
-   distancefromhome = points2distance((HomeLat, HomeLong), (currentLat, currentLong))
-   print "Distance from home = %8.8f \t" %distancefromhome
-   print "Distance from home in meters =  %8.8f \t" %(distancefromhome/1000)
-   print "new calc =", calculate_distance(HomeLat2, HomeLong2, session.fix.latitude, session.fix.longitude)
-   print "new calc 2 =:", lldistance((HomeLat2, HomeLong2), (session.fix.latitude, session.fix.longitude))
-   #time.sleep(1.5)
-   print 'track:', session.fix.track
-   #print help(session)
-   print 'mode ' , session.fix.mode
-   #print 'type' , session.fixType
-   print 'quality ', session.satellites
-   time.sleep(1.5)
-   
-
+def destination_coordinates(lat1, lon1, bearing_in_degrees, distance_to_travel_in_meters):
+# given: lat1, lon1,  bearing = bearing to travel in degrees, distance_to_travel = distance to travel in meters
+	distance_to_travel_in_meters = float(distance_to_travel_in_meters) / 1000
+	print distance_to_travel_in_meters
+	origin = geopy.Point(lat1, lon1)
+	destination = VincentyDistance(kilometers=distance_to_travel_in_meters).destination(origin, bearing_in_degrees)
+	lat2, lon2 = destination.latitude, destination.longitude
+	return lat2,lon2
 
 

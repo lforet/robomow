@@ -25,11 +25,18 @@
 #define SABER_MOTOR2_FULL_REVERSE 128
 #define SABER_MOTOR2_FULL_STOP 192
 
-
 // Motor level to send when issuing the full stop command
 #define SABER_ALL_STOP 0
 
-SoftwareSerial SaberSerial = SoftwareSerial( SABER_RX_PIN, SABER_TX_PIN );
+int rc1_fwrv = 8; //channel 2 on rc
+int rc2_rtlf = 9; //channel 1 on rc
+int rc3_kill = 10; //channel 5 on rc
+
+int rc1_val;
+int rc2_val;
+int rc3_val;
+
+//SoftwareSerial SaberSerial = SoftwareSerial( SABER_RX_PIN, SABER_TX_PIN );
 
 //global variables
 boolean isConnectedPC = false;
@@ -53,6 +60,9 @@ void initSabertooth()
   delay( 2000 );
   // Send full stop command
   //setEngineSpeed( SABER_ALL_STOP );
+  pinMode(rc1_fwrv, INPUT);
+  pinMode(rc2_rtlf, INPUT);
+  pinMode(rc3_kill, INPUT);
 }
 
 void establishContact() {
@@ -73,9 +83,10 @@ void establishContact() {
 void setup( )
 {
   initSabertooth( );
+
 }
 
-void pc_commands(){
+String pc_commands(){
   byte incomingByte;
   String cmd = "";
   String confirm_cmd = "";
@@ -92,47 +103,129 @@ void pc_commands(){
   if (cmd != "") {
     //Serial.println(content);
     //Serial.println(content.substring(0,2));
-    if (cmd.substring(0,2) == "FD"){
-      Serial.println(cmd);
+    if (cmd.substring(0,2) == "FW"){
+      //Serial.println(cmd);
       int speed_cmd = cmd.substring(2,5).toInt();
-      forward(speed_cmd);
+      return cmd;
     }
     if (cmd.substring(0,2) == "RV"){
-      Serial.println(cmd);
+      //Serial.println(cmd);
       int speed_cmd = cmd.substring(2,5).toInt();
-      reverse(speed_cmd);
+      return cmd;
     }
     if (cmd.substring(0,2) == "LT"){
-      Serial.println(cmd);
+      //Serial.println(cmd);
       int speed_cmd = cmd.substring(2,5).toInt();
-      left(speed_cmd);
+      return cmd;
     }
     if (cmd.substring(0,2) == "RT"){
-      Serial.println(cmd);
+      //Serial.println(cmd);
       int speed_cmd = cmd.substring(2,5).toInt();
-      right(speed_cmd);
+      return cmd;
     }
     if (cmd.substring(0,2) == "ST"){
-      Serial.println(cmd);
+      //Serial.println(cmd);
       int speed_cmd = cmd.substring(2,5).toInt();
-      stop_motors();
+      return cmd;
     }
     if (cmd.substring(0,2) == "SP"){
-      Serial.println(cmd);
-      stats();
+      //Serial.println(cmd);
+      return cmd;
     }    
   }
   delay(200);
 }
 
 void loop(){
+  String cmd = "";
   //forward(50);
   //delay (2000);
   //Serial.println();
   //establishContact();
-  pc_commands();
-  delay (100);
+  //cmd = pc_commands();
+  cmd = rc_commands();
+  send_cmd_to_robot(cmd);
+  //Serial.println(");
+  delay (250);
 }
+
+String rc_commands(){
+  String cmd = "";
+  
+  rc1_val = pulseIn(rc1_fwrv, HIGH, 20000);//channel 2 on rc
+  Serial.print(rc1_val);
+  rc1_val = map(rc1_val, 1020, 1840, -100 , 100);
+  if (rc1_val < -100){
+    rc1_val = -100;
+  }
+  if (rc1_val > 100){
+    rc1_val = 100;
+  }
+  Serial.print(rc1_val);
+  
+  rc2_val = pulseIn(rc2_rtlf, HIGH, 20000);//channel 1 on rc
+  
+  rc2_val = map(rc2_val, 1020, 1840, -100 , 100);
+  if (rc2_val < -100){
+    rc2_val = -100;
+  }
+  if (rc2_val > 100){
+    rc2_val = 100;
+  }
+  Serial.print(rc2_val);
+  
+  rc3_val = pulseIn(rc3_kill, HIGH, 20000);//channel 5 on rc
+
+  rc3_val = map(rc3_val, 1020, 1840, -100 , 100);
+  if (rc3_val < -100){
+    rc3_val = -100;
+  }
+  if (rc3_val > 100){
+    rc3_val = 100;
+  }
+  Serial.println(rc3_val);
+  
+  if (rc1_val > 10){
+      cmd = "FW" + String(rc1_val);
+  }
+   if (rc2_val > 10){
+      cmd = "RT" + String(rc2_val);
+  }
+  return cmd;
+}
+
+
+
+void send_cmd_to_robot(String cmd){
+  if (cmd != "") {
+    if (cmd.substring(0,2) == "FW"){
+      int speed_cmd = cmd.substring(2,5).toInt();
+      forward(speed_cmd);
+    }
+    if (cmd.substring(0,2) == "RV"){
+      int speed_cmd = cmd.substring(2,5).toInt();
+      reverse(speed_cmd);
+    }
+    if (cmd.substring(0,2) == "LT"){
+      int speed_cmd = cmd.substring(2,5).toInt();
+      left(speed_cmd);
+    }
+    if (cmd.substring(0,2) == "RT"){
+      int speed_cmd = cmd.substring(2,5).toInt();
+      right(speed_cmd);
+    }
+    if (cmd.substring(0,2) == "ST"){
+      int speed_cmd = cmd.substring(2,5).toInt();
+      stop_motors();
+    }
+    if (cmd.substring(0,2) == "SP"){
+      stats();
+    }    
+  }
+  Serial.print("cmd send to robot");
+  Serial.println(cmd);
+}
+
 
 void m1_drive(int speed_val){
   int val = map(speed_val, -100, 100, 1, 127);

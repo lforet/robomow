@@ -48,5 +48,9 @@ must be added to the dial out group for aruduino com to work
 
 ##########################################
 
+GPS library for distance calculations
+
+sudo easy_install geopy
+
 
 
