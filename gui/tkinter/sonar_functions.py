@@ -3,14 +3,15 @@ import serial
 import sys, time
 from threading import Thread
 import numpy as np
-import matplotlib.cm as cm
+import matplotlib
+matplotlib.use('agg')
 from matplotlib.pyplot import figure, show, rc
 import matplotlib.pyplot as P
 from pylab import *
 import Image
 import cv
 from maxsonar_class import *
-
+import gc
 
 ###########################################################
 
@@ -60,8 +61,60 @@ def fig2data ( fig ):
     # canvas.tostring_argb give pixmap in ARGB mode. Roll the ALPHA channel to have it in RGBA mode
     buf = np.roll ( buf, 3, axis = 2 )
     return buf
-###########################################################
 
+
+###########################################################
+def sonar_graph(ping_readings):
+	#print "ping reading:", ping_readings
+	#print type(ping_readings[1])
+	# force square figure and square axes looks better for polar, IMO
+	fig = figure(figsize=(3.8,3.8))
+	ax = P.subplot(1, 1, 1, projection='polar')
+	P.rgrids([28, 61, 91])
+	ax.set_theta_zero_location('N')
+	ax.set_theta_direction(-1)
+	theta = 356
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[0]]
+	width = .15
+	bars1 = ax.bar(0, 100, width=0.001, bottom=0.0)
+	#print "theta, radii, width: ", theta, radii, width
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	theta = 86
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[1]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')	
+	theta = 176
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[2]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	theta = 266
+	angle = theta * np.pi / 180.0
+	radii = [ping_readings[3]]
+	width = .15
+	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
+	#print "finshed graph"
+	#pil_img = fig2img(fig)
+	#sonar_image = pil_img
+	#print type(pil_img), pil_img
+	#sonar_image = PILtoCV_4Channel(pil_img)
+	#cv.ShowImage("Sonar", sonar_image )
+	#cv.MoveWindow ('Sonar',50 ,50 )
+	#time.sleep(.01)
+	#cv.WaitKey(10)
+	fig.savefig('sonar_image.png')
+	#Image.open('sonar_image.png').save('sonar_image.jpg','JPEG')
+	#print "finished saving"
+	#stop
+	#garbage cleanup
+	#fig.clf()
+	P.close(fig)
+	#gc.collect()
+	#del fig
+	
+	return
 
 def process_sonar_data(sonar_data):
 	#global sensor1
@@ -91,6 +144,7 @@ def process_sonar_data(sonar_data):
 		#sonar_img = sonar_graph(data2)
 		return data2
 		#time.sleep(.01)
+
 
 
 if __name__== "__main__":

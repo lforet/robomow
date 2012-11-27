@@ -15,6 +15,7 @@ from matplotlib.pyplot import figure, show, rc
 import pylab as pl
 import numpy as np
 
+
 sock = None
 ROBOT_IP = None
 PORT = 50005
@@ -64,54 +65,6 @@ def Search_For_Robot():
 			return False
 		else:
 			return answer
-
-def sonar_graph(ping_readings):
-	print "ping reading:", ping_readings
-	print type(ping_readings[1])
-	# force square figure and square axes looks better for polar, IMO
-	fig = pl.figure(figsize=(6,6))
-	ax = P.subplot(1, 1, 1, projection='polar')
-	P.rgrids([28, 61, 91])
-	ax.set_theta_zero_location('N')
-	ax.set_theta_direction(-1)
-	theta = 356
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[0]]
-	width = .15
-	bars1 = ax.bar(0, 100, width=0.001, bottom=0.0)
-	#print "theta, radii, width: ", theta, radii, width
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-	theta = 86
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[1]]
-	width = .15
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')	
-	theta = 176
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[2]]
-	width = .15
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-	theta = 266
-	angle = theta * np.pi / 180.0
-	radii = [ping_readings[3]]
-	width = .15
-	bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-	#print "finshed graph"
-	#pil_img = fig2img(fig)
-	#sonar_image = pil_img
-	#print type(pil_img), pil_img
-	#sonar_image = PILtoCV_4Channel(pil_img)
-	#cv.ShowImage("Sonar", sonar_image )
-	#cv.MoveWindow ('Sonar',50 ,50 )
-	time.sleep(.01)
-	#cv.WaitKey(10)
-	fig.savefig('sonar_image.png')
-	Image.open('sonar_image.png').save('sonar_image.jpg','JPEG')
-	#stop
-	#garbage cleanup
-	#fig.clf()
-	#P.close()
-	return
 
 
 def com_loop(address, port):
@@ -239,16 +192,19 @@ def update_sonar(ip, port):
 	sonarfeed = sonar_feed()
 	sonarfeed.daemon=True
 	sonarfeed.start()
-	sonarfeed.join()
+
 
 def update_images(ip, port):
-	s = FileReceiver()
+	s = FileReceiver(9090, 9091)
 	#line below stops thread when main program stops
 	s.daemon = True
 	s.start()
 	videofeed = video_feed()
 	videofeed.daemon=True
 	videofeed.start()
+
+###### 11/23/2012 - need to try pickle instead of saving files...
+
 
 class video_feed(Thread):
 	def run(self):
@@ -258,9 +214,10 @@ class video_feed(Thread):
 				image.thumbnail((320,240))
 				photo1 = ImageTk.PhotoImage(image)
 				camera_1.config(image=photo1)
-				time.sleep(.3)
+				time.sleep(.1)
 			except:
 				pass
+			
 			
 
 class sonar_feed(Thread):
@@ -275,20 +232,19 @@ class sonar_feed(Thread):
 				#sonar_image  = sf.sonar_display(sonar_data)
 				processed_sonar_data = sf.process_sonar_data(sonar_data)
 				print "processed_sonar_data ", processed_sonar_data 
-				sonar_graph(processed_sonar_data)
+				sf.sonar_graph(processed_sonar_data)
 				#print "saving sonar image"
 				#sonar_image.save("sonar_image.jpg")
 				#print "returning"
 				#refresh with new somar image
-				image = Image.open("sonar_image.jpg")
-				image.thumbnail((320,240))
+				image = Image.open("sonar_image.png")
+				#image.thumbnail((320,240))
 				sonar_img = ImageTk.PhotoImage(image)
 				sonar_display.config(image=sonar_img)
-				time.sleep(1)
+				time.sleep(.2)
+				#gc.collect()
 			except:
 				pass
-
-
 
 def update_display():
 		global ROBOT_IP
@@ -325,7 +281,7 @@ if __name__== "__main__":
 				testmode= True
 
 	main_gui = Tk()
-	main_gui.geometry("1100x840")
+	main_gui.geometry("1150x840")
 
 	com_status = StringVar()
 	com_status.set('COM INACTIVE')
@@ -333,16 +289,16 @@ if __name__== "__main__":
 	frame1=Frame(main_gui,  bd=1, relief=SUNKEN)
 	frame2=Frame(main_gui,  bd=1, relief=SUNKEN)
 	frame3=Frame(main_gui,  bd=1, relief=SUNKEN)
+	frame4=Frame(main_gui,  bd=1, relief=SUNKEN)
 
-	Button_Com_Status = Button(main_gui, textvariable=com_status);Button_Com_Status.pack();
+	Button_Com_Status = Button(frame1, textvariable=com_status);
+	Button_Com_Status.pack();
 
-	button_search_for_bot = Button(frame2, text="Find Bot", command=lambda: Search_For_Robot());
+	button_search_for_bot = Button(frame1, text="Find Bot", command=lambda: Search_For_Robot());
 	#button_search_for_bot.grid(row=0, column=1, sticky=W)
-	button_search_for_bot.pack()
-	frame2.pack()
-
-	Button_Enable_Motors = Button(main_gui, text="Enable Drive Motors", command=enable_drive_motors)
-	Button_Enable_Motors.pack()
+	button_search_for_bot.pack(side=LEFT)
+	Button_Enable_Motors = Button(frame1, text="Enable Drive Motors", command=enable_drive_motors)
+	Button_Enable_Motors.pack(side=LEFT)
 	MF = Button(frame1, text="Forward", command=lambda: send_command_to_robot('f', ROBOT_IP, PORT));
 	#MF.grid(row=0, column=1, sticky=W)
  	MB = Button(frame1, text="Reverse", command=lambda: send_command_to_robot('b', ROBOT_IP, PORT))
@@ -355,19 +311,44 @@ if __name__== "__main__":
 	MB.pack(side=LEFT)
 	ML.pack(side=LEFT)
 	MR.pack(side=LEFT)
-	frame1.pack( padx=5, pady=5)
+	frame1.pack( padx=5, pady=5)	
+	s = Scrollbar(frame2)
+	Textbox1 = Text(frame2)
+	Textbox1.focus_set()
+	s.pack(side=RIGHT, fill=Y)
+	Textbox1.pack(side=RIGHT)#, fill=Tkinter.Y)
+	s.config(command=Textbox1.yview)
+	Textbox1.config(yscrollcommand=s.set, width=90)#, height=50)
+	frame2.pack()
 	Button_Enable_Motors.configure(background='green')
 	MF.configure(state=DISABLED, background='red')
 	MB.configure(state=DISABLED, background='red')
 	ML.configure(state=DISABLED, background='red')
 	MR.configure(state=DISABLED, background='red')
 
-	Button_Update_Image = Button(frame3, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
+
+
+	image = Image.open("temp.jpg")
+	sonar = Image.open('sonar_image.png')
+	#sonar.thumbnail((440,440))
+	photo1 = ImageTk.PhotoImage(image)
+	camera_1 = Label(frame3, image=photo1, bd=1, relief=SUNKEN)
+	camera_1.pack(side=LEFT, padx=5, pady=5)
+	sonar_img = ImageTk.PhotoImage(sonar)
+	sonar_display = Label(frame3, image=sonar_img, bd=1, relief=SUNKEN)
+	sonar_display.pack(side=LEFT, padx=5, pady=5)
+	frame3.pack()
+
+
+
+
+
+	Button_Update_Image = Button(frame4, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
 	Button_Update_Image.pack(side=LEFT);
-	button_toggle_sonar = Button(frame3, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
+	button_toggle_sonar = Button(frame4, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
 	button_toggle_sonar.pack()
 	#frame3.pack(anchor=NW)
-	frame3.pack()
+	frame4.pack()
 #
 	paused = StringVar()
 	paused.set('PAUSE')
@@ -375,27 +356,13 @@ if __name__== "__main__":
 
 	#Button_show_Image = Button(main_gui, text="Load Image", command=random_image).pack(); 
 	
-	s = Scrollbar(main_gui)
-	Textbox1 = Text(main_gui)
-	Textbox1.focus_set()
-	s.pack(side=RIGHT, fill=Y)
-	Textbox1.pack(side=RIGHT)#, fill=Tkinter.Y)
-	s.config(command=Textbox1.yview)
-	Textbox1.config(yscrollcommand=s.set, width=90)#, height=50)
+
 
 	var_IP_of_bot = StringVar(None)
 	IP_of_bot = Entry(main_gui, textvariable=var_IP_of_bot)
 	IP_of_bot.pack()
 
-	image = Image.open("temp.jpg")
-	sonar = Image.open('sonar_image.jpg')
-	#sonar.thumbnail((440,440))
-	photo1 = ImageTk.PhotoImage(image)
-	camera_1 = Label(image=photo1, bd=1, relief=SUNKEN); camera_1.pack(padx=5, pady=5)
-	
 
-	sonar_img = ImageTk.PhotoImage(sonar)
-	sonar_display = Label(image=sonar_img, bd=1, relief=SUNKEN); sonar_display.pack(padx=5, pady=5)
 	
 	#frame1.pack_forget()
 	update_display()

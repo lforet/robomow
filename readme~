@@ -41,4 +41,12 @@ hg clone https://code.google.com/p/pymeanshift/
 sudo apt-get install python-imaging-tk
 
 
+##################################################
+
+must be added to the dial out group for aruduino com to work
+
+
+##########################################
+
+
 
