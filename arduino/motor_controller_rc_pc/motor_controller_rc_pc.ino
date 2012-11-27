@@ -6,10 +6,6 @@
 // Digital pin 13 is the serial transmit pin to the
 // Sabertooth 2x5
 #define SABER_TX_PIN 13
-
-// NOT USED (but still init'd)
-// Digital pin 12 is the serial receive pin from the
-// Sabertooth 2x5
 #define SABER_RX_PIN 12
 
 // Set to 9600 through Sabertooth dip switches
@@ -36,7 +32,7 @@ int rc1_val;
 int rc2_val;
 int rc3_val;
 
-//SoftwareSerial SaberSerial = SoftwareSerial( SABER_RX_PIN, SABER_TX_PIN );
+SoftwareSerial SaberSerial = SoftwareSerial( SABER_RX_PIN, SABER_TX_PIN );
 
 //global variables
 boolean isConnectedPC = false;
@@ -48,9 +44,9 @@ void initSabertooth()
 {
   // Init software UART to communicate
   // with the Sabertooth 2x5
-  //pinMode( SABER_TX_PIN, OUTPUT );
+  pinMode( SABER_TX_PIN, OUTPUT );
 
-  //SaberSerial.begin( SABER_BAUDRATE );
+  SaberSerial.begin( SABER_BAUDRATE );
   Serial.begin( SABER_BAUDRATE );
   
   //establish contact with main pc
@@ -140,60 +136,75 @@ void loop(){
   String cmd = "";
   //forward(50);
   //delay (2000);
-  //Serial.println();
+  //Serial.println("loop");
+  //SaberSerial.write("loop2");
   //establishContact();
   //cmd = pc_commands();
-  cmd = rc_commands();
-  send_cmd_to_robot(cmd);
+  rc_commands();
+  //serial_print_stuff();
+  //send_cmd_to_robot(cmd);
   //Serial.println(");
-  delay (250);
+  // if (SaberSerial.available()){
+  //  Serial.write(SaberSerial.read());
+  //}
+  //if (Serial.available()){
+  //  SaberSerial.write(Serial.read());
+  //}
+  //SaberSerial.println("hello")
+  delay (10);
 }
 
-String rc_commands(){
+void rc_commands(){
   String cmd = "";
-  
-  rc1_val = pulseIn(rc1_fwrv, HIGH, 20000);//channel 2 on rc
-  Serial.print(rc1_val);
-  rc1_val = map(rc1_val, 1020, 1840, -100 , 100);
-  if (rc1_val < -100){
-    rc1_val = -100;
-  }
-  if (rc1_val > 100){
-    rc1_val = 100;
-  }
-  Serial.print(rc1_val);
-  
-  rc2_val = pulseIn(rc2_rtlf, HIGH, 20000);//channel 1 on rc
-  
-  rc2_val = map(rc2_val, 1020, 1840, -100 , 100);
-  if (rc2_val < -100){
-    rc2_val = -100;
-  }
-  if (rc2_val > 100){
-    rc2_val = 100;
-  }
-  Serial.print(rc2_val);
-  
   rc3_val = pulseIn(rc3_kill, HIGH, 20000);//channel 5 on rc
-
-  rc3_val = map(rc3_val, 1020, 1840, -100 , 100);
-  if (rc3_val < -100){
-    rc3_val = -100;
+  if (rc3_val > 1400){
+    
+    rc1_val = pulseIn(rc1_fwrv, HIGH, 20000);
+    //Serial.print(rc1_val);
+    if (rc1_val > 1000 && rc1_val < 2000){
+      rc1_val = map(rc1_val, 1030, 1860, 1, 127);
+      if (rc1_val < 1){
+        rc1_val = 1;
+      }
+      if (rc1_val > 127){
+        rc1_val = 127;
+      }
+    }
+    else{
+      rc1_val = 64;
+    }
+    // ******************************************************
+    rc2_val = pulseIn(rc2_rtlf, HIGH, 20000);//channel 1 on rc
+    if (rc2_val > 1000 && rc2_val < 2000){
+      rc2_val = map(rc2_val, 1070, 1890, 128, 255); 
+      if (rc2_val < 128){
+        rc2_val = 128;
+      }
+      if (rc2_val > 255){
+       rc2_val = 255;
+      }
+      //Serial.println(rc2_val);
+    }
+    else{
+      rc2_val = 192;
+    }
+    
+    rc_motor_drive();
   }
-  if (rc3_val > 100){
-    rc3_val = 100;
+   // ******************************************************
+  if (rc3_val < 1400){
+    Serial.println("kill switch activated");
+    stop_motors();
   }
-  Serial.println(rc3_val);
-  
-  if (rc1_val > 10){
-      cmd = "FW" + String(rc1_val);
-  }
-   if (rc2_val > 10){
-      cmd = "RT" + String(rc2_val);
-  }
-  return cmd;
 }
 
+void rc_motor_drive(){
+  //Serial.write(rc1_val);
+  //Serial.write(rc2_val);
+  SaberSerial.write(rc1_val);
+  SaberSerial.write(rc2_val);
+  
+}
 
 
 void send_cmd_to_robot(String cmd){
@@ -281,6 +292,8 @@ void left(int speed_val){
 
 void stop_motors(){
   int speed_val = 0;
+  rc1_val = 64;
+  rc2_val = 192;
   m1_drive(speed_val);
   m2_drive(speed_val);
 }
@@ -289,4 +302,14 @@ void stats(){
   Serial.print(motor1_spd);
   Serial.print(",");
   Serial.println(motor2_spd);
+}
+
+
+void serial_print_stuff(){
+  Serial.print("rc1: ");
+  Serial.print(rc1_val);
+  Serial.print("  rc2: ");
+  Serial.print(rc2_val);
+  Serial.print("  rc3: ");
+  Serial.println(rc3_val);
 }
