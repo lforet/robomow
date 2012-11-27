@@ -7,6 +7,7 @@
 import gps, os, time
 #from future import division
 from math import sin, cos, radians, sqrt, atan2, asin, sqrt, pi
+import math
 rEarth = 6371.01 # Earth's average radius in km
 epsilon = 0.000001 # threshold for floating-point equality
 
@@ -204,13 +205,13 @@ def decdeg2dms(dd):
    return deg,mnt,sec
 
 session = gps.gps(host="localhost", port="2947")
-gps2 = gps.gps(host="localhost", port="2948")
-print gps.gps()
-print gps2
+#gps2 = gps.gps(host="localhost", port="2948")
+#print gps.gps()
+#print gps2
 session.next()
 session.stream()
-gps2.next()
-gps2.stream()
+#gps2.next()
+#gps2.stream()
 
 home = GetHomePosition()
 print home
@@ -227,7 +228,7 @@ print HomeLat, HomeLong
 while 1:
    os.system("clear")
    session.next()
-   gps2.next()
+   #gps2.next()
    # a = altitude, d = date/time, m=mode,
    # o=postion/fix, s=status, y=satellites
    
@@ -235,10 +236,10 @@ while 1:
    print "-------------"
    print 'Start latitude ' , HomeLat
    print 'Start longitude ' , HomeLong
-   print 'latitude ' , decdeg2dms(session.fix.latitude), decdeg2dms(gps2.fix.latitude)
-   print 'longitude ' , decdeg2dms(session.fix.longitude), decdeg2dms(gps2.fix.longitude)
+   print 'latitude ' , decdeg2dms(session.fix.latitude)
+   print 'longitude ' , decdeg2dms(session.fix.longitude)
    print 'time utc ' , session.utc, session.fix.time
-   print 'altitude ' , session.fix.altitude, gps2.fix.altitude, ((session.fix.altitude+gps2.fix.altitude)/2)
+   print 'altitude ' , session.fix.altitude
    print 'epx ', session.fix.epx
    print 'epv ', session.fix.epv
    print 'ept ', session.fix.ept
@@ -248,11 +249,11 @@ while 1:
    print 'Satellites (total of', len(session.satellites) , ' in view)'
    for i in session.satellites:
       print '\t', i
-   print "Active satellites used: ", ActiveSatelliteCount(session.satellites), ActiveSatelliteCount(gps2.satellites)
-   currentLat = decdeg2dms(session.fix.latitude)
-   currentLong = decdeg2dms(session.fix.longitude)
-   distancefromhome = points2distance((HomeLat, HomeLong), (currentLat, currentLong))
-   print "Distance from home = %8.8f \t" %distancefromhome
+   print "Active satellites used: ", ActiveSatelliteCount(session.satellites)
+   currentLat = session.fix.latitude
+   currentLong = session.fix.longitude
+   distancefromhome = calculate_distance(HomeLat2, HomeLong2, currentLat, currentLong)
+   print "Distance from home =" , distancefromhome
    print "Distance from home in meters =  %8.8f \t" %(distancefromhome/1000)
    print "new calc =", calculate_distance(HomeLat2, HomeLong2, session.fix.latitude, session.fix.longitude)
    print "new calc 2 =:", lldistance((HomeLat2, HomeLong2), (session.fix.latitude, session.fix.longitude))
