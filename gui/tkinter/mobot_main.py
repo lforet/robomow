@@ -37,7 +37,7 @@ class send_video(Thread):
 			print self.filetosend
 			while True:
 				snap_shot(self.filetosend)
-				time.sleep(.1)
+				time.sleep(.15)
 				#print "sending image"
 				send_file(filetosend = self.filetosend)
 
@@ -50,7 +50,7 @@ def send_file(host="u1204vm.local", cport=9091, mport=9090, filetosend=""):
 		cs.close()
 	except:
 		pass
-	time.sleep(0.05)
+	time.sleep(0.1)
 	try:
 		ms = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		ms.connect((host, mport))
