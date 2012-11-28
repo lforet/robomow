@@ -49,9 +49,6 @@ void initSabertooth()
   SaberSerial.begin( SABER_BAUDRATE );
   Serial.begin( SABER_BAUDRATE );
   
-  //establish contact with main pc
-  //establishContact();
-  
   // 2 second time delay for the Sabertooth to init
   delay( 2000 );
   // Send full stop command
@@ -61,20 +58,6 @@ void initSabertooth()
   pinMode(rc3_kill, INPUT);
 }
 
-void establishContact() {
-  Serial.println("establishContact: ");
-  Serial.println(Serial.available());
-  byte incomingByte = 0;
-  while (Serial.available() <= 0) {
-    Serial.println('mmd'); //mobot motor driver
-    delay(100);
-  }
-  // read the incoming byte:
-  incomingByte = Serial.read();
-  // echo data received:
-  Serial.print("I received: ");
-  Serial.println(incomingByte);
-}
 
 void setup( )
 {
@@ -129,6 +112,7 @@ String pc_commands(){
       return cmd;
     }    
   }
+  return cmd;
   delay(200);
 }
 
@@ -139,9 +123,9 @@ void loop(){
   //Serial.println("loop");
   //SaberSerial.write("loop2");
   //establishContact();
-  //cmd = pc_commands();
+  cmd = pc_commands();
   rc_commands();
-  //serial_print_stuff();
+  serial_print_stuff();
   //send_cmd_to_robot(cmd);
   //Serial.println(");
   // if (SaberSerial.available()){
@@ -249,6 +233,8 @@ void m1_drive(int speed_val){
   //Serial.print("m1:");
   //Serial.println(val);
   //Serial.write(val);
+  SaberSerial.write(val);
+  //SaberSerial.write(rc2_val);
   motor1_spd = speed_val;
 }
 
@@ -266,6 +252,7 @@ void m2_drive(int speed_val){
   //Serial.write(val);
   //Serial.print("m2:");
   //Serial.println(val);
+  SaberSerial.write(val);
   motor2_spd = speed_val;
 }
 

@@ -80,7 +80,7 @@ class robomow_motor(object):
 	def forward(self,speed):
 		##takes desired speed as percentage
 		self.com.flushInput()
-		command_str = ("FD"+str(speed))
+		command_str = ("FW"+str(speed))
 		validate_command(self, command_str)
 		self.motor_stats()
 
@@ -100,7 +100,7 @@ class robomow_motor(object):
 
 	def left(self, speed):
 		##takes desired speed as percentage
-		command_str = ("LT"+str(speed))
+		command_str = ("LF"+str(speed))
 		validate_command(self, command_str)
 		self.motor_stats()
 

@@ -143,6 +143,10 @@ class send_sonar_data(Thread):
 				time.sleep(.01)
 			print "out of while in sonar"
 
+
+#def move_mobot(themove):
+	
+
 if __name__== "__main__":
 	testmode = False
 	if len(sys.argv) > 1:
@@ -168,17 +172,18 @@ if __name__== "__main__":
 		#sonar.join()
 
 	while True:
-		move = ""
-		#print "......................", sonar.sonar_data
-		print "sonar_data: ", sonar.sonar_data
-		print "max dist: ", sonar.max_dist, sonar.max_sensor
-		print "min_dist: ", sonar.min_dist, sonar.min_sensor
-		if sonar.max_sensor == 0: move = "foward"
-		if sonar.max_sensor == 1: move = "right"
-		#if sonar.max_sensor == 2: move = "reverse"
-		if sonar.max_sensor == 3: move = "left"
-		print "suggest moving: ", move
-		move_mobot()
+		if (sonar.max_dist > 0):
+			move = ""
+			print "......................"
+			print "sonar_data: ", sonar.sonar_data
+			print "max dist: ", sonar.max_dist, sonar.max_sensor
+			print "min_dist: ", sonar.min_dist, sonar.min_sensor
+			if sonar.max_sensor == 0: move = "foward"
+			if sonar.max_sensor == 1: move = "right"
+			#if sonar.max_sensor == 2: move = "reverse"
+			if sonar.max_sensor == 3: move = "left"
+			print "suggest moving: ", move
+			#move_mobot(move)
 
 		time.sleep(1)
 	print "stopped"
