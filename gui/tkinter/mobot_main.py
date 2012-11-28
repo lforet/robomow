@@ -32,21 +32,8 @@ def snap_shot(filename):
 		print "could not grab webcam"
 	return 
 
-class send_video(Thread):
-	def __init__(self, filetosend):   
-		self.filetosend = filetosend     
-		Thread.__init__(self)
-
-	def run(self):
-			print self.filetosend
-			while True:
-				snap_shot(self.filetosend)
-				time.sleep(.15)
-				#print "sending image"
-				send_file(filetosend = self.filetosend)
-
-def send_file(host="u1204vm.local", cport=9091, mport=9090, filetosend=""):
-	global file_lock
+def send_file(host, cport, mport, filetosend):
+	#global file_lock
 	file_lock = True
 	#print "file_lock", file_lock
 	try:       
@@ -70,7 +57,7 @@ def send_file(host="u1204vm.local", cport=9091, mport=9090, filetosend=""):
 	except:
 		print "ms failed"
 		pass
-	file_lock = False
+	#file_lock = False
 	#print "file_lock", file_lock
 		
 		
@@ -101,60 +88,105 @@ class send_video(Thread):
 		Thread.__init__(self)
 
 	def run(self):
-			global file_lock, hhh
+			#global file_lock, hhh
 			print self.filetosend
 			while True:
-				#print "file_lock", file_lock
 				snap_shot(self.filetosend)	
-				while (file_lock == True):
-					time.sleep(.01)
-					#print "waiting on file unlock"
-				send_file(filetosend = self.filetosend)
-				#print "file_lock", file_lock
+				send_file(host="u1204vm.local", cport=9090, mport=9091,filetosend=self.filetosend)
 				time.sleep(.01)
 							
 class send_sonar_data(Thread):
-	def __init__(self):   
-		#self.filetosend = filetosend     
+	def __init__(self, filetosend):   
+		self.filetosend = filetosend
+		self.sonar_data = "" 
+		self.max_dist = -1
+		self.min_dist = -1   
+		self.min_sensor = -1
+		self.max_sensor = -1 
 		Thread.__init__(self)
 
 	def run(self):
-			global file_lock, hhh
-			#sonar = MaxSonar()
+			#global file_lock, hhh
+			sonar = MaxSonar()
+			
 			while True:
-				#sonar_data  = str(sonar.distances_cm())
-				sonar_data = ""
-				for i in range(1,6):
-					sonar_data = sonar_data + "s"+str(i)+":"+ str(random.randint(28, 91))
-				#sonar_data = "s1:61s2:33s3:45s4:87s5:91"
-				print "sonar_data:", sonar_data
-				f = open("sonar_data.txt", "w")
-				f.write(sonar_data)
-				f.close()
-				while (file_lock == True):
-					time.sleep(.01)
-					#print "sonar waiting on file unlock"
-				send_file(filetosend="sonar_data.txt")
-				hhh = hhh +1
+				self.sonar_data = ""
+				self.max_dist = -1
+				self.min_dist = -1 
+				self.min_sensor = -1
+				self.max_sensor = -1
+				#
+				#below 2 lines are for test purposes when actual US arent sending data
+				#for i in range(1,6):
+				#	sonar_data = sonar_data + "s"+str(i)+":"+ str(random.randint(28, 91))
+
+				data = str(sonar.distances_cm())
+				self.sonar_data = []
+				sonar_data_str1 = ""
+				if len(data) > 1:
+					self.sonar_data.append(int(data[(data.find('s1:')+3):(data.find('s2:'))]))
+					self.sonar_data.append(int(data[(data.find('s2:')+3):(data.find('s3:'))]))
+					self.sonar_data.append(int(data[(data.find('s3:')+3):(data.find('s4:'))]))
+					self.sonar_data.append(int(data[(data.find('s4:')+3):(data.find('s5:'))]))
+					self.sonar_data.append(int(data[(data.find('s5:')+3):(len(data)-1)]))
+					self.max_dist = max(self.sonar_data)
+					self.min_dist = min(self.sonar_data)
+					self.min_sensor = self.sonar_data.index(self.min_dist)
+					self.max_sensor = self.sonar_data.index(self.max_dist)
+					#sonar_data_str1 = "".join(str(x) for x in self.sonar_data)
+					#print sonar_data_str1
+					#print data
+					f = open("sonar_data.txt", "w")
+					f.write(data)
+					f.close()
+					send_file(host="u1204vm.local", cport=9092, mport=9093,filetosend=self.filetosend)
 				time.sleep(.01)
-				
+			print "out of while in sonar"
+
+
+def move_mobot(themove):
+	
+
+
+
 if __name__== "__main__":
 	testmode = False
 	if len(sys.argv) > 1:
 		if sys.argv[1] == 'testmode':
 				print 'starting in testing mode'
 				testmode= True
+
 				
 	webcam1 = cv2.VideoCapture(0)
+
+
 	video1 = send_video("snap_shot.jpg")
-	video1.daemon
+	#video1.daemon=True
 	video1.start()
 	#video1.join()
 	
+	
 	##start sonar
 	if (testmode == False):
-		sonar = send_sonar_data()
-		sonar.daemon=True
+		sonar = send_sonar_data("sonar_data.txt")
+		#sonar.daemon=True
 		sonar.start()
 		#sonar.join()
-	
+
+	while True:
+		move = ""
+		#print "......................", sonar.sonar_data
+		print "sonar_data: ", sonar.sonar_data
+		print "max dist: ", sonar.max_dist, sonar.max_sensor
+		print "min_dist: ", sonar.min_dist, sonar.min_sensor
+		if sonar.max_sensor == 0: move = "foward"
+		if sonar.max_sensor == 1: move = "right"
+		#if sonar.max_sensor == 2: move = "reverse"
+		if sonar.max_sensor == 3: move = "left"
+		print "suggest moving: ", move
+		move_mobot(move)
+
+		time.sleep(1)
+	print "stopped"
+
+
