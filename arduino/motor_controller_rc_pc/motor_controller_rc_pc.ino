@@ -82,6 +82,7 @@ void loop(){
   if (rc3_val < 1500){
     pc_commands();
   }
+
   //serial_print_stuff();
   //Serial.println(");
   // if (SaberSerial.available()){
@@ -99,11 +100,11 @@ void pc_commands(){
   String cmd = "";
   String confirm_cmd = "";
   char incoming_character;
-  
-  //while (Serial.available() <= 0) {
-  //  Serial.println ("m1:");
-  //  delay(100);
-  //}
+  //send signal to pc that this is the arduino
+  if (Serial.available() <= 0) {
+    Serial.println ("m1:");
+    //delay(100);
+  }
   while(Serial.available()) {
       incoming_character = Serial.read();
       cmd.concat(incoming_character);
@@ -138,27 +139,6 @@ void pc_commands(){
   Serial.println(cmd);
 }
 
-void loop(){
-  String cmd = "";
-  //forward(50);
-  //delay (2000);
-  //Serial.println("loop");
-  //SaberSerial.write("loop2");
-  //establishContact();
-  cmd = pc_commands();
-  rc_commands();
-  serial_print_stuff();
-  //send_cmd_to_robot(cmd);
-  //Serial.println(");
-  // if (SaberSerial.available()){
-  //  Serial.write(SaberSerial.read());
-  //}
-  //if (Serial.available()){
-  //  SaberSerial.write(Serial.read());
-  //}
-  //SaberSerial.println("hello")
-  delay (10);
-}
 
 void rc_commands(){
   String cmd = "";
