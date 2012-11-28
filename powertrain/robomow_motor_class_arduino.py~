@@ -80,9 +80,9 @@ class robomow_motor(object):
 	def forward(self,speed):
 		##takes desired speed as percentage
 		self.com.flushInput()
-		command_str = ("FD"+str(speed))
+		command_str = ("FW"+str(speed))
 		validate_command(self, command_str)
-		self.motor_stats()
+		#self.motor_stats()
 
 
 	def reverse(self,speed):
@@ -90,25 +90,25 @@ class robomow_motor(object):
 		self.com.flushInput()
 		command_str = ("RV"+str(speed))
 		validate_command(self, command_str)
-		self.motor_stats()
+		#self.motor_stats()
 
 	def stop(self):
 		##takes desired speed as percentage
 		command_str = ("ST")
-		validate_command(self, command_str)
-		self.motor_stats()
+		#validate_command(self, command_str)
+		#self.motor_stats()
 
 	def left(self, speed):
 		##takes desired speed as percentage
-		command_str = ("LT"+str(speed))
-		validate_command(self, command_str)
-		self.motor_stats()
+		command_str = ("LF"+str(speed))
+		#validate_command(self, command_str)
+		#self.motor_stats()
 
 	def right(self, speed):
 		##takes desired speed as percentage
 		command_str = ("RT"+str(speed))
-		validate_command(self, command_str)
-		self.motor_stats()
+		#validate_command(self, command_str)
+		#self.motor_stats()
 
 	def motor_stats(self):
 		##takes desired speed as percentage
@@ -132,30 +132,31 @@ class robomow_motor(object):
 			received = received.replace(':', '')
 			#print "stripped:", received, "  cmd:", cmd
 			#cmd = cmd[0] + cmd[1]
-			if (len(received) > 0):
-				if (received[0]+received[1] == cmd[0]+cmd[1]):
-					#print "successful: sending to motor arduino"
-					received = received.strip("SP")
-					#print "received now:", received
-					spd_list = received.split(',')
-					#print spd_list
-					successful = True
-					self.motor1_speed = spd_list[0]
-					self.motor2_speed = spd_list[1] 	 		
-					break
+			if (len(received) > 0):	
+				#print "successful: sending to motor arduino"
+				received = received.strip("SP")
+				#print "received now:", received
+				spd_list = received.split(',')
+				#print "spd_list", spd_list
+				successful = True
+				self.motor1_speed = int(spd_list[0])
+				self.motor2_speed = int(spd_list[1])
+				break
 		if (successful == False):
-				print "NOT successful: sending to motor arduino"
+				print "NOT successful: sending SP stats to motor arduino"
 
 def validate_command(self, cmd):
 		successful = False
 		for n in range (5):
-			time.sleep(0.01)
+			time.sleep(0.05)
 			self.com.flushOutput()
 			#print "sending to motor arduino:", cmd
 			self.com.write (cmd)
 			received = ""
 			self.com.flushInput()
-			received = self.com.readline()
+			#time.sleep(0.05)
+			while (len(received) < 1):
+				received = self.com.readline()
 			#print "received back from arduino:", received
 			#print len(received)
 			received = received.replace('\r\n', '')
@@ -164,7 +165,7 @@ def validate_command(self, cmd):
 			received = received.replace(':', '')
 			#print "stripped:", received, "  cmd:", cmd
 			if (received == cmd):
-				#print "successful: sending to motor arduino"
+				print "successful: sending to motor arduino"
 				successful = True		 		
 				break
 		if (successful == False):

@@ -63,6 +63,20 @@ void initSabertooth()
   pinMode(rc3_kill, INPUT);
 }
 
+void establishContact() {
+  Serial.println("establishContact: ");
+  Serial.println(Serial.available());
+  byte incomingByte = 0;
+  while (Serial.available() <= 0) {
+    Serial.println('mmd'); //mobot motor driver
+    delay(100);
+  }
+  // read the incoming byte:
+  incomingByte = Serial.read();
+  // echo data received:
+  Serial.print("I received: ");
+  Serial.println(incomingByte);
+}
 
 void setup( )
 {
@@ -82,7 +96,6 @@ void loop(){
   if (rc3_val < 1500){
     pc_commands();
   }
-
   //serial_print_stuff();
   //Serial.println(");
   // if (SaberSerial.available()){
@@ -92,7 +105,7 @@ void loop(){
   //  SaberSerial.write(Serial.read());
   //}
   //SaberSerial.println("hello")
-  delay (10);
+  delay (100);
 }
 
 void pc_commands(){
@@ -100,16 +113,18 @@ void pc_commands(){
   String cmd = "";
   String confirm_cmd = "";
   char incoming_character;
-  //send signal to pc that this is the arduino
-  if (Serial.available() <= 0) {
+  
+  if(Serial.available() <= 0) {
     Serial.println ("m1:");
-    //delay(100);
+  //  delay(100);
   }
+  
   while(Serial.available()) {
       incoming_character = Serial.read();
       cmd.concat(incoming_character);
   }
-   if (cmd != "") {
+  
+  if (cmd != "") {
     if (cmd.substring(0,2) == "FW"){
       int speed_cmd = cmd.substring(2,5).toInt();
       pc_cmd = cmd;
@@ -133,12 +148,21 @@ void pc_commands(){
     }
     if (cmd.substring(0,2) == "SP"){
       stats();
-    }    
-  }
-  Serial.print("cmd send to robot");
-  Serial.println(cmd);
-}
+    }
+    //if(Serial.available() <= 0) {
+       for (int xx = 0; xx < 5; xx++) { 
+         Serial.println (cmd);
+         delay(10);
+       }
+    //}
 
+  }
+  
+
+  //Serial.print("cmd send to robot");
+  //Serial.println(cmd);
+  //return cmd;
+}
 
 void rc_commands(){
   String cmd = "";
@@ -207,10 +231,10 @@ void rc_commands(){
     rc_motor_drive();
   }
    // ******************************************************
-  if (rc3_val < 1400){
-    Serial.println("PC switch activated");
+  //if (rc3_val < 1400){
+   // Serial.println("PC switch activated");
     //stop_motors();
-  }
+  //}
 }
 
 void rc_motor_drive(){
