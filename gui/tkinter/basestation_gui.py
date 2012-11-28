@@ -185,10 +185,10 @@ def show_buttons():
 
 
 def update_sonar(ip, port):
-	#s = FileReceiver()
+	s = FileReceiver(9092, 9093)
 	#line below stops thread when main program stops
-	#s.daemon = True
-	#s.start()
+	s.daemon = True
+	s.start()
 	sonarfeed = sonar_feed()
 	sonarfeed.daemon=True
 	sonarfeed.start()
@@ -196,6 +196,7 @@ def update_sonar(ip, port):
 
 def update_images(ip, port):
 	s = FileReceiver(9090, 9091)
+	print s.cmd_port,s.data_port
 	#line below stops thread when main program stops
 	s.daemon = True
 	s.start()
@@ -241,7 +242,7 @@ class sonar_feed(Thread):
 				#image.thumbnail((320,240))
 				sonar_img = ImageTk.PhotoImage(image)
 				sonar_display.config(image=sonar_img)
-				time.sleep(.2)
+				time.sleep(.1)
 				#gc.collect()
 			except:
 				pass
@@ -319,37 +320,34 @@ if __name__== "__main__":
 	ML.configure(state=DISABLED, background='red')
 	MR.configure(state=DISABLED, background='red')
 
+	Button_Update_Image = Button(frame2, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
+	Button_Update_Image.pack(side=LEFT);
+	button_toggle_sonar = Button(frame2, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
+	button_toggle_sonar.pack()
+	frame2.pack()
 
 
 	image = Image.open("temp.jpg")
 	sonar = Image.open('sonar_image.png')
 	#sonar.thumbnail((440,440))
 	photo1 = ImageTk.PhotoImage(image)
-	camera_1 = Label(frame2, image=photo1, bd=1, relief=SUNKEN)
+	camera_1 = Label(frame3, image=photo1, bd=1, relief=SUNKEN)
 	camera_1.pack(side=LEFT, padx=5, pady=5)
 	sonar_img = ImageTk.PhotoImage(sonar)
-	sonar_display = Label(frame2, image=sonar_img, bd=1, relief=SUNKEN)
+	sonar_display = Label(frame3, image=sonar_img, bd=1, relief=SUNKEN)
 	sonar_display.pack(side=LEFT, padx=5, pady=5)
-	frame2.pack()
+	frame3.pack()
 
-	s = Scrollbar(frame3)
-	Textbox1 = Text(frame3)
+	s = Scrollbar(frame4)
+	Textbox1 = Text(frame4)
 	Textbox1.focus_set()
 	s.pack(side=RIGHT, fill=Y)
 	Textbox1.pack(side=RIGHT)#, fill=Tkinter.Y)
 	s.config(command=Textbox1.yview)
-	Textbox1.config(yscrollcommand=s.set, width=90)#, height=50)
-	frame3.pack()
-
-
-
-
-	Button_Update_Image = Button(frame4, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
-	Button_Update_Image.pack(side=LEFT);
-	button_toggle_sonar = Button(frame4, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
-	button_toggle_sonar.pack()
-	#frame3.pack(anchor=NW)
+	Textbox1.config(yscrollcommand=s.set,  height=15, width=90)
 	frame4.pack()
+
+
 #
 	paused = StringVar()
 	paused.set('PAUSE')

@@ -9,8 +9,8 @@ class FileReceiver ( Thread ):
 
     def __init__( self, command_port, data_port ):
         Thread.__init__( self )
-	self.cmd_port = command_port
-	self.data_port = data_port
+        self.cmd_port = command_port
+        self.data_port = data_port
 
 	
     def run(self):
@@ -29,10 +29,10 @@ class FileReceiver ( Thread ):
     
     def bindcsock( self ):
         self.csock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.csock.bind(('', 9091))
+        self.csock.bind(('', self.cmd_port))
         self.csock.listen(2)
         #self.csock.settimeout(2)
-        print '[Control] Listening on port 9091'
+        print '[Control] Listening on port ', self.cmd_port
 
     def acceptcsock( self ):
         self.cconn, self.maddr = self.csock.accept()

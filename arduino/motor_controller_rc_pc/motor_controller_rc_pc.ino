@@ -21,6 +21,8 @@
 #define SABER_MOTOR2_FULL_REVERSE 128
 #define SABER_MOTOR2_FULL_STOP 192
 
+
+#define SABER_MAXIMUM_SPEED 20
 // Motor level to send when issuing the full stop command
 #define SABER_ALL_STOP 0
 
@@ -31,6 +33,7 @@ int rc3_kill = 10; //channel 5 on rc
 int rc1_val;
 int rc2_val;
 int rc3_val;
+String pc_cmd = "";
 
 SoftwareSerial SaberSerial = SoftwareSerial( SABER_RX_PIN, SABER_TX_PIN );
 
@@ -49,13 +52,12 @@ void initSabertooth()
   SaberSerial.begin( SABER_BAUDRATE );
   Serial.begin( SABER_BAUDRATE );
   
-  //establish contact with main pc
-  //establishContact();
-  
   // 2 second time delay for the Sabertooth to init
   delay( 2000 );
+  
   // Send full stop command
-  //setEngineSpeed( SABER_ALL_STOP );
+  stop_motors();
+  
   pinMode(rc1_fwrv, INPUT);
   pinMode(rc2_rtlf, INPUT);
   pinMode(rc3_kill, INPUT);
@@ -82,67 +84,19 @@ void setup( )
 
 }
 
-String pc_commands(){
-  byte incomingByte;
-  String cmd = "";
-  String confirm_cmd = "";
-  char incoming_character;
-  
-  while (Serial.available() <= 0) {
-    Serial.println ("m1:");
-    delay(100);
-  }
-  while(Serial.available()) {
-      incoming_character = Serial.read();
-      cmd.concat(incoming_character);
-  }
-  if (cmd != "") {
-    //Serial.println(content);
-    //Serial.println(content.substring(0,2));
-    if (cmd.substring(0,2) == "FW"){
-      //Serial.println(cmd);
-      int speed_cmd = cmd.substring(2,5).toInt();
-      return cmd;
-    }
-    if (cmd.substring(0,2) == "RV"){
-      //Serial.println(cmd);
-      int speed_cmd = cmd.substring(2,5).toInt();
-      return cmd;
-    }
-    if (cmd.substring(0,2) == "LT"){
-      //Serial.println(cmd);
-      int speed_cmd = cmd.substring(2,5).toInt();
-      return cmd;
-    }
-    if (cmd.substring(0,2) == "RT"){
-      //Serial.println(cmd);
-      int speed_cmd = cmd.substring(2,5).toInt();
-      return cmd;
-    }
-    if (cmd.substring(0,2) == "ST"){
-      //Serial.println(cmd);
-      int speed_cmd = cmd.substring(2,5).toInt();
-      return cmd;
-    }
-    if (cmd.substring(0,2) == "SP"){
-      //Serial.println(cmd);
-      return cmd;
-    }    
-  }
-  delay(200);
-}
-
 void loop(){
-  String cmd = "";
+  //String cmd = "";
   //forward(50);
   //delay (2000);
   //Serial.println("loop");
   //SaberSerial.write("loop2");
   //establishContact();
-  //cmd = pc_commands();
+  
   rc_commands();
+  if (rc3_val < 1500){
+    pc_commands();
+  }
   //serial_print_stuff();
-  //send_cmd_to_robot(cmd);
   //Serial.println(");
   // if (SaberSerial.available()){
   //  Serial.write(SaberSerial.read());
@@ -154,63 +108,24 @@ void loop(){
   delay (10);
 }
 
-void rc_commands(){
+void pc_commands(){
+  byte incomingByte;
   String cmd = "";
-  rc3_val = pulseIn(rc3_kill, HIGH, 20000);//channel 5 on rc
-  if (rc3_val > 1400){
-    
-    rc1_val = pulseIn(rc1_fwrv, HIGH, 20000);
-    //Serial.print(rc1_val);
-    if (rc1_val > 1000 && rc1_val < 2000){
-      rc1_val = map(rc1_val, 1030, 1860, 1, 127);
-      if (rc1_val < 1){
-        rc1_val = 1;
-      }
-      if (rc1_val > 127){
-        rc1_val = 127;
-      }
-    }
-    else{
-      rc1_val = 64;
-    }
-    // ******************************************************
-    rc2_val = pulseIn(rc2_rtlf, HIGH, 20000);//channel 1 on rc
-    if (rc2_val > 1000 && rc2_val < 2000){
-      rc2_val = map(rc2_val, 1070, 1890, 128, 255); 
-      if (rc2_val < 128){
-        rc2_val = 128;
-      }
-      if (rc2_val > 255){
-       rc2_val = 255;
-      }
-      //Serial.println(rc2_val);
-    }
-    else{
-      rc2_val = 192;
-    }
-    
-    rc_motor_drive();
-  }
-   // ******************************************************
-  if (rc3_val < 1400){
-    Serial.println("kill switch activated");
-    stop_motors();
-  }
-}
-
-void rc_motor_drive(){
-  //Serial.write(rc1_val);
-  //Serial.write(rc2_val);
-  SaberSerial.write(rc1_val);
-  SaberSerial.write(rc2_val);
+  String confirm_cmd = "";
+  char incoming_character;
   
-}
-
-
-void send_cmd_to_robot(String cmd){
-  if (cmd != "") {
+  //while (Serial.available() <= 0) {
+  //  Serial.println ("m1:");
+  //  delay(100);
+  //}
+  while(Serial.available()) {
+      incoming_character = Serial.read();
+      cmd.concat(incoming_character);
+  }
+   if (cmd != "") {
     if (cmd.substring(0,2) == "FW"){
       int speed_cmd = cmd.substring(2,5).toInt();
+      pc_cmd = cmd;
       forward(speed_cmd);
     }
     if (cmd.substring(0,2) == "RV"){
@@ -235,10 +150,97 @@ void send_cmd_to_robot(String cmd){
   }
   Serial.print("cmd send to robot");
   Serial.println(cmd);
+  //return cmd;
 }
 
+void rc_commands(){
+  String cmd = "";
+  rc3_val = pulseIn(rc3_kill, HIGH, 20000);//channel 5 on rc
+  if (rc3_val > 1400){
+    
+    rc1_val = pulseIn(rc1_fwrv, HIGH, 20000);
+    //Serial.print(rc1_val);
+    if (rc1_val > 1000 && rc1_val < 2000){
+      rc1_val = map(rc1_val, 1000, 1900, -100, 100);
+      if (rc1_val < -100){
+        rc1_val = -100;
+      }
+      if (rc1_val > 100){
+        rc1_val = 100;
+      }
+    }
+    else{
+      rc1_val = 0;
+    }
+
+    // ******************************************************
+    rc2_val = pulseIn(rc2_rtlf, HIGH, 20000);//channel 1 on rc
+    if (rc2_val > 1000 && rc2_val < 2000){
+      rc2_val = map(rc2_val, 1000, 1900,  -100, 100); 
+      if (rc2_val < -100){
+        rc2_val = -100;
+      }
+      if (rc2_val > 100){
+       rc2_val = 100;
+      }
+      //Serial.println(rc2_val);
+    }
+    else{
+      rc2_val = 0;
+    }
+   
+    // mix fw/rv with rt/lf readings
+    motor2_spd = rc1_val + rc2_val;
+    motor1_spd = rc1_val + (rc2_val * -1);
+    
+    //adjust for min / max
+    if (motor1_spd > SABER_MAXIMUM_SPEED){
+      motor1_spd = SABER_MAXIMUM_SPEED;
+    }
+    if (motor1_spd < (SABER_MAXIMUM_SPEED*-1)){
+      motor1_spd = (SABER_MAXIMUM_SPEED*-1);
+    }  
+    if (motor2_spd > SABER_MAXIMUM_SPEED){
+      motor2_spd = SABER_MAXIMUM_SPEED;
+    }
+    if (motor2_spd < (SABER_MAXIMUM_SPEED*-1)){
+      motor2_spd = (SABER_MAXIMUM_SPEED*-1);
+    }   
+ 
+    motor1_spd = map(motor1_spd, -100, 100, 0, 127);
+    motor2_spd = map(motor2_spd, -100, 100, 128, 255); 
+    //Serial.print (rc1_val);
+    //Serial.print ("  ");
+    //Serial.print (rc2_val);
+    //Serial.print("motor1_spd: ");
+    //Serial.print(motor1_spd);
+    //Serial.print("   motor2_spd: ");
+    //Serial.println(motor2_spd);
+
+    rc_motor_drive();
+  }
+   // ******************************************************
+  if (rc3_val < 1400){
+    Serial.println("PC switch activated");
+    //stop_motors();
+  }
+}
+
+void rc_motor_drive(){
+  //Serial.write(rc1_val);
+  //Serial.write(rc2_val);
+  SaberSerial.write(motor1_spd);
+  SaberSerial.write(motor2_spd);
+  
+}
 
 void m1_drive(int speed_val){
+  if (speed_val > SABER_MAXIMUM_SPEED){
+    speed_val = SABER_MAXIMUM_SPEED;
+  }
+  if (speed_val < (SABER_MAXIMUM_SPEED*-1)){
+    speed_val = (SABER_MAXIMUM_SPEED*-1);
+  }
   int val = map(speed_val, -100, 100, 1, 127);
   if (val > 127){
     val = 127;
@@ -249,10 +251,17 @@ void m1_drive(int speed_val){
   //Serial.print("m1:");
   //Serial.println(val);
   //Serial.write(val);
+  SaberSerial.write(val);
   motor1_spd = speed_val;
 }
 
 void m2_drive(int speed_val){
+  if (speed_val > SABER_MAXIMUM_SPEED){
+    speed_val = SABER_MAXIMUM_SPEED;
+  }
+  if (speed_val < (SABER_MAXIMUM_SPEED*-1)){
+    speed_val = (SABER_MAXIMUM_SPEED*-1);
+  }
   int val = map(speed_val, -100, 100, 128, 255);
   if (val < 128){
     val = 128;
@@ -266,6 +275,7 @@ void m2_drive(int speed_val){
   //Serial.write(val);
   //Serial.print("m2:");
   //Serial.println(val);
+  SaberSerial.write(val);
   motor2_spd = speed_val;
 }
 
@@ -306,7 +316,14 @@ void stats(){
 
 
 void serial_print_stuff(){
-  Serial.print("rc1: ");
+  Serial.print (rc1_val);
+  Serial.print ("  ");
+  Serial.print (rc2_val);
+  Serial.print("motor1_spd: ");
+  Serial.print(motor1_spd);
+  Serial.print("   motor2_spd: ");
+  Serial.print(motor2_spd);
+  Serial.print("  rc1: ");
   Serial.print(rc1_val);
   Serial.print("  rc2: ");
   Serial.print(rc2_val);

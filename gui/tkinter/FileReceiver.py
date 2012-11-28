@@ -9,9 +9,9 @@ class FileReceiver ( Thread ):
 
     def __init__( self, command_port, data_port ):
         Thread.__init__( self )
-	self.cmd_port = command_port
-	self.data_port = data_port
-
+        self.cmd_port = command_port
+        self.data_port = data_port
+		
 	
     def run(self):
         self.process()

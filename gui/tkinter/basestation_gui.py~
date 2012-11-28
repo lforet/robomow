@@ -185,10 +185,10 @@ def show_buttons():
 
 
 def update_sonar(ip, port):
-	#s = FileReceiver()
+	s = FileReceiver(9092, 9093)
 	#line below stops thread when main program stops
-	#s.daemon = True
-	#s.start()
+	s.daemon = True
+	s.start()
 	sonarfeed = sonar_feed()
 	sonarfeed.daemon=True
 	sonarfeed.start()
@@ -196,6 +196,7 @@ def update_sonar(ip, port):
 
 def update_images(ip, port):
 	s = FileReceiver(9090, 9091)
+	print s.cmd_port,s.data_port
 	#line below stops thread when main program stops
 	s.daemon = True
 	s.start()
@@ -312,20 +313,18 @@ if __name__== "__main__":
 	ML.pack(side=LEFT)
 	MR.pack(side=LEFT)
 	frame1.pack( padx=5, pady=5)	
-	s = Scrollbar(frame2)
-	Textbox1 = Text(frame2)
-	Textbox1.focus_set()
-	s.pack(side=RIGHT, fill=Y)
-	Textbox1.pack(side=RIGHT)#, fill=Tkinter.Y)
-	s.config(command=Textbox1.yview)
-	Textbox1.config(yscrollcommand=s.set, width=90)#, height=50)
-	frame2.pack()
+
 	Button_Enable_Motors.configure(background='green')
 	MF.configure(state=DISABLED, background='red')
 	MB.configure(state=DISABLED, background='red')
 	ML.configure(state=DISABLED, background='red')
 	MR.configure(state=DISABLED, background='red')
 
+	Button_Update_Image = Button(frame2, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
+	Button_Update_Image.pack(side=LEFT);
+	button_toggle_sonar = Button(frame2, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
+	button_toggle_sonar.pack()
+	frame2.pack()
 
 
 	image = Image.open("temp.jpg")
@@ -339,16 +338,16 @@ if __name__== "__main__":
 	sonar_display.pack(side=LEFT, padx=5, pady=5)
 	frame3.pack()
 
-
-
-
-
-	Button_Update_Image = Button(frame4, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
-	Button_Update_Image.pack(side=LEFT);
-	button_toggle_sonar = Button(frame4, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
-	button_toggle_sonar.pack()
-	#frame3.pack(anchor=NW)
+	s = Scrollbar(frame4)
+	Textbox1 = Text(frame4)
+	Textbox1.focus_set()
+	s.pack(side=RIGHT, fill=Y)
+	Textbox1.pack(side=RIGHT)#, fill=Tkinter.Y)
+	s.config(command=Textbox1.yview)
+	Textbox1.config(yscrollcommand=s.set,  height=15, width=90)
 	frame4.pack()
+
+
 #
 	paused = StringVar()
 	paused.set('PAUSE')
