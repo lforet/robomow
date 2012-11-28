@@ -9,6 +9,8 @@ from threading import *
 import sys
 from maxsonar_class import *
 import random
+from robomow_motor_class_arduino import *
+
 
 hhh = 0
 file_lock = False
@@ -144,7 +146,27 @@ class send_sonar_data(Thread):
 			print "out of while in sonar"
 
 
-#def move_mobot(themove):
+def move_mobot(themove):
+	if (themove == "foward"):
+		motor1.forward(100)
+		time.sleep(.2)
+		print motor1.motor1_speed, motor1.motor2_speed
+	if (themove == "reverse"):
+		motor1.reverse(100)
+		time.sleep(.2)
+		print motor1.motor1_speed, motor1.motor2_speed
+	if (themove == "left"):
+		motor1.left(100)
+		time.sleep(.2)
+		print motor1.motor1_speed, motor1.motor2_speed
+	if (themove == "right):
+		motor1.right(100)
+		time.sleep(.2)
+		print motor1.motor1_speed, motor1.motor2_speed
+	if (themove == "stop"):
+		motor1.stop()
+		time.sleep(.2)
+		print motor1.motor1_speed, motor1.motor2_speed
 	
 
 if __name__== "__main__":
@@ -159,7 +181,7 @@ if __name__== "__main__":
 
 
 	video1 = send_video("snap_shot.jpg")
-	#video1.daemon=True
+	video1.daemon=True
 	video1.start()
 	#video1.join()
 	
@@ -167,9 +189,12 @@ if __name__== "__main__":
 	##start sonar
 	if (testmode == False):
 		sonar = send_sonar_data("sonar_data.txt")
-		#sonar.daemon=True
+		sonar.daemon=True
 		sonar.start()
 		#sonar.join()
+
+	motor = robomow_motor()
+	print "motor.isConnected:", motor.isConnected
 
 	while True:
 		if (sonar.max_dist > 0):
