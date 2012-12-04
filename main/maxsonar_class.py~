@@ -56,7 +56,7 @@ class MaxSonar(object):
 					pass
 			if self._isConnected == False:
 				print "class MaxSonar: ultrasonic sensor package not found!"
-				time.sleep(.5)
+				time.sleep(1)
 		#print "returning", ser
 		return ser
   

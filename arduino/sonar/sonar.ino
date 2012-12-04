@@ -98,6 +98,6 @@ void loop() {
   sum3 = 0;
   sum4 = 0;
 
-  delay(50);
+  delay(30);
 
 } 

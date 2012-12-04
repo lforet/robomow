@@ -22,7 +22,7 @@
 #define SABER_MOTOR2_FULL_STOP 192
 
 
-#define SABER_MAXIMUM_SPEED 20
+#define SABER_MAXIMUM_SPEED 30
 // Motor level to send when issuing the full stop command
 #define SABER_ALL_STOP 0
 
@@ -105,7 +105,7 @@ void loop(){
   //  SaberSerial.write(Serial.read());
   //}
   //SaberSerial.println("hello")
-  delay (100);
+  delay (10);
 }
 
 void pc_commands(){
@@ -150,9 +150,9 @@ void pc_commands(){
       stats();
     }
     //if(Serial.available() <= 0) {
-       for (int xx = 0; xx < 5; xx++) { 
+       for (int xx = 0; xx < 3; xx++) { 
          Serial.println (cmd);
-         delay(10);
+         delay(5);
        }
     //}
 

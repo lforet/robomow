@@ -114,7 +114,7 @@ class robomow_motor(object):
 		##takes desired speed as percentage
 		cmd = ("SP")
 		successful = False
-		for n in range (5):
+		for n in range (4):
 			time.sleep(0.1)
 			self.com.flushOutput()
 			#print "sending to motor arduino:", cmd
@@ -150,7 +150,7 @@ class robomow_motor(object):
 
 def validate_command(self, cmd):
 		successful = False
-		for n in range (5):
+		for n in range (4):
 			time.sleep(0.05)
 			self.com.flushOutput()
 			#print "sending to motor arduino:", cmd

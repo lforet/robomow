@@ -45,7 +45,7 @@ def send_file(host, cport, mport, filetosend):
 		print "sending file", filetosend
 		cs.close()
 	except:
-		print "cs failed"
+		#print "cs failed"
 		pass
 	time.sleep(0.1)
 	try:
@@ -57,7 +57,7 @@ def send_file(host, cport, mport, filetosend):
 		ms.send(data)
 		ms.close()
 	except:
-		print "ms failed"
+		#print "ms failed"
 		pass
 	#file_lock = False
 	#print "file_lock", file_lock
@@ -125,48 +125,52 @@ class send_sonar_data(Thread):
 				data = str(sonar.distances_cm())
 				self.sonar_data = []
 				sonar_data_str1 = ""
-				if len(data) > 1:
-					self.sonar_data.append(int(data[(data.find('s1:')+3):(data.find('s2:'))]))
-					self.sonar_data.append(int(data[(data.find('s2:')+3):(data.find('s3:'))]))
-					self.sonar_data.append(int(data[(data.find('s3:')+3):(data.find('s4:'))]))
-					self.sonar_data.append(int(data[(data.find('s4:')+3):(data.find('s5:'))]))
-					self.sonar_data.append(int(data[(data.find('s5:')+3):(len(data)-1)]))
-					self.max_dist = max(self.sonar_data)
-					self.min_dist = min(self.sonar_data)
-					self.min_sensor = self.sonar_data.index(self.min_dist)
-					self.max_sensor = self.sonar_data.index(self.max_dist)
-					#sonar_data_str1 = "".join(str(x) for x in self.sonar_data)
-					#print sonar_data_str1
-					#print data
-					f = open("sonar_data.txt", "w")
-					f.write(data)
-					f.close()
-					send_file(host="u1204vm.local", cport=9092, mport=9093,filetosend=self.filetosend)
+				try:
+					if len(data) > 1:
+						self.sonar_data.append(int(data[(data.find('s1:')+3):(data.find('s2:'))]))
+						self.sonar_data.append(int(data[(data.find('s2:')+3):(data.find('s3:'))]))
+						self.sonar_data.append(int(data[(data.find('s3:')+3):(data.find('s4:'))]))
+						self.sonar_data.append(int(data[(data.find('s4:')+3):(data.find('s5:'))]))
+						self.sonar_data.append(int(data[(data.find('s5:')+3):(len(data)-1)]))
+						self.max_dist = max(self.sonar_data)
+						self.min_dist = min(self.sonar_data)
+						self.min_sensor = self.sonar_data.index(self.min_dist)
+						self.max_sensor = self.sonar_data.index(self.max_dist)
+						#sonar_data_str1 = "".join(str(x) for x in self.sonar_data)
+						#print sonar_data_str1
+						#print data
+						f = open("sonar_data.txt", "w")
+						f.write(data)
+						f.close()
+						send_file(host="u1204vm.local", cport=9092, mport=9093,filetosend=self.filetosend)
+				except:
+					pass
 				time.sleep(.01)
 			print "out of while in sonar"
 
 
 def move_mobot(themove):
+	global motor
 	if (themove == "foward"):
-		motor1.forward(100)
-		time.sleep(.2)
-		print motor1.motor1_speed, motor1.motor2_speed
+		motor.forward(100)
+		time.sleep(.01)
+		print motor.motor1_speed, motor.motor2_speed
 	if (themove == "reverse"):
-		motor1.reverse(100)
-		time.sleep(.2)
-		print motor1.motor1_speed, motor1.motor2_speed
+		motor.reverse(100)
+		time.sleep(.01)
+		print motor.motor1_speed, motor.motor2_speed
 	if (themove == "left"):
-		motor1.left(100)
-		time.sleep(.2)
-		print motor1.motor1_speed, motor1.motor2_speed
-	if (themove == "right):
-		motor1.right(100)
-		time.sleep(.2)
-		print motor1.motor1_speed, motor1.motor2_speed
+		motor.left(100)
+		time.sleep(.01)
+		print motor.motor1_speed, motor.motor2_speed
+	if (themove == "right"):
+		motor.right(100)
+		time.sleep(.01)
+		print motor.motor1_speed, motor.motor2_speed
 	if (themove == "stop"):
-		motor1.stop()
-		time.sleep(.2)
-		print motor1.motor1_speed, motor1.motor2_speed
+		motor.stop()
+		time.sleep(.01)
+		print motor.motor1_speed, motor.motor2_speed
 	
 
 if __name__== "__main__":
@@ -197,20 +201,35 @@ if __name__== "__main__":
 	print "motor.isConnected:", motor.isConnected
 
 	while True:
+		now =  datetime.now()
 		if (sonar.max_dist > 0):
 			move = ""
 			print "......................"
 			print "sonar_data: ", sonar.sonar_data
 			print "max dist: ", sonar.max_dist, sonar.max_sensor
 			print "min_dist: ", sonar.min_dist, sonar.min_sensor
-			if sonar.max_sensor == 0: move = "foward"
-			if sonar.max_sensor == 1: move = "right"
+			#if sonar.max_sensor == 0: move = "foward"
+			#if sonar.max_sensor == 1: move = "right"
 			#if sonar.max_sensor == 2: move = "reverse"
-			if sonar.max_sensor == 3: move = "left"
-			print "suggest moving: ", move
-			#move_mobot(move)
+			#if sonar.max_sensor == 3: move = "left"
+			#if (sonar.min_dist < 38): move = "stop"
+			
+			#go foward until < 40 cm turn right
+			if (sonar.sonar_data[0] > 75): move = "foward"
+			if (sonar.sonar_data[0] < 75):
+				if sonar.sonar_data[1] > sonar.sonar_data[3]: move = "right"
+				else:
+					move = "left"
+				
+			print "moving: ", move
+			if (move != ""):
+				print "moving robot"
+				move_mobot(move)
 
-		time.sleep(1)
+		time.sleep(.1)
+		print "loop time:",  datetime.now() - now
 	print "stopped"
+
+
 
 
