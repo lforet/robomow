@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python
 
 from PIL import Image, ImageTk
 import time
@@ -10,7 +10,8 @@ import sys
 from maxsonar_class import *
 import random
 from robomow_motor_class_arduino import *
-
+from gps_functions import *
+from math import *
 
 hhh = 0
 file_lock = False
@@ -230,6 +231,19 @@ if __name__== "__main__":
 		print "loop time:",  datetime.now() - now
 	print "stopped"
 
+
+
+
+#############################################################
+#start gps
+#get current gps postiion
+#get bearing to target position 
+# turn toward target bearing
+######################################################
+gps1 = gps.gps(host="localhost", port="2947")
+gps2 = gps.gps(host="localhost", port="2948")
+gps3 = gps.gps(host="localhost", port="2949")
+gps4 = gps.gps(host="localhost", port="2950")
 
 
 

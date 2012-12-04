@@ -227,4 +227,23 @@ def destination_coordinates(lat1, lon1, bearing_in_degrees, distance_to_travel_i
 	lat2, lon2 = destination.latitude, destination.longitude
 	return lat2,lon2
 
+import geopy
+from geopy.distance import VincentyDistance
 
+
+
+def get_dest_gps_cood(lat1, lon1, bearing, distance_in_meters):
+	# given: lat1, lon1, b = bearing in degrees, d = distance in kilometers
+	#returns new lat long
+	#lat1 = 53.32055555555556
+	#lat2 = 53.31861111111111
+	#lon1 = -1.7297222222222221
+	#lon2 = -1.6997222222222223
+	d = distance_in_meters / 1000.0
+	b = bearing
+	print d, b
+	origin = geopy.Point(lat1, lon1)
+	destination = VincentyDistance(kilometers=d).destination(origin, b)
+	lat2, lon2 = destination.latitude, destination.longitude
+	
+	return lat2, lon2

@@ -24,29 +24,50 @@ lon2 = -1.6997222222222223
 Aaltitude = 2000
 Oppsite  = 20000
 
+bearing = 270
+distance_in_meters = 10.0
+
+pos1 = get_dest_gps_cood(lat1, lon1, bearing, distance_in_meters/2.0)
+#print "pos1 lat long:", pos1
+
+pos2 = get_dest_gps_cood(pos1[0], pos1[1], 0, distance_in_meters/2.0)
+print "pos2 lat long:", pos2
+
+
 a = [lat1, lon1]
-b = [lat2, lon2]
+b = [pos2[0], pos2[1]]
 print "lldistance(a, b) in meters: ", lldistance(a, b)
 
-print "haversine(lon1, lat1, lon2, lat2) in meters: ",  haversine(lon1, lat1, lon2, lat2)*1000
+print "haversine(lon1, lat1, lon2, lat2) in meters: ",  haversine(lon1, lat1, pos2[0], pos2[1])*1000
 
-print "calculate_distance(lat1, lon1, lat2, lon2): ", calculate_distance(lat1, lon1, lat2, lon2)
+print "calculate_distance(lat1, lon1, lat2, lon2): ", calculate_distance(lat1, lon1, pos2[0], pos2[1])
 
 #print "points2distance(a,  b):", points2distance(a, b)
 
 
-bearing = degrees(calcBearing(lat1, lon1, lat2, lon2))
+bearing = degrees(calcBearing(lat1, lon1, pos2[0], pos2[1]))
 bearing = (bearing + 360) % 360
 
 print "calcBearing(lat1, lon1, lat2, lon2):", bearing 
 
-print "distance.distance(ne, cl).meters" , geopyDistance(lat1, lon1, lat2, lon2)
+print "distance.distance(ne, cl).meters" , geopyDistance(lat1, lon1, pos2[0], pos2[1])
 
-print "bearing2(lat1, lon1, lat2, lon2):", bearing2(lat1, lon1, lat2, lon2) 
+print "bearing2(lat1, lon1, lat2, lon2):", bearing2(lat1, lon1, pos2[0], pos2[1]) 
 
-destLat, destLong = destination_coordinates(lat1, lon1, bearing , calculate_distance(lat1, lon1, lat2, lon2))
+destLat, destLong = destination_coordinates(lat1, lon1, bearing , calculate_distance(lat1, lon1, pos2[0], pos2[1]))
 
-print "destination_coordinates(lat1, lon1, 55, 12):", destLat, destLong
-print "bearing2(lat1, lon1, destLat, destLong):", bearing2(lat1, lon1, destLat, destLong) 
-print "meters_to_feet(meters)", meters_to_feet(calculate_distance(lat1, lon1, lat2, lon2))
+print "destination_coordinates(lat1, lon1, 55, 12):",pos2[0], pos2[1]
+print "bearing2(lat1, lon1, destLat, destLong):", bearing2(lat1, lon1, pos2[0], pos2[1]) 
+print "meters_to_feet(meters)", meters_to_feet(calculate_distance(lat1, lon1, pos2[0], pos2[1]))
+
+
+H_Dist, distance, c, H_Bearing = distance_and_bearings(lat1, lon1, pos2[0], pos2[1], start_altitude=0, dest_altitude=0)
+
+print("---------------------------------------")
+print("Horizontial Distance:", H_Dist,"meters")
+print("   Vertical Distance:", distance,"km")
+print("    Vertical Bearing:",c)
+print(" Horizontial Bearing:",H_Bearing)
+
+
 

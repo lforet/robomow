@@ -133,12 +133,25 @@ elif dirs == 8:
     dx = [1, 1, 0, -1, -1, -1, 0, 1]
     dy = [0, 1, 1, 1, 0, -1, -1, -1]
 
-n = 30 # horizontal size of the map
-m = 30 # vertical size of the map
-the_map = []
-row = [0] * n
-for i in range(m): # create empty map
-    the_map.append(list(row))
+
+def create_map(length=30, width=30):
+	#n = 30 # horizontal size of the map
+	#m = 30 # vertical size of the map
+	the_map = []
+	row = [0] * length
+	for i in range(width): # create empty map
+		the_map.append(list(row))
+	return the_map
+	
+
+
+#create map
+length = 30
+width = 30 
+the_map = create_map(length, width)
+
+
+
 '''
 # fillout the map with a '+' pattern
 for x in range(n / 8, n * 7 / 8):
@@ -158,14 +171,14 @@ for i in range(200):
 
 # randomly select start and finish locations from a list
 sf = []
-sf.append((0, 0, n - 1, m - 1))
-sf.append((0, m - 1, n - 1, 0))
-sf.append((n / 2 - 1, m / 2 - 1, n / 2 + 1, m / 2 + 1))
-sf.append((n / 2 - 1, m / 2 + 1, n / 2 + 1, m / 2 - 1))
-sf.append((n / 2 - 1, 0, n / 2 + 1, m - 1))
-sf.append((n / 2 + 1, m - 1, n / 2 - 1, 0))
-sf.append((0, m / 2 - 1, n - 1, m / 2 + 1))
-sf.append((n - 1, m / 2 + 1, 0, m / 2 - 1))
+sf.append((0, 0, length - 1, width - 1))
+sf.append((0, width - 1, length - 1, 0))
+sf.append((length / 2 - 1, width / 2 - 1, length / 2 + 1, width / 2 + 1))
+sf.append((length / 2 - 1, width / 2 + 1, length / 2 + 1, width / 2 - 1))
+sf.append((length / 2 - 1, 0, length / 2 + 1, width - 1))
+sf.append((length / 2 + 1, width - 1, length / 2 - 1, 0))
+sf.append((0,width / 2 - 1, length - 1, width / 2 + 1))
+sf.append((length - 1, width/ 2 + 1, 0, width / 2 - 1))
 (xA, yA, xB, yB) = random.choice(sf)
 
 
@@ -189,6 +202,7 @@ for i in range(200):
 		#print "randx,randy", randx,randy
 		the_map[randy][randx] = 1
 '''
+
 #until current location = destination location
 currentx = xA
 currenty = yA
@@ -201,13 +215,14 @@ while arrived == False:
 	
 	#place random obstacles
 	for i in range(15):
-		randx =random.randint(1,n-1)
-		randy =random.randint(1,m-1)
+		randx =random.randint(1,length-1)
+		randy =random.randint(1,width-1)
 		if the_map[randy][randx] == 0:
 			#print "randx,randy", randx,randy
 			the_map[randy][randx] = 1
 	
-	route = pathFind(the_map, n, m, dirs, dx, dy, currentx, currenty, xB, yB)
+	route = pathFind(the_map, length, width, dirs, dx, dy, currentx, currenty, xB, yB)
+
 	if len(route) > 0: 
 
 		print "route:", route
@@ -217,8 +232,8 @@ while arrived == False:
 		the_map[currenty][currentx] = 3
 		# display the map with the route added
 		print 'Map:'
-		for y in range(m):
-			for x in range(n):
+		for y in range(width):
+			for x in range(length):
 				xy = the_map[y][x]
 				if xy == 0:
 				    print '.', # space

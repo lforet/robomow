@@ -82,7 +82,7 @@ class robomow_motor(object):
 		self.com.flushInput()
 		command_str = ("FW"+str(speed))
 		validate_command(self, command_str)
-		#self.motor_stats()
+		self.motor_stats()
 
 
 	def reverse(self,speed):
@@ -90,32 +90,32 @@ class robomow_motor(object):
 		self.com.flushInput()
 		command_str = ("RV"+str(speed))
 		validate_command(self, command_str)
-		#self.motor_stats()
+		self.motor_stats()
 
 	def stop(self):
 		##takes desired speed as percentage
 		command_str = ("ST")
-		#validate_command(self, command_str)
-		#self.motor_stats()
+		validate_command(self, command_str)
+		self.motor_stats()
 
 	def left(self, speed):
 		##takes desired speed as percentage
-		command_str = ("LF"+str(speed))
-		#validate_command(self, command_str)
-		#self.motor_stats()
+		command_str = ("LT"+str(speed))
+		validate_command(self, command_str)
+		self.motor_stats()
 
 	def right(self, speed):
 		##takes desired speed as percentage
 		command_str = ("RT"+str(speed))
-		#validate_command(self, command_str)
-		#self.motor_stats()
+		validate_command(self, command_str)
+		self.motor_stats()
 
 	def motor_stats(self):
 		##takes desired speed as percentage
 		cmd = ("SP")
 		successful = False
 		for n in range (5):
-			time.sleep(0.01)
+			time.sleep(0.1)
 			self.com.flushOutput()
 			#print "sending to motor arduino:", cmd
 			self.com.write (cmd)
@@ -137,7 +137,7 @@ class robomow_motor(object):
 				received = received.strip("SP")
 				#print "received now:", received
 				spd_list = received.split(',')
-				#print "spd_list", spd_list
+				print "spd_list", spd_list
 				successful = True
 				self.motor1_speed = int(spd_list[0])
 				self.motor2_speed = int(spd_list[1])
@@ -157,13 +157,13 @@ def validate_command(self, cmd):
 			#time.sleep(0.05)
 			while (len(received) < 1):
 				received = self.com.readline()
-			#print "received back from arduino:", received
+			print "received back from arduino:", received
 			#print len(received)
 			received = received.replace('\r\n', '')
 			received = received.replace('m1:', '')
 			received = received.replace('m', '')
 			received = received.replace(':', '')
-			#print "stripped:", received, "  cmd:", cmd
+			print "stripped:", received, "  cmd:", cmd
 			if (received == cmd):
 				print "successful: sending to motor arduino"
 				successful = True		 		
