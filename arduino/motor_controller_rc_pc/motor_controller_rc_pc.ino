@@ -22,7 +22,7 @@
 #define SABER_MOTOR2_FULL_STOP 192
 
 
-#define SABER_MAXIMUM_SPEED 30
+#define SABER_MAXIMUM_SPEED 45
 // Motor level to send when issuing the full stop command
 #define SABER_ALL_STOP 0
 

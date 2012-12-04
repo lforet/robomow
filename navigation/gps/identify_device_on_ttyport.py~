@@ -30,4 +30,4 @@ def find_usb_tty(vendor_id = None, product_id = None) :
 
     return tty_devs
 
-print find_usb_tty("067b","2303")
+#print find_usb_tty("067b","2303")

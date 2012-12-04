@@ -13,43 +13,73 @@ import os
 
 class mobot_gps( Thread ):
 
-	def __init__(self, port): 
+	def __init__(self): 
 		Thread.__init__( self )	
-		#self.gps = gps_to_start
-		self.port = port
-		self._gps = None
+		self.latitude = 0.0
+		self.longitude = 0.0
+		self.altitude = 0.0
 		self.satellites = 0
 		self.active_satellites = 0
-		self.lat = 0.0
-		self.long = 0.0
-		print self.port
 
-	#def __del__(self):
-	#	del(self)
+
+	def __del__(self):
+		del(self)
 	
 	def run(self):
 		self.process()
 
 	def process( self ):
-		print "startup"
-		print self.port
-		self._gps = gps.gps(host="localhost", port=self.port)
-		print self._gps
-		print "hi"
-		self._gps.next()
-		self._gps.stream()
-		while True:
-			try:
-				self._gps.next()
-				self._gps.stream()
-				self.satellites = self._gps.satellites
-				self.active_satellites = ActiveSatelliteCount(self._gps.satellites)
-				self.lat = self._gps.fix.latitude
-				self.long = self._gps.fix.longitude
-				time.sleep(1)
-			except:
-				pass
+		gpss = []
+		#get list of all attached gps units
+		all_gps_list = gps_list()
+		print "Total # GPS Units Found:", len (all_gps_list)
+		#start all gps units
+		start_all_gps()
+		#connect via python
+		for n in range(len(all_gps_list)):
+			port = str(2947+n)
+			print "port", port
+			gpss.append(gps.gps(host="localhost", port=port))
+			print "starting_gps:", gpss[n]
+			#returncode = call(start_gps, shell=True)
+			time.sleep(1)	
+			gpss[n].next()
+			gpss[n].stream()
+			#print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
+			time.sleep(1)
+		
+		while True :
+			self.latitude = 0.0
+			self.longitude = 0.0
+			self.altitude = 0.0
+			self.satellites = 0
+			self.active_satellites = 0
 
+			try:
+				for n in range(len(all_gps_list)):
+					gpss[n].next()
+					gpss[n].stream()
+				   	print " READING GPS:", n
+				   	print "-------------"
+				   	print 'latitude ' , gpss[n].fix.latitude
+				   	print 'longitude ' , gpss[n].fix.longitude
+				   	print 'time utc ' , gpss[n].utc, gpss[n].fix.time
+				   	print 'altitude ' , gpss[n].fix.altitude
+				   	print 'epx ', gpss[n].fix.epx
+				   	print 'epv ', gpss[n].fix.epv
+				   	print 'ept ', gpss[n].fix.ept
+				   	print "speed ", gpss[n].fix.speed
+				   	print "climb " , gpss[n].fix.climb
+				   	#print
+				   	print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
+				   	for i in gpss[n].satellites:
+					 	print '\t', i
+				   	print "Active satellites used: ", ActiveSatelliteCount(gpss[n].satellites)
+					time.sleep(1)
+			except:
+				#time.sleep(1)
+				pass
+			os.system("clear")
 
 def ActiveSatelliteCount(session):
    count = 0
@@ -61,21 +91,19 @@ def ActiveSatelliteCount(session):
 
 
 def start_all_gps():
-
 	all_gps_list = gps_list()
-
 	#gps_list = ["/dev/ttyUSB0", "/dev/ttyUSB1"]
-	#print "gps_list:", gps_list
-	#print len(gps_list)
+	print "gps_list:", all_gps_list
+	print len(all_gps_list)
 	for n in range(len(all_gps_list)):
-		start_gps = "gpsd "+all_gps_list[0]+" -S " + str(2947+n)
+		start_gps = "gpsd "+all_gps_list[n]+" -S " + str(2947+n) + " -n -b"
 		print "start_gps:", start_gps
 		returncode = call(start_gps, shell=True)
 		time.sleep(2)
 		#print returncode
 
 def start_a_gps(gps_to_start):
-	start_gps = "gpsd "+gps_to_start+" -S " + str(2947+n)
+	start_gps = "gpsd "+gps_to_start+" -S " + str(2947+n) + "-n -b"
 	print "start_gps:", start_gps
 	returncode = call(start_gps, shell=True)
 	time.sleep(2)
@@ -92,13 +120,19 @@ def decdeg2dms(dd):
    return deg,mnt,sec
 
 if __name__ == "__main__":
-	gpslist = gps_list()
-	print gpslist
-	gps2 = mobot_gps("2947")
-	#gps2.daemon=True
+	#print "startup all gps"
+	#start_all_gps()
+	#gpslist = gps_list()
+	#print gpslist
+	gps2 = mobot_gps()
+	gps2.daemon=True
 	gps2.start()
+	gps2.join()
+	'''
 	print gps2._gps
 	while 1:
+		print gps2._gps
+		print "# of GPS Units:", len(gpslist)
 		if (gps2.satellites > 0):
 			print 'Satellites (total of', len(gps2.satellites) , ' in view)'
 			print "Active satellites used:", gps2.active_satellites
@@ -107,4 +141,5 @@ if __name__ == "__main__":
 			print "lat: ", gps2.lat
 			print "long:", gps2.long
 		time.sleep(random.randint(1, 3))	
-		os.system("clear")	
+		os.system("clear")
+	'''	
