@@ -8,19 +8,19 @@ from threading import *
 import gps
 import random
 import os
-
+from math import sin, cos, radians, sqrt, atan2, asin, sqrt, pi
 
 
 class mobot_gps( Thread ):
 
 	def __init__(self): 
 		Thread.__init__( self )	
-			self.latitude = 0.0
-			self.longitude = 0.0
-			self.altitude = 0.0
-			self.satellites = 0
-			self.active_satellites = 0
-
+		self.latitude = 0.0
+		self.longitude = 0.0
+		self.altitude = 0.0
+		self.satellites = 0
+		self.active_satellites = 0
+		self.samples = 10
 
 	def __del__(self):
 		del(self)
@@ -47,35 +47,64 @@ class mobot_gps( Thread ):
 			gpss[n].stream()
 			#print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
 			time.sleep(1)
-		
+						
 		while True :
 			self.latitude = 0.0
 			self.longitude = 0.0
 			self.altitude = 0.0
 			self.satellites = 0
 			self.active_satellites = 0
-
 			try:
 				for n in range(len(all_gps_list)):
-					gpss[n].next()
-					gpss[n].stream()
-				   	print " READING GPS:", n
-				   	print "-------------"
-				   	print 'latitude ' , gpss[n].fix.latitude
-				   	print 'longitude ' , gpss[n].fix.longitude
-				   	print 'time utc ' , gpss[n].utc, gpss[n].fix.time
-				   	print 'altitude ' , gpss[n].fix.altitude
-				   	print 'epx ', gpss[n].fix.epx
-				   	print 'epv ', gpss[n].fix.epv
-				   	print 'ept ', gpss[n].fix.ept
-				   	print "speed ", gpss[n].fix.speed
-				   	print "climb " , gpss[n].fix.climb
-				   	#print
-				   	print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
-				   	for i in gpss[n].satellites:
-					 	print '\t', i
-				   	print "Active satellites used: ", ActiveSatelliteCount(gpss[n].satellites)
-					time.sleep(1)
+					for x in xrange(1, self.samples):
+						os.system("clear")
+						while ActiveSatelliteCount(gpss[n].satellites) < 6:
+							print "Acquiring at least 6 GPS Satellites..."
+							print "Number of acquired satellites: ", ActiveSatelliteCount(gpss[n].satellites)
+							time.sleep(1)
+							#os.system("clear")
+							gpss[n].next()
+							gpss[n].stream()
+						gpss[n].next()
+					   	print "READING GPS:", n, "  ", x
+					   	print "-------------"
+					   	print 'latitude ' , gpss[n].fix.latitude
+					   	print 'longitude ' , gpss[n].fix.longitude
+					   	print 'time utc ' , gpss[n].utc, gpss[n].fix.time
+					   	print 'altitude ' , gpss[n].fix.altitude
+					   	print 'epx ', gpss[n].fix.epx
+					   	print 'epv ', gpss[n].fix.epv
+					   	print 'ept ', gpss[n].fix.ept
+					   	print "speed ", gpss[n].fix.speed
+					   	print "climb " , gpss[n].fix.climb
+					   	#print
+					   	print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
+					   	for i in gpss[n].satellites:
+						 	print '\t', i
+					   	print "Active satellites used: ", ActiveSatelliteCount(gpss[n].satellites)
+						self.latitude =  (self.latitude + gpss[n].fix.latitude)  
+						self.longitude = (self.longitude + gpss[n].fix.longitude)
+						if (x > 0):
+							print 'Avg latitude : ' , self.latitude / x
+							print 'Avg longitude: ' , self.longitude / x
+							#time.sleep(10)
+						self.active_satellites = (self.active_satellites + ActiveSatelliteCount(gpss[n].satellites))				
+						time.sleep(.5)
+						
+				print "Averaging....", x+1
+				self.latitude = (self.latitude / x)
+				self.longitude = (self.longitude / x)
+				print "total sats:", self.active_satellites
+				self.active_satellites = ( self.active_satellites / x)
+				time.sleep(1)
+			   	print 'Avg latitude : ' , self.latitude, "   ", abs(self.latitude - gpss[n].fix.latitude)
+			   	print 'Avg longitude: ' , self.longitude, "    ", abs(self.longitude - gpss[n].fix.longitude) 				
+				print 'Avg Active Satellites: ' , self.active_satellites
+			
+				print "Distance: ", round((lldistance((self.latitude, self.longitude), (gpss[n].fix.latitude, gpss[n].fix.longitude)) * 3.28084), 4), " feet"
+				time.sleep(8)
+
+
 			except:
 				#time.sleep(1)
 				pass
@@ -118,6 +147,26 @@ def decdeg2dms(dd):
    mnt,sec = divmod(dd*3600,60)
    deg,mnt = divmod(mnt,60)
    return deg,mnt,sec
+
+
+def lldistance(a, b):
+   """
+   Calculates the distance between two GPS points (decimal)
+   @param a: 2-tuple of point A
+   @param b: 2-tuple of point B
+   @return: distance in m
+   """
+   r = 6367442.5             # average earth radius in m
+   dLat = radians(a[0]-b[0])
+   dLon = radians(a[1]-b[1])
+   x = sin(dLat/2) ** 2 + \
+       cos(radians(a[0])) * cos(radians(b[0])) *\
+       sin(dLon/2) ** 2
+   #original# y = 2 * atan2(sqrt(x), sqrt(1-x))
+   y = 2 * asin(sqrt(x))
+   d = r * y
+
+   return d
 
 if __name__ == "__main__":
 	#print "startup all gps"

@@ -188,14 +188,15 @@ def GetHomePosition():
    Long = 0
    print "Have Acquired at least 6 GPS Satellites..."
    print "Saving Home Position....(about 15 secs)....."
-   for i in range(15):
-      time.sleep(1)
+   num = 30
+   for i in range(num):
+      time.sleep(.5)
       session.next()
       Lat = Lat + session.fix.latitude
       Long = Long + session.fix.longitude
       print session.fix.latitude, session.fix.longitude
-   Lat = Lat / 15
-   Long = Long / 15
+   Lat = Lat / num
+   Long = Long / num
    print "avgs =", Lat, Long
    return Lat, Long, session.utc, session.fix.time, session.fix.altitude
 
@@ -234,10 +235,10 @@ while 1:
    
    print " GPS reading"
    print "-------------"
-   print 'Start latitude ' , HomeLat
-   print 'Start longitude ' , HomeLong
-   print 'latitude ' , decdeg2dms(session.fix.latitude)
-   print 'longitude ' , decdeg2dms(session.fix.longitude)
+   print 'Start latitude ' , HomeLat2
+   print 'Start longitude ' , HomeLong2
+   print 'latitude ' , session.fix.latitude
+   print 'longitude ' , session.fix.longitude
    print 'time utc ' , session.utc, session.fix.time
    print 'altitude ' , session.fix.altitude
    print 'epx ', session.fix.epx
