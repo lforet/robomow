@@ -58,14 +58,17 @@ class mobot_gps( Thread ):
 				for n in range(len(all_gps_list)):
 					for x in xrange(1, self.samples):
 						os.system("clear")
-						while ActiveSatelliteCount(gpss[n].satellites) < 6:
-							print "Acquiring at least 6 GPS Satellites..."
-							print "Number of acquired satellites: ", ActiveSatelliteCount(gpss[n].satellites)
-							time.sleep(1)
+						#while ActiveSatelliteCount(gpss[n].satellites) < 6:
+						#	print "Acquiring at least 6 GPS Satellites..."
+						#	print "Number of acquired satellites: ", ActiveSatelliteCount(gpss[n].satellites)
+						#	time.sleep(1)
 							#os.system("clear")
-							gpss[n].next()
-							gpss[n].stream()
-						gpss[n].next()
+						#	gpss[n].next()
+						#	gpss[n].stream()
+						#gpss[n].next()
+						#test data	
+						gpss[n].fix.latitude = 53.32055555555556 + (random.random() * 0.1)
+						gpss[n].fix.longitude = -1.7297222222222221 + (random.random() * 0.1)
 					   	print "READING GPS:", n, "  ", x
 					   	print "-------------"
 					   	print 'latitude ' , gpss[n].fix.latitude
