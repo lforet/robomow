@@ -4,6 +4,8 @@
 #gpsd /dev/ttyUSB0 -b -n
 #The gpsd server reads NMEA sentences from the gps unit and is accessed on port 2947. You can test if everything is working by running a pre-built gpsd client such as xgps.
 
+
+
 #sudo easy_install geopy
 from geopy import distance
 import geopy
@@ -149,10 +151,10 @@ def start_all_gps():
 	print "gps_list:", all_gps_list
 	print len(all_gps_list)
 	for n in range(len(all_gps_list)):
-		start_gps = "gpsd "+all_gps_list[n]+" -S" + str(2947+n) + " -n -b"
+		start_gps = "gpsd "+all_gps_list[n]+" -S " + str(2947+n) #+ " -n -b"
 		print "start_gps:", start_gps
 		returncode = call(start_gps, shell=True)
-		time.sleep(2)
+		time.sleep(4)
 		#print returncode
 
 def start_a_gps(gps_to_start):
