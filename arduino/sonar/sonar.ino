@@ -32,7 +32,7 @@ float cm_to_inches = 0.393701;
 void setup() {
 
   //This opens up a serial connection to shoot the results back to the PC console
-  Serial.begin(9600);
+  Serial.begin(57600);
 
 }
 

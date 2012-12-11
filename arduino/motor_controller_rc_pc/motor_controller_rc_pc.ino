@@ -22,7 +22,7 @@
 #define SABER_MOTOR2_FULL_STOP 192
 
 
-#define SABER_MAXIMUM_SPEED 45
+#define SABER_MAXIMUM_SPEED 40
 // Motor level to send when issuing the full stop command
 #define SABER_ALL_STOP 0
 
@@ -50,7 +50,7 @@ void initSabertooth()
   pinMode( SABER_TX_PIN, OUTPUT );
 
   SaberSerial.begin( SABER_BAUDRATE );
-  Serial.begin( SABER_BAUDRATE );
+  Serial.begin( 57600 );
   
   // 2 second time delay for the Sabertooth to init
   delay( 2000 );
@@ -127,7 +127,6 @@ void pc_commands(){
   if (cmd != "") {
     if (cmd.substring(0,2) == "FW"){
       int speed_cmd = cmd.substring(2,5).toInt();
-      pc_cmd = cmd;
       forward(speed_cmd);
     }
     if (cmd.substring(0,2) == "RV"){
@@ -149,12 +148,12 @@ void pc_commands(){
     if (cmd.substring(0,2) == "SP"){
       stats();
     }
-    //if(Serial.available() <= 0) {
-       for (int xx = 0; xx < 3; xx++) { 
-         Serial.println (cmd);
-         delay(5);
-       }
-    //}
+// lines below are for validation
+    //for (int xx = 0; xx < 3; xx++) { 
+      //delay(10);
+    //  Serial.println (cmd);
+    //  delay(10);
+   // }
 
   }
   

@@ -2,7 +2,7 @@
 
 import serial
 import time
-
+#from identify_device_on_ttyport import *
 
 def log(*msgline):
 	for msg in msgline:
@@ -31,11 +31,12 @@ class robomow_motor(object):
 	def open_serial_port(self):
 		while self.isConnected == False:
 			print "class robomow_motor: searching serial ports for motor controller package..."
-			for i in range(11):
+			for i in range(5):
+				'''
 				com = "/dev/ttyUSB"
 				com = com[0:11] + str(i)
 				print "class robomow_motor: searching on COM:", com
-				time.sleep(.1)
+				time.sleep(.5)
 				try:				
 					ser = serial.Serial(com, 9600, timeout=1)
 					data = ser.readline()
@@ -48,10 +49,11 @@ class robomow_motor(object):
 						break
 				except:
 					pass
+				'''
 				com = "/dev/ttyACM"
 				com = com[0:11] + str(i)
 				print "class robomow_motor: searching on COM:", com
-				time.sleep(.1)
+				time.sleep(.5)
 				try:				
 					ser = serial.Serial(com, 9600, timeout=1)
 					data = ser.readline()
@@ -79,43 +81,48 @@ class robomow_motor(object):
 
 	def forward(self,speed):
 		##takes desired speed as percentage
-		self.com.flushInput()
+		#self.com.flushInput()
 		command_str = ("FW"+str(speed))
-		validate_command(self, command_str)
-		self.motor_stats()
+		#validate_command(self, command_str)
+		send_command(self, command_str)		
+		#self.motor_stats()
 
 
 	def reverse(self,speed):
 		##takes desired speed as percentage
-		self.com.flushInput()
+		#self.com.flushInput()
 		command_str = ("RV"+str(speed))
-		validate_command(self, command_str)
-		self.motor_stats()
+		#validate_command(self, command_str)
+		send_command(self, command_str)			
+		#self.motor_stats()
 
 	def stop(self):
 		##takes desired speed as percentage
 		command_str = ("ST")
-		validate_command(self, command_str)
-		self.motor_stats()
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
+		#self.motor_stats()
 
 	def left(self, speed):
 		##takes desired speed as percentage
 		command_str = ("LT"+str(speed))
-		validate_command(self, command_str)
-		self.motor_stats()
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
+		#self.motor_stats()
 
 	def right(self, speed):
 		##takes desired speed as percentage
 		command_str = ("RT"+str(speed))
-		validate_command(self, command_str)
-		self.motor_stats()
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
+		#self.motor_stats()
 
 	def motor_stats(self):
 		##takes desired speed as percentage
 		cmd = ("SP")
 		successful = False
-		for n in range (4):
-			time.sleep(0.1)
+		for n in range (5):
+			time.sleep(0.05)
 			self.com.flushOutput()
 			#print "sending to motor arduino:", cmd
 			self.com.write (cmd)
@@ -150,9 +157,9 @@ class robomow_motor(object):
 
 def validate_command(self, cmd):
 		successful = False
-		for n in range (4):
+		for n in range (5):
 			time.sleep(0.05)
-			self.com.flushOutput()
+			#self.com.flushOutput()
 			#print "sending to motor arduino:", cmd
 			self.com.write (cmd)
 			received = ""
@@ -174,4 +181,31 @@ def validate_command(self, cmd):
 		if (successful == False):
 				print "NOT successful: sending to motor arduino"
 
-
+def send_command(self, cmd):
+		#successful = False
+		
+		for n in range (3):
+			#time.sleep(0.5)
+			self.com.flushOutput()
+			self.com.flushInput()
+			#time.sleep(.5)
+			#self.com.write(cmd.encode("ascii"))
+			self.com.write(cmd)
+			#print "sending to motor arduino:", cmd
+		#try:
+			#received = ""
+		#self.com.flushInput()
+			time.sleep(.1)
+			#while (len(received) < 1):
+			#	received = self.com.readline()
+			#	print "received back from arduino:", received
+		#except:
+		#	pass
+		#try:
+		#	received = ""
+		#	self.com.flushInput()
+		#	received = received + self.com.readline()
+		#	print "received:", received
+		#except:
+		#	pass
+		#time.sleep(5)

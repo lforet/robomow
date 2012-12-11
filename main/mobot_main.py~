@@ -150,28 +150,28 @@ class send_sonar_data(Thread):
 			print "out of while in sonar"
 
 
-def move_mobot(themove):
+def move_mobot(themove, speed):
 	global motor
-	if (themove == "foward"):
-		motor.forward(100)
-		time.sleep(.01)
-		print motor.motor1_speed, motor.motor2_speed
-	if (themove == "reverse"):
-		motor.reverse(100)
-		time.sleep(.01)
-		print motor.motor1_speed, motor.motor2_speed
-	if (themove == "left"):
-		motor.left(100)
-		time.sleep(.01)
-		print motor.motor1_speed, motor.motor2_speed
-	if (themove == "right"):
-		motor.right(100)
-		time.sleep(.01)
-		print motor.motor1_speed, motor.motor2_speed
-	if (themove == "stop"):
+	if (themove == "f"):
+		motor.forward(speed)
+		#time.sleep(.01)
+		#print motor.motor1_speed, motor.motor2_speed
+	if (themove == "v"):
+		motor.reverse(speed)
+		#time.sleep(.01)
+		#print motor.motor1_speed, motor.motor2_speed
+	if (themove == "l"):
+		motor.left(speed)
+		#time.sleep(.01)
+		#print motor.motor1_speed, motor.motor2_speed
+	if (themove == "r"):
+		motor.right(speed)
+		#time.sleep(.01)
+		#print motor.motor1_speed, motor.motor2_speed
+	if (themove == "s"):
 		motor.stop()
-		time.sleep(.01)
-		print motor.motor1_speed, motor.motor2_speed
+		#time.sleep(.01)
+		#print motor.motor1_speed, motor.motor2_speed
 
 
 def enable_video():
@@ -206,7 +206,7 @@ def test_gps():
 		print "lat: ", gps2.latitude
 		print "long:", gps2.longitude
 		time.sleep(random.randint(1, 3))	
-		os.system("clear")
+		#os.system("clear")
 
 
 
@@ -222,15 +222,26 @@ if __name__== "__main__":
 	#enable_video()
 	#while 1:
 	#	time.sleep(1)
-	#motor = robomow_motor()
 
-	test_gps()
+	#test_gps()
 
-'''
-	print "motor.isConnected:", motor.isConnected
+	#move_mobot('f', 15)
+	#time.sleep(5)
+	#move_mobot('s', 0)
+	sonar = None
+	motor = None
 
 	while True:
 		now =  datetime.now()
+		if sonar == None or len(sonar.sonar_data) < 1:
+			sonar = send_sonar_data("sonar_data.txt")
+			sonar.daemon=True
+			sonar.start()
+		if motor == None:
+			motor = robomow_motor()
+			print "motor.isConnected:", motor.isConnected
+			time.sleep(2)
+
 		if (sonar.max_dist > 0):
 			move = ""
 			print "......................"
@@ -244,24 +255,30 @@ if __name__== "__main__":
 			#if (sonar.min_dist < 38): move = "stop"
 			
 			#go foward until < 40 cm turn right
-			if (sonar.sonar_data[0] > 75): move = "foward"
+			if (sonar.sonar_data[0] > 75): move = "f"
 			if (sonar.sonar_data[0] < 75):
-				if sonar.sonar_data[1] > sonar.sonar_data[3]: move = "right"
+				if sonar.sonar_data[1] > sonar.sonar_data[3]: move = "r"
 				else:
-					move = "left"
+					move = "l"
 				
-			print "moving: ", move
+			print "moving mobot: ", move
 			if (move != ""):
-				print "moving robot"
-				move_mobot(move)
-
-		time.sleep(.1)
+				#print "moving robot"
+				if move == "f":
+					move_mobot(move, 20)
+					time.sleep(random.randint(50, 200)/100)
+				else:
+					move_mobot(move, 25)
+					time.sleep(random.randint(50, 200)/100)
+		move_mobot('s', 0)
+		time.sleep(.3)
+		print "sonar_data: ", sonar.sonar_data
 		print "loop time:",  datetime.now() - now
 	print "stopped"
 
 
 
-
+'''
 #############################################################
 #start gps
 #get current gps postiion

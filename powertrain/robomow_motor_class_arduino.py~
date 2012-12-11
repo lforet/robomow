@@ -81,7 +81,8 @@ class robomow_motor(object):
 		##takes desired speed as percentage
 		self.com.flushInput()
 		command_str = ("FW"+str(speed))
-		validate_command(self, command_str)
+		#validate_command(self, command_str)
+		send_command(self, command_str)		
 		self.motor_stats()
 
 
@@ -89,25 +90,29 @@ class robomow_motor(object):
 		##takes desired speed as percentage
 		self.com.flushInput()
 		command_str = ("RV"+str(speed))
-		validate_command(self, command_str)
+		#validate_command(self, command_str)
+		send_command(self, command_str)			
 		self.motor_stats()
 
 	def stop(self):
 		##takes desired speed as percentage
 		command_str = ("ST")
-		validate_command(self, command_str)
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
 		self.motor_stats()
 
 	def left(self, speed):
 		##takes desired speed as percentage
 		command_str = ("LT"+str(speed))
-		validate_command(self, command_str)
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
 		self.motor_stats()
 
 	def right(self, speed):
 		##takes desired speed as percentage
 		command_str = ("RT"+str(speed))
-		validate_command(self, command_str)
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
 		self.motor_stats()
 
 	def motor_stats(self):
@@ -115,7 +120,7 @@ class robomow_motor(object):
 		cmd = ("SP")
 		successful = False
 		for n in range (5):
-			time.sleep(0.1)
+			time.sleep(0.05)
 			self.com.flushOutput()
 			#print "sending to motor arduino:", cmd
 			self.com.write (cmd)
@@ -170,5 +175,13 @@ def validate_command(self, cmd):
 				break
 		if (successful == False):
 				print "NOT successful: sending to motor arduino"
+
+def send_command(self, cmd):
+		#successful = False
+		#for n in range (5):
+		#	time.sleep(0.05)
+		self.com.flushOutput()
+		#print "sending to motor arduino:", cmd
+		self.com.write (cmd)
 
 

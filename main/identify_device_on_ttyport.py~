@@ -17,8 +17,8 @@ def find_usb_tty(vendor_id = None, product_id = None) :
                 dns = glob.glob(os.path.join(dn, os.path.basename(dn) + "*"))
                 for sdn in dns :
                     for fn in glob.glob(os.path.join(sdn, "*")) :
-                        if  re.search(r"\/ttyUSB[0-9]+$", fn) :
-                        #if  re.search(r"\/ttyACM[0-9]+$", fn) :
+                        #if  re.search(r"\/ttyUSB[0-9]+$", fn) :
+                        if  re.search(r"\/ttyACM[0-9]+$", fn) :
                             #tty_devs.append("/dev" + os.path.basename(fn))
                             tty_devs.append(os.path.join("/dev", os.path.basename(fn)))
                         pass
