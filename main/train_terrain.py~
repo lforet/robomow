@@ -49,7 +49,7 @@ def snap_shot():
 	try:
 		while webcam1 == None:
 			webcam1 = cv2.VideoCapture(0)
-			time.sleep(.4)
+			time.sleep(.1)
 			#webcam1 = cv.CreateCameraCapture(1)
 	except:
 		print "******* Could not open WEBCAM *******"
@@ -132,11 +132,11 @@ def save_data(features, classID):
 	f_handle.close()
 	
 def train_ai():
-	data = []
-	classID = []
-	features = []
-	features_temp_array = []
-	try: 
+		data = []
+		classID = []
+		features = []
+		features_temp_array = []
+	#try: 
 		data_filename = 'robomow_feature_data.csv'
 		print 'readind features and classID: ', data_filename
 		f_handle = open(data_filename, 'r')
@@ -168,7 +168,7 @@ def train_ai():
 		learner = milk.defaultclassifier()
 		model = learner.train(features, classID)
 		pickle.dump( model, open( "robomow_ai_model.mdl", "wb" ) )
-	except:
+	#except:
 		print "could not retrain.. bad file"
 	return 
 
@@ -182,7 +182,7 @@ if __name__=="__main__":
 	front_cam = front_camera(1)
 	front_cam.daemon=True
 	front_cam.start()
-
+	img1 = None
 
 
 	if len(sys.argv) > 1:
@@ -204,13 +204,33 @@ if __name__=="__main__":
 
 		if reply == "Mowable":
 			classID = "1"
-			features = find_features(img1)
-			save_data(features, classID)
+			if img1 != None:
+				features = find_features(img1)
+				save_data(features, classID)
+			else:
+				if video != None: 
+					img1 = np.array(grab_frame_from_video(video)[1])
+				else:
+					img1 = snap_shot()
+				img1 = array2image(img1)
+				img1 = img1.resize((320,240))
+				img1 = image2array(img1)
+				cv2.imwrite('temp.png', img1)
 
 		if reply == "Non-Mowable":
 			classID = "2"
-			features = find_features(img1)
-			save_data(features, classID)
+			if img1 != None:
+				features = find_features(img1)
+				save_data(features, classID)
+			else:
+				if video != None: 
+					img1 = np.array(grab_frame_from_video(video)[1])
+				else:
+					img1 = snap_shot()
+				img1 = array2image(img1)
+				img1 = img1.resize((320,240))
+				img1 = image2array(img1)
+				cv2.imwrite('temp.png', img1)
 
 		if reply == "Quit":
 			print "Quitting...."
@@ -218,8 +238,18 @@ if __name__=="__main__":
 
 		if reply == "Predict":
 			print "AI predicting"
-			predict_class(img1)
-			
+			if img1 != None:
+				predict_class(img1)
+			else:
+				if video != None: 
+					img1 = np.array(grab_frame_from_video(video)[1])
+				else:
+					img1 = snap_shot()
+				img1 = array2image(img1)
+				img1 = img1.resize((320,240))
+				img1 = image2array(img1)
+				cv2.imwrite('temp.png', img1)
+	
 		if reply == "Retrain AI":
 			print "Retraining AI"
 			train_ai()

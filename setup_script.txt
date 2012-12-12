@@ -1,4 +1,4 @@
-sudo apt-get install build-essential arduino python2.7 python2.7-dev libopencv-* python-opencv python-numpy python-scipy python-scikits-learn  python-sciscipy python-serial python-setuptools python-tk python-imaging python-pygame python-easygui python-imaging-tk cheese
+sudo apt-get install build-essential arduino python2.7 python2.7-dev libopencv-* python-opencv python-numpy python-scipy python-scikits-learn  python-scipy python-serial python-setuptools python-tk python-imaging python-pygame python-easygui python-imaging-tk cheese
 
 sudo apt-get install libeigen3-dev
 
