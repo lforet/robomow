@@ -1,5 +1,9 @@
-sudo apt-get install build-essential arduino python2.7 python2.7-dev libopencv-* python-opencv python-numpy python-scipy python-scikits-learn  python-sciscipy python-matplotlib python-serial python-setuptools python-tk python-imaging python-pygame python-easygui python-imaging-tk git
+sudo apt-get install build-essential arduino python2.7 python2.7-dev libopencv-* python-opencv python-numpy python-scipy python-scikits-learn  python-sciscipy python-serial python-setuptools python-tk python-imaging python-pygame python-easygui python-imaging-tk cheese
+
+sudo apt-get install libeigen3-dev
+
+sudo apt-get install python-matplotlib
 
 sudo easy_install geopy
-sudo easy_install milk
-sudo easy_install mahotas
+sudo pip install milk
+sudo pip install mahotas

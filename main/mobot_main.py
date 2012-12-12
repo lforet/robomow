@@ -273,10 +273,10 @@ if __name__== "__main__":
 					move_mobot(move, 25)
 					time.sleep(random.randint(50, 200)/100)
 			if (sonar.min_dist < 40):
-				move_mobot('b', 25)
-				time.sleep(.2)
+				move_mobot('b', 28)
+				time.sleep(.4)
 				move_mobot('r', 25)
-				time.sleep(.3)
+				time.sleep(.65)
 				
 		#move_mobot('s', 0)
 		#time.sleep(.2)

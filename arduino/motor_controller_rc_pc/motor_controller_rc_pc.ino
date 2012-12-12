@@ -291,7 +291,7 @@ void m2_drive(int speed_val){
 
 void forward(int speed_val){
   m1_drive(speed_val);
-  m2_drive(speed_val+5);
+  m2_drive(speed_val+1);
 }
 
 void reverse(int speed_val){
