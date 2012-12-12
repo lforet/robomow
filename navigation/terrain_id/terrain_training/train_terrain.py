@@ -13,6 +13,26 @@ import pickle
 import csv
 import milk
 
+
+def snap_shot():
+	#capture from camera at location 0
+	now = time.time()
+	global webcam1
+	try:
+		#have to capture a few frames as it buffers a few frames..
+		for i in range (5):
+			ret, img = webcam1.read()		 
+		#print "time to capture 5 frames:", (time.time()) - now
+		#cv2.imwrite(filename, img)
+		#img1 = Image.open(filename)
+		#img1.thumbnail((320,240))
+		#img1.save(filename)
+		#print (time.time()) - now
+		return img
+	except:
+		print "could not grab webcam" 
+
+
 def find_features(img):
 	#print type(img), img.size, img.shape
 
@@ -37,13 +57,16 @@ def grab_frame_from_video(video):
 				
 
 def predict_class(img):
-	model = pickle.load( open( "robomow_ai_model.mdl", "rb" ) )
-	features = find_features(img)
-	classID = classify(model, features)
-	if classID == 1: answer = "Mowable"
-	if classID == 2: answer = "Non-Mowable"
-	print "predicted classID:", answer
-	eg.msgbox("predicted classID:"+answer)
+	try:
+		model = pickle.load( open( "robomow_ai_model.mdl", "rb" ) )
+		features = find_features(img)
+		classID = classify(model, features)
+		if classID == 1: answer = "Mowable"
+		if classID == 2: answer = "Non-Mowable"
+		print "predicted classID:", answer
+		eg.msgbox("predicted classID:"+answer)
+	except:
+		print "could not predict...bad data"
 
 def save_data(features, classID):
 	data_filename = 'robomow_feature_data.csv'
@@ -73,60 +96,70 @@ def train_ai():
 	classID = []
 	features = []
 	features_temp_array = []
+	try: 
+		data_filename = 'robomow_feature_data.csv'
+		print 'readind features and classID: ', data_filename
+		f_handle = open(data_filename, 'r')
+		reader = csv.reader(f_handle)
+		#read data from file into arrays
+		for row in reader:
+			data.append(row)
 
-	data_filename = 'robomow_feature_data.csv'
-	print 'readind features and classID: ', data_filename
-	f_handle = open(data_filename, 'r')
-	reader = csv.reader(f_handle)
-	#read data from file into arrays
-	for row in reader:
-		data.append(row)
+		for row in range(0, len(data)):
+			#print features[row][1]
+			classID.append(int(data[row][0]))
+			features_temp_array.append(data[row][1].split(" "))
 
-	for row in range(0, len(data)):
-		#print features[row][1]
-		classID.append(int(data[row][0]))
-		features_temp_array.append(data[row][1].split(" "))
+		#removes ending element which is a space
+		for x in range(len(features_temp_array)):
+			features_temp_array[x].pop()
+			features_temp_array[x].pop(0)
 
-	#removes ending element which is a space
-	for x in range(len(features_temp_array)):
-		features_temp_array[x].pop()
-		features_temp_array[x].pop(0)
+		#convert all strings in array to numbers
+		temp_array = []
+		for x in range(len(features_temp_array)):
+			temp_array = [ float(s) for s in features_temp_array[x] ]
+			features.append(temp_array)
 
-	#convert all strings in array to numbers
-	temp_array = []
-	for x in range(len(features_temp_array)):
-		temp_array = [ float(s) for s in features_temp_array[x] ]
-		features.append(temp_array)
+		#make numpy arrays
+		#features = np.asarray(features)
+		print classID, features 
 
-	#make numpy arrays
-	#features = np.asarray(features)
-	print classID, features 
-
-	learner = milk.defaultclassifier()
-	model = learner.train(features, classID)
-	pickle.dump( model, open( "robomow_ai_model.mdl", "wb" ) )
+		learner = milk.defaultclassifier()
+		model = learner.train(features, classID)
+		pickle.dump( model, open( "robomow_ai_model.mdl", "wb" ) )
+	except:
+		print "could not retrain.. bad file"
 	return 
 
 if __name__=="__main__":
+	
+	print "********************************************************************"
+	print "*   if 1 argument: video file to process otherwise uses webcam     *"
+	print "********************************************************************"
+	video = None
+	webcam1 = None
+	if len(sys.argv) > 1:
+		try:
+			video = cv2.VideoCapture(sys.argv[1])
+			#print video, sys.argv[1]
+		except:
+			print "******* Could not open image/video file *******"
+			print "Unexpected error:", sys.exc_info()[0]
+			#raise		
+			sys.exit(-1)
+	else:
+		try:
+			webcam1 = cv2.VideoCapture(0)
+		except:
+			print "******* Could not open WEBCAM *******"
+			print "Unexpected error:", sys.exc_info()[0]
+			#raise		
+			sys.exit(-1)
 
-	if len(sys.argv) < 2:
-		print "****************************************************"
-		print "*   Requires 1 argument: video file to process     *"
-		print "****************************************************"
-		sys.exit(-1)
-
-	try:
-		video = cv2.VideoCapture(sys.argv[1])
-		#print video, sys.argv[1]
-	except:
-		print "******* Could not open image/video file *******"
-		print "Unexpected error:", sys.exc_info()[0]
-		#raise		
-		sys.exit(-1)
-	loop = 1
 	reply =""
 	eg.rootWindowPosition = "+100+100"
-	while loop == 1:
+	while True:
 		eg.rootWindowPosition = eg.rootWindowPosition
 		print 'reply=', reply		
 
@@ -156,11 +189,16 @@ if __name__=="__main__":
 
 		if reply == "Next Frame":
 			print "Acquiring new image.."
-			img1 = np.array(grab_frame_from_video(video)[1])
+			if video != None: 
+				img1 = np.array(grab_frame_from_video(video)[1])
+			else:
+				img1 = snap_shot()
 			img1 = array2image(img1)
 			img1 = img1.resize((320,240))
 			img1 = image2array(img1)
 			cv2.imwrite('temp.png', img1)
+			#print type(img1)
+			#img1.save()
 
 		if reply == "Fwd 10 Frames":
 			print "Forward 10 frames..."
@@ -177,6 +215,18 @@ if __name__=="__main__":
 			f_handle.write('')
 			f_handle.close()
 
-		reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+		if reply == "Test Img":	
+			#im = Image.fromarray(image)
+			#im.save("new.png")
+			img1 = Image.open('temp.png')
+			#img1.thumbnail((320,240))
+			path = "../../../../mobot_data/images/test_images/"
+			filename = str(time.time()) + ".jpg"
+			img1.save(path+filename)	
+	
+		if video != None: 
+			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+		else:
+			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
 
 
