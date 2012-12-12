@@ -156,7 +156,7 @@ def move_mobot(themove, speed):
 		motor.forward(speed)
 		#time.sleep(.01)
 		#print motor.motor1_speed, motor.motor2_speed
-	if (themove == "v"):
+	if (themove == "b"):
 		motor.reverse(speed)
 		#time.sleep(.01)
 		#print motor.motor1_speed, motor.motor2_speed
@@ -232,8 +232,9 @@ if __name__== "__main__":
 	motor = None
 
 	while True:
+		current_move = ""
 		now =  datetime.now()
-		if sonar == None or len(sonar.sonar_data) < 1:
+		if sonar == None: # or len(sonar.sonar_data) < 1:
 			sonar = send_sonar_data("sonar_data.txt")
 			sonar.daemon=True
 			sonar.start()
@@ -252,17 +253,18 @@ if __name__== "__main__":
 			#if sonar.max_sensor == 1: move = "right"
 			#if sonar.max_sensor == 2: move = "reverse"
 			#if sonar.max_sensor == 3: move = "left"
-			#if (sonar.min_dist < 38): move = "stop"
 			
+			threshold = 75
 			#go foward until < 40 cm turn right
-			if (sonar.sonar_data[0] > 75): move = "f"
-			if (sonar.sonar_data[0] < 75):
-				if sonar.sonar_data[1] > sonar.sonar_data[3]: move = "r"
+			if (sonar.sonar_data[0] > threshold): move = "f"
+			if (sonar.sonar_data[1] > threshold): move = "f"
+			if (sonar.sonar_data[0] < threshold) or (sonar.sonar_data[1] < threshold):
+				if sonar.sonar_data[2] > sonar.sonar_data[3]: move = "r"
 				else:
 					move = "l"
-				
-			print "moving mobot: ", move
-			if (move != ""):
+			if (current_move != move) and (sonar.min_dist > 40):	
+				print "moving mobot: ", move
+				current_move = move
 				#print "moving robot"
 				if move == "f":
 					move_mobot(move, 20)
@@ -270,8 +272,14 @@ if __name__== "__main__":
 				else:
 					move_mobot(move, 25)
 					time.sleep(random.randint(50, 200)/100)
-		move_mobot('s', 0)
-		time.sleep(.3)
+			if (sonar.min_dist < 38):
+				move_mobot('b', 25)
+				time.sleep(.2)
+				move_mobot('r', 25)
+				time.sleep(.3)
+				
+		#move_mobot('s', 0)
+		#time.sleep(.2)
 		print "sonar_data: ", sonar.sonar_data
 		print "loop time:",  datetime.now() - now
 	print "stopped"

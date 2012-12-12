@@ -4,7 +4,10 @@ Install OpenCV 2.3.1
 
     sudo apt-get install libopencv-*
     sudo apt-get install python-opencv
-    sudo apt-get install python-numpy
+    #sudo apt-get install python-numpy
+	sudo pip install numpy
+	sudo pip install milk
+	sudo easy_install mahotas
 
 That’s it! OpenCV 2.3.1 is installed completely in Ubuntu 12.04 (Thanks for the package).
 
