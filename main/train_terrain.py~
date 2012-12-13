@@ -13,7 +13,7 @@ import pickle
 import csv
 import milk
 from threading import *
-import gc
+
 
 
 class front_camera(Thread):
@@ -28,18 +28,13 @@ class front_camera(Thread):
 		#gc.enable()
 		camera =  cv.CreateCameraCapture(self.camID)
 		while True:
-			time.sleep(.1)
+			time.sleep(.05)
 			#camera = cv2.VideoCapture(self.camID)
 			#ret, frame = camera.read()
 			frame = cv.QueryFrame(camera)
 			#cv2.imshow('Front Camera', frame)
 			cv.ShowImage('Front Camera', frame)
 			cv.WaitKey(50)
-			#camera.release()
-			#frame = None
-			#ret = None
-			#camera = None
-			#gc.collect()
 					
 
 def snap_shot():
@@ -184,7 +179,6 @@ if __name__=="__main__":
 	front_cam.start()
 	img1 = None
 
-
 	if len(sys.argv) > 1:
 		try:
 			video = cv2.VideoCapture(sys.argv[1])
@@ -195,9 +189,9 @@ if __name__=="__main__":
 			#raise		
 			sys.exit(-1)
 	reply =""
-	eg.rootWindowPosition = "+100+100"
+	#eg.rootWindowPosition = "+100+100"
 	while True:
-		eg.rootWindowPosition = eg.rootWindowPosition
+		#eg.rootWindowPosition = eg.rootWindowPosition
 		print 'reply=', reply		
 
 		#if reply == "": reply = "Next Frame"

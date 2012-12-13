@@ -13,34 +13,6 @@ import pickle
 import csv
 import milk
 from threading import *
-import gc
-
-
-class front_camera(Thread):
-	def __init__(self, camID):
-		self.camID = camID   
-		#self.camera = cv2.VideoCapture(camID)  
-		#self.camera = cv.CreateCameraCapture(camID)  
-		Thread.__init__(self)
-
-	def run(self):
-		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
-		#gc.enable()
-		camera =  cv.CreateCameraCapture(self.camID)
-		while True:
-			time.sleep(.1)
-			#camera = cv2.VideoCapture(self.camID)
-			#ret, frame = camera.read()
-			frame = cv.QueryFrame(camera)
-			#cv2.imshow('Front Camera', frame)
-			cv.ShowImage('Front Camera', frame)
-			cv.WaitKey(50)
-			#camera.release()
-			#frame = None
-			#ret = None
-			#camera = None
-			#gc.collect()
-					
 
 def snap_shot():
 	#capture from camera at location 0
@@ -179,11 +151,7 @@ if __name__=="__main__":
 	print "********************************************************************"
 	video = None
 	webcam1 = None
-	front_cam = front_camera(1)
-	front_cam.daemon=True
-	front_cam.start()
 	img1 = None
-
 
 	if len(sys.argv) > 1:
 		try:
@@ -195,9 +163,9 @@ if __name__=="__main__":
 			#raise		
 			sys.exit(-1)
 	reply =""
-	eg.rootWindowPosition = "+100+100"
+	#eg.rootWindowPosition = "+100+100"
 	while True:
-		eg.rootWindowPosition = eg.rootWindowPosition
+		#eg.rootWindowPosition = eg.rootWindowPosition
 		print 'reply=', reply		
 
 		#if reply == "": reply = "Next Frame"
@@ -294,7 +262,7 @@ if __name__=="__main__":
 		if video != None: 
 			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
 		else:
-			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'F', 'B', 'L', 'R', 'Quit'), image='temp.png', root=None)
+			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
 
 
 

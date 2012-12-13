@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 import socket 
 import cv2
+import cv
 from threading import *
 import sys
 from maxsonar_class import *
@@ -13,7 +14,32 @@ from robomow_motor_class_arduino import *
 from gps_functions import *
 from math import *
 import easygui as eg
+import sonar_functions as sf
+from img_processing_tools import *
 
+class front_camera(Thread):
+	def __init__(self, camID):
+		self.camID = camID   
+		#self.camera = cv2.VideoCapture(camID)  
+		#self.camera = cv.CreateCameraCapture(camID)  
+		Thread.__init__(self)
+
+	def run(self):
+		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
+		cv.MoveWindow('Front Camera', 373, 24)
+		#gc.enable()
+		camera =  cv.CreateCameraCapture(self.camID)
+		while True:
+			#time.sleep(.12)
+			if camera == None:
+				camera =  cv.CreateCameraCapture(self.camID)
+			#camera = cv2.VideoCapture(self.camID)
+			#ret, frame = camera.read()
+			frame = cv.QueryFrame(camera)
+			frame = resize_img(frame, 0.60)
+			#cv2.imshow('Front Camera', frame)
+			cv.ShowImage('Front Camera', frame)
+			cv.WaitKey(10)
 
 
 def snap_shot(filename):
@@ -110,7 +136,6 @@ class send_sonar_data(Thread):
 	def run(self):
 			#global file_lock, hhh
 			sonar = MaxSonar()
-			
 			while True:
 				self.sonar_data = ""
 				self.max_dist = -1
@@ -131,7 +156,7 @@ class send_sonar_data(Thread):
 						self.sonar_data.append(int(data[(data.find('s2:')+3):(data.find('s3:'))]))
 						self.sonar_data.append(int(data[(data.find('s3:')+3):(data.find('s4:'))]))
 						self.sonar_data.append(int(data[(data.find('s4:')+3):(data.find('s5:'))]))
-						self.sonar_data.append(int(data[(data.find('s5:')+3):(len(data)-1)]))
+						#self.sonar_data.append(int(data[(data.find('s5:')+3):(len(data)-1)]))
 						self.max_dist = max(self.sonar_data)
 						self.min_dist = min(self.sonar_data)
 						self.min_sensor = self.sonar_data.index(self.min_dist)
@@ -139,18 +164,19 @@ class send_sonar_data(Thread):
 						#sonar_data_str1 = "".join(str(x) for x in self.sonar_data)
 						#print sonar_data_str1
 						#print data
-						f = open("sonar_data.txt", "w")
-						f.write(data)
-						f.close()
-						send_file(host="u1204vm.local", cport=9092, mport=9093,filetosend=self.filetosend)
+						#
+						#f = open("sonar_data.txt", "w")
+						#f.write(data)
+						#f.close()
+						#send_file(host="u1204vm.local", cport=9092, mport=9093,filetosend=self.filetosend)
 				except:
 					pass
 				time.sleep(.01)
 			print "out of while in sonar"
 
 
-def move_mobot(themove, speed):
-	global motor
+def move_mobot(motor, themove, speed):
+	print "moving:", themove, "  speed:", speed
 	if (themove == "f"):
 		motor.forward(speed)
 		#time.sleep(.01)
@@ -211,15 +237,6 @@ def test_gps():
 def auto_move(sonar, motor):
 	current_move = ""
 	now =  datetime.now()
-	if sonar == None: # or len(sonar.sonar_data) < 1:
-		sonar = send_sonar_data("sonar_data.txt")
-		sonar.daemon=True
-		sonar.start()
-	if motor == None:
-		motor = robomow_motor()
-		print "motor.isConnected:", motor.isConnected
-		time.sleep(2)
-
 	if (sonar.max_dist > 0):
 		move = ""
 		print "......................"
@@ -244,22 +261,61 @@ def auto_move(sonar, motor):
 			current_move = move
 			#print "moving robot"
 			if move == "f":
-				move_mobot(move, 20)
+				move_mobot(motor, move, 20)
 				time.sleep(random.randint(50, 200)/100)
 			else:
-				move_mobot(move, 25)
+				move_mobot(motor, move, 25)
 				time.sleep(random.randint(50, 200)/100)
 		if (sonar.min_dist < 40):
-			move_mobot('b', 28)
+			move_mobot(motor, 'b', 28)
 			time.sleep(.4)
-			move_mobot('r', 25)
+			move_mobot(motor, 'r', 25)
 			time.sleep(.65)
-	#move_mobot('s', 0)
+	move_mobot(motor, 's', 0)
 	#time.sleep(.2)
 	print "sonar_data: ", sonar.sonar_data
 	print "loop time:",  datetime.now() - now
 
 
+class display_sonar(Thread):
+	def __init__(self, sonar):
+		self.sonar = sonar  
+		Thread.__init__(self)
+
+	def run(self):
+		cv2.namedWindow('Sonar Data', cv.CV_WINDOW_AUTOSIZE)
+		while True:
+			#time.sleep(1)
+			try:
+				print "raw sonar data", sonar.sonar_data
+				sonar_img = sf.sonar_graph(self.sonar.sonar_data)
+				cv.ShowImage('Sonar Data', PILtoCV(sonar_img, 4))
+				cv.WaitKey(10)
+			except:
+				print "sonar display failure"
+				pass
+
+class sonar_prevent_hit(Thread):
+	def __init__(self, sonar):
+		self.sonar = sonar  
+		Thread.__init__(self)
+
+	def run(self):
+		while True:
+			time.sleep(.12)
+			try:
+				print "self.sonar.min_dist:", self.sonar.min_dist
+				if (self.sonar.min_dist < 40):
+						print "auto hit prevent activated"
+						#move_mobot(motor, 'b', 25)
+						#time.sleep(.2)
+						#move_mobot(motor, 'r', 25)
+						#time.sleep(random.randint(50, 200)/100)
+						move_mobot(motor, 's', 0)
+						time.sleep(.5)
+			except:
+				print "sonar auto hit prevent failure"
+				pass
 
 if __name__== "__main__":
 	testmode = False
@@ -267,45 +323,65 @@ if __name__== "__main__":
 		if sys.argv[1] == 'testmode':
 				print 'starting in testing mode'
 				testmode= True
-		
-	#webcam1 = cv2.VideoCapture(0)
-	#enable_video()
-	#while 1:
-	#	time.sleep(1)
 
-	#test_gps()
-
-	#move_mobot('f', 15)
-	#time.sleep(5)
-	#move_mobot('s', 0)
 	sonar = None
 	motor = None
 	reply =""
 	movetime = 0.25
+	while sonar == None or motor == None:
+		if sonar == None: # or len(sonar.sonar_data) < 1:
+			sonar = send_sonar_data("sonar_data.txt")
+			sonar.daemon=True
+			sonar.start()
+		if motor == None:
+			motor = robomow_motor()
+			print "motor.isConnected:", motor.isConnected
+		time.sleep(2)
+
+	#start front navigation cam
+	front_cam = front_camera(1)
+	front_cam.daemon=True
+	front_cam.start()
+
+	#start sonar display
+	sonar_disp = display_sonar(sonar)
+	sonar_disp.daemon=True
+	sonar_disp.start()
+
+	#start sonar_hit_preventer
+	sonar_hit_preventer = sonar_prevent_hit(sonar)
+	sonar_hit_preventer.daemon=True
+	sonar_hit_preventer.start()
+
+	eg.rootWindowPosition = "+60+375"
 	while True:
+		
+		if reply == 'AutoPilot':
+			auto_move(sonar, motor)
+	
 		if reply == 'F':
-			move_mobot('f', 25)
+			move_mobot(motor, 'f', 25)
 			#time.sleep(movetime)
 		if reply == 'B':
-			move_mobot('b', 25)
+			move_mobot(motor, 'b', 25)
 			#time.sleep(movetime)
 		if reply == 'R':
-			move_mobot('r', 25)
-			#time.sleep(movetime)
-		if reply == 'L':
-			move_mobot('l', 25)
-			#time.sleep(movetime)
-		if reply == 'STOP':
-			move_mobot('s', 25)
+			move_mobot(motor, 'r', 25)
 			time.sleep(movetime)
+			move_mobot(motor, 's', 0)
+		if reply == 'L':
+			move_mobot(motor, 'l', 25)
+			time.sleep(movetime)
+			move_mobot(motor, 's', 0)
+		if reply == 'STOP':
+			move_mobot(motor, 's', 0)
 		if reply == "Quit":
+			print "stopping mobot..."
+			move_mobot(motor, 's', 0)
+			time.sleep(movetime)
 			print "Quitting...."
 			sys.exit(-1)
-
-
 		reply =	eg.buttonbox(title='Mobot Drive', choices=('AutoPilot', 'F', 'B', 'L', 'R', 'STOP', 'Quit'), root=None)
-
-
 
 
 '''

@@ -133,6 +133,7 @@ def sonar_graph(ping_readings):
 	
 	#gc.collect()
 	#del fig
+	
 	P.close(fig)
 
 def process_sonar_data(sonar_data):

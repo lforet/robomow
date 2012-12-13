@@ -255,7 +255,7 @@ def rgb2I3 (img):
 ###########################################################
 
 def resize_img(original_img, scale_percentage):
-	#print original_img.height, original_img.width, original_img.nChannels
+	print original_img.height, original_img.width, original_img.nChannels
 	#resized_img = cv.CreateMat(original_img.rows * scale_percentage , original.cols * scale_percenta, cv.CV_8UC3)
 	resized_img = cv.CreateImage((cv.Round(original_img.width * scale_percentage) , cv.Round(original_img.height * scale_percentage)), original_img.depth, original_img.nChannels)
 	cv.Resize(original_img, resized_img)
