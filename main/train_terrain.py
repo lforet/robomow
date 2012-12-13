@@ -294,6 +294,7 @@ if __name__=="__main__":
 		if video != None: 
 			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
 		else:
-			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'F', 'B', 'L', 'R', 'Quit'), image='temp.png', root=None)
+
 
 
