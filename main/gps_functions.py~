@@ -78,7 +78,7 @@ class mobot_gps( Thread ):
 				for n in range(len(all_gps_list)):
 					for x in xrange(1, self.samples):
 						os.system("clear")
-						while ActiveSatelliteCount(gpss[n].satellites) < 6:
+						while ActiveSatelliteCount(gpss[n].satellites) < 4:
 							print "Acquiring at least 6 GPS Satellites..."
 							print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
 							print "Number of acquired satellites: ", ActiveSatelliteCount(gpss[n].satellites)
@@ -151,14 +151,14 @@ def start_all_gps():
 	print "gps_list:", all_gps_list
 	print len(all_gps_list)
 	for n in range(len(all_gps_list)):
-		start_gps = "gpsd "+all_gps_list[n]+" -S " + str(2947+n) #+ " -n -b"
+		start_gps = "gpsd "+all_gps_list[n]+" -S " + str(2947+n) + " -n -b"
 		print "start_gps:", start_gps
 		returncode = call(start_gps, shell=True)
 		time.sleep(4)
 		#print returncode
 
 def start_a_gps(gps_to_start):
-	start_gps = "gpsd "+gps_to_start+" -S " + str(2947+n) #+ "-n -b"
+	start_gps = "gpsd "+gps_to_start+" -S " + str(2947+n) + " -n -b"
 	print "start_gps:", start_gps
 	returncode = call(start_gps, shell=True)
 	time.sleep(2)

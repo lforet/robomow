@@ -212,7 +212,7 @@ def test_gps():
 	gps2.daemon=True
 	gps2.start()
 	#gps2.join()
-	while 1:
+	while True:
 		print "# of GPS Units:", len(gpslist)
 		if (gps2.satellites > 0):
 			print 'Satellites (total of', len(gps2.satellites) , ' in view)'
@@ -307,8 +307,8 @@ def auto_move(motor, sonar, threshold):
 	now =  datetime.now()
 	while  (sonar.min_dist < threshold):
 		evasive_maneuver(motor, sonar, threshold)
-	time.sleep(.5)
-	if (sonar.min_dist > threshold):
+	#time.sleep(.5)
+	#if (sonar.min_dist > threshold):
 		#move_mobot(motor, 'f', 20)
 	#print "sonar_data: ", sonar.sonar_data
 	#print "loop time:",  datetime.now() - now
@@ -360,6 +360,11 @@ if __name__== "__main__":
 				print 'starting in testing mode'
 				testmode= True
 
+
+	test_gps()
+
+
+'''
 	sonar = None
 	motor = None
 	reply =""
@@ -373,14 +378,14 @@ if __name__== "__main__":
 			motor = robomow_motor()
 			print "motor.isConnected:", motor.isConnected
 		time.sleep(2)
-
+'''
 	#wallfollow(motor, sonar)
 
 	#start front navigation cam
-	mobot_disp = mobot_display(0, sonar)
-	mobot_disp.daemon=True
-	mobot_disp.start()
-	time.sleep(2)
+	#mobot_disp = mobot_display(0, sonar)
+	#mobot_disp.daemon=True
+	#mobot_disp.start()
+	#time.sleep(2)
 
 	#start sonar_hit_preventer
 	#sonar_hit_preventer = sonar_prevent_hit(motor, sonar, 38)
@@ -389,9 +394,9 @@ if __name__== "__main__":
 	#sonar_hit_preventer.join()
 	#time.sleep(2)
 
-	while True:
-		auto_move(motor, sonar, 38)
-		time.sleep(.03)
+	#while True:
+	#	auto_move(motor, sonar, 38)
+	#	time.sleep(.03)
 	#wallfollow(motor, sonar, 40)
 
 

@@ -212,15 +212,15 @@ def test_gps():
 	gps2.daemon=True
 	gps2.start()
 	#gps2.join()
-	while 1:
+	while True:
 		print "# of GPS Units:", len(gpslist)
 		if (gps2.satellites > 0):
 			print 'Satellites (total of', len(gps2.satellites) , ' in view)'
 			print "Active satellites used:", gps2.active_satellites
 			for i in gps2.satellites:
 				print '\t', i
-		print "lat: ", gps2.latitude
-		print "long:", gps2.longitude
+		#print "lat: ", gps2.latitude
+		#print "long:", gps2.longitude
 		time.sleep(random.randint(1, 3))	
 		#os.system("clear")
 
@@ -360,6 +360,11 @@ if __name__== "__main__":
 				print 'starting in testing mode'
 				testmode= True
 
+
+	test_gps()
+
+
+'''
 	sonar = None
 	motor = None
 	reply =""
@@ -373,14 +378,14 @@ if __name__== "__main__":
 			motor = robomow_motor()
 			print "motor.isConnected:", motor.isConnected
 		time.sleep(2)
-
+'''
 	#wallfollow(motor, sonar)
 
 	#start front navigation cam
-	mobot_disp = mobot_display(0, sonar)
-	mobot_disp.daemon=True
-	mobot_disp.start()
-	time.sleep(2)
+	#mobot_disp = mobot_display(0, sonar)
+	#mobot_disp.daemon=True
+	#mobot_disp.start()
+	#time.sleep(2)
 
 	#start sonar_hit_preventer
 	#sonar_hit_preventer = sonar_prevent_hit(motor, sonar, 38)
@@ -389,9 +394,9 @@ if __name__== "__main__":
 	#sonar_hit_preventer.join()
 	#time.sleep(2)
 
-	while True:
-		auto_move(motor, sonar, 38)
-		time.sleep(.03)
+	#while True:
+	#	auto_move(motor, sonar, 38)
+	#	time.sleep(.03)
 	#wallfollow(motor, sonar, 40)
 
 
