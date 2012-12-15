@@ -33,7 +33,7 @@ class MaxSonar(object):
 						print "class MaxSonar: found ultrasonic sensor package on serial port: ", port
 						self._isConnected  = True
 						#self._port = ser
-						time.sleep(.35)
+						#time.sleep(.35)
 						break
 				except:
 					pass
@@ -80,7 +80,7 @@ class MaxSonar(object):
 						self._data = 0
 						self._isConnected = False
 						self._ser = self._open_serial_port()
-						#time.sleep(.05)
+						#time.sleep(.1)
 					except:
 						pass
 

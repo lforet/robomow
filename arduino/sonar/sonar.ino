@@ -26,7 +26,7 @@ int sum3=0;//Create sum variable so it can be averaged
 int sum4=0;//Create sum variable so it can be averaged
 
 int sum_mm = 0;
-int avgrange=10;//Quantity of values to average (sample size)
+int avgrange=8;//Quantity of values to average (sample size)
 int calibration_offset = 0;
 float cm_to_inches = 0.393701;
 void setup() {
@@ -34,15 +34,19 @@ void setup() {
   //This opens up a serial connection to shoot the results back to the PC console
   Serial.begin(57600);
 
+  pinMode(anPin0, INPUT);
+  delay(1);
+  pinMode(anPin1, INPUT);
+  delay(1);
+  pinMode(anPin2, INPUT);
+  delay(1);
+  pinMode(anPin3, INPUT);
+  delay(1);
+  pinMode(anPin4, INPUT);
 }
 
 void loop() {
 
-  pinMode(anPin0, INPUT);
-  pinMode(anPin1, INPUT);
-  pinMode(anPin2, INPUT);
-  pinMode(anPin3, INPUT);
-  pinMode(anPin4, INPUT);
   //MaxSonar Analog reads are known to be very sensitive. See the Arduino forum for more information.
   //A simple fix is to average out a sample of n readings to get a more consistant reading.\\ 
 
@@ -52,16 +56,21 @@ void loop() {
     //Scale factor is (Vcc/512) per inch. A 5V supply yields ~9.8mV/cm
     //Arduino analog pin goes from 0 to 1024, so the value has to be divided by 2 to get the actual cm
     anVolt0 = analogRead(anPin0)/2;
+    delay(5);
     anVolt1 = analogRead(anPin1)/2;
+    delay(5);
     anVolt2 = analogRead(anPin2)/2;
+    delay(5);
     anVolt3 = analogRead(anPin3)/2;
+    delay(5);
     anVolt4 = analogRead(anPin4)/2;
+    delay(5);
     sum0 += anVolt0;
     sum1 += anVolt1;
     sum2 += anVolt2;
     sum3 += anVolt3;
     sum4 += anVolt4;
-    delay(10);
+    //delay(1);
   }  
 
   cm0 = sum0/avgrange;
@@ -98,6 +107,6 @@ void loop() {
   sum3 = 0;
   sum4 = 0;
 
-  delay(30);
+  delay(10);
 
 } 

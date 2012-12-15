@@ -17,31 +17,6 @@ import easygui as eg
 import sonar_functions as sf
 from img_processing_tools import *
 
-class front_camera(Thread):
-	def __init__(self, camID):
-		self.camID = camID   
-		#self.camera = cv2.VideoCapture(camID)  
-		#self.camera = cv.CreateCameraCapture(camID)  
-		Thread.__init__(self)
-
-	def run(self):
-		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
-		cv.MoveWindow('Front Camera', 373, 24)
-		#gc.enable()
-		camera =  cv.CreateCameraCapture(self.camID)
-		while True:
-			#time.sleep(.12)
-			if camera == None:
-				camera =  cv.CreateCameraCapture(self.camID)
-			#camera = cv2.VideoCapture(self.camID)
-			#ret, frame = camera.read()
-			frame = cv.QueryFrame(camera)
-			frame = resize_img(frame, 0.60)
-			#cv2.imshow('Front Camera', frame)
-			cv.ShowImage('Front Camera', frame)
-			cv.WaitKey(10)
-
-
 def snap_shot(filename):
 	#capture from camera at location 0
 	now = time.time()
@@ -131,6 +106,10 @@ class send_sonar_data(Thread):
 		self.min_dist = -1   
 		self.min_sensor = -1
 		self.max_sensor = -1 
+		self.right_sensor = -1
+		self.left_sensor = -1
+		self.forwardl_sensor = -1
+		self.fowardr_sensor = -1
 		Thread.__init__(self)
 
 	def run(self):
@@ -142,6 +121,10 @@ class send_sonar_data(Thread):
 				self.min_dist = -1 
 				self.min_sensor = -1
 				self.max_sensor = -1
+				self.right_sensor = -1
+				self.left_sensor = -1
+				self.forwardl_sensor = -1
+				self.fowardr_sensor = -1
 				#
 				#below 2 lines are for test purposes when actual US arent sending data
 				#for i in range(1,6):
@@ -162,6 +145,11 @@ class send_sonar_data(Thread):
 						self.min_sensor = self.sonar_data.index(self.min_dist)
 						self.max_sensor = self.sonar_data.index(self.max_dist)
 						#sonar_data_str1 = "".join(str(x) for x in self.sonar_data)
+						self.frontl_sensor = self.sonar_data[0]
+						self.frontr_sensor = self.sonar_data[1]
+						self.right_sensor = self.sonar_data[2]
+						self.left_sensor = self.sonar_data[3]
+
 						#print sonar_data_str1
 						#print data
 						#
@@ -171,7 +159,10 @@ class send_sonar_data(Thread):
 						#send_file(host="u1204vm.local", cport=9092, mport=9093,filetosend=self.filetosend)
 				except:
 					pass
-				time.sleep(.01)
+				try:
+					time.sleep(.02)
+				except:
+					pass
 			print "out of while in sonar"
 
 
@@ -234,88 +225,133 @@ def test_gps():
 		#os.system("clear")
 
 
-def auto_move(sonar, motor):
-	current_move = ""
-	now =  datetime.now()
-	if (sonar.max_dist > 0):
-		move = ""
-		print "......................"
-		print "sonar_data: ", sonar.sonar_data
-		print "max dist: ", sonar.max_dist, sonar.max_sensor
-		print "min_dist: ", sonar.min_dist, sonar.min_sensor
-		#if sonar.max_sensor == 0: move = "foward"
-		#if sonar.max_sensor == 1: move = "right"
-		#if sonar.max_sensor == 2: move = "reverse"
-		#if sonar.max_sensor == 3: move = "left"
-	
-		threshold = 75
-		#go foward until < 40 cm turn right
-		if (sonar.sonar_data[0] > threshold): move = "f"
-		if (sonar.sonar_data[1] > threshold): move = "f"
-		if (sonar.sonar_data[0] < threshold) or (sonar.sonar_data[1] < threshold):
-			if sonar.sonar_data[2] > sonar.sonar_data[3]: move = "r"
-			else:
-				move = "l"
-		if (current_move != move) and (sonar.min_dist > 40):	
-			print "moving mobot: ", move
-			current_move = move
-			#print "moving robot"
-			if move == "f":
-				move_mobot(motor, move, 20)
-				time.sleep(random.randint(50, 200)/100)
-			else:
-				move_mobot(motor, move, 25)
-				time.sleep(random.randint(50, 200)/100)
-		if (sonar.min_dist < 40):
-			move_mobot(motor, 'b', 28)
-			time.sleep(.4)
-			move_mobot(motor, 'r', 25)
-			time.sleep(.65)
-	move_mobot(motor, 's', 0)
-	#time.sleep(.2)
-	print "sonar_data: ", sonar.sonar_data
-	print "loop time:",  datetime.now() - now
-
 
 class display_sonar(Thread):
 	def __init__(self, sonar):
 		self.sonar = sonar  
 		Thread.__init__(self)
 
+class mobot_display(Thread):
+	def __init__(self, camID, sonar):
+		self.camID = camID 
+		self.sonar = sonar   
+		Thread.__init__(self)
+
 	def run(self):
 		cv2.namedWindow('Sonar Data', cv.CV_WINDOW_AUTOSIZE)
+		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
+		cv.MoveWindow('Front Camera', 373, 24)
+		camera =  cv.CreateCameraCapture(self.camID)
 		while True:
 			#time.sleep(1)
 			try:
-				print "raw sonar data", sonar.sonar_data
+				#print "raw sonar data", self.sonar.sonar_data
 				sonar_img = sf.sonar_graph(self.sonar.sonar_data)
 				cv.ShowImage('Sonar Data', PILtoCV(sonar_img, 4))
-				cv.WaitKey(10)
+				cv.WaitKey(40)
+				frame = cv.QueryFrame(camera)
+				frame = resize_img(frame, 0.60)
+				cv.ShowImage('Front Camera', frame)
+				cv.WaitKey(40)
 			except:
-				print "sonar display failure"
+				print "display failure"
 				pass
 
 class sonar_prevent_hit(Thread):
-	def __init__(self, sonar):
+	def __init__(self, motor, sonar, threshold):
 		self.sonar = sonar  
+		self.motor = motor
+		self.threshold = threshold
 		Thread.__init__(self)
 
 	def run(self):
 		while True:
-			time.sleep(.12)
+			#time.sleep(.12)
 			try:
-				print "self.sonar.min_dist:", self.sonar.min_dist
-				if (self.sonar.min_dist < 40):
-						print "auto hit prevent activated"
-						#move_mobot(motor, 'b', 25)
-						#time.sleep(.2)
-						#move_mobot(motor, 'r', 25)
-						#time.sleep(random.randint(50, 200)/100)
-						move_mobot(motor, 's', 0)
-						time.sleep(.5)
+				#print "self.sonar.min_dist:", self.sonar.min_dist
+				if (self.sonar.min_dist < self.threshold):
+					print "auto hit prevent activated: " ,self.sonar.sonar_data
+					time.sleep(1)
+				evasive_maneuver(self.motor, self.sonar, self.threshold)
 			except:
 				print "sonar auto hit prevent failure"
 				pass
+
+def evasive_maneuver(motor, sonar, threshold):
+	#wait to confirm 
+	move_mobot(motor, 's', 0)
+	time.sleep(.5)
+	while (sonar.min_dist < threshold ):
+		print "..........evasive maneuver............."
+		print "sonar_data: ", sonar.sonar_data
+		move_mobot(motor, 's', 0)
+		time.sleep(.5)
+		move_mobot(motor, 'b', 28)
+		time.sleep(1)
+		move_mobot(motor, 's', 0)
+		time.sleep(.5)
+		if (sonar.right_sensor > sonar.left_sensor):
+			motor.spin_right(25)
+			time.sleep(random.randint(100, 250)/100)	
+		else:
+			motor.spin_left(25)
+			time.sleep(random.randint(100, 250)/100)
+		#move_mobot(motor, 'f', 25)
+		#time.sleep(.2)
+
+
+def auto_move(motor, sonar, threshold):
+
+	print "..........autopilot............."
+	print "sonar_data: ", sonar.sonar_data
+	now =  datetime.now()
+	while  (sonar.min_dist < threshold):
+		evasive_maneuver(motor, sonar, threshold)
+	#time.sleep(.5)
+	#if (sonar.min_dist > threshold):
+		#move_mobot(motor, 'f', 20)
+	#print "sonar_data: ", sonar.sonar_data
+	#print "loop time:",  datetime.now() - now
+
+
+def wallfollow(motor, sonar, threshold):
+	rm_spd = 16
+	lm_spd = 16
+
+	spd = 14
+	while True:
+		print "..........wallfollow............."
+		print "sonar_data: ", sonar.sonar_data
+		print "sonar_right:", sonar.right_sensor, "   sonar_left:", sonar.left_sensor,
+		print "RMotor: ", rm_spd, "  LMotor: ", lm_spd
+		while (sonar.min_dist < threshold):
+			rm_spd = spd
+			lm_spd = spd
+			evasive_maneuver(motor, sonar, threshold)
+		else:
+			if sonar.right_sensor < 56:
+					lm_spd = spd - 4 #decrease left motor speed
+					rm_spd = spd + 1 
+			if sonar.right_sensor > 57:
+					lm_spd = spd + 2 #increase left motor speed
+					rm_spd = spd
+					#rm_spd = rm_spd -1
+			#if sonar.right_sensor  > 48 and sonar.right_sensor < 52:
+			#		rm_spd = spd
+			#		lm_spd = spd
+
+		#adjust for max/min
+		if lm_spd > 28: lm_spd = 28
+		if rm_spd > 28: rm_spd = 28
+		if lm_spd < 6: lm_spd = 6
+		if rm_spd < 6: rm_spd = 6
+
+		#send cmds to motors
+		motor.right(rm_spd)
+		motor.left(lm_spd)
+		time.sleep(.03)
+		#move_mobot(motor, 's', 0)
+		
 
 if __name__== "__main__":
 	testmode = False
@@ -338,21 +374,29 @@ if __name__== "__main__":
 			print "motor.isConnected:", motor.isConnected
 		time.sleep(2)
 
-	#start front navigation cam
-	front_cam = front_camera(1)
-	front_cam.daemon=True
-	front_cam.start()
+	#wallfollow(motor, sonar)
 
-	#start sonar display
-	sonar_disp = display_sonar(sonar)
-	sonar_disp.daemon=True
-	sonar_disp.start()
+	#start front navigation cam
+	mobot_disp = mobot_display(0, sonar)
+	mobot_disp.daemon=True
+	mobot_disp.start()
+	time.sleep(2)
 
 	#start sonar_hit_preventer
-	sonar_hit_preventer = sonar_prevent_hit(sonar)
-	sonar_hit_preventer.daemon=True
-	sonar_hit_preventer.start()
+	#sonar_hit_preventer = sonar_prevent_hit(motor, sonar, 38)
+	#sonar_hit_preventer.daemon=True
+	#sonar_hit_preventer.start()
+	#sonar_hit_preventer.join()
+	#time.sleep(2)
 
+	while True:
+		auto_move(motor, sonar, 38)
+		time.sleep(.03)
+	#wallfollow(motor, sonar, 40)
+
+
+
+'''
 	eg.rootWindowPosition = "+60+375"
 	while True:
 		
@@ -384,7 +428,7 @@ if __name__== "__main__":
 		reply =	eg.buttonbox(title='Mobot Drive', choices=('AutoPilot', 'F', 'B', 'L', 'R', 'STOP', 'Quit'), root=None)
 
 
-'''
+
 #############################################################
 #start gps
 #get current gps postiion

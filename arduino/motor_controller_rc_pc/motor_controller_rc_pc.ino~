@@ -133,25 +133,17 @@ void pc_commands(){
       int speed_cmd = cmd.substring(2,5).toInt();
       reverse(speed_cmd);
     }
-    if (cmd.substring(0,2) == "SL"){
+    if (cmd.substring(0,2) == "LT"){
       int speed_cmd = cmd.substring(2,5).toInt();
       left(speed_cmd);
     }
-    if (cmd.substring(0,2) == "SR"){
+    if (cmd.substring(0,2) == "RT"){
       int speed_cmd = cmd.substring(2,5).toInt();
       right(speed_cmd);
     }
     if (cmd.substring(0,2) == "ST"){
       int speed_cmd = cmd.substring(2,5).toInt();
       stop_motors();
-    }
-    if (cmd.substring(0,2) == "M1"){
-      int speed_cmd = cmd.substring(2,5).toInt();
-      m1_drive(speed_cmd);
-    }
-    if (cmd.substring(0,2) == "M2"){
-      int speed_cmd = cmd.substring(2,5).toInt();
-      m2_drive(speed_cmd);
     }
     if (cmd.substring(0,2) == "SP"){
       stats();

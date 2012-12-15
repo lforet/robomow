@@ -103,16 +103,30 @@ class robomow_motor(object):
 		send_command(self, command_str)	
 		#self.motor_stats()
 
-	def left(self, speed):
+	def spin_left(self, speed):
 		##takes desired speed as percentage
-		command_str = ("LT"+str(speed))
+		command_str = ("SL"+str(speed))
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
+		#self.motor_stats()
+
+	def spin_right(self, speed):
+		##takes desired speed as percentage
+		command_str = ("SR"+str(speed))
 		#validate_command(self, command_str)
 		send_command(self, command_str)	
 		#self.motor_stats()
 
 	def right(self, speed):
 		##takes desired speed as percentage
-		command_str = ("RT"+str(speed))
+		command_str = ("M2"+str(speed))
+		#validate_command(self, command_str)
+		send_command(self, command_str)	
+		#self.motor_stats()
+
+	def left(self, speed):
+		##takes desired speed as percentage
+		command_str = ("M1"+str(speed))
 		#validate_command(self, command_str)
 		send_command(self, command_str)	
 		#self.motor_stats()
@@ -182,10 +196,11 @@ def validate_command(self, cmd):
 				print "NOT successful: sending to motor arduino"
 
 def send_command(self, cmd):
-		#successful = False
-		
-		for n in range (3):
-			#time.sleep(0.5)
+	#successful = False
+
+	for n in range (3):
+		#time.sleep(0.5)
+		try:
 			self.com.flushOutput()
 			self.com.flushInput()
 			#time.sleep(.5)
@@ -195,12 +210,12 @@ def send_command(self, cmd):
 		#try:
 			#received = ""
 		#self.com.flushInput()
-			time.sleep(.1)
+			time.sleep(.05)
 			#while (len(received) < 1):
 			#	received = self.com.readline()
 			#	print "received back from arduino:", received
-		#except:
-		#	pass
+		except:
+			pass
 		#try:
 		#	received = ""
 		#	self.com.flushInput()
