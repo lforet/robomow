@@ -154,11 +154,13 @@ the_map = create_map(length, width)
 
 '''
 # fillout the map with a '+' pattern
-for x in range(n / 8, n * 7 / 8):
-    the_map[m / 2][x] = 1
-for y in range(m/8, m * 7 / 8):
-    the_map[y][n / 2] = 1
+for x in range(width / 8, width * 7 / 8):
+    the_map[length / 2][x] = 1
+for y in range(length/8, length * 7 / 8):
+    the_map[y][width / 2] = 1
 '''
+#print the_map
+#sys.exit(-1)
 
 '''
 #place random obstacles
