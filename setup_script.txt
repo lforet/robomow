@@ -7,3 +7,4 @@ sudo apt-get install python-matplotlib
 sudo easy_install geopy
 sudo pip install milk
 sudo pip install mahotas
+sudo easy_install simplekml

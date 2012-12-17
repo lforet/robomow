@@ -1,9 +1,6 @@
-# A* Shortest Path Algorithm
-# http://en.wikipedia.org/wiki/A*
-# for Robomow Navigation
 import sys
 sys.path.append( "/home/mobot/projects/robomow/lib/" )
-print sys.path
+
 from heapq import heappush, heappop # for priority queue
 import math
 import time
@@ -139,7 +136,7 @@ def create_map(length=30, width=30):
 	#n = 30 # horizontal size of the map
 	#m = 30 # vertical size of the map
 	the_map = []
-	row = [0] * length
+	row = [[0,0]] * length
 	for i in range(width): # create empty map
 		the_map.append(list(row))
 	return the_map
@@ -163,99 +160,112 @@ def print_map(the_map, width, length):
 					 print 'F', # finish
 			print
 
-'''
-# fillout the map with a '+' pattern
-for x in range(width / 8, width * 7 / 8):
-    the_map[length / 2][x] = 1
-for y in range(length/8, length * 7 / 8):
-    the_map[y][width / 2] = 1
-'''
-#print the_map
-#sys.exit(-1)
 
-'''
-#place random obstacles
-for i in range(200):
-	randx =random.randint(1,n-1)
-	randy =random.randint(1,m-1)
-	#print "randx,randy", randx,randy
-	the_map[randy][randx] = 1
-'''
-#create map
-length = 20
-width = 20 
-the_map = create_map(length, width)
-# randomly select start and finish locations from a list
-sf = []
-sf.append((0, 0, length - 1, width - 1))
-sf.append((0, width - 1, length - 1, 0))
-sf.append((length / 2 - 1, width / 2 - 1, length / 2 + 1, width / 2 + 1))
-sf.append((length / 2 - 1, width / 2 + 1, length / 2 + 1, width / 2 - 1))
-sf.append((length / 2 - 1, 0, length / 2 + 1, width - 1))
-sf.append((length / 2 + 1, width - 1, length / 2 - 1, 0))
-sf.append((0,width / 2 - 1, length - 1, width / 2 + 1))
-sf.append((length - 1, width/ 2 + 1, 0, width / 2 - 1))
-(xA, yA, xB, yB) = random.choice(sf)
 
-'''
-t = time.time()
-route = pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB)
-print 'Time to generate the route (seconds): ', time.time() - t
-print 'Route:'
-print route
-'''
-#place random obstacles
-'''
-for i in range(200):
-	randx =random.randint(1,n-1)
-	randy =random.randint(1,m-1)
-	if the_map[randy][randx] == 0:
-		#print "randx,randy", randx,randy
-		the_map[randy][randx] = 1
-'''
-xA = int(width / 2)
-yA = int(length / 2)
-print 'Map size (X,Y): ', width, length
-print 'Start: ', xA, yA, the_map[xA][yA]
-print 'Finish: ', xB, yB
+if __name__== "__main__":
 
-#until current location = destination location
-currentx = xA
-currenty = yA
-#update map with starting and destination position
-the_map[yA][xA] = 2
-the_map[yB][xB] = 4
-arrived = False
+	'''
+	# fillout the map with a '+' pattern
+	for x in range(width / 8, width * 7 / 8):
+		 the_map[length / 2][x] = 1
+	for y in range(length/8, length * 7 / 8):
+		 the_map[y][width / 2] = 1
+	'''
 
-num_of_directions = 8 # number of possible directions to move on the map
-if num_of_directions == 4:
-	 dx = [1, 0, -1, 0]
-	 dy = [0, 1, 0, -1]
-elif num_of_directions == 8:
-	 dx = [1, 1, 0, -1, -1, -1, 0, 1]
-	 dy = [0, 1, 1, 1, 0, -1, -1, -1]
+	#create map
+	length = 10
+	width = 10
+	the_map = create_map(length, width)
+	xB, yB = 4, 4 # destination
+	#mobot starts in center of map
+	xA, yA = int(width / 2), int(length / 2)
+	lat1 = 33.474947
+	lon1 = -86.822500
+	the_map[xA][yA] = lat1, lon1
+	print 'Map size (X,Y): ', width, length
+	print 'Start: ', xA, yA, the_map[xA][yA]
+	print 'Finish: ', xB, yB
+	#print the_map
+	meters_left = int(width/2)
+	meters_up = int(length / 2)
+	pos_left = []
+	pos_left =  destination_coordinates(lat1, lon1, 270, meters_left)
+	print pos_left
+	print lldistance((lat1, lon1), pos_left)
+	pos_up = []
+	pos_up = destination_coordinates(pos_left[0], pos_left[1], 0, meters_up)
+	print pos_up
+	print lldistance((lat1, lon1), pos_up)
+	the_map[0][0] = pos_up
+	#print the_map
 
-while arrived == False:
+	import simplekml
+	kml = simplekml.Kml()
+	for y in range(width):
+		for x in range(length):
+			temp_posx = destination_coordinates(pos_up[0], pos_up[1], 90 , x)
+			temp_posy = destination_coordinates(temp_posx[0], temp_posx[1], 180,y)
+			the_map[y][x] = temp_posy
+			name_str = "mobot" + str(x) + " " + str(y)
+			kml.newpoint(name=(name_str), coords=[(temp_posy[1], temp_posy[0])])
+			kml.save("mobot.kml")
+	print the_map
+
+	sys.exit(-1)
+
+
+	#until current location = destination location
+	currentx = xA
+	currenty = yA
+	#update map with starting and destination position
+	the_map[yA][xA] = 2
+	the_map[yB][xB] = 4
+	arrived = False
+
+	num_of_directions = 8 # number of possible directions to move on the map
+	if num_of_directions == 4:
+		 dx = [1, 0, -1, 0]
+		 dy = [0, 1, 0, -1]
+	elif num_of_directions == 8:
+		 dx = [1, 1, 0, -1, -1, -1, 0, 1]
+		 dy = [0, 1, 1, 1, 0, -1, -1, -1]
+
+	while arrived == False:
 	
-	#place random obstacles
-	for i in range(5):
-		randx =random.randint(1,length-1)
-		randy =random.randint(1,width-1)
-		if the_map[randy][randx] == 0:
-			#print "randx,randy", randx,randy
-			the_map[randy][randx] = 1
-	the_route = pathFind(the_map, length, width, num_of_directions, currentx, currenty, xB, yB)
-	if len(the_route) > 0:
-		print "route:", the_route
-		j = int(the_route[0])
-		currentx += dx[j]
-		currenty += dy[j]
-		the_map[currenty][currentx] = 3
+		#place random obstacles
+		for i in range(5):
+			randx =random.randint(1,length-1)
+			randy =random.randint(1,width-1)
+			if the_map[randy][randx] == 0:
+				#print "randx,randy", randx,randy
+				the_map[randy][randx] = 1
+		the_route = pathFind(the_map, length, width, num_of_directions, currentx, currenty, xB, yB)
+		if len(the_route) > 0:
+			print "route:", the_route
+			j = int(the_route[0])
+			currentx += dx[j]
+			currenty += dy[j]
+			the_map[currenty][currentx] = 3
 		
-		print_map(the_map, width, length)
-	else:
-		print "I have arrived..."
-		arrived = True	
+			print_map(the_map, width, length)
+		else:
+			print "I have arrived..."
+			arrived = True	
 
-	raw_input('Press Enter...')
+		raw_input('Press Enter...')
 
+
+
+
+	'''
+					self.latitude = (avg_latitude / (x*len(all_gps_list)))
+					self.longitude = (avg_longitude / (x*len(all_gps_list)))
+					#print "total sats:", self.active_satellites
+					self.active_satellites = ( avg_active_satellites / (x*len(all_gps_list)))
+					#time.sleep(1)
+						print 'Avg latitude : ' , self.latitude, "   ", abs(self.latitude - gpss[n].fix.latitude)
+						print 'Avg longitude: ' , self.longitude, "    ", abs(self.longitude - gpss[n].fix.longitude) 				
+					print 'Avg Active Satellites: ' , self.active_satellites
+			
+					print "Distance: ", round((lldistance((self.latitude, self.longitude), (gpss[n].fix.latitude, gpss[n].fix.longitude)) * 3.28084), 4), " feet"
+'''
