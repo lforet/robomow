@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+import sys
+sys.path.append( "/home/lforet/projects/robomow/lib/" )
+
+print sys.path
 from PIL import Image, ImageTk
 import time
 from datetime import datetime
@@ -7,15 +11,15 @@ import socket
 import cv2
 import cv
 from threading import *
-import sys
-from maxsonar_class import *
 import random
-from robomow_motor_class_arduino import *
-from gps_functions import *
 from math import *
 import easygui as eg
 import sonar_functions as sf
 from img_processing_tools import *
+from nav_functions import *
+from maxsonar_class import *
+from robomow_motor_class_arduino import *
+from gps_functions import *
 
 def snap_shot(filename):
 	#capture from camera at location 0
@@ -361,8 +365,21 @@ if __name__== "__main__":
 				testmode= True
 
 
-	test_gps()
+	#test_gps()
+	gpslist = gps_list()
+	#print gpslist
+	gps2 = mobot_gps()
+	gps2.daemon=True
+	gps2.start()
+	time.sleep(5)
 
+	while True:
+		time.sleep(1)
+		if (gps2.active_satellites > 4):
+			print "position: ", gps2.latitude, gps2.longitude
+			the_map = create_map(10, 10, (gps2.latitude, gps2.longitude))	
+			break
+	print the_map
 
 '''
 	sonar = None
