@@ -6,6 +6,8 @@ import math
 import time
 import random
 from gps_functions import *
+import simplekml
+
 
 class node:
     xPos = 0 # x position
@@ -132,14 +134,55 @@ def pathFind(the_map, n, m, num_of_directions, xA, yA, xB, yB):
 
 
 
-def create_map(length=30, width=30):
+def create_map(length, width, starting_pos):
+	#starting_pos = lat, lon
 	#n = 30 # horizontal size of the map
 	#m = 30 # vertical size of the map
 	the_map = []
 	row = [[0,0]] * length
 	for i in range(width): # create empty map
 		the_map.append(list(row))
+
+	#xB, yB = 4, 4 # destination
+	#mobot starts in center of map
+	xA, yA = int(width / 2), int(length / 2)
+	lat1 = starting_pos[0]
+	lon1 = starting_pos[1]
+	the_map[xA][yA] = lat1, lon1
+	print 'Map size (X,Y): ', width, length
+	print 'Start: ', xA, yA, the_map[xA][yA]
+	#print 'Finish: ', xB, yB
+	#print the_map
+	meters_left = int(width/2)
+	meters_up = int(length / 2)
+	pos_left = []
+	pos_left =  destination_coordinates(lat1, lon1, 270, meters_left)
+	print pos_left
+	print lldistance((lat1, lon1), pos_left)
+	pos_up = []
+	pos_up = destination_coordinates(pos_left[0], pos_left[1], 0, meters_up)
+	print pos_up
+	print lldistance((lat1, lon1), pos_up)
+	the_map[0][0] = pos_up
+	#print the_map
+
+	
+	kml = simplekml.Kml()
+	data_filename = "mobot_local_map.kml"
+	f_handle = open(data_filename, 'w')
+	f_handle.write('')
+	f_handle.close()
+	for y in range(width):
+		for x in range(length):
+			temp_posx = destination_coordinates(pos_up[0], pos_up[1], 90 , x)
+			temp_posy = destination_coordinates(temp_posx[0], temp_posx[1], 180,y)
+			the_map[y][x] = temp_posy
+			name_str = "mobot" + str(x) + " " + str(y)
+			kml.newpoint(name=(name_str), coords=[(temp_posy[1], temp_posy[0])])
+			kml.save(data_filename)
 	return the_map
+
+
 	
 def print_map(the_map, width, length):
 
@@ -175,40 +218,8 @@ if __name__== "__main__":
 	#create map
 	length = 10
 	width = 10
-	the_map = create_map(length, width)
-	xB, yB = 4, 4 # destination
-	#mobot starts in center of map
-	xA, yA = int(width / 2), int(length / 2)
-	lat1 = 33.474947
-	lon1 = -86.822500
-	the_map[xA][yA] = lat1, lon1
-	print 'Map size (X,Y): ', width, length
-	print 'Start: ', xA, yA, the_map[xA][yA]
-	print 'Finish: ', xB, yB
-	#print the_map
-	meters_left = int(width/2)
-	meters_up = int(length / 2)
-	pos_left = []
-	pos_left =  destination_coordinates(lat1, lon1, 270, meters_left)
-	print pos_left
-	print lldistance((lat1, lon1), pos_left)
-	pos_up = []
-	pos_up = destination_coordinates(pos_left[0], pos_left[1], 0, meters_up)
-	print pos_up
-	print lldistance((lat1, lon1), pos_up)
-	the_map[0][0] = pos_up
-	#print the_map
+	the_map = create_map(length, width, (33.5, -86.5))
 
-	import simplekml
-	kml = simplekml.Kml()
-	for y in range(width):
-		for x in range(length):
-			temp_posx = destination_coordinates(pos_up[0], pos_up[1], 90 , x)
-			temp_posy = destination_coordinates(temp_posx[0], temp_posx[1], 180,y)
-			the_map[y][x] = temp_posy
-			name_str = "mobot" + str(x) + " " + str(y)
-			kml.newpoint(name=(name_str), coords=[(temp_posy[1], temp_posy[0])])
-			kml.save("mobot.kml")
 	print the_map
 
 	sys.exit(-1)
