@@ -304,6 +304,41 @@ def evasive_maneuver(motor, sonar, threshold):
 		#time.sleep(.2)
 
 
+
+def turn_to_bearing(motor, sonar, threshold, compass, heading):
+	#wait to confirm 
+	move_mobot(motor, 's', 0)
+	time.sleep(1)
+	#while (sonar.min_dist > threshold ):
+	print "..........turning to bearing: ", bearing
+	dif = heading - compass.heading 
+	while dif > 20:	
+		move_mobot(motor, 'r', 10)
+		time.sleep(.3)
+		dif = heading - compass.heading 
+	move_mobot(motor, 's', 0)
+	time.sleep(1)	
+	print "heading now:", compass.heading
+
+
+
+	#print "sonar_data: ", sonar.sonar_data
+	#move_mobot(motor, 's', 0)
+	#time.sleep(.5)
+	#move_mobot(motor, 'b', 28)
+	#time.sleep(1)
+	#move_mobot(motor, 's', 0)
+	#	time.sleep(.5)
+		if (sonar.right_sensor > sonar.left_sensor):
+			motor.spin_right(25)
+			time.sleep(random.randint(100, 250)/100)	
+		else:
+			motor.spin_left(25)
+			time.sleep(random.randint(100, 250)/100)
+		#move_mobot(motor, 'f', 25)
+		#time.sleep(.2)
+
+
 def auto_move(motor, sonar, threshold):
 
 	print "..........autopilot............."
@@ -364,7 +399,28 @@ if __name__== "__main__":
 				print 'starting in testing mode'
 				testmode= True
 
+	sonar = None
+	motor = None
+	compass = None
+	reply =""
+	movetime = 0.25
+	while sonar == None or motor == None or compass = None:
+		if sonar == None: # or len(sonar.sonar_data) < 1:
+			sonar = send_sonar_data("sonar_data.txt")
+			sonar.daemon=True
+			sonar.start()
+		if motor == None:
+			motor = robomow_motor()
+			print "motor.isConnected:", motor.isConnected
+		if compass == None:
+			compass = android_sensor_tcp(8095)
+			compass.daemon=True
+			compass.start()
+		time.sleep(2)
 
+
+	turn_to_bearing(motor, sonar, 40, compass, 190)
+'''
 	#test_gps()
 	gpslist = gps_list()
 	#print gpslist
@@ -381,21 +437,7 @@ if __name__== "__main__":
 			break
 	print the_map
 
-'''
-	sonar = None
-	motor = None
-	reply =""
-	movetime = 0.25
-	while sonar == None or motor == None:
-		if sonar == None: # or len(sonar.sonar_data) < 1:
-			sonar = send_sonar_data("sonar_data.txt")
-			sonar.daemon=True
-			sonar.start()
-		if motor == None:
-			motor = robomow_motor()
-			print "motor.isConnected:", motor.isConnected
-		time.sleep(2)
-'''
+
 	#wallfollow(motor, sonar)
 
 	#start front navigation cam
@@ -417,8 +459,6 @@ if __name__== "__main__":
 	#wallfollow(motor, sonar, 40)
 
 
-
-'''
 	eg.rootWindowPosition = "+60+375"
 	while True:
 		

@@ -35,6 +35,8 @@ class android_sensor_tcp(Thread):
 		self.roll= None
 		self.azimuth = None
 		self.heading = None	
+		self.latitude = None
+		self.longitude = None
 		Thread.__init__(self)
 			
 	def run(self):
@@ -67,6 +69,8 @@ class android_sensor_tcp(Thread):
 							self.pitch = float(data1[9])
 							self.roll = float(data1[10])
 							self.azimuth = float(data1[11])
+							self.latitude =float(data1[12])
+							self.longitude = float(data1[13])
 							self.heading = math.degrees(self.azimuth)
 							if self.heading < 0: self.heading = self.heading + 360
 							self.heading = round(self.heading, 2)
@@ -85,7 +89,9 @@ class android_sensor_tcp(Thread):
 						self.pitch = None
 						self.roll= None
 						self.azimuth = None
-						self.heading = None	
+						self.heading = None
+						self.latitude = None
+						self.longitude = None		
 						conn = ""	
 						time.sleep(.5)	
 				time.sleep(1) 
@@ -122,7 +128,9 @@ if __name__== "__main__":
 	while True:
 		while android_sensor.heading == None:
 			time.sleep(.1)
-		print android_sensor.heading
-		#time.sleep(.1)
+		print android_sensor.heading, android_sensor.latitude, android_sensor.longitude
+		
+		time.sleep(.1)
+		
 	del android_sensor
 
