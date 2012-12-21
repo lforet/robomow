@@ -13,6 +13,8 @@ from Phidgets.PhidgetException import PhidgetErrorCodes, PhidgetException
 from Phidgets.Events.Events import SpatialDataEventArgs, AttachEventArgs, DetachEventArgs, ErrorEventArgs
 from Phidgets.Devices.Spatial import Spatial, SpatialEventData, TimeSpan
 
+
+
 sp = Spatial()
 print("Opening phidget object....")
 
@@ -50,18 +52,19 @@ north = 0
 for i in range (1000):
 	try:
 		print
-		print "acc:", sp.getAcceleration([0][0]), sp.getAcceleration([1][0]), sp.getAcceleration([2][0])
+		gravity = sp.getAngularRate([0][0]), sp.getAngularRate([1][0]), sp.getAngularRate([2][0])
+		print "acc:", gravity
 		print "AngularRate:", sp.getAngularRate([0][0]), sp.getAngularRate([1][0]), sp.getAngularRate([2][0])
-		print "MagneticField:", sp.getMagneticField([0][0]), sp.getMagneticField([1][0]), sp.getMagneticField([2][0])
-		compass = sp.getMagneticField([1][0])
+		magField = sp.getMagneticField([0][0]), sp.getMagneticField([1][0]), sp.getMagneticField([2][0])
+		print "MagneticField:", magField
 		#print "compass = ", compass
-		if compass > 0:		
-			north = north + compass
-			print "north: ", north, (north / i) , i
-		compassBearing = (north / i) * (180.0 / math.pi);
-		if (compassBearing > 360): compassBearing -= 360;
-		if (compassBearing < 0): compassBearing += 360;
-		print "compassBearing: ", compassBearing
+		#if compass <  0:		
+		#	compass = compass + 360
+			#print "north: ", north, (north / i) , i
+		#compassBearing = compass* (180.0 / math.pi);
+		#if (compassBearing > 360): compassBearing -= 360;
+		#if (compassBearing < 0): compassBearing += 360;
+		#print "compass: ", compass
 
 	except:
 		print ('..................')
