@@ -40,6 +40,8 @@ class mobot_gps( Thread ):
 		self.altitude = 0.0
 		self.satellites = 0
 		self.active_satellites = 0
+		self.track = 0.0
+		self.speed = 0.0
 		self.samples = 10
 
 	def __del__(self):
@@ -74,61 +76,73 @@ class mobot_gps( Thread ):
 			avg_altitude = 0.0
 			avg_satellites = 0
 			avg_active_satellites = 0
+			avg_track = 0.0;
+			avg_speed = 0.0
 			try:
 				for n in range(len(all_gps_list)):
 					for x in xrange(1, self.samples):
-						os.system("clear")
-						while ActiveSatelliteCount(gpss[n].satellites) < 4:
-							print "Acquiring at least 6 GPS Satellites..."
-							print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
-							print "Number of acquired satellites: ", ActiveSatelliteCount(gpss[n].satellites)
-							time.sleep(1)
-							os.system("clear")
-							gpss[n].next()
-							gpss[n].stream()
+						#os.system("clear")
+						#while ActiveSatelliteCount(gpss[n].satellites) < 4:
+						#	print "Acquiring at least 6 GPS Satellites..."
+						#	print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
+						#	print "Number of acquired satellites: ", ActiveSatelliteCount(gpss[n].satellites)
+						#	time.sleep(1)
+						#	os.system("clear")
+						#	gpss[n].next()
+						#	gpss[n].stream()
 						gpss[n].next()
+						gpss[n].stream()
 						#test data	
 						#gpss[n].fix.latitude = 53.32055555555556 + (random.random() * 0.00005)
 						#gpss[n].fix.longitude =-1.7297222222222221 + (random.random() * 0.00005)
 						
-					   	print "READING GPS:", n, "  ", x
-					   	print "-------------"
-					   	print 'latitude ' , gpss[n].fix.latitude
-					   	print 'longitude ' , gpss[n].fix.longitude
-					   	print 'time utc ' , gpss[n].utc, gpss[n].fix.time
-					   	print 'altitude ' , gpss[n].fix.altitude
-					   	print 'epx ', gpss[n].fix.epx
-					   	print 'epv ', gpss[n].fix.epv
-					   	print 'ept ', gpss[n].fix.ept
-					   	print "speed ", gpss[n].fix.speed
-					   	print "climb " , gpss[n].fix.climb
-					   	#print
-					   	print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
-					   	for i in gpss[n].satellites:
-						 	print '\t', i
-					   	print "Active satellites used: ", ActiveSatelliteCount(gpss[n].satellites)
+						#print "READING GPS:", n, "  ", x
+						#print "-------------"
+						#print 'latitude ' , gpss[n].fix.latitude
+						#print 'longitude ' , gpss[n].fix.longitude
+						#print 'mode:', gpss[n].fix.mode
+						#print 'track: ', gpss[n].fix.track
+						#print 'time utc ' , gpss[n].utc, gpss[n].fix.time
+						#print 'altitude ' , gpss[n].fix.altitude
+						#print 'epx ', gpss[n].fix.epx
+						#print 'epv ', gpss[n].fix.epv
+						#print 'ept ', gpss[n].fix.ept
+						#print 'epc ', gpss[n].fix.epc
+						#print 'epd ', gpss[n].fix.epd
+						#print 'eps ', gpss[n].fix.eps
+						#print "speed ", gpss[n].fix.speed
+						#print "climb " , gpss[n].fix.climb
+						#print
+						#print 'Satellites (total of', len(gpss[n].satellites) , ' in view)'
+						#for i in gpss[n].satellites:
+						#	print '\t', i
+						#print "Active satellites used: ", ActiveSatelliteCount(gpss[n].satellites)
 											
 						avg_latitude =  (avg_latitude + gpss[n].fix.latitude)  
 						avg_longitude = (avg_longitude + gpss[n].fix.longitude)
-						#if (x > 0):
-						#	print 'Avg latitude : ' , self.latitude / x
-						#	print 'Avg longitude: ' , self.longitude / x
-							#time.sleep(10)
-						avg_active_satellites = (avg_active_satellites + ActiveSatelliteCount(gpss[n].satellites))				
+						avg_altitude = (avg_altitude + gpss[n].fix.altitude)
+						avg_track = (avg_track + gpss[n].fix.track)
+						avg_speed = (avg_speed + gpss[n].fix.speed)
+						avg_active_satellites = (avg_active_satellites + ActiveSatelliteCount(gpss[n].satellites))	
+						avg_satellites = (avg_satellites + len(gpss[n].satellites))
 						time.sleep(.2)
 						
-				#print "Averaging....", (x*len(all_gps_list))
-				self.latitude = (avg_latitude / (x*len(all_gps_list)))
-				self.longitude = (avg_longitude / (x*len(all_gps_list)))
-				#print "total sats:", self.active_satellites
-				self.active_satellites = ( avg_active_satellites / (x*len(all_gps_list)))
-				#time.sleep(1)
-			   	print 'Avg latitude : ' , self.latitude, "   ", abs(self.latitude - gpss[n].fix.latitude)
-			   	print 'Avg longitude: ' , self.longitude, "    ", abs(self.longitude - gpss[n].fix.longitude) 				
-				print 'Avg Active Satellites: ' , self.active_satellites
+					#print "Averaging....", (x*len(all_gps_list))
+					self.latitude = (avg_latitude / (x*len(all_gps_list)))
+					self.longitude = (avg_longitude / (x*len(all_gps_list)))
+					#print "total sats:", self.active_satellites
+					self.active_satellites = ( avg_active_satellites / (x*len(all_gps_list)))
+					self.track = (avg_track / (x*len(all_gps_list)))
+					self.speed = (avg_speed / (x*len(all_gps_list)))
+					self.altitude = (avg_altitude / (x*len(all_gps_list)))
+					self.satellites = (avg_satellites / (x*len(all_gps_list)))
+					#time.sleep(1)
+					#print 'Avg latitude : ' , self.latitude, "   ", abs(self.latitude - gpss[n].fix.latitude)
+			   	#print 'Avg longitude: ' , self.longitude, "    ", abs(self.longitude - gpss[n].fix.longitude) 				
+				#print 'Avg Active Satellites: ' , self.active_satellites
 			
-				print "Distance: ", round((lldistance((self.latitude, self.longitude), (gpss[n].fix.latitude, gpss[n].fix.longitude)) * 3.28084), 4), " feet"
-				time.sleep(5)
+				#print "Distance: ", round((lldistance((self.latitude, self.longitude), (gpss[n].fix.latitude, gpss[n].fix.longitude)) * 3.28084), 4), " feet"
+				#time.sleep(5)
 
 
 			except:

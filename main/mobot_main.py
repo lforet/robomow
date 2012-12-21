@@ -1,9 +1,8 @@
 #!/usr/bin/python
 
 import sys
-sys.path.append( "/home/lforet/projects/robomow/lib/" )
+sys.path.append( "../lib/" )
 
-print sys.path
 from PIL import Image, ImageTk
 import time
 from datetime import datetime
@@ -215,17 +214,29 @@ def test_gps():
 	gps2 = mobot_gps()
 	gps2.daemon=True
 	gps2.start()
+	
+	current_track = 1000
+	max_spd = 0.0
 	#gps2.join()
 	while True:
 		print "# of GPS Units:", len(gpslist)
-		if (gps2.satellites > 0):
-			print 'Satellites (total of', len(gps2.satellites) , ' in view)'
-			print "Active satellites used:", gps2.active_satellites
-			for i in gps2.satellites:
-				print '\t', i
-		#print "lat: ", gps2.latitude
-		#print "long:", gps2.longitude
-		time.sleep(random.randint(1, 3))	
+		#if (gps2.satellites > 0):
+		print 'Satellites (total of', gps2.satellites , ' in view)'
+		print "Active satellites used:", gps2.active_satellites
+		#for i in gps2.satellites:
+		#	print '\t', i
+		print "lat: ", gps2.latitude
+		print "long:", gps2.longitude
+		print 'track: ', gps2.track
+		print "Current Track: ", current_track
+		mph = gps2.speed * 2.23693629
+		if mph > max_spd: max_spd = mph
+		print 'speed: m/sec', gps2.speed , " MPH:" , mph
+		print "max_spd: ", max_spd
+		if mph > 2.0:
+			current_track = gps2.track
+		#time.sleep(random.randint(1, 3))
+		time.sleep(.5)	
 		#os.system("clear")
 
 
@@ -365,27 +376,59 @@ if __name__== "__main__":
 				testmode= True
 
 
-	#test_gps()
-	gpslist = gps_list()
-	#print gpslist
-	gps2 = mobot_gps()
-	gps2.daemon=True
-	gps2.start()
-	time.sleep(5)
+	
 
+	#gpslist = gps_list()
+	#print gpslist
+	#mobot_gps = mobot_gps()
+	#mobot_gps.daemon=True
+	#mobot_gps.start()
+	#time.sleep(5)
+	'''
 	while True:
 		time.sleep(1)
-		if (gps2.active_satellites > 4):
-			print "position: ", gps2.latitude, gps2.longitude
-			the_map = create_map(10, 10, (gps2.latitude, gps2.longitude))	
-			break
+		#if (mobot_gps.active_satellites > 4):
+			#print "position: ", gps2.latitude, gps2.longitude
+			#the_map = create_map(10, 10, (gps2.latitude, gps2.longitude))	
+			#break
+		print; print
+		print "READINGS"
+		print "--------------------------------"
+		print "Number of GPS units: " , len(gpslist)
+		print 'latitude ' , mobot_gps.latitude
+		print 'longitude ' , mobot_gps.longitude
+		#print 'mode:', mobot_gps.fix.mode
+		print 'track: ', mobot_gps.track
+		#print 'time utc ' , mobot_gps.utc, mobot_gps.fix.time
+		print 'altitude ' , mobot_gps.altitude
+		#print 'epx ', mobot_gps.fix.epx
+		#print 'epv ', mobot_gps.fix.epv
+		#print 'ept ', mobot_gps.fix.ept
+		#print 'epc ', mobot_gps.fix.epc
+		#print 'epd ', mobot_gps.fix.epd
+		#print 'eps ', mobot_gps.fix.eps
+   	#print "speed ", mobot_gps.fix.speed
+   	#print "climb " , mobot_gps.fix.climb
+   	#print
+   	#print 'Satellites (total of', len(mobot_gps.satellites) , ' in view)'
+   	#for i in mobot_gps.satellites:
+	 	#	print '\t', i
+   	print "Active satellites used: ", mobot_gps.active_satellites
 	print the_map
 
-'''
+		except (KeyboardInterrupt, SystemExit): #when you press ctrl+c
+        print "\nKilling Thread..."
+        gpsp.running = False
+        gpsp.join() # wait for the thread to finish what it's doing
+    print "Done.\nExiting."
+
+
+	'''	
 	sonar = None
 	motor = None
 	reply =""
 	movetime = 0.25
+	'''
 	while sonar == None or motor == None:
 		if sonar == None: # or len(sonar.sonar_data) < 1:
 			sonar = send_sonar_data("sonar_data.txt")
@@ -395,14 +438,21 @@ if __name__== "__main__":
 			motor = robomow_motor()
 			print "motor.isConnected:", motor.isConnected
 		time.sleep(2)
-'''
+	'''
+
 	#wallfollow(motor, sonar)
 
 	#start front navigation cam
 	#mobot_disp = mobot_display(0, sonar)
 	#mobot_disp.daemon=True
 	#mobot_disp.start()
-	#time.sleep(2)
+
+	#time.sleep(5)
+	test_gps()
+
+	while True:
+		time.sleep(.1)
+		
 
 	#start sonar_hit_preventer
 	#sonar_hit_preventer = sonar_prevent_hit(motor, sonar, 38)
