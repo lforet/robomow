@@ -19,6 +19,7 @@ from nav_functions import *
 from maxsonar_class import *
 from robomow_motor_class_arduino import *
 from gps_functions import *
+from class_android_sensor_tcp import *
 
 def snap_shot(filename):
 	#capture from camera at location 0
@@ -321,33 +322,24 @@ def turn_to_bearing(motor, sonar, threshold, compass, heading):
 	move_mobot(motor, 's', 0)
 	time.sleep(1)
 	#while (sonar.min_dist > threshold ):
-	print "..........turning to bearing: ", bearing
-	dif = heading - compass.heading 
+	print "..........turning to heading: ", heading
+	while compass.heading == None:
+		time.sleep(.01)
+	dif = abs(heading - compass.heading )
 	while dif > 20:	
-		move_mobot(motor, 'r', 10)
-		time.sleep(.3)
-		dif = heading - compass.heading 
+		#motor.spin_right(22)
+		#time.sleep(.3)
+		while compass.heading == None:
+			time.sleep(.01)
+		dif = abs(heading - compass.heading )
+		print "dif:", dif
+		print "heading now:", compass.heading
+		#move_mobot(motor, 's', 0)
+		#time.sleep(.3)
 	move_mobot(motor, 's', 0)
 	time.sleep(1)	
 	print "heading now:", compass.heading
 
-
-
-	#print "sonar_data: ", sonar.sonar_data
-	#move_mobot(motor, 's', 0)
-	#time.sleep(.5)
-	#move_mobot(motor, 'b', 28)
-	#time.sleep(1)
-	#move_mobot(motor, 's', 0)
-	#	time.sleep(.5)
-		if (sonar.right_sensor > sonar.left_sensor):
-			motor.spin_right(25)
-			time.sleep(random.randint(100, 250)/100)	
-		else:
-			motor.spin_left(25)
-			time.sleep(random.randint(100, 250)/100)
-		#move_mobot(motor, 'f', 25)
-		#time.sleep(.2)
 
 
 def auto_move(motor, sonar, threshold):
@@ -415,7 +407,7 @@ if __name__== "__main__":
 	compass = None
 	reply =""
 	movetime = 0.25
-	while sonar == None or motor == None or compass = None:
+	while sonar == None or motor == None or compass == None:
 		if sonar == None: # or len(sonar.sonar_data) < 1:
 			sonar = send_sonar_data("sonar_data.txt")
 			sonar.daemon=True
@@ -429,9 +421,12 @@ if __name__== "__main__":
 			compass.start()
 		time.sleep(2)
 
+	time.sleep(5)
+	while compass.heading == None:
+		time.sleep(1)
+	turn_to_bearing(motor, sonar, 40, compass, 110)
+	
 
-
-	turn_to_bearing(motor, sonar, 40, compass, 190)
 '''
 	#test_gps()
 	gpslist = gps_list()
