@@ -42,14 +42,15 @@ try:
         data1 = data.split(',')
         #if not data: break
         #print 'Received from remote: ', data 
-        print "data1:", data1
+        if len(data1) > 0 : print "data1:", data1
         #conn.send("ACK")
         try:
             compass = math.degrees(float(data1[11]))
-            print "compass:", compass
+            if compass < 0: compass = compass + 360
+            print "compass:", round(compass)
         except:
             pass
-        time.sleep(1) 
+        #time.sleep(.1) 
     
 except IOError as detail:
     print "connection lost", detail

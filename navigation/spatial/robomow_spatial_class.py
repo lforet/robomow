@@ -42,7 +42,7 @@ class robomow_spatial(object):
 		print("Waiting for attach....")
 
 		try:
-			self.waitForAttach(2000)
+			self.waitForAttach(4000)
 			print "is attached = ", self.isAttached()
 		except PhidgetException as e:
 			print("Phidget Exception %i: %s" % (e.code, e.details))
@@ -57,6 +57,6 @@ class robomow_spatial(object):
 		else:
 			self.setDataRate(1000)
 			
-		
+	
 		
 
