@@ -55,7 +55,7 @@ class android_sensor_tcp(Thread):
 						data = read_line(conn)
 						if len(data) > 0: break
 					data1 = data.split(',')
-					print data1
+					print data
 					if len(data) > 1:
 						try:
 							self.light = float(data1[1])
