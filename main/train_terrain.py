@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+#!/usr/bin/python
+
+import sys
+sys.path.append( "../lib/" )
 
 import easygui as eg
-import sys
 from img_processing_tools import *
 #from PIL import Image
 from PIL import ImageStat

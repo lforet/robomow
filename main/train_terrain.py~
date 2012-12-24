@@ -14,29 +14,6 @@ import csv
 import milk
 from threading import *
 
-
-
-class front_camera(Thread):
-	def __init__(self, camID):
-		self.camID = camID   
-		#self.camera = cv2.VideoCapture(camID)  
-		#self.camera = cv.CreateCameraCapture(camID)  
-		Thread.__init__(self)
-
-	def run(self):
-		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
-		#gc.enable()
-		camera =  cv.CreateCameraCapture(self.camID)
-		while True:
-			time.sleep(.05)
-			#camera = cv2.VideoCapture(self.camID)
-			#ret, frame = camera.read()
-			frame = cv.QueryFrame(camera)
-			#cv2.imshow('Front Camera', frame)
-			cv.ShowImage('Front Camera', frame)
-			cv.WaitKey(50)
-					
-
 def snap_shot():
 	#capture from camera at location 0
 	now = time.time()
@@ -174,9 +151,6 @@ if __name__=="__main__":
 	print "********************************************************************"
 	video = None
 	webcam1 = None
-	front_cam = front_camera(1)
-	front_cam.daemon=True
-	front_cam.start()
 	img1 = None
 
 	if len(sys.argv) > 1:
