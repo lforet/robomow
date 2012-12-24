@@ -23,7 +23,7 @@ def snap_shot():
 	webcam1 = None
 	try:
 		while webcam1 == None:
-			webcam1 = cv2.VideoCapture(0)
+			webcam1 = cv2.VideoCapture(1)
 			time.sleep(.1)
 			#webcam1 = cv.CreateCameraCapture(1)
 	except:
