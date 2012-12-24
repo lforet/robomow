@@ -55,7 +55,7 @@ class android_sensor_tcp(Thread):
 						data = read_line(conn)
 						if len(data) > 0: break
 					data1 = data.split(',')
-					print data
+					#print data1
 					if len(data) > 1:
 						try:
 							self.light = float(data1[1])
@@ -70,8 +70,7 @@ class android_sensor_tcp(Thread):
 							self.roll = float(data1[10])
 							self.azimuth = float(data1[11])
 							self.latitude =float(data1[12])
-							self.longitude = float(data1[13])
-							
+							self.longitude = float(data1[13])	
 							self.heading = math.degrees(self.azimuth)
 							if self.heading < 0: self.heading = self.heading + 360
 							self.heading = round(self.heading, 2)
@@ -109,6 +108,7 @@ class android_sensor_tcp(Thread):
 			try:
 				print "waiting to accept.."
 				conn, addr = self.socket.accept()
+				print "connected...", conn, addr
 				return conn, addr	
 			except IOError as detail:
 				print "connection lost", detail
