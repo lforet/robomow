@@ -330,7 +330,9 @@ def turn_to_bearing(motor, sonar, threshold, compass, heading):
 		dif = abs(heading - compass.heading )
 		print "dif:", dif
 		print "heading now:", compass.heading
-		motor.spin_right(22)
+		#motor.spin_right(22)
+		motor.right(-24)
+		motor.left(22)
 		#time.sleep(.3)
 		#move_mobot(motor, 's', 0)
 		#time.sleep(.3)
@@ -422,7 +424,7 @@ if __name__== "__main__":
 	time.sleep(5)
 	while compass.heading == None:
 		time.sleep(1)
-	turn_to_bearing(motor, sonar, 40, compass, 110)
+	turn_to_bearing(motor, sonar, 40, compass, 180)
 	
 
 '''
