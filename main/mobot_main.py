@@ -558,6 +558,10 @@ if __name__== "__main__":
 			move_mobot(motor, 's', 0)
 		if reply == 'STOP':
 			move_mobot(motor, 's', 0)
+		
+		if reply == 'TRAIN':
+			reply2 = eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+
 		if reply == "Quit":
 			print "stopping mobot..."
 			move_mobot(motor, 's', 0)
@@ -569,7 +573,7 @@ if __name__== "__main__":
 		#	time.sleep(.5)
 		#	move_mobot(motor, "s", 0)
 	
-		reply =	eg.buttonbox(title='Mobot Drive', choices=('AutoPilot', 'F', 'B', 'L', 'R', 'STOP', 'Quit'), root=None)
+		reply =	eg.buttonbox(title='Mobot Drive', choices=('AutoPilot', 'F', 'B', 'L', 'R', 'STOP', 'TRAIN', 'Quit'), root=None)
 '''
 
 

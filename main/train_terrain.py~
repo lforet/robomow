@@ -7,7 +7,7 @@ sys.path.append( "../lib/" )
 import easygui as eg
 from img_processing_tools import *
 #from PIL import Image
-from PIL import ImageStat
+from PIL import ImageStat, Image, ImageDraw
 import cv, cv2 
 import time
 import mahotas
@@ -23,7 +23,7 @@ def snap_shot():
 	webcam1 = None
 	try:
 		while webcam1 == None:
-			webcam1 = cv2.VideoCapture(0)
+			webcam1 = cv2.VideoCapture(1)
 			time.sleep(.1)
 			#webcam1 = cv.CreateCameraCapture(1)
 	except:
@@ -75,13 +75,15 @@ def predict_class(img):
 	try:
 		model = pickle.load( open( "robomow_ai_model.mdl", "rb" ) )
 		features = find_features(img)
-		classID = classify(model, features)
+		classID = classify(model, features)	
 		if classID == 1: answer = "Mowable"
 		if classID == 2: answer = "Non-Mowable"
 		print "predicted classID:", answer
-		eg.msgbox("predicted classID:"+answer)
+		#eg.msgbox("predicted classID:"+answer)
+		return classID
 	except:
 		print "could not predict...bad data"
+		
 
 def save_data(features, classID):
 	data_filename = 'robomow_feature_data.csv'
@@ -111,41 +113,113 @@ def train_ai():
 		classID = []
 		features = []
 		features_temp_array = []
-	#try: 
-		data_filename = 'robomow_feature_data.csv'
-		print 'readind features and classID: ', data_filename
-		f_handle = open(data_filename, 'r')
-		reader = csv.reader(f_handle)
-		#read data from file into arrays
-		for row in reader:
-			data.append(row)
+		try: 
+			data_filename = 'robomow_feature_data.csv'
+			print 'readind features and classID: ', data_filename
+			f_handle = open(data_filename, 'r')
+			reader = csv.reader(f_handle)
+			#read data from file into arrays
+			for row in reader:
+				data.append(row)
 
-		for row in range(0, len(data)):
-			#print features[row][1]
-			classID.append(int(data[row][0]))
-			features_temp_array.append(data[row][1].split(" "))
+			for row in range(0, len(data)):
+				#print features[row][1]
+				classID.append(int(data[row][0]))
+				features_temp_array.append(data[row][1].split(" "))
 
-		#removes ending element which is a space
-		for x in range(len(features_temp_array)):
-			features_temp_array[x].pop()
-			features_temp_array[x].pop(0)
+			#removes ending element which is a space
+			for x in range(len(features_temp_array)):
+				features_temp_array[x].pop()
+				features_temp_array[x].pop(0)
 
-		#convert all strings in array to numbers
-		temp_array = []
-		for x in range(len(features_temp_array)):
-			temp_array = [ float(s) for s in features_temp_array[x] ]
-			features.append(temp_array)
+			#convert all strings in array to numbers
+			temp_array = []
+			for x in range(len(features_temp_array)):
+				temp_array = [ float(s) for s in features_temp_array[x] ]
+				features.append(temp_array)
 
-		#make numpy arrays
-		#features = np.asarray(features)
-		print classID, features 
+			#make numpy arrays
+			#features = np.asarray(features)
+			print classID, features 
 
-		learner = milk.defaultclassifier()
-		model = learner.train(features, classID)
-		pickle.dump( model, open( "robomow_ai_model.mdl", "wb" ) )
-	#except:
-		print "could not retrain.. bad file"
-		return 
+			learner = milk.defaultclassifier()
+			model = learner.train(features, classID)
+			pickle.dump( model, open( "robomow_ai_model.mdl", "wb" ) )
+		except:
+			print "could not retrain.. bad file"
+			return 
+
+
+def subsection_image(pil_img, sections, visual):
+	sections = sections / 4
+	#print "sections= ", sections
+	fingerprint = []
+
+	# - -----accepts image and  number of sections to divide the image into (resolution of fingerprint)
+	# ---------- returns a subsectioned image classified by terrain type
+	img_width, img_height = pil_img.size
+	#print "image size = img_wdith= ", img_width, "  img_height=", img_height, "  sections=", sections
+	#cv.DestroyAllWindows()
+	#time.sleep(2)
+	if visual == True:
+		cv_original_img1 = PILtoCV(pil_img,3)
+		#cv.NamedWindow('Original', cv.CV_WINDOW_AUTOSIZE)
+		cv.ShowImage("Original",cv_original_img1 )
+		#cv_original_img1_ary = np.array(PIL2array(pil_img))
+		#print cv_original_img1_ary
+		#cv2.imshow("Original",cv_original_img1_ary) 
+		cv.MoveWindow("Original", ((img_width)+100),50)
+	#pil_img = rgb2I3 (pil_img)
+	#cv.WaitKey()
+	#cv.DestroyWindow("Original")
+	temp_img = pil_img.copy()
+	xsegs = img_width  / sections
+	ysegs = img_height / sections
+	#print "xsegs, ysegs = ", xsegs, ysegs 
+	for yy in range(0, img_height-ysegs+1 , ysegs):
+		for xx in range(0, img_width-xsegs+1, xsegs):
+			#print "Processing section =", xx, yy, xx+xsegs, yy+ysegs
+			box = (xx, yy, xx+xsegs, yy+ysegs)
+			#print "box = ", box
+			cropped_img1 = pil_img.crop(box)
+			I3_mean =   ImageStat.Stat(cropped_img1).mean
+			I3_mean_rgb = (int(I3_mean[0]), int(I3_mean[1]), int(I3_mean[2]))
+			print "I3_mean: ", I3_mean
+			sub_ID = predict_class(image2array(cropped_img1))
+			print "sub_ID:", sub_ID
+			#fingerprint.append(sub_ID)
+			if visual == True:
+				cv_cropped_img1 = PILtoCV(cropped_img1,3)
+				cv.ShowImage("Fingerprint",cv_cropped_img1 )
+				cv.MoveWindow("Fingerprint", (img_width+100),50)
+				if sub_ID == 1: I3_mean_rgb = (50,150,50)
+				if sub_ID == 2: I3_mean_rgb = (150,150,150)
+				if sub_ID == 3: I3_mean_rgb = (0,0,200)
+				ImageDraw.Draw(pil_img).rectangle(box, (I3_mean_rgb))
+				cv_img = PILtoCV(pil_img,3)
+				cv.ShowImage("Image",cv_img)
+				cv.MoveWindow("Image", 50,50)
+				cv.WaitKey(20)
+				time.sleep(.1)
+				#print xx*yy
+				#time.sleep(.05)
+	#cv.DestroyAllWindows()
+	cv.DestroyWindow("Fingerprint")
+	cv.WaitKey(100)
+	cv.DestroyWindow("Image")
+	cv.WaitKey(100)
+	cv.DestroyWindow("Original")
+	cv.WaitKey(100)
+	cv.DestroyWindow("Image")
+	cv.WaitKey()
+	time.sleep(2)
+	#print "FINGERPRINT: ", fingerprint
+	#cv.WaitKey()
+	#return fingerprint
+	return 9
+
+
+
 
 if __name__=="__main__":
 	
@@ -180,7 +254,7 @@ if __name__=="__main__":
 				save_data(features, classID)
 			else:
 				if video != None: 
-					img1 = np.array(grab_frame_from_video(video)[0])
+					img1 = np.array(grab_frame_from_video(video)[1])
 				else:
 					img1 = snap_shot()
 				img1 = array2image(img1)
@@ -195,7 +269,7 @@ if __name__=="__main__":
 				save_data(features, classID)
 			else:
 				if video != None: 
-					img1 = np.array(grab_frame_from_video(video)[0])
+					img1 = np.array(grab_frame_from_video(video)[1])
 				else:
 					img1 = snap_shot()
 				img1 = array2image(img1)
@@ -213,14 +287,22 @@ if __name__=="__main__":
 				predict_class(img1)
 			else:
 				if video != None: 
-					img1 = np.array(grab_frame_from_video(video)[0])
+					img1 = np.array(grab_frame_from_video(video)[1])
 				else:
 					img1 = snap_shot()
 				img1 = array2image(img1)
 				img1 = img1.resize((320,240))
 				img1 = image2array(img1)
 				cv2.imwrite('temp.png', img1)
-	
+
+		if reply == "Subsection":
+			img1 = Image.open('temp.png')
+			print img1
+			xx = subsection_image(img1, 16,True)
+			print xx
+			#while (xx != 9):
+			#	time.sleep(1)
+
 		if reply == "Retrain AI":
 			print "Retraining AI"
 			train_ai()
@@ -228,7 +310,7 @@ if __name__=="__main__":
 		if reply == "Next Frame":
 			print "Acquiring new image.."
 			if video != None: 
-				img1 = np.array(grab_frame_from_video(video)[0])
+				img1 = np.array(grab_frame_from_video(video)[1])
 			else:
 				img1 = snap_shot()
 			img1 = array2image(img1)
@@ -241,7 +323,7 @@ if __name__=="__main__":
 		if reply == "Fwd 10 Frames":
 			print "Forward 10 frames..."
 			for i in range(10):
-				img1 = np.array(grab_frame_from_video(video)[0])
+				img1 = np.array(grab_frame_from_video(video)[1])
 			img1 = array2image(img1)
 			img1 = img1.resize((320,240))
 			img1 = image2array(img1)
@@ -261,11 +343,14 @@ if __name__=="__main__":
 			path = "../../../../mobot_data/images/test_images/"
 			filename = str(time.time()) + ".jpg"
 			img1.save(path+filename)	
-	
-		if video != None: 
-			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
-		else:
-			reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+		try:
+			print "trying"
+			if video != None: 
+				reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Subsection', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+			else:
+				reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+		except:
+			pass
 
 
 
