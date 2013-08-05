@@ -109,9 +109,7 @@ def sonar_graph(ping_readings):
 		radii = [ping_readings[3]]
 		width = .15
 		bars = ax.bar(angle, radii, width=width, bottom=0.0, color='blue')
-		img_to_return = fig2img(fig)
-		P.close(fig)
-		return img_to_return 
+		return fig2img(fig) 
 	except:
 		print "Sonar data error... can't graph"
 		pass
@@ -135,6 +133,7 @@ def sonar_graph(ping_readings):
 	
 	#gc.collect()
 	#del fig
+	print "hi"
 	P.close(fig)
 
 def process_sonar_data(sonar_data):

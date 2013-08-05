@@ -20,6 +20,8 @@ from maxsonar_class import *
 from robomow_motor_class_arduino import *
 from gps_functions import *
 from class_android_sensor_tcp import *
+from train_terrain import *
+
 
 def snap_shot(filename):
 	#capture from camera at location 0
@@ -143,16 +145,20 @@ class send_sonar_data(Thread):
 						self.sonar_data.append(int(data[(data.find('s2:')+3):(data.find('s3:'))]))
 						self.sonar_data.append(int(data[(data.find('s3:')+3):(data.find('s4:'))]))
 						self.sonar_data.append(int(data[(data.find('s4:')+3):(data.find('s5:'))]))
-						#self.sonar_data.append(int(data[(data.find('s5:')+3):(len(data)-1)]))
-						self.max_dist = max(self.sonar_data)
+						#have to put this before cliff sensor
 						self.min_dist = min(self.sonar_data)
 						self.min_sensor = self.sonar_data.index(self.min_dist)
+						self.sonar_data.append(int(data[(data.find('s5:')+3):(len(data)-1)]))
+						self.max_dist = max(self.sonar_data)
+						#self.min_dist = min(self.sonar_data)
+						#self.min_sensor = self.sonar_data.index(self.min_dist)
 						self.max_sensor = self.sonar_data.index(self.max_dist)
 						#sonar_data_str1 = "".join(str(x) for x in self.sonar_data)
 						self.frontl_sensor = self.sonar_data[0]
 						self.frontr_sensor = self.sonar_data[1]
 						self.right_sensor = self.sonar_data[2]
 						self.left_sensor = self.sonar_data[3]
+						self.cliff = self.sonar_data[4]
 
 						#print sonar_data_str1
 						#print data
@@ -170,28 +176,46 @@ class send_sonar_data(Thread):
 			print "out of while in sonar"
 
 
-def move_mobot(motor, themove, speed):
+def safety_check(motor, sonar, threshold, cliff):
+	answer = True
+	if (sonar.cliff > cliff):
+		print "cliff detected", sonar.cliff, cliff
+		answer = False
+	if (sonar.min_dist < threshold):
+		print "object too close", sonar.min_dist, threshold
+		answer = False
+	return answer
+
+def move_mobot(motor, sonar, threshold, cliff, themove, speed):
+	move_time = .6
+	print "sonar data:", sonar.sonar_data
 	print "moving:", themove, "  speed:", speed
-	#motor.stop()
+	#####################3
+	if themove == "s": motor.forward(0)
 	if (themove == "f"):
+		#if (safety_check(motor, sonar, threshold, cliff)) == True:
 		motor.forward(speed)
-		#time.sleep(.01)
-		#print motor.motor1_speed, motor.motor2_speed
+		time.sleep(move_time)
+		motor.forward(0)
+			#print motor.motor1_speed, motor.motor2_speed
+		#else:
+		#	evasive_maneuver(motor, sonar, threshold, cliff)
 	if (themove == "b"):
-		motor.reverse(speed)
-		#time.sleep(.01)
+		motor.left(-1*speed)
+		motor.right(-1*speed)
+		#motor.reverse(speed)
+		time.sleep(move_time)
+		motor.forward(0)
 		#print motor.motor1_speed, motor.motor2_speed
 	if (themove == "l"):
 		motor.spin_left(speed)
-		#time.sleep(.01)
+		time.sleep(move_time)
+		motor.forward(0)
 		#print motor.motor1_speed, motor.motor2_speed
 	if (themove == "r"):
 		motor.spin_right(speed)
-		#time.sleep(.01)
-		#print motor.motor1_speed, motor.motor2_speed
-	if (themove == "s"):
-		motor.stop()
-		#time.sleep(.01)
+		time.sleep(move_time)
+		motor.forward(0)
 		#print motor.motor1_speed, motor.motor2_speed
 	print "done moving"
 
@@ -241,8 +265,6 @@ def test_gps():
 		time.sleep(.5)	
 		#os.system("clear")
 
-
-
 class display_sonar(Thread):
 	def __init__(self, sonar):
 		self.sonar = sonar  
@@ -255,6 +277,8 @@ class mobot_display(Thread):
 		Thread.__init__(self)
 
 	def run(self):
+		global frame1
+		global frame2
 		cv2.namedWindow('Sonar Data', cv.CV_WINDOW_AUTOSIZE)
 		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
 		cv2.namedWindow('Ground Cam', cv.CV_WINDOW_AUTOSIZE)
@@ -270,15 +294,25 @@ class mobot_display(Thread):
 				sonar_img = sf.sonar_graph(self.sonar.sonar_data)
 				cv.ShowImage('Sonar Data', PILtoCV(sonar_img, 4))
 				cv.WaitKey(10)
-				frame = cv.QueryFrame(camera)
+				del sonar_img
+			except:
+				print "sonar display failure"
+				pass
+			try:
+				frame1 = cv.QueryFrame(camera)
+				frame1 = resize_img(frame1, 0.60)
+				cv.ShowImage('Front Camera', frame1)
+				cv.WaitKey(10)
+			except:
+				print "camera1 display failure"
+				pass
+			try:
 				frame2 = cv.QueryFrame(camera2)
-				frame = resize_img(frame, 0.60)
 				frame2 = resize_img(frame2, 0.60)
-				cv.ShowImage('Front Camera', frame)
 				cv.ShowImage('Ground Cam', frame2)
 				cv.WaitKey(10)
 			except:
-				print "display failure"
+				print "camera2 display failure"
 				pass
 
 class sonar_prevent_hit(Thread):
@@ -301,35 +335,35 @@ class sonar_prevent_hit(Thread):
 				print "sonar auto hit prevent failure"
 				pass
 
-def evasive_maneuver(motor, sonar, threshold):
+def evasive_maneuver(motor, sonar, threshold, cliff):
 	#wait to confirm 
-	move_mobot(motor, 's', 0)
-	time.sleep(.5)
-	while (sonar.min_dist < threshold ):
+	motor.stop()
+	time.sleep(1)
+	while (sonar.min_dist < threshold or sonar.cliff > cliff):
 		print "..........evasive maneuver............."
 		print "sonar_data: ", sonar.sonar_data
-		move_mobot(motor, 's', 0)
+		motor.stop()
 		time.sleep(1)
-		move_mobot(motor, 'b', 28)
+		motor.reverse(28)
 		time.sleep(1)
-		move_mobot(motor, 's', 0)
+		motor.stop()
 		time.sleep(.5)
 		if (sonar.right_sensor > sonar.left_sensor):
-			#while (sonar.min_dist < threshold):
+			#while (sonar.frontl_sensor < threshold and sonar.frontr_sensor < threshold):
 			motor.spin_right(26)
-			time.sleep(random.randint(120, 250)/100)	
+			time.sleep(random.randint(120, 260)/100)	
+			#time.sleep(0.02)
 		else:
-			#while (sonar.min_dist < threshold):
+			#while (sonar.frontl_sensor < threshold and sonar.frontr_sensor < threshold):
 			motor.spin_left(26)
-			time.sleep(random.randint(120, 250)/100)
+			time.sleep(random.randint(120, 260)/100)
+			#time.sleep(0.02)
 		#move_mobot(motor, 'f', 25)
 		#time.sleep(.2)
 
-
-
 def turn_to_bearing(motor, sonar, threshold, compass, heading):
 	#wait to confirm 
-	move_mobot(motor, 's', 0)
+	motor.forward(0)
 	time.sleep(1)
 	#while (sonar.min_dist > threshold ):
 	print "..........turning to heading: ", heading
@@ -346,17 +380,16 @@ def turn_to_bearing(motor, sonar, threshold, compass, heading):
 		#time.sleep(.3)
 		#move_mobot(motor, 's', 0)
 		#time.sleep(.3)
-	move_mobot(motor, 's', 0)
+	motor.foward(0)
 	time.sleep(1)	
 	print "heading now:", compass.heading
 
-
-
 class auto_move(Thread):
-	def __init__(self, motor, sonar, threshold):
+	def __init__(self, motor, sonar, threshold, cliff):
 		self.motor = motor
 		self.sonar = sonar
 		self.threshold = threshold
+		self.cliff = cliff
 		Thread.__init__(self)
 
 	def run(self):		
@@ -368,12 +401,13 @@ class auto_move(Thread):
 				print "..........autopilot............."
 				print "sonar_data: ", self.sonar.sonar_data
 				now =  datetime.now()
-				while  (self.sonar.min_dist < self.threshold):
-					evasive_maneuver(self.motor, self.sonar, self.threshold)
+				print "min sensor:", self.sonar.min_sensor		
+				while  (self.sonar.min_dist <= self.threshold):
+					evasive_maneuver(self.motor, self.sonar, self.threshold, self.cliff)
 				#time.sleep(.5)
 				if (self.sonar.min_dist > self.threshold):
-					move_mobot(self.motor, 'f', 20)
-				time.sleep(.01)
+					move_mobot(self.motor, self.sonar, self.threshold, self.cliff, 'f', 20)
+				time.sleep(.02)
 				#move_mobot(self.motor, 's', 0)
 				#print "sonar_data: ", sonar.sonar_data
 				#print "loop time:",  datetime.now() - now
@@ -417,6 +451,125 @@ def wallfollow(motor, sonar, threshold):
 		time.sleep(.03)
 		#move_mobot(motor, 's', 0)
 		
+def train_on_terrain():
+	global frame2
+	img1 = frame2
+	video = None
+	reply = ""
+	while reply != 'Quit':
+		#eg.rootWindowPosition = eg.rootWindowPosition
+		print 'reply=', reply		
+
+		#if reply == "": reply = "Next Frame"
+
+		if reply == "Mowable":
+			classID = "1"
+			if img1 != None:
+				features = find_features(frame2)
+				save_data(features, classID)
+			else:
+				if video != None: 
+					img1 = np.array(grab_frame_from_video(video)[1])
+				else:
+					img1 = frame2
+				img1 = array2image(img1)
+				img1 = img1.resize((320,240))
+				img1 = image2array(img1)
+				cv2.imwrite('temp.png', img1)
+
+		if reply == "Non-Mowable":
+			classID = "2"
+			if img1 != None:
+				features = find_features(img1)
+				save_data(features, classID)
+			else:
+				if video != None: 
+					img1 = np.array(grab_frame_from_video(video)[1])
+				else:
+					img1 = frame2
+				img1 = array2image(img1)
+				img1 = img1.resize((320,240))
+				img1 = image2array(img1)
+				cv2.imwrite('temp.png', img1)
+
+		if reply == "Quit":
+			print "Quitting Training...."
+			#sys.exit(-1)
+
+		if reply == "Predict":
+			print "AI predicting"
+			if img1 != None:
+				predict_class(CV2array(img1))
+			else:
+				if video != None: 
+					img1 = np.array(grab_frame_from_video(video)[1])
+				else:
+					img1 = frame2
+				img1 = array2image(img1)
+				img1 = img1.resize((320,240))
+				img1 = image2array(img1)
+				cv2.imwrite('temp.png', img1)
+
+		if reply == "Subsection":
+			img1 = Image.open('temp.png')
+			print img1
+			xx = subsection_image(img1, 16,True)
+			print xx
+			#while (xx != 9):
+			#	time.sleep(1)
+
+		if reply == "Retrain AI":
+			print "Retraining AI"
+			train_ai()
+
+		if reply == "Next Frame":
+			print "Acquiring new image.."
+			if video != None: 
+				img1 = np.array(grab_frame_from_video(video)[1])
+			else:
+				img1 = frame2
+			print img1
+			#img1 = array2image(img1)
+			#img1 = CVtoPIL(img1)
+			#img1 = img1.resize((320,240))
+			#img1 = PILtoCV(img1,3)
+			#img1 = image2array(img1)
+			#cv2.imwrite('temp.png', img1)
+			cv.SaveImage('temp.png', img1)
+			#print type(img1)
+			#img1.save()
+
+		if reply == "Fwd 10 Frames":
+			print "Forward 10 frames..."
+			for i in range(10):
+				img1 = np.array(grab_frame_from_video(video)[1])
+			img1 = array2image(img1)
+			img1 = img1.resize((320,240))
+			img1 = image2array(img1)
+			cv2.imwrite('temp.png', img1)
+
+		if reply == "Del AI File":
+			data_filename = 'robomow_feature_data.csv'
+			f_handle = open(data_filename, 'w')
+			f_handle.write('')
+			f_handle.close()
+
+		if reply == "Test Img":	
+			#im = Image.fromarray(image)
+			#im.save("new.png")
+			img1 = Image.open('temp.png')
+			#img1.thumbnail((320,240))
+			path = "../../../../mobot_data/images/test_images/"
+			filename = str(time.time()) + ".jpg"
+			img1.save(path+filename)	
+			print "trying"
+		#if video != None: 
+		#	reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img', 'Next Frame', 'Fwd 10 Frames', 'Predict', 'Subsection', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+		#else:
+		reply =	eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+
+
+
 
 if __name__== "__main__":
 	testmode = False
@@ -430,8 +583,12 @@ if __name__== "__main__":
 	motor = None
 	compass = None
 	reply =""
-	movetime = 0.35
+	movetime = 0.4
 	threshold = 40
+	cliff = 48
+	frame1 =  None
+	frame2 = None
+
 	while sonar == None or motor == None:# or compass == None:
 		if sonar == None: # or len(sonar.sonar_data) < 1:
 			sonar = send_sonar_data("sonar_data.txt")
@@ -451,7 +608,6 @@ if __name__== "__main__":
 	#while compass.heading == None:
 	#	time.sleep(1)
 
-
 	#turn_to_bearing(motor, sonar, 40, compass, 0)
 	
 	#test_gps()
@@ -461,7 +617,6 @@ if __name__== "__main__":
 	#gps2.daemon=True
 	#gps2.start()
 	#time.sleep(5)
-
 
 	while True:
 		time.sleep(1)
@@ -507,10 +662,10 @@ if __name__== "__main__":
 	mobot_disp = mobot_display(0, sonar)
 	mobot_disp.daemon=True
 	mobot_disp.start()
-	time.sleep(2)
+	#time.sleep(2)
 	#test_gps()
 
-	mobot_autopilot = auto_move(motor, sonar, threshold)
+	mobot_autopilot = auto_move(motor, sonar, threshold, cliff)
 	mobot_autopilot.daemon = True
 	mobot_autopilot.start()
 	print mobot_autopilot
@@ -543,37 +698,37 @@ if __name__== "__main__":
 			print "auto_pilot_on:", auto_pilot_on
 	
 		if reply == 'F':
-			move_mobot(motor, 'f', 25)
+			move_mobot(motor, sonar, threshold, cliff, 'f', 25)
 			#time.sleep(movetime)
 		if reply == 'B':
-			move_mobot(motor, 'b', 25)
+			move_mobot(motor, sonar, threshold, cliff, 'b', 25)
 			#time.sleep(movetime)
 		if reply == 'R':
-			move_mobot(motor, 'r', 25)
+			move_mobot(motor, sonar, threshold, cliff, 'r', 28)
 			time.sleep(movetime)
-			move_mobot(motor, 's', 0)
+			motor.stop()
 		if reply == 'L':
-			move_mobot(motor, 'l', 25)
+			move_mobot(motor, sonar, threshold, cliff, 'l', 28)
 			time.sleep(movetime)
-			move_mobot(motor, 's', 0)
+			motor.stop()
 		if reply == 'STOP':
-			move_mobot(motor, 's', 0)
+			motor.stop()
 		
 		if reply == 'TRAIN':
-			reply2 = eg.buttonbox(msg='Classify Image', title='Robomow GUI', choices=('Mowable', 'Non-Mowable', 'Test Img','Next Frame',  'Predict', 'Retrain AI' , 'Del AI File', 'Quit'), image='temp.png', root=None)
+			train_on_terrain()
 
 		if reply == "Quit":
 			print "stopping mobot..."
-			move_mobot(motor, 's', 0)
-			time.sleep(movetime)
+			motor.stop()
+			#time.sleep(movetime)
 			print "Quitting...."
 			sys.exit(-1)
 		#for i in range (4):
-		auto_move(motor, sonar, threshold)
+		auto_move(motor, sonar, threshold, cliff)
 		#	time.sleep(.5)
 		#	move_mobot(motor, "s", 0)
 	
-		reply =	eg.buttonbox(title='Mobot Drive', choices=('AutoPilot', 'F', 'B', 'L', 'R', 'STOP', 'Quit'), root=None)
+		reply =	eg.buttonbox(title='Mobot Drive', choices=('AutoPilot', 'F', 'B', 'L', 'R', 'STOP', 'TRAIN', 'Quit'), root=None)
 '''
 
 

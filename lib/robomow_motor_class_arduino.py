@@ -55,7 +55,7 @@ class robomow_motor(object):
 				print "class robomow_motor: searching on COM:", com
 				time.sleep(.5)
 				try:				
-					ser = serial.Serial(com, 57600, timeout=1)
+					ser = serial.Serial(com, 57600, timeout=0.2)
 					data = ser.readline()
 					#print "data=", int(data[3:(len(data)-1)])
 					if data[0:2] == "m1":
@@ -98,7 +98,7 @@ class robomow_motor(object):
 
 	def stop(self):
 		##takes desired speed as percentage
-		command_str = ("ST")
+		command_str = ("FW"+str(0))
 		#validate_command(self, command_str)
 		send_command(self, command_str)	
 		#self.motor_stats()
@@ -197,34 +197,38 @@ def validate_command(self, cmd):
 
 def send_command(self, cmd):
 	#successful = False
-
-	for n in range (1):
-		time.sleep(0.1)
+	received = ""
+	for n in range (5):	
+		self.com.flushOutput()
+		self.com.flushInput()
+		try:	
+			received = self.com.readline()
+		except SerialException as jj:
+			print jj
+		print "received back from arduino:", received
+		received = received.replace("\r", "")
+		received = received.replace("\n", "")
+		if (received[0:3] == "m1:"): break
+	if (len(received) > 0) and (received[0:3] == "m1:"):
+		self.com.flushOutput()
+		self.com.flushInput()
+		print "sending command:", cmd
+		self.com.write(cmd)
+	else:
 		try:
-			received = ""
-			while (len(received) < 3):
-				self.com.flushOutput()
-				self.com.flushInput()
-				self.com.write(cmd)
-				received = self.com.readline()
-				#print "received back from arduino:", received
-				received = received.replace("\r\n", "")
-				#print len(received)
-			if (received != "m1:"):
-				try:
-					print "closing port"
-					#print self.com
-					self.com.close()
-					self.isConnected = False
-					self.com = None
-					print "reopening port"
-					self.com = self.open_serial_port()			
-				except:
-					print "problem re-opening motor serial port"
-					pass
+			print "closing port"
+			#print self.com
+			self.com.close()
+			self.isConnected = False
+			self.com = None
+			print "reopening port"
+			self.com = self.open_serial_port()			
 		except:
-			print "motor driver problem"
+			print "problem re-opening motor serial port"
 			pass
+		#except:
+		#	print "motor driver problem"
+		#	pass
 		#try:
 		#	received = ""
 		#	self.com.flushInput()

@@ -79,7 +79,7 @@ def predict_class(img):
 		if classID == 1: answer = "Mowable"
 		if classID == 2: answer = "Non-Mowable"
 		print "predicted classID:", answer
-		#eg.msgbox("predicted classID:"+answer)
+		eg.msgbox("predicted classID:"+answer)
 		return classID
 	except:
 		print "could not predict...bad data"
@@ -217,8 +217,6 @@ def subsection_image(pil_img, sections, visual):
 	#cv.WaitKey()
 	#return fingerprint
 	return 9
-
-
 
 
 if __name__=="__main__":

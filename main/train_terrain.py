@@ -72,17 +72,17 @@ def grab_frame_from_video(video):
 				
 
 def predict_class(img):
-	try:
-		model = pickle.load( open( "robomow_ai_model.mdl", "rb" ) )
-		features = find_features(img)
-		classID = classify(model, features)	
-		if classID == 1: answer = "Mowable"
-		if classID == 2: answer = "Non-Mowable"
-		print "predicted classID:", answer
-		#eg.msgbox("predicted classID:"+answer)
-		return classID
-	except:
-		print "could not predict...bad data"
+	#try:
+	model = pickle.load( open( "robomow_ai_model.mdl", "rb" ) )
+	features = find_features(img)
+	classID = classify(model, features)	
+	if classID == 1: answer = "Mowable"
+	if classID == 2: answer = "Non-Mowable"
+	print "predicted classID:", answer
+	eg.msgbox("predicted classID:"+answer)
+	return classID
+	#except:
+	print "could not predict...bad data"
 		
 
 def save_data(features, classID):
@@ -217,8 +217,6 @@ def subsection_image(pil_img, sections, visual):
 	#cv.WaitKey()
 	#return fingerprint
 	return 9
-
-
 
 
 if __name__=="__main__":
