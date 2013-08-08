@@ -2,7 +2,8 @@
 
 import serial
 import time
-#from identify_device_on_ttyport import *
+import os
+from serial.tools import list_ports
 
 def log(*msgline):
 	for msg in msgline:
@@ -31,25 +32,7 @@ class robomow_motor(object):
 	def open_serial_port(self):
 		while self.isConnected == False:
 			print "class robomow_motor: searching serial ports for motor controller package..."
-			for i in range(5):
-				'''
-				com = "/dev/ttyUSB"
-				com = com[0:11] + str(i)
-				print "class robomow_motor: searching on COM:", com
-				time.sleep(.5)
-				try:				
-					ser = serial.Serial(com, 9600, timeout=1)
-					data = ser.readline()
-					#print "data=", int(data[3:(len(data)-1)])
-					if data[0:2] == "m1":
-						#ser.write("X")      # write a string
-						print "class robomow_motor: found motor controller package on COM: ", com
-						self.isConnected  = True
-						time.sleep(.35)
-						break
-				except:
-					pass
-				'''
+			for i in range(len(list_serial_ports())):
 				com = "/dev/ttyACM"
 				com = com[0:11] + str(i)
 				print "class robomow_motor: searching on COM:", com
@@ -169,6 +152,13 @@ class robomow_motor(object):
 		if (successful == False):
 				print "NOT successful: sending SP stats to motor arduino"
 
+	def terminate(self):
+		self.com.close()
+		print "closing motor serial", self.com
+		print self._should_stop.set()
+		#self._read_thread.wait()
+#############################################################
+
 def validate_command(self, cmd):
 		successful = False
 		for n in range (5):
@@ -237,3 +227,29 @@ def send_command(self, cmd):
 		#except:
 		#	pass
 		#time.sleep(5)
+
+def list_serial_ports():
+    # Windows
+    if os.name == 'nt':
+        # Scan for available ports.
+        available = []
+        for i in range(256):
+            try:
+                s = serial.Serial(i)
+                available.append('COM'+str(i + 1))
+                s.close()
+            except serial.SerialException:
+                pass
+        return available
+    else:
+		# Mac / Linux
+		ports_to_return = []
+		for port in list_ports.comports():
+			#print port[1]
+			#[start:end:increment] 
+			#print port[1][3:4:1]
+			if port[1][3:4:1] == "A":ports_to_return.append(port)
+		#print ports_to_return
+		#raw_input ("press enter") 
+		return ports_to_return
+

@@ -105,7 +105,8 @@ class send_video(Thread):
 				time.sleep(.01)
 							
 class send_sonar_data(Thread):
-	def __init__(self, filetosend):   
+	def __init__(self, filetosend): 
+		self.sonar = MaxSonar()  
 		self.filetosend = filetosend
 		self.sonar_data = "" 
 		self.max_dist = -1
@@ -120,7 +121,6 @@ class send_sonar_data(Thread):
 
 	def run(self):
 			#global file_lock, hhh
-			sonar = MaxSonar()
 			while True:
 				self.sonar_data = ""
 				self.max_dist = -1
@@ -136,7 +136,7 @@ class send_sonar_data(Thread):
 				#for i in range(1,6):
 				#	sonar_data = sonar_data + "s"+str(i)+":"+ str(random.randint(28, 91))
 
-				data = str(sonar.distances_cm())
+				data = str(self.sonar.distances_cm())
 				self.sonar_data = []
 				sonar_data_str1 = ""
 				try:
@@ -174,6 +174,9 @@ class send_sonar_data(Thread):
 				except:
 					pass
 			print "out of while in sonar"
+	
+	def terminate(self):
+		self.sonar.terminate()
 
 
 def safety_check(motor, sonar, threshold, cliff):
@@ -202,7 +205,7 @@ def move_mobot(motor, sonar, threshold, cliff, themove, speed):
 		#	evasive_maneuver(motor, sonar, threshold, cliff)
 	if (themove == "b"):
 		motor.left(-1*speed)
-		motor.right(-1*speed)
+		motor.right(-1*(speed*1.2))
 		#motor.reverse(speed)
 		time.sleep(move_time)
 		motor.forward(0)
@@ -283,7 +286,7 @@ class mobot_display(Thread):
 		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
 		cv2.namedWindow('Ground Cam', cv.CV_WINDOW_AUTOSIZE)
 		cv.MoveWindow('Front Camera', 373, 24)
-		cv.MoveWindow('Ground Cam', 700, 24)
+		cv.MoveWindow('Ground Cam', 760, 24)
 		cv.MoveWindow('Sonar Data', 60, 24)
 		camera =  cv.CreateCameraCapture(self.camID)
 		camera2 = cv.CreateCameraCapture(1)
@@ -337,26 +340,28 @@ class sonar_prevent_hit(Thread):
 				pass
 
 def evasive_maneuver(motor, sonar, threshold, cliff):
+	global auto_pilot_on
 	#wait to confirm 
 	motor.stop()
-	time.sleep(1)
-	while (sonar.min_dist < threshold or sonar.cliff > cliff):
+	time.sleep(.05)
+	while (sonar.min_dist < threshold or sonar.cliff > cliff or auto_pilot_on == True):
 		print "..........evasive maneuver............."
 		print "sonar_data: ", sonar.sonar_data
 		motor.stop()
-		time.sleep(1)
-		motor.reverse(28)
+		time.sleep(.05)
+		motor.left(-1*24)
+		motor.right(-1*(24*1.2))
 		time.sleep(1)
 		motor.stop()
-		time.sleep(.5)
+		#time.sleep(.5)
 		if (sonar.right_sensor > sonar.left_sensor):
 			#while (sonar.frontl_sensor < threshold and sonar.frontr_sensor < threshold):
-			motor.spin_right(26)
+			motor.spin_right(24)
 			time.sleep(random.randint(120, 260)/100)	
 			#time.sleep(0.02)
 		else:
 			#while (sonar.frontl_sensor < threshold and sonar.frontr_sensor < threshold):
-			motor.spin_left(26)
+			motor.spin_left(24)
 			time.sleep(random.randint(120, 260)/100)
 			#time.sleep(0.02)
 		#move_mobot(motor, 'f', 25)
@@ -407,8 +412,9 @@ class auto_move(Thread):
 					evasive_maneuver(self.motor, self.sonar, self.threshold, self.cliff)
 				#time.sleep(.5)
 				if (self.sonar.min_dist > self.threshold):
-					move_mobot(self.motor, self.sonar, self.threshold, self.cliff, 'f', 20)
-				time.sleep(.02)
+					move_mobot(self.motor, self.sonar, self.threshold, self.cliff, 'f',18)
+
+				#time.sleep(1)
 				#move_mobot(self.motor, 's', 0)
 				#print "sonar_data: ", sonar.sonar_data
 				#print "loop time:",  datetime.now() - now
@@ -590,20 +596,31 @@ if __name__== "__main__":
 	frame1 =  None
 	frame2 = None
 
-	while sonar == None or motor == None:# or compass == None:
-		if sonar == None: # or len(sonar.sonar_data) < 1:
-			sonar = send_sonar_data("sonar_data.txt")
-			sonar.daemon=True
-			sonar.start()
-		if motor == None:
-			motor = robomow_motor()
-			print "motor.isConnected:", motor.isConnected
+	#while sonar == None or motor == None:# or compass == None:
+	while sonar == None:
+			try:
+				sonar = send_sonar_data("sonar_data.txt")
+			except:
+				time.sleep(.5)
+				pass
+	sonar.daemon=True
+	sonar.start()
+
+	while motor == None:
+			try:
+				motor = robomow_motor()
+				print "motor.isConnected:", motor.isConnected
+			except:
+				time.sleep(.5)
+				pass
+
 		#if compass == None:
 		#	compass = android_sensor_tcp(8095)
 		#	compass.daemon=True
 		#	compass.start()
 	time.sleep(2)
 	print "done"
+
 	'''
 	#time.sleep(3)
 	#while compass.heading == None:
@@ -720,15 +737,15 @@ if __name__== "__main__":
 
 		if reply == "Quit":
 			print "stopping mobot..."
-			motor.stop()
+			motor.forward(0)
+			time.sleep(.1)
+			del mobot_disp	
+			motor.terminate()
+			sonar.terminate()
+			sys.exit(-1)
 			#time.sleep(movetime)
 			print "Quitting...."
-			sys.exit(-1)
-		#for i in range (4):
-		auto_move(motor, sonar, threshold, cliff)
-		#	time.sleep(.5)
-		#	move_mobot(motor, "s", 0)
-	
+
 		reply =	eg.buttonbox(title='Mobot Drive', choices=('AutoPilot', 'F', 'B', 'L', 'R', 'STOP', 'TRAIN', 'Quit'), root=None)
 '''
 
