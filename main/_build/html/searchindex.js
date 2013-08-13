@@ -1,0 +1,1 @@
+Search.setIndex({envversion:42,terms:{index:0,search:0,bold:[],modul:0,page:[],content:0,mobot_main:[],main:[],section:[]},objtypes:{},objnames:{},filenames:["index","mobot_main"],titles:["Welcome to mobot&#8217;s documentation!","<strong>Mobot Main</strong>"],objects:{},titleterms:{main:1,document:0,welcom:0,section:1,indic:0,mobot:[0,1],tabl:0,strong:1,page:1,bold:[]}})

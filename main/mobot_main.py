@@ -24,6 +24,7 @@ from train_terrain import *
 
 
 def snap_shot(filename):
+	"""grabs a frame from webcam, resizes to 320x240 and returns image"""
 	#capture from camera at location 0
 	now = time.time()
 	global webcam1
