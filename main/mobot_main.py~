@@ -21,10 +21,13 @@ from robomow_motor_class_arduino import *
 from gps_functions import *
 from class_android_sensor_tcp import *
 from train_terrain import *
+from lidar_class import *
 
+from visual import *
+from mobot_nav_class import *
 
 def snap_shot(filename):
-	'''grabs a frame from webcam, resizes to 320x240 and returns image'''
+	"""grabs a frame from webcam, resizes to 320x240 and returns image"""
 	#capture from camera at location 0
 	now = time.time()
 	global webcam1
@@ -598,14 +601,14 @@ if __name__== "__main__":
 	frame2 = None
 
 	#while sonar == None or motor == None:# or compass == None:
-	while sonar == None:
-			try:
-				sonar = send_sonar_data("sonar_data.txt")
-			except:
-				time.sleep(.5)
-				pass
-	sonar.daemon=True
-	sonar.start()
+	#while sonar == None:
+	#		try:
+	#			sonar = send_sonar_data("sonar_data.txt")
+	#		except:
+	#			time.sleep(.5)
+	#			pass
+	#sonar.daemon=True
+	#sonar.start()
 
 	while motor == None:
 			try:
@@ -619,8 +622,19 @@ if __name__== "__main__":
 		#	compass = android_sensor_tcp(8095)
 		#	compass.daemon=True
 		#	compass.start()
+		
+	while lidar == None:	
+		print 'trying to connect lidar'
+		lidar = mobot_lidar("/dev/ttyUSB0", 115200)
+		#except:
+		time.sleep(.5)
+		pass
+
+	#th = thread.start_new_thread(update_view, (lidar,))		
 	time.sleep(2)
-	print "done"
+	nav = mobot_nav (lidar)
+	raw_input ('done connecting motor and lidar: press enter')
+	
 
 	'''
 	#time.sleep(3)
@@ -684,10 +698,10 @@ if __name__== "__main__":
 	#time.sleep(2)
 	#test_gps()
 
-	mobot_autopilot = auto_move(motor, sonar, threshold, cliff)
-	mobot_autopilot.daemon = True
-	mobot_autopilot.start()
-	print mobot_autopilot
+	#mobot_autopilot = auto_move(motor, sonar, threshold, cliff)
+	#mobot_autopilot.daemon = True
+	#mobot_autopilot.start()
+	#print mobot_autopilot
 
 	#while True:
 	#	time.sleep(.1)
@@ -707,6 +721,10 @@ if __name__== "__main__":
 
 	eg.rootWindowPosition = "+60+375"
 	while True:
+		
+		if reply == 'Turn?':
+			print "angel_greatest_dist", nav.angel_greatest_dist()
+			print "turn_left_or_right", nav.turn_left_or_right()
 		
 		if reply == 'AutoPilot':
 			#auto_move(motor, sonar, threshold)

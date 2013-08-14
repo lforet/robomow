@@ -1,15 +1,280 @@
-from mobot_lidar_class import *
+from lidar_class import *
 import time
+from visual import *
+from operator import itemgetter
+from mobot_nav_class import *
 
-ml1 = mobot_lidar()
+#global variables
+use_points = True
+use_outer_line = False
+use_lines = True
+use_intensity = False
+
+init_level = 0
+index = 0
+offset = 140
+
+
+#setup the window, view, etc
+scene.forward = (1, -1, 0)
+scene.background = (0.1, 0.1, 0.2)
+scene.title = "Neato XV-11 Laser Distance Sensor - OpenLidarMap"
+
+
+
+class grid:
+    """A graphical grid, with two level of subdivision.
+
+    The grid can be manipulated (moved, showed/hidden...) by acting on self.frame.
+    """
+    
+    def __init__(self, size=100, small_interval=10, big_interval=50):
+        self.frame = frame(pos=(0,0,0))
+        for i in range(-size, size+small_interval, small_interval):
+            if i %big_interval == 0:
+                c = color.gray(0.65)
+            else:
+                c = color.gray(0.25)
+            curve(frame=self.frame, pos=[(i,0,size),(i,0,-size)], color=c)
+            curve(frame=self.frame, pos=[(size,0,i),(-size,0,i)], color=c)
+
+#grid where major intervals are 1m, minor intervals are 10cm
+my_grid = grid(size=4000, small_interval = 100, big_interval=1000)
+my_grid.frame.pos.y=-5
+
+# sample and intensity points
+point   = points(pos=[(0,0,0) for i in range(360)], size=5, color=(1  , 0, 0))
+pointb  = points(pos=[(0,0,0) for i in range(360)], size=5, color=(0.4, 0, 0))
+point2  = points(pos=[(0,0,0) for i in range(360)], size=3, color=(1  , 1,   0))
+point2b = points(pos=[(0,0,0) for i in range(360)], size=3, color=(0.4, 0.4, 0))
+#lines
+outer_line= curve (pos=[(0,0,0) for i in range(360)], size=5, color=(1  , 0, 0))
+lines=[curve(pos=[(offset*cos(i* pi / 180.0),0,offset*-sin(i* pi / 180.0)),(offset*cos(i* pi / 180.0),0,offset*-sin(i* pi / 180.0))], color=[(0.1, 0.1, 0.2),(1,0,0)]) for i in range(360)]
+zero_intensity_ring = ring(pos=(0,0,0), axis=(0,1,0), radius=offset-1, thickness=1, color = color.yellow)
+
+#draw the robot (very approximatly)
+robot = frame()
+box(frame=robot, pos = (150,-65,0), width=300, length = 180, height = 100)
+cylinder(frame=robot, pos=(60,-115,0), axis = (0,100,0), radius=150)
+cylinder(frame=robot, pos = (0,10,0), axis= (0,-40,0),radius=60)
+robot.visible = False # and hide it!
+
+#draw the lidar (even more approximatly)
+lidar=frame()
+cylinder(frame=lidar, pos = (0,-8,0), axis = (0,16,0), radius = 40, color=color.gray(0.8))
+cylinder(frame=lidar, pos = (-70,-18,0), axis = (0,-25,0), radius=15, color=color.gray(0.8))
+ring(frame=lidar, pos=(0,-18,0), radius = 60, thickness=10, axis = (0,1,0), color=color.gray(0.8))
+ring(frame=lidar, pos=(-12,-18,0), radius = 50, thickness=10, axis = (0,1,0), color=color.gray(0.8))
+ring(frame=lidar, pos=(-30,-18,0), radius = 40, thickness=10, axis = (0,1,0), color=color.gray(0.8))
+ring(frame=lidar, pos=(-45,-18,0), radius = 30, thickness=10, axis = (0,1,0), color=color.gray(0.8))
+ring(frame=lidar, pos=(-60,-18,0), radius = 20, thickness=10, axis = (0,1,0), color=color.gray(0.8))
+
+#Text
+label_help = label(pos = (0,0,0))
+label_help.text="""Red : distance.
+Yellow : intensity (the ring materializes 'intensity == 0')
+Darker colors when quality is subpar.
+The grid has 10cm intervals.
+
+Mouse:
+Left+drag = rotate
+Left+Right+drag = zoom
+
+Keyboard:
+h : show/hide this help
+r : start motor (bluetooth version)
+s : stop motor (bluetooth version)
+i : show/hide intensity dots
+o : show/hide distance outer line
+p : show/hide distance dots
+l : show/hide distance rays
+j : show/hide RPM label
+k : show/hide error count
+g : show/hide grid
+b : show/hide robot 3D model
+n : show/hide lidar 3D model"""
+label_speed = label(pos = (0,-500,0), xoffset=1, box=False, opacity=0.1)
+label_errors = label(pos = (0,-1000,0), xoffset=1, text="errors: 0", visible = False, box=False)
+
+
+def motor_control( speed ):
+    global ser, controler, rpm_setpoint
+    val = controler.process( speed - rpm_setpoint)
+    ser.write(chr(val))
+
+def gui_update_speed(speed_rpm):
+    label_speed.text = "RPM : " + str(speed_rpm)
+
+def compute_speed(data):
+    speed_rpm = float( data[0] | (data[1] << 8) ) / 64.0
+    return speed_rpm
+
+def update_view(lidar):
+	"""Updates the view of a sample.
+
+	Takes the angle (an int, from 0 to 359) and the list of four bytes of data in the order they arrived.
+	"""
+	global offset, use_outer_line, use_line
+	while True:
+	
+		gui_update_speed(lidar.speed_rpm)
+		
+		
+		for i in lidar.data:
+			time.sleep(0.0001)
+			angle = i[0]
+			dist_mm = i[1]
+			quality = i[2]
+
+			#reset the point display
+			point.pos[angle] = vector( 0, 0, 0 )
+			pointb.pos[angle] = vector( 0, 0, 0 )
+			point2.pos[angle] = vector( 0, 0, 0 )
+			point2b.pos[angle] = vector( 0, 0, 0 )
+
+			angle_rad = angle * pi / 180.0
+			c = cos(angle_rad)
+			s = -sin(angle_rad)
+
+			dist_x = dist_mm*c
+			dist_y = dist_mm*s
+
+			#print "angle:", angle, "   dist_mm:", dist_mm, "   quality:",  quality 
+
+			if not use_lines : lines[angle].pos[1]=(offset*c,0,offset*s)
+			if not use_outer_line :
+				outer_line.pos[angle]=(offset*c,0,offset*s)
+				outer_line.color[angle] = (0.1, 0.1, 0.2)
+
+
+			# display the sample
+			if quality == 0: # is the flag for "bad data" set?
+			#	# yes it's bad data
+				lines[angle].pos[1]=(offset*c,0,offset*s)
+				outer_line.pos[angle]=(offset*c,0,offset*s)
+				outer_line.color[angle] = (0.1, 0.1, 0.2)
+			else:
+				# no, it's cool
+			#	if not x1 & 0x40:
+					# X+1:6 not set : quality is OK
+				if use_points : point.pos[angle] = vector( dist_x,0, dist_y)
+				if use_intensity : point2.pos[angle] = vector( (quality + offset)*c,0, (quality + offset)*s)
+				if use_lines : lines[angle].color[1] = (1,0,0)
+				if use_outer_line : outer_line.color[angle] = (1,0,0)
+				#else:
+				#    # X+1:6 set : Warning, the quality is not as good as expected
+				#    if use_points : pointb.pos[angle] = vector( dist_x,0, dist_y)
+				#    if use_intensity : point2b.pos[angle] = vector( (quality + offset)*c,0, (quality + offset)*s)
+				#    if use_lines : lines[angle].color[1] = (0.4,0,0)
+				#    if use_outer_line : outer_line.color[angle] = (0.4,0,0)
+				if use_lines : lines[angle].pos[1]=( dist_x, 0, dist_y)
+				if use_outer_line : outer_line.pos[angle]=( dist_x, 0, dist_y)
+				#raw_input ("press enter")
+
+
+
+def angel_greatest_dist(lidar):
+	min_dist_mm = 60
+	greatest_dist_mm = 0
+	#while True:
+	for i in lidar.data:
+		time.sleep(0.0001)
+		angle = i[0]
+		dist_mm = i[1]
+		quality = i[2]	
+		if dist_mm  > min_dist_mm and quality > 10:
+			if dist_mm > greatest_dist_mm: 
+					greatest_dist_mm = dist_mm 
+					angle_to_return = angle
+	return angle_to_return
+
+
+
+
+def nav(lidar):
+	min_dist_mm = 33
+	while True:
+		time.sleep(0.1)
+		print 'angel_greatest_dist(lidar) ', angel_greatest_dist(lidar)
+		'''
+		for i in lidar.data:
+			time.sleep(0.0001)
+			angle = i[0]
+			dist_mm = i[1]
+			quality = i[2]
+			if angle <  front_left or angle > front_right:
+				if dist_mm  > min_dist_mm and dist_mm  < 200 and quality > 0:
+					print "---------------------------------------"
+					print 'OBJECT AHEAD:', i
+					print "---------------------------------------"
+
+				if angle <  lc_left or angle > lc_right:
+					if dist_mm  > min_dist_mm and dist_mm  < 200 and quality > 0:
+						print "---------------------------------------"
+						print 'OBJECT LEFT:', i
+						print "---------------------------------------"
+		'''
+	
+	
+label_help.visible = False
+
+ml1 = mobot_lidar("/dev/ttyUSB0", 115200)
 print ml1
 #print ml1.ser
 print dir(ml1)
-time.sleep(3)
+time.sleep(1)
 print ml1.ser
+
+th = thread.start_new_thread(update_view, (ml1,))
+#th2 = thread.start_new_thread(nav, (ml1,))
+
+nav = mobot_nav (ml1)
+
 while True:
-	print ml1.lidarData
-	#gps2 = mobot_gps()
-	#gps2.daemon=True
-	#gps2.start()
-	time.sleep(1)
+	rate(60) # synchonous repaint at 60fps
+
+	if scene.kb.keys: # event waiting to be processed?
+		s = scene.kb.getkey() # get keyboard info
+
+		if s == "s": # stop motor
+		    ser.write(chr(0))
+		elif s=="r": # run motor
+		    ser.write(chr(130))
+
+		elif s=="o": # Toggle outer line
+		    use_outer_line = not use_outer_line
+		elif s=="l": # Toggle rays
+		    use_lines = not use_lines
+		elif s=="p": # Toggle points
+		    use_points = not use_points
+		elif s=="i": # Toggle intensity
+		    use_intensity = not use_intensity
+		    zero_intensity_ring.visible = use_intensity
+
+		elif s=="g": # Toggle grid
+		    my_grid.frame.visible = not my_grid.frame.visible
+		elif s=="b": # Toggle robot representation
+		    robot.visible = not robot.visible
+		elif s=="n": # Toglle lidar representation
+		    lidar.visible = not lidar.visible
+
+		elif s=="h": # Toggle help
+		    label_help.visible = not label_help.visible
+		elif s=="j": # Toggle rpm
+		    label_speed.visible = not label_speed.visible
+		elif s=="k": # Toggle errors
+		    label_errors.visible = not label_errors.visible
+		elif s=="t": # which way to turn
+			print "angel_greatest_dist", nav.angel_greatest_dist()
+			print "turn_left_or_right", nav.turn_left_or_right()
+
+		#print "---------------------------------------"
+		#print ml1.data
+		#print "len: ", len(ml1.data)
+		#gps2 = mobot_gps()
+		#gps2.daemon=True
+		#gps2.start()
+		#print "---------------------------------------"
+		#print "speed: ", ml1.speed_rpm
+		#time.sleep(1)
+	
