@@ -123,6 +123,9 @@ def array2PIL(arr, size):
     return Image.frombuffer(mode, size, arr.tostring(), 'raw', mode, 0, 1)
 
 
+def CV2array(img):
+		return np.asarray(img[:,:])
+
 ###########################################################
 def CalcHistogram(img):
 	#calc histogram of green band
