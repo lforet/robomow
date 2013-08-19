@@ -4,90 +4,113 @@ sys.path.append( "../lib/" )
 
 import pika
 from pylab import imread
-import Image
 import time
 import cv, cv2
 import cPickle as pickle	
-from img_processing_tools import *
-import numpy
-
-count = 0
-recovery_count = 0
-
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-
-channel = connection.channel()
+#from img_processing_tools import *
+import gc
 
 '''
- queue_declare(callback, queue='', passive=False, durable=False, exclusive=False, auto_delete=False, nowait=False, arguments=None)[source]
-
-    Declare queue, create if needed. This method creates or checks a queue. When creating a new queue the client can specify various properties that control the durability of the queue and its contents, and the level of sharing for the queue.
-
-    Leave the queue name empty for a auto-named queue in RabbitMQ
-    Parameters:	
-
-        callback (method) - The method to call on Queue.DeclareOk
-        queue (str or unicode) - The queue name
-        passive (bool) - Only check to see if the queue exists
-        durable (bool)- Survive reboots of the broker
-        exclusive (bool)- Only allow access by the current connection
-        auto_delete (bool) - Delete after consumer cancels or disconnects
-        nowait (bool) - Do not wait for a Queue.DeclareOk
-        arguments (dict) - Custom key/value arguments for the queue
-
+helps on ubunutu to not drop frames
+lsmod
+rmmod uvcvideo
+modprobe uvcvideo nodrop=1 timeout=5000 quirks=0x80
 '''
 
-channel.queue_declare(queue='mobot_video1', auto_delete=True, arguments={'x-message-ttl':1000})
 
-cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
-#webcam1 =  cv.CreateCameraCapture(1)
-webcam1 = cv2.VideoCapture(1)
-#webcam1.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320) 
-#webcam1.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240) 
-#webcam1.set(cv2.cv.CV_CAP_PROP_FPS, 10)
+class mobot_video_feed():
+	def __init__(self, camera_num, x, y):
+		self.camera_num = camera_num
+		self.x = x
+		self.y = y
+		self.camera = None
+		self.frame_count = 0
+		self.recovery_count = 0
+		self.feed_num = 'video.' + str(camera_num )
+		self.frame = None
+		self.connection = None
+		self.channel = None
+		self.capture_time = 0.0
+		self.run()
 
-while True:
-	frame1 = None
-	now = time.time()
-	count = count + 1
-	time.sleep(0.001)
-	try:
-		#frame1 = cv.QueryFrame(camera)
-		ret, frame1 = webcam1.read()
-	except:
-		pass
-	capture_time = (time.time()-now)
-	print 'frames:', count , "   capture time:", capture_time, "   recovery_count:", recovery_count 
-	if capture_time > 0.9 or frame1 == None:
-		frame1 = None
-		while frame1 == None:
-			recovery_count = recovery_count + 1
+	def connect(self):
+		self.connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+		self.channel = self.connection.channel()
+		#channel.queue_declare(queue='mobot_video1', auto_delete=True, arguments={'x-message-ttl':1000})
+		self.channel.exchange_declare(exchange='mobot_data_feed',type='topic')
+
+		print self.feed_num
+	'''
+	 queue_declare(callback, queue='', passive=False, durable=False, exclusive=False, auto_delete=False, nowait=False, arguments=None)[source]
+
+		Declare queue, create if needed. This method creates or checks a queue. When creating a new queue the client can specify various properties that control the durability of the queue and its contents, and the level of sharing for the queue.
+
+		Leave the queue name empty for a auto-named queue in RabbitMQ
+		Parameters:	
+
+		    callback (method) - The method to call on Queue.DeclareOk
+		    queue (str or unicode) - The queue name
+		    passive (bool) - Only check to see if the queue exists
+		    durable (bool)- Survive reboots of the broker
+		    exclusive (bool)- Only allow access by the current connection
+		    auto_delete (bool) - Delete after consumer cancels or disconnects
+		    nowait (bool) - Do not wait for a Queue.DeclareOk
+		    arguments (dict) - Custom key/value arguments for the queue
+
+	'''
+
+	def publish(self, data):
+			self.channel.basic_publish(exchange='mobot_data_feed', 
+								routing_key=self.feed_num, body=data)
+
+	def enable_local_display(self):
+		cv2.namedWindow('Front Camera', cv.CV_WINDOW_AUTOSIZE)
+		#webcam1 =  cv.CreateCameraCapture(1)
+		webcam1 = cv2.VideoCapture(1)
+		cv2.imshow('Front Camera', frame1)	
+		cv2.waitKey(30)
+
+
+	def initialize_camera(self, camera_num, x, y):
+			if camera_num <> "":
+				self.camera = cv2.VideoCapture(camera_num)
+				self.camera.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, x) 
+				self.camera.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, y) 
+				#self.camera1.set(cv2.cv.CV_CAP_PROP_FPS, 10)
+	
+	def run(self):
+		self.connect()
+		self.initialize_camera(self.camera_num, self.x, self.y)
+		while True:
+			time.sleep(0.0001) #dont hog resources
+			self.frame = None
+			self.frame_count += 1
+			now = time.time()
 			try:
-				webcam1.release				
-				webcam1 = cv2.VideoCapture(1)
-				ret, frame1 = webcam1.read()
+				ret, self.frame = self.camera.read()
 			except:
-				time.sleep(.1)
 				pass
-	#print frame1, type(frame1)#, dir (frame1)
-	#cv.ShowImage('Front Camera', frame1)
-	cv2.imshow('Front Camera', frame1)
-	#cv.WaitKey(30)	
-	cv2.waitKey(30)
-	img = pickle.dumps(frame1,-1)
-	#frame2 = array2CV(pickle.loads(img))
-	#print type(img), len (img)
-	#print 'frame2:', type(frame2)#, len (frame2)
-	channel.basic_publish(exchange='', routing_key='mobot_video1', body=img)
-	#frame1 = resize_img(frame1, 0.60)
+			self.capture_time = (time.time()-now)
+			print 'frames:', self.frame_count , "   capture time:", self.capture_time, "   recovery_count:", self.recovery_count 
+			if self.capture_time > 0.9 or self.frame == None:
+				self.frame = None
+				while self.frame == None:
+					self.recovery_count += 1
+					try:
+						if self.camera != None:
+							self.camera.release	
+						gc.enable()
+						gc.collect()			
+						self.initialize_camera(self.camera_num, 320, 240)
+						try:
+							ret, self.frame = self.camera.read()
+						except:
+							pass
+					except:
+						time.sleep(.5)
+						pass
+			pickled_frame = pickle.dumps(self.frame,-1)
+			self.publish(pickled_frame)
 
-
-#img1.thumbnail((320,240))
-
-# send string : img = Image.open('rec_image.jpg').tostring()
-#to receive it: img1 = Image.fromstring('RGB', (320,240), img_rec)
-
-print " [x] Sent 'Hello World!'"
-
-connection.close()
+#connection.close()
 

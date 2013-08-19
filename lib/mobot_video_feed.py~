@@ -10,6 +10,11 @@ import cPickle as pickle
 import gc
 
 '''
+USAGE:
+import mobot_video_feed
+camera1 = mobot_video_feed.mobot_video_feed(camera#, width, height)
+print test
+
 helps on ubunutu to not drop frames
 lsmod
 rmmod uvcvideo
