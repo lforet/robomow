@@ -26,8 +26,8 @@ class ButtonDemo(EasyFrame):
                                          row = 1, column = 1,
                                          command = self.restore,
                                          state = "disabled")
-        #self.newWindow = tk
-        self.app = CircleArea(self.newWindow)
+		#self.newWindow = tk
+		self.app = CircleArea(self.newWindow)
 
     # Methods to handle user events.
     def clear(self):

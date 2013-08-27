@@ -37,9 +37,9 @@ class ImageDemo(EasyFrame):
 		
 	def update_display(self):
 		# Load the image and associate it with the image label.
-		# Load the image and associate it with the image label.
-		self.image = PhotoImage(file = "smokey.gif")
-		imageLabel["image"] = self.image
+        # Load the image and associate it with the image label.
+        self.image = PhotoImage(file = "smokey.gif")
+        imageLabel["image"] = self.image
 		#self.image = PhotoImage(self.frame)
 		#camera = mobot_video_consume.consume_video('video.0', 'localhost')
 		#while True:

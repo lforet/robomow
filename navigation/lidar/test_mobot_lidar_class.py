@@ -1,8 +1,13 @@
-from lidar_class import *
+#!/usr/bin/python
+
+import sys
+sys.path.append( "../../lib/" )
+
+import mobot_lidar_class 
 import time
 from visual import *
-from operator import itemgetter
 from mobot_nav_class import *
+import cPickle as pickle
 
 #global variables
 use_points = True
@@ -116,9 +121,7 @@ def update_view(lidar):
 	"""
 	global offset, use_outer_line, use_line
 	while True:
-	
 		gui_update_speed(lidar.speed_rpm)
-		
 		
 		for i in lidar.data:
 			time.sleep(0.0001)
@@ -218,7 +221,7 @@ def nav(lidar):
 	
 label_help.visible = False
 
-ml1 = mobot_lidar("/dev/ttyUSB0", 115200)
+ml1 = mobot_lidar_class.lidar("/dev/ttyUSB0", 115200)
 print ml1
 #print ml1.ser
 print dir(ml1)
@@ -236,12 +239,12 @@ while True:
 	if scene.kb.keys: # event waiting to be processed?
 		s = scene.kb.getkey() # get keyboard info
 
-		if s == "s": # stop motor
-		    ser.write(chr(0))
-		elif s=="r": # run motor
-		    ser.write(chr(130))
+		#if s == "s": # stop motor
+		#    ser.write(chr(0))
+		#elif s=="r": # run motor
+		#    ser.write(chr(130))
 
-		elif s=="o": # Toggle outer line
+		if s=="o": # Toggle outer line
 		    use_outer_line = not use_outer_line
 		elif s=="l": # Toggle rays
 		    use_lines = not use_lines

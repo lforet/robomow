@@ -20,7 +20,6 @@ rmmod uvcvideo
 modprobe uvcvideo nodrop=1 timeout=5000 quirks=0x80
 '''
 
-
 class mobot_video():
 	def __init__(self, camera_num, x, y):
 		self.camera_num = camera_num
