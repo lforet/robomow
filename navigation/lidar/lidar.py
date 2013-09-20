@@ -4,6 +4,8 @@
 
 
 import thread, time, sys, traceback, math
+import random
+
 
 #com_port = "COM30" # example: 5 == "COM6" == "/dev/tty5"
 com_port = "/dev/ttyUSB0"
@@ -17,6 +19,8 @@ fps_rate = 60
 
 lidarData = [[] for i in range(360)] #A list of 360 elements Angle, Distance , quality
 
+x_degree = 0
+y_degree = 0
 
 if visualization:
     from visual import *
@@ -221,6 +225,8 @@ def checkKeys():
             label_errors.visible = not label_errors.visible
 
 
+
+	
 import serial
 ser = serial.Serial(com_port, baudrate)
 th = thread.start_new_thread(read_Lidar, ())
