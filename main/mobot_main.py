@@ -21,7 +21,7 @@ from robomow_motor_class_arduino import *
 from gps_functions import *
 from class_android_sensor_tcp import *
 from train_terrain import *
-from lidar_class import *
+#from lidar_class import *
 
 from visual import *
 from mobot_nav_class import *
@@ -623,17 +623,17 @@ if __name__== "__main__":
 		#	compass.daemon=True
 		#	compass.start()
 		
-	while lidar == None:	
-		print 'trying to connect lidar'
-		lidar = mobot_lidar("/dev/ttyUSB0", 115200)
-		#except:
-		time.sleep(.5)
-		pass
+	#while lidar == None:	
+	#	print 'trying to connect lidar'
+	#	lidar = mobot_lidar("/dev/ttyUSB0", 115200)
+	#	#except:
+	#	time.sleep(.5)
+	#	pass
 
 	#th = thread.start_new_thread(update_view, (lidar,))		
-	time.sleep(2)
-	nav = mobot_nav (lidar)
-	raw_input ('done connecting motor and lidar: press enter')
+	#time.sleep(2)
+	#nav = mobot_nav (lidar)
+	#raw_input ('done connecting motor and lidar: press enter')
 	
 
 	'''

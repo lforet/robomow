@@ -319,8 +319,6 @@ if __name__== "__main__":
 	ML.configure(state=DISABLED, background='red')
 	MR.configure(state=DISABLED, background='red')
 
-
-
 	image = Image.open("temp.jpg")
 	sonar = Image.open('sonar_image.png')
 	#sonar.thumbnail((440,440))
@@ -341,9 +339,6 @@ if __name__== "__main__":
 	Textbox1.config(yscrollcommand=s.set, width=90)#, height=50)
 	frame3.pack()
 
-
-
-
 	Button_Update_Image = Button(frame4, text="Grab Images", command=lambda: update_images(ROBOT_IP, 12345)); 
 	Button_Update_Image.pack(side=LEFT);
 	button_toggle_sonar = Button(frame4, text="Update Sonar", command=lambda: update_sonar(ROBOT_IP, 12345));
@@ -357,14 +352,10 @@ if __name__== "__main__":
 
 	#Button_show_Image = Button(main_gui, text="Load Image", command=random_image).pack(); 
 	
-
-
 	var_IP_of_bot = StringVar(None)
 	IP_of_bot = Entry(main_gui, textvariable=var_IP_of_bot)
 	IP_of_bot.pack()
 
-
-	
 	#frame1.pack_forget()
 	update_display()
 	main_gui.mainloop()

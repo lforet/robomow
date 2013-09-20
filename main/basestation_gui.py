@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+import sys
+sys.path.append( "../lib/" )
+
 from Tkinter import *
 import tkMessageBox
 from PIL import Image, ImageTk

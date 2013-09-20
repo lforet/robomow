@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+import sys
+sys.path.append( "../lib/" )
+
+import pika
+from pylab import imread
+import Image
+import time
+import cv, cv2
+import cPickle as pickle	
+from img_processing_tools import *
+import numpy
+
+count = 0
+
+def callback(ch, method, properties, body):
+	global count 
+	count = count +1
+	#while True:
+	#time.sleep(0.0001)
+	#try:
+	frame = array2CV(pickle.loads(body))
+	print frame, type(frame)
+	print count
+	cv.ShowImage('Video', frame)
+	cv.WaitKey(10)
+	#except:
+	#pass
+		
+	#print len(img_rec), type(img_rec)
+	#img1 = Image.fromstring('RGB', (320,240), img_rec)#.transpose(Image.FLIP_TOP_BOTTOM)
+	#
+	#img1 = Image.open(StringIO(img_rec))
+	#img1.show()
+	
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+
+channel = connection.channel()
+
+
+#channel.queue_declare(queue='hello')
+channel.queue_declare(queue='hello',arguments={'x-message-ttl' : 1000}) 
+
+print ' [*] Waiting for messages. To exit press CTRL+C'
+
+cv2.namedWindow('Video', cv.CV_WINDOW_AUTOSIZE)
+
+channel.basic_consume(callback, queue='hello', no_ack=True)
+
+channel.start_consuming()
