@@ -4,6 +4,17 @@ import dbus
 import time
 import thread
 import pika
+''' 
+	Pulbishes signal strength of given SSID
+
+USAGE:
+	signal_strength(SSID)
+	
+	wlist = WiFiList()
+	while True:
+		time.sleep(.0001)
+		print wlist.signal_strength('isotope11_wireless')
+'''
 
 class WiFiList():
 	def __init__(self):
@@ -84,7 +95,7 @@ if __name__ == "__main__":
 	wlist = WiFiList()
 	i = 0
 	while True:
-		time.sleep(.1)
+		time.sleep(.0001)
 		print wlist.signal_strength('isotope11_wireless'), i
 		i += 1
 	

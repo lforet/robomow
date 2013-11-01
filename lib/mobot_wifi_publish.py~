@@ -84,7 +84,7 @@ if __name__ == "__main__":
 	wlist = WiFiList()
 	i = 0
 	while True:
-		time.sleep(.1)
+		time.sleep(.0001)
 		print wlist.signal_strength('isotope11_wireless'), i
 		i += 1
 	
