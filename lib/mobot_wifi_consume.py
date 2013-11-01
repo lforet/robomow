@@ -6,6 +6,7 @@ import thread, time, sys, traceback
 
 ''' USAGE:
 
+	wifi = consume_wifi(channel_name.#, ip_of_publisher)
 
 	wifi = consume_wifi('wifi.1', 'localhost')
 	while True:
@@ -46,7 +47,7 @@ class consume_wifi():
 		while True:		
 			if  self.connection == None or self.connection.is_open == False:
 					self.connect()
-			time.sleep(0.11) # do not hog the processor power
+			time.sleep(0.005) # do not hog the processor power
 			#print "-" * 50
 			method_frame, properties, body = self.channel.basic_get(self.queue_name)
 			if method_frame:
@@ -70,6 +71,6 @@ if __name__== "__main__":
 
 	wifi = consume_wifi('wifi.1', '192.168.1.180')
 	while True:
-		time.sleep(1)
+		time.sleep(.01)
 		print 'signal strength:', wifi.signal_strength
 
