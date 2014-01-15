@@ -8,7 +8,7 @@ from heapq import heappush, heappop # for priority queue
 import math
 import time
 import random
-from gps_functions import *
+#from gps_functions import *
 
 class node:
     xPos = 0 # x position

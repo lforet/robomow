@@ -57,7 +57,7 @@ if __name__== "__main__":
 	while True:
 		time.sleep(0.1)
 		try:
-			print "receiving video feed data: " len(camera.frame)
+			print "receiving video feed data: ", len(camera.frame)
 			cv2.imshow('Video', camera.frame)
 			cv.WaitKey(10)
 		except:

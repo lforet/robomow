@@ -55,7 +55,7 @@ if __name__== "__main__":
 	cv2.namedWindow('Video', cv.CV_WINDOW_AUTOSIZE)
 	camera = consume_video('video.0', 'localhost')
 	while True:
-		time.sleep(0.1)
+		#time.sleep(0.1)
 		try:
 			print "receiving video feed data: ", len(camera.frame)
 			cv2.imshow('Video', camera.frame)
