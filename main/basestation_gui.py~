@@ -48,7 +48,7 @@ def Search_For_Robot(name):
 		if answer == None:
 			print "failed DNS Search...trying PING method...", answer
 		
-			for ip in xrange(30, 150, 1):
+			for ip in xrange(85, 110, 1):
 				ip_to_ping = "192.168.1."+str(ip)
 				print "Searching for Robot on IP:", ip_to_ping,
 				TextOut("Searching for Robot on IP:" + ip_to_ping)
