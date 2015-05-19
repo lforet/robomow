@@ -29,7 +29,7 @@ def TextOut(text):
 		Textbox1.insert(END, str(datetime.now()) + ':' + text +'\n') #print new line in textbox
 		Textbox1.yview(END) 			#autoscroll
 
-def Search_For_Robot():
+def Search_For_Robot(name):
 	global ROBOT_IP
 	#first try by dns lookup
 	#robot_name = 'mobot-2012'
@@ -38,7 +38,8 @@ def Search_For_Robot():
 		print "Searching for Robot using DNS..."
 		TextOut("Searching for Robot using DNS...")
 		time.sleep(.1)		
-		answer = socket.gethostbyname('mobot-2012.local')
+		#answer = socket.gethostbyname('mobot-2012.local')
+		answer = socket.gethostbyname(name)
 		print "Robot found on IP: ", answer
 		TextOut("Robot found on IP: " + answer)
 		ROBOT_IP = answer
@@ -47,7 +48,7 @@ def Search_For_Robot():
 		if answer == None:
 			print "failed DNS Search...trying PING method...", answer
 		
-			for ip in xrange(30, 150, 1):
+			for ip in xrange(85, 110, 1):
 				ip_to_ping = "192.168.1."+str(ip)
 				print "Searching for Robot on IP:", ip_to_ping,
 				TextOut("Searching for Robot on IP:" + ip_to_ping)
@@ -57,7 +58,7 @@ def Search_For_Robot():
 					temp = answer[0][:10]
 					#print "temp=", temp
 					#Textout(": Found Device: " + temp)
-					if temp == 'mobot-2012':
+					if temp == name:
 						print "Robot found on IP: ", ip_to_ping
 						TextOut("Robot found on IP: " + ip_to_ping)
 						ROBOT_IP = ip_to_ping
@@ -271,7 +272,7 @@ def update_display():
 					Button_Com_Status.configure(bg = "red")
 					#hide_buttons()
 			else:
-				 Search_For_Robot()
+				 Search_For_Robot(sys.argv[1])
 		#main_gui.update()	
 		main_gui.after(100, update_display)
 
